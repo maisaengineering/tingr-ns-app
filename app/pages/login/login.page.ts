@@ -1,4 +1,5 @@
 import { Router, NavigationExtras } from "@angular/router";
+import { connectionType, getConnectionType } from "connectivity";
 import { Component, OnInit } from "@angular/core";
 import { Page } from "ui/page";
 import { Teacher } from "../../shared/teacher/teacher";
@@ -17,6 +18,10 @@ export class LoginPage implements OnInit {
 
     ngOnInit() {
         this.page.actionBarHidden = true;
+        if (getConnectionType() === connectionType.none) {
+            alert("Tingr requires an internet connection to log in.");
+            return;
+        }
     }
 
     constructor(private router: Router, private teacherService: TeacherService, private page: Page) {

@@ -6,8 +6,9 @@ import {AppComponent} from "./app.component";
 import {SIDEDRAWER_DIRECTIVES} from "nativescript-telerik-ui/sidedrawer/angular";
 import {NativeScriptRouterModule} from "nativescript-angular";
 import {TNSFontIconModule} from "nativescript-ng2-fonticon";
-import {APP_ROUTES, navigatableComponents} from "./app.routes";
+import {APP_ROUTES, authProviders, navigatableComponents} from "./app.routes";
 import { AuthData } from "./providers/data/oauth_data";
+import { BackendService } from "./shared/backend.service";
 @NgModule({
     declarations: [
         SIDEDRAWER_DIRECTIVES,
@@ -27,7 +28,11 @@ import { AuthData } from "./providers/data/oauth_data";
             'fa': 'fonts/font-awesome.css'
         })
     ],
-    providers: [AuthData],
+    providers: [
+        AuthData,
+        BackendService,
+        authProviders
+    ],
     schemas: [
         NO_ERRORS_SCHEMA
     ]
