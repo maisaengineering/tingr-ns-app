@@ -1,37 +1,33 @@
 import {NgModule, NO_ERRORS_SCHEMA} from "@angular/core";
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { NativeScriptHttpModule } from "nativescript-angular/http";
 import {NativeScriptModule} from "nativescript-angular/platform";
 import {AppComponent} from "./app.component";
 import {SIDEDRAWER_DIRECTIVES} from "nativescript-telerik-ui/sidedrawer/angular";
 import {NativeScriptRouterModule} from "nativescript-angular";
 import {TNSFontIconModule} from "nativescript-ng2-fonticon";
-import {APP_ROUTES} from "./app.routes";
-import {DrawerComponent} from "./components/drawer/drawer.component";
-import {HomePage} from "./pages/home/home.page";
-import {SettingsPage} from "./pages/settings/settings.page";
-import {TodoPage} from "./pages/todo/todo.page";
-import {TodoListComponent} from "./components/todolist/todo.list.component";
-
+import {APP_ROUTES, navigatableComponents} from "./app.routes";
+import { AuthData } from "./providers/data/oauth_data";
 @NgModule({
     declarations: [
         SIDEDRAWER_DIRECTIVES,
         AppComponent,
-        HomePage,
-        SettingsPage,
-        TodoPage,
-        DrawerComponent,
-        TodoListComponent
+        ...navigatableComponents
     ],
     bootstrap: [
         AppComponent
     ],
     imports: [
         NativeScriptModule,
+        NativeScriptFormsModule,
+        NativeScriptHttpModule,
         NativeScriptRouterModule,
         NativeScriptRouterModule.forRoot(APP_ROUTES),
         TNSFontIconModule.forRoot({
             'fa': 'fonts/font-awesome.css'
         })
     ],
+    providers: [AuthData],
     schemas: [
         NO_ERRORS_SCHEMA
     ]

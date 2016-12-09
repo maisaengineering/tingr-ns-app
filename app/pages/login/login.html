@@ -1,0 +1,8 @@
+<Label text="Continue to Tingr" class="login-header"></Label>
+<StackLayout>
+    <Image src="res://icon" stretch="none" horizontalAlignment="center"></Image>
+    <TextField hint="Email Address" keyboardType="email" [(ngModel)]="email"
+               autocorrect="false" autocapitalizationType="none"></TextField>
+
+    <Button text="Continue" class="blue-background submit-button" (tap)="submitEmail()"></Button>
+</StackLayout>
