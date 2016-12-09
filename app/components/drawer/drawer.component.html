@@ -1,0 +1,24 @@
+<GridLayout class="drawer-header">
+</GridLayout>
+<StackLayout class="drawer-links" orientation="vertical">
+    <StackLayout class="drawer-link"
+                 orientation="horizontal"
+                 [nsRouterLink]="['/home']">
+        <Label class="fa" text="{{'fa-home' | fonticon}}"></Label>
+        <Label class="text" text="Home"></Label>
+    </StackLayout>
+    <StackLayout class="drawer-link"
+                 orientation="horizontal"
+                 [nsRouterLink]="['/todo']">
+        <Label class="fa" text="{{'fa-check-square-o' | fonticon}}"></Label>
+        <Label class="text" text="ToDo List"></Label>
+    </StackLayout>
+    <StackLayout class="drawer-separator">
+    </StackLayout>
+    <StackLayout class="drawer-link"
+                 orientation="horizontal"
+                 [nsRouterLink]="['/settings']">
+        <Label class="fa" text="{{'fa-cogs' | fonticon}}"></Label>
+        <Label class="text" text="Settings"></Label>
+    </StackLayout>
+</StackLayout>
