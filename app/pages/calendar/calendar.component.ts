@@ -15,12 +15,14 @@ import { TextView } from 'ui/text-view';
 })
 export class CalendarComponent extends DrawerPage implements OnInit{
     public schedules: Array<Schedule>;
+    public reminders: Array<Reminder>;
 
 
     constructor(private calendarService: CalendarService,private changeDetectorRef: ChangeDetectorRef) {
         super(changeDetectorRef);
         const calendar = calendarService.getCalendar();
         this.schedules = calendar.schedules;
+        this.reminders = calendar.reminders;
     }
 
     ngOnInit() {

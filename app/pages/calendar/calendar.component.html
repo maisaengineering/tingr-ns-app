@@ -10,13 +10,11 @@
     <StackLayout tkMainContent>
 
         <StackLayout text="top" dock="top" class="today-date green">
-            <Label text="Sunday, Janury frist" style="text-align: center;"></Label>
+            <Label text="Sunday, January 1st" style="text-align: center;"></Label>
         </StackLayout>
 
         <StackLayout class="line-separator">
         </StackLayout>
-
-
 
         <!--<StackLayout>
             <ListView [items]="messages">
@@ -33,9 +31,10 @@
         </StackLayout>-->
 
 
+        <!-- ##################  Scheules-------------------------------------------------------------------------------->
         <DockLayout stretchLastChild="false" class="calendar-schedule">
-            <Image dock="left" stretch ="none" verticalAlignment="center" class="schedule-icon"  src="~/images/schedule-icon.png"></Image>
-
+            <Image dock="left" stretch ="none" verticalAlignment="center" class="schedule-icon"  src="~/images/calendar-icon-72.png"></Image>
+            <!--<Label  dock="left" stretch ="none" verticalAlignment="center" class="fa schedule-icon" text="{{'fa-clock-o fa-4' | fonticon}}"></Label>-->
 
             <StackLayout text="top" dock="top">
                 <ListView [items]="schedules">
@@ -49,22 +48,35 @@
                             </StackLayout>
                         </StackLayout>-->
 
-                        <GridLayout columns="auto, auto" rows="auto,auto" class="item">
+                        <GridLayout columns="auto, auto" rows="auto,auto" class="item {{ item.read ? 'blue' :  '' }}">
                             <Label col="0" text="{{item.time}}" row="0"></Label>
                             <Label col="1" row="0"  class="event" text="{{ item.event }}"></Label>
                         </GridLayout>
                     </template>
                 </ListView>
             </StackLayout>
-
         </DockLayout>
 
         <StackLayout class="line-separator">
         </StackLayout>
 
+        <!-- ##################  Reminders-------------------------------------------------------------------------------->
 
+        <DockLayout stretchLastChild="false" class="calendar-reminder">
+            <Image dock="left" stretch ="none" verticalAlignment="center" class="reminder-icon"  src="~/images/reminder-icon-72.png"></Image>
+            <StackLayout text="top" dock="top">
+                <ListView [items]="reminders">
+                    <template let-item="item">
+                        <GridLayout columns="auto, auto" rows="auto,auto" class="item {{ item.read ? 'blue' :  '' }}">
+                            <Label col="0" text="{{item.text}}" row="0"></Label>
+                        </GridLayout>
+                    </template>
+                </ListView>
+            </StackLayout>
+        </DockLayout>
 
-
+        <StackLayout class="line-separator">
+        </StackLayout>
 
 
 

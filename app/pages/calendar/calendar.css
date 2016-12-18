@@ -115,19 +115,21 @@ StackLayout.today-date {
 }
 
 
-
-
-.calendar-schedule .schedule-icon {
+.calendar-schedule .schedule-icon, .calendar-reminder .reminder-icon {
     margin-right: 10px;
     margin-left: 10px;
 }
-.calendar-schedule .item {
+.calendar-schedule .item, .calendar-reminder .item  {
     padding: 6px;
     font-size: 12px
 }
 
 .calendar-schedule .item .event{
     margin-left: 20px;
+}
+
+.calendar-reminder .item {
+    font-style: italic;
 }
 
 

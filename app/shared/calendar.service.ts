@@ -10,35 +10,45 @@ export class CalendarService {
         const messages = [];
 
         schedules.push({
-            time: "2-00:2-30pm",
-            event: "Kis Arrival"
-        });
+                time: "2-00:2-30pm",
+                event: "Kis Arrival"
+            },
+            {
+                time: "2-30:3-00pm",
+                event: "Snacks"
+            },
+            {
+                time: "3-00:3-30pm",
+                event: "HomeWork/Worksheet"
+            },
+            {
+                time: "3-00:3-30pm",
+                event: "HomeWork/Worksheet"
+            },
+            {
+                time: "3-00:4-15pm",
+                event: "Dance"
+            },
+            {
+                time: "4-15:5-00pm",
+                event: "Spelling practice"
+            },
+            {
+                time: "5-00:5-30pm",
+                event: "Reading Practice"
+            },
+            {
+                time: "5-30:6-00pm",
+                event: "Evening Snacks, Free Play & Outdoor",
+                read: true
+            });
 
-        schedules.push({
-            time: "2-30:3-00pm",
-            event: "Snacks"
-        });
-
-        schedules.push({
-            time: "3-00:3-30pm",
-            event: "HomeWork/Worsheet"
-        });
-        schedules.push({
-            time: "3-00:3-30pm",
-            event: "HomeWork/Worsheet"
-        });
-        schedules.push({
-            time: "3-00:3-30pm",
-            event: "HomeWork/Worsheet"
-        });
-        schedules.push({
-            time: "3-00:3-30pm",
-            event: "HomeWork/Worsheet"
-        });
-        schedules.push({
-            time: "3-00:3-30pm",
-            event: "HomeWork/Worsheet"
-        });
+        /* Reminders Data */
+        reminders.push(
+            {text: "Jonie's birthday Turing 3 years"},
+            {text: "Ask parent's to bring toys"},
+            {text: "TOMORROW is school holiday", read: true},
+        );
 
         const calendar = {
             schedules: schedules,
@@ -53,11 +63,13 @@ export class CalendarService {
 
 export interface Schedule {
     time: String;
-    event: string;
+    event: String;
+    read: Boolean;
 }
 
 export interface Reminder {
     text: String;
+    read: Boolean;
 }
 
 
