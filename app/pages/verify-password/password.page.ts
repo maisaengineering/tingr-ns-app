@@ -36,18 +36,19 @@ export class VerifyPasswordPage implements OnInit {
 
     signIn() {
         this.isAuthenticating = true;
-        this.teacherService.signIn(this.teacher)
+        this.router.navigate(["calendar"]);
+        /*this.teacherService.signIn(this.teacher)
             .subscribe(
-                () => {
-                    this.isAuthenticating = false;
-                    this.router.navigate(["home"]);
-                    //this.router.navigate(["/"], { clearHistory: true });
+                (result) => {
+                    console.log("SignIN Response: "+ JSON.stringify(result));
+                    this.router.navigate(["calendar"]);
+
                 },
                 (error) => {
-                    this.isAuthenticating = false;
-                    alert(error.message);
+                    console.log('Error: '+ JSON.stringify(error));
+                    alert(JSON.stringify(error))
                 }
-            );
+            );*/
     }
 
     forgotPassword() {

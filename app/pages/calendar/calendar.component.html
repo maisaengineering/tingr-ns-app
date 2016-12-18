@@ -1,0 +1,67 @@
+<ActionBar title="Daily">
+    <NavigationButton text="Menu" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
+</ActionBar>
+<RadSideDrawer #drawerComponent tkToggleNavButton>
+    <ScrollView tkDrawerContent class="drawer-content">
+        <StackLayout horizzontalAlign="left">
+            <drawer-content></drawer-content>
+        </StackLayout>
+    </ScrollView>
+    <StackLayout tkMainContent>
+
+        <StackLayout text="top" dock="top" class="today-date green">
+            <Label text="Sunday, Janury frist" style="text-align: center;"></Label>
+        </StackLayout>
+
+
+
+        <!--<StackLayout>
+            <ListView [items]="messages">
+                <template let-item="item">
+                    <StackLayout orientation="horizontal" class="item">
+                        <Image width="100" height="100" src="res://icon" class="item-thumbnail"></Image>
+                        <StackLayout orientation="horizontal" class="item-detail">
+                            <Label id="name" text="{{item.time}}"></Label>
+                            <Label id="description" text="{{ item.event }}" textWrap="true"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </template>
+            </ListView>
+        </StackLayout>-->
+ 
+
+        <DockLayout stretchLastChild="false" class="calendar-section1">
+            <Image dock="left" stretch ="none" verticalAlignment="center" class="section1-icon"  src="~/images/reminder-icon.png"></Image>
+
+
+            <StackLayout text="top" dock="top">
+                <ListView [items]="messages">
+                    <template let-item="item">
+                        <!--<StackLayout orientation="horizontal" class="item">
+                            <StackLayout orientation="horizontal" class="details">
+                                <StackLayout class="time">
+                                    <Label text="{{item.time}}"></Label>
+                                </StackLayout>
+                                <Label class="event" text="{{ item.event }}" textWrap="true"></Label>
+                            </StackLayout>
+                        </StackLayout>-->
+
+                        <GridLayout columns="auto, auto" rows="auto,auto" class="item">
+                            <Label col="0" text="{{item.time}}" row="0"></Label>
+                            <Label col="1" row="0"  class="event" text="{{ item.event }}"></Label>
+                        </GridLayout>
+                    </template>
+                </ListView>
+            </StackLayout>
+
+        </DockLayout>
+
+
+
+
+
+
+
+
+    </StackLayout>
+</RadSideDrawer>

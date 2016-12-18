@@ -56,7 +56,7 @@ TextField {
 }
 
 ActionBar {
-    background-color: #4caf50;
+    background-color: #9fc5f8;
     color: white;
 }
 
@@ -67,7 +67,7 @@ ActionBar {
 
 .drawer-content .drawer-header {
     height: 150px;
-    background-color: #4caf50;
+    background-color: #9fc5f8;
     margin-bottom: 7px;
 }
 
@@ -89,7 +89,7 @@ ActionBar {
     background-color: #dddddd;
 }
 
-.drawer-content .drawer-separator {
+.drawer-content .drawer-separator  {
     height: 1px;
     background-color: #dddddd;
     margin: 7px 0;

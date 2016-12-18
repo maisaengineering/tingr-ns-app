@@ -14,19 +14,19 @@ import { TeacherService } from "../../shared/teacher/teacher.service";
 export class LoginPage implements OnInit {
     teacher: Teacher;
     isLoggingIn = false;
-    email = '';
+    email = 'teacher1@org1.com';
 
     ngOnInit() {
         this.page.actionBarHidden = true;
-        if (getConnectionType() === connectionType.none) {
+        /*if (getConnectionType() === connectionType.none) {
             alert("Tingr requires an internet connection to log in.");
             return;
-        }
+        }*/
     }
 
     constructor(private router: Router, private teacherService: TeacherService, private page: Page) {
         this.teacher = new Teacher();
-        this.email = "teacher1@org1.com";
+        this.teacher.email = "teacher1@org1.com";
     }
 
     submitEmail() {

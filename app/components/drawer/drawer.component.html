@@ -3,16 +3,24 @@
 <StackLayout class="drawer-links" orientation="vertical">
     <StackLayout class="drawer-link"
                  orientation="horizontal"
-                 [nsRouterLink]="['/home']">
-        <Label class="fa" text="{{'fa-home' | fonticon}}"></Label>
-        <Label class="text" text="Home"></Label>
+                 [nsRouterLink]="['/calendar']">
+        <Label class="fa" text="{{'fa-calendar-o' | fonticon}}"></Label>
+        <Label class="text" text="Calendar"></Label>
     </StackLayout>
     <StackLayout class="drawer-link"
                  orientation="horizontal"
-                 [nsRouterLink]="['/todo']">
-        <Label class="fa" text="{{'fa-check-square-o' | fonticon}}"></Label>
-        <Label class="text" text="ToDo List"></Label>
+                 [nsRouterLink]="['/kids']">
+        <Label class="fa" text="{{'fa-child' | fonticon}}"></Label>
+        <Label class="text" text="Kids List"></Label>
     </StackLayout>
+
+    <StackLayout class="drawer-link"
+                 orientation="horizontal"
+                 [nsRouterLink]="['/messages']">
+        <Label class="fa" text="{{'fa-comments' | fonticon}}"></Label>
+        <Label class="text" text="Messages"></Label>
+    </StackLayout>
+
     <StackLayout class="drawer-separator">
     </StackLayout>
     <StackLayout class="drawer-link"
@@ -21,4 +29,15 @@
         <Label class="fa" text="{{'fa-cogs' | fonticon}}"></Label>
         <Label class="text" text="Settings"></Label>
     </StackLayout>
+
+
+    <StackLayout class="drawer-separator">
+    </StackLayout>
+    <StackLayout class="drawer-link"
+                 orientation="horizontal"
+                 [nsRouterLink]="['/logoff']">
+        <Label class="fa" text="{{'fa-sign-out' | fonticon}}"></Label>
+        <Label class="text" text="Logout"></Label>
+    </StackLayout>
+
 </StackLayout>

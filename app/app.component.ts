@@ -20,7 +20,8 @@ export class AppComponent implements OnInit{
          appSettings.remove("accessToken");
          appSettings.clear();
          console.log("accessTokenOuter: " +appSettings.getString("acccessToken"));*/
-        //appSettings.clear();
+        // appSettings.clear();
+        //appSettings.setString("accessToken", "664ad1d476dce67606c3c1fc7cb00388f9c0387ba7aa6ae63b36231eccceeabf")
         if(typeof appSettings["accessToken"] === 'undefined'){
             this.authService.getClientToken()
                 .subscribe(
