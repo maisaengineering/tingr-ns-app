@@ -20,45 +20,7 @@ refer to http://docs.nativescript.org/ui/theme.
 @import 'nativescript-theme-core/css/core.light.css';
 @import url("~/platform.css");
 
-Page {
-    background-color: white;
-    font-size: 15px;
-}
-TextField {
-    padding: 10px;
-    font-size: 13px;
-}
 
-/*colors --*/
-.blue{
-    color: #2b78e4;
-}
-.blue-background{
-    background-color: #2b78e4;
-}
-.blue2{
-    color: #9fc5f8;
-}
-.green {
-    color: #93c47d;
-}
-.dark-gray{
-    color: #333333;
-}
-.light-gray{
-    color: #666666;
-}
-
-
-
-.fa {
-    font-family: FontAwesome, fontawesome-webfont;
-}
-
-ActionBar {
-    background-color: #9fc5f8;
-    color: white;
-}
 
 .drawer-content {
     background-color: #eeeeee;
@@ -149,4 +111,52 @@ ActionBar {
     animation-name: glow;
     animation-duration: 1s;
     animation-fill-mode: forwards;
+}
+
+/* application css*/
+
+Page {
+    background-color: white;
+    font-size: 15px;
+}
+TextField {
+    padding: 10px;
+    font-size: 13px;
+}
+
+/*colors --*/
+.blue{
+    color: #2b78e4;
+}
+.blue-background{
+    background-color: #2b78e4;
+}
+.blue2{
+    color: #9fc5f8;
+}
+.green {
+    color: #93c47d;
+}
+.dark-gray{
+    color: #333333;
+}
+.light-gray{
+    color: #666666;
+}
+
+
+
+.fa {
+    font-family: FontAwesome, fontawesome-webfont;
+}
+
+ActionBar {
+    background-color: #9fc5f8;
+    color: white;
+}
+
+.line-separator  {
+    height: 1px;
+    background-color: #dddddd;
+    margin: 7px 0;
 }

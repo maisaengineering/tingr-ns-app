@@ -106,13 +106,16 @@ GridLayout.message-box {
 }
 
 StackLayout.today-date {
-    margin: 10px;
+    margin: 5px;
     font-size: 16px;
     text-align: center;
 }
 
 .calendar-section1 {
 }
+
+
+
 
 .calendar-section1 .section1-icon {
     margin-right: 10px;
