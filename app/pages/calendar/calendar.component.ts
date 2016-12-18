@@ -1,6 +1,6 @@
 import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {DrawerPage} from "../drawer.page";
-import {CalendarService,  Message} from "../../shared/calendar.service";
+import {CalendarService,Schedule,Reminder,  Message} from "../../shared/calendar.service";
 
 import { ListView } from 'ui/list-view';
 import { TextView } from 'ui/text-view';
@@ -14,13 +14,13 @@ import { TextView } from 'ui/text-view';
     providers: [CalendarService]
 })
 export class CalendarComponent extends DrawerPage implements OnInit{
-    public messages: Array<Message>;
+    public schedules: Array<Schedule>;
 
 
     constructor(private calendarService: CalendarService,private changeDetectorRef: ChangeDetectorRef) {
         super(changeDetectorRef);
         const calendar = calendarService.getCalendar();
-        this.messages = calendar.messages;
+        this.schedules = calendar.schedules;
     }
 
     ngOnInit() {
@@ -31,7 +31,7 @@ export class CalendarComponent extends DrawerPage implements OnInit{
         console.log("------------------------ ItemTapped: " + args.index);
     }
 
-    public bubbleClass(message: Message): string {
+    public bubbleClass(schedule: Schedule): string {
         const sender =  'me'
 
         return `bubble-from-${sender}`;

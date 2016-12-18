@@ -33,12 +33,12 @@
         </StackLayout>-->
 
 
-        <DockLayout stretchLastChild="false" class="calendar-section1">
-            <Image dock="left" stretch ="none" verticalAlignment="center" class="section1-icon"  src="~/images/reminder-icon.png"></Image>
+        <DockLayout stretchLastChild="false" class="calendar-schedule">
+            <Image dock="left" stretch ="none" verticalAlignment="center" class="schedule-icon"  src="~/images/schedule-icon.png"></Image>
 
 
             <StackLayout text="top" dock="top">
-                <ListView [items]="messages">
+                <ListView [items]="schedules">
                     <template let-item="item">
                         <!--<StackLayout orientation="horizontal" class="item">
                             <StackLayout orientation="horizontal" class="details">

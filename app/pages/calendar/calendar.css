@@ -111,22 +111,22 @@ StackLayout.today-date {
     text-align: center;
 }
 
-.calendar-section1 {
+.calendar-schedule {
 }
 
 
 
 
-.calendar-section1 .section1-icon {
+.calendar-schedule .schedule-icon {
     margin-right: 10px;
     margin-left: 10px;
 }
-.calendar-section1 .item {
-   padding: 6px;
+.calendar-schedule .item {
+    padding: 6px;
     font-size: 12px
 }
 
-.calendar-section1 .item .event{
+.calendar-schedule .item .event{
     margin-left: 20px;
 }
 

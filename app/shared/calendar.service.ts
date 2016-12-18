@@ -5,40 +5,44 @@ import { Injectable } from '@angular/core';
 export class CalendarService {
     getCalendar(): Calendar {
         const today = "Sunday January, 1st";
+        const schedules = [];
+        const reminders = [];
         const messages = [];
 
-        messages.push({
+        schedules.push({
             time: "2-00:2-30pm",
             event: "Kis Arrival"
         });
 
-        messages.push({
+        schedules.push({
             time: "2-30:3-00pm",
             event: "Snacks"
         });
 
-        messages.push({
+        schedules.push({
             time: "3-00:3-30pm",
             event: "HomeWork/Worsheet"
         });
-        messages.push({
+        schedules.push({
             time: "3-00:3-30pm",
             event: "HomeWork/Worsheet"
         });
-        messages.push({
+        schedules.push({
             time: "3-00:3-30pm",
             event: "HomeWork/Worsheet"
         });
-        messages.push({
+        schedules.push({
             time: "3-00:3-30pm",
             event: "HomeWork/Worsheet"
         });
-        messages.push({
+        schedules.push({
             time: "3-00:3-30pm",
             event: "HomeWork/Worsheet"
         });
 
         const calendar = {
+            schedules: schedules,
+            reminders: reminders,
             messages: messages
         };
 
@@ -47,12 +51,25 @@ export class CalendarService {
 }
 
 
-
-export interface Message {
+export interface Schedule {
     time: String;
     event: string;
 }
 
+export interface Reminder {
+    text: String;
+}
+
+
+export interface Message {
+    kid_name: String;
+    relation: String;
+    text: String;
+
+}
+
 export interface Calendar {
+    schedules: Array<Schedule>;
+    reminders: Array<Reminder>;
     messages: Array<Message>;
 }
