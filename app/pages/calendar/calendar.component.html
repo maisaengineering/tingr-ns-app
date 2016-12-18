@@ -78,7 +78,29 @@
         <StackLayout class="line-separator">
         </StackLayout>
 
+        <!-- ##################  Messages -------------------------------------------------------------------------------->
 
+        <DockLayout stretchLastChild="false" class="calendar-message">
+            <Image dock="left" stretch ="none" verticalAlignment="center" class="message-icon"  src="~/images/message-icon-72.png"></Image>
+            <StackLayout text="top" dock="top">
+                <ListView [items]="messages">
+                    <template let-item="item">
+                        <GridLayout columns="50, *" rows="*" class="item">
+                            <StackLayout  verticalAlignment="center">
+                                <Image stretch ="none" col="0" horizontalAlignment="center" class="avatar-icon" src="~/images/avatar-icon-32.png"></Image>
+                            </StackLayout>
+                            <StackLayout col="1">
+                                <StackLayout col="1" orientation="horizontal">
+                                    <Label class="kid-name" [text]="item.kid_name" textwrap="true"></Label>
+                                    <Label class="relation-name light-gray" [text]="item.relation" textwrap="true"></Label>
+                                </StackLayout>
+                                <Label [text]="item.text" class="{{ item.read ? 'blue' : 'very-light-gray'}}" col="1" textwrap="true"></Label>
+                            </StackLayout>
+                        </GridLayout>
+                    </template>
+                </ListView>
+            </StackLayout>
+        </DockLayout>
 
 
     </StackLayout>

@@ -115,11 +115,15 @@ StackLayout.today-date {
 }
 
 
-.calendar-schedule .schedule-icon, .calendar-reminder .reminder-icon {
+.calendar-schedule .schedule-icon,
+.calendar-reminder .reminder-icon,
+.calendar-message .message-icon {
     margin-right: 10px;
     margin-left: 10px;
 }
-.calendar-schedule .item, .calendar-reminder .item  {
+.calendar-schedule .item,
+.calendar-reminder .item,
+.calendar-message .item  {
     padding: 6px;
     font-size: 12px
 }
@@ -130,6 +134,28 @@ StackLayout.today-date {
 
 .calendar-reminder .item {
     font-style: italic;
+}
+
+
+.calendar-message .avatar-icon{
+    padding: 8px;
+    display: inline-block;
+    box-shadow: 0px 0px 2px #2b78e4;
+    border-color: #2b78e4;
+    border-width: 1;
+    /*border-radius: 5;*/
+    border-radius: 30%;
+    line-height: 20px;
+}
+.calendar-message .item .kid-name{
+    font-weight: bold;
+    font-size: 13px;
+}
+.calendar-message .item .relation-name{
+    font-size: 11px;
+    font-style: italic;
+    margin-left: 5px;
+    margin-top: 1px;
 }
 
 
