@@ -19,8 +19,8 @@
 
             <ListView [items]="kids">
                 <template let-item="item">
-                    <DockLayout stretchLastChild="false" class="myclass-container">
-                            <Image dock="left" stretch ="none" class="profile-pic" verticalAlignment="center"   src="~/images/avatar-icon-50.png"></Image>
+                    <DockLayout stretchLastChild="false" class="myclass-container" >
+                            <Image (longPress)="onLongPress($event)" dock="left" stretch ="none" class="profile-pic" verticalAlignment="center"   src="~/images/avatar-icon-50.png"></Image>
                             <StackLayout verticalAlignment="center" dock="left">
                                 <Label [text]="item.fname+' '+item.lname" class="kid-name"></Label>
                                 <Label [text]="item.age+' years old'" class="kid-age very-light-gray"></Label>

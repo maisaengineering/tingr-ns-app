@@ -4,7 +4,9 @@ import {MyClassService, Kid} from "../../shared/myclass.service";
 
 import { ListView } from 'ui/list-view';
 import { TextView } from 'ui/text-view';
-
+import { GridLayout } from "ui/layouts/grid-layout";
+// >> long-press-code
+import { GestureEventData } from "ui/gestures";
 
 
 @Component({
@@ -25,5 +27,19 @@ export class MyClassComponent extends DrawerPage implements OnInit{
 
     ngOnInit() {
 
+    }
+
+    onLongPress(args: GestureEventData) {
+        console.log("LongPress!");
+        console.log("Object that triggered the event: " + args.object);
+        console.log("View that triggered the event: " + args.view);
+        console.log("Event name: " + args.eventName);
+
+        let grid = <GridLayout>args.object;
+        grid.rotate = 0;
+        grid.animate({
+            rotate: 360,
+            duration: 2000
+        });
     }
 }
