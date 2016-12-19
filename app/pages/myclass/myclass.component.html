@@ -1,0 +1,45 @@
+<ActionBar title="Caterpillars">
+    <NavigationButton text="Menu" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
+</ActionBar>
+<RadSideDrawer #drawerComponent tkToggleNavButton>
+    <ScrollView tkDrawerContent class="drawer-content">
+        <StackLayout horizzontalAlign="left">
+            <drawer-content></drawer-content>
+        </StackLayout>
+    </ScrollView>
+    <GridLayout tkMainContent>
+
+     <!--   <StackLayout style.backgroundColor="palegreen">
+            <GridLayout columns="*,3*,*" horizontalAlignment="left" verticalAlignment="top" style.backgroundColor="lightgray" >
+                <Label text="Label 1" col="0" backgroundColor="red"></Label>
+                <Label text="Label 2" col="1" backgroundColor="green"></Label>
+                <Label text="Label 3" col="2" backgroundColor="yellow"></Label>
+            </GridLayout>
+        </StackLayout>-->
+
+            <ListView [items]="kids">
+                <template let-item="item">
+                    <DockLayout stretchLastChild="false" class="myclass-container">
+                            <Image dock="left" stretch ="none" class="profile-pic" verticalAlignment="center"   src="~/images/avatar-icon-50.png"></Image>
+                            <StackLayout verticalAlignment="center" dock="left">
+                                <Label [text]="item.fname+' '+item.lname" class="kid-name"></Label>
+                                <Label [text]="item.age+' years old'" class="kid-age very-light-gray"></Label>
+                            </StackLayout>
+                            <StackLayout dock="right" verticalAlignment="center" class="right-section">
+                                <Image  stretch ="none" src="~/images/profile-details-60.png"></Image>
+                                <StackLayout orientation="horizontal">
+                                    <StackLayout *ngIf="item.reminders_count != 0"  class="number-with-circle reminders-count">
+                                        <Label [text]="item.reminders_count"></Label>
+                                    </StackLayout>
+                                    <StackLayout *ngIf="item.notifications_count != 0" class="number-with-circle notifications-count">
+                                        <Label [text]="item.notifications_count"></Label>
+                                    </StackLayout>
+                                </StackLayout>
+                            </StackLayout>
+                    </DockLayout>
+
+                </template>
+            </ListView>
+
+    </GridLayout>>
+</RadSideDrawer>
