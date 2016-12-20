@@ -23,7 +23,7 @@
 
 
         <GridLayout row="1">
-            <GridLayout columns="*, *, *" class="section2">
+            <GridLayout columns="*, *, *" class="navigation-links-1">
 
                 <StackLayout col="0" row="0" horizontalAlignment="center" orientation="vertical" class="profile-details">
                     <Image text="top" horizontalAlignment="center" src="~/images/profile-details-60.png" stretch="none"></Image>
@@ -32,7 +32,7 @@
 
                 <StackLayout col="1" row="0" horizontalAlignment="center" orientation="vertical" class="documents">
                     <Image text="top" horizontalAlignment="center" src="~/images/doc-lock-icon-60.png" stretch="none"></Image>
-                    <Label text="Documents"></Label>
+                    <Label text="form&docs"></Label>
                 </StackLayout>
 
                 <StackLayout col="2" row="0" horizontalAlignment="center" orientation="vertical" class="notes">
@@ -48,12 +48,13 @@
         </GridLayout>
 
         <GridLayout row="3">
-            <GridLayout columns="*, *" class="section2">
+            <GridLayout columns="*, *" class="navigation-links-2">
                 <StackLayout col="0" row="0" horizontalAlignment="center" orientation="horizontal">
+                    <Label text="" class="number-with-circle reminders"></Label>
                     <Label text="Reminders"></Label>
                 </StackLayout>
-
                 <StackLayout col="1" row="0" horizontalAlignment="center" orientation="horizontal">
+                    <Label text="" class="number-with-circle notifications"></Label>
                     <Label text="Notifications"></Label>
                 </StackLayout>
             </GridLayout>

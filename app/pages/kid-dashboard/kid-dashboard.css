@@ -35,15 +35,29 @@ Label.kid-name {
 
 
 /*
-Section 1 -> Profile details, Documents, Notes
+navigation-links-1 -> Profile details, Documents, Notes
 */
 
 
 
-.kid-dashboard .section2 {
-    margin: 10px 0 1px 0px;
+.kid-dashboard .navigation-links-1 {
+    margin: 10px;
 }
 
+
+/*Navigational-links-2 -> Reminders , Notifcations*/
+.kid-dashboard .navigation-links-2 {
+    margin: 10px 0 10px 0;
+}
+
+.number-with-circle.reminders{
+    background-color: orange;
+    margin-right: 5px;
+}
+.number-with-circle.notifications{
+    background-color:  #2b78e4;
+    margin-right: 5px;
+}
 
 
 /* Moment Container with Cover Image and Org Logo */
@@ -61,6 +75,10 @@ Section 1 -> Profile details, Documents, Notes
     height: 1px;
     background-color: #dddddd;
     /*margin:0 20px 0 20px;*/
+}
+
+.vertical-divider{
+    border-left: 1px solid red;
 }
 
 
