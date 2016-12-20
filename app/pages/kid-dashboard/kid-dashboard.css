@@ -1,0 +1,67 @@
+Image.kid-profile-image {
+    height: 75;
+    width: 75;
+    border-radius: 36;
+}
+
+Image.kid-cover-image {
+    height: 100;
+}
+
+StackLayout.kid-profile-image-container {
+    border-color:  #9fc5f8;
+    border-width: 2;
+    border-radius: 38;
+
+}
+
+StackLayout.kid-profile-container {
+    vertical-align: middle;
+    horizontal-align: center;
+    margin-left: 10;
+    height: 100;
+}
+
+Label.kid-name {
+    border-color:  #9fc5f8;
+    vertical-align: middle;
+    margin-left: 10;
+    margin-right: 20px;
+    font-size: 20;
+    color: #9fc5f8;
+    font-style: italic;
+    font-weight: bold;
+}
+
+
+/*
+Section 1 -> Profile details, Documents, Notes
+*/
+
+
+
+.kid-dashboard .section2 {
+    margin: 10px 0 1px 0px;
+}
+
+
+
+/* Moment Container with Cover Image and Org Logo */
+
+.moment-image-container .cover-image{
+    height: 150;
+}
+
+.moment-image-container .org-container {
+    margin: 10;
+}
+
+
+.horizontal-separator  {
+    height: 1px;
+    background-color: #dddddd;
+    /*margin:0 20px 0 20px;*/
+}
+
+
+
