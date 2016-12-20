@@ -7,15 +7,17 @@ import { LoginPage } from "./pages/login/login.page";
 import { VerifyPasswordPage } from "./pages/verify-password/password.page";
 import { CalendarComponent } from "./pages/calendar/calendar.component";
 import { MyClassComponent } from "./pages/myclass/myclass.component";
+import { KidDashboardComponent } from "./pages/kid-dashboard/kid-dashboard-component";
 
 import { AuthGuard } from "./auth-guard.service";
 
 export const APP_ROUTES = [
-    {path: "", redirectTo: "/myclass", pathMatch: 'full'},
+    {path: "", redirectTo: "/kid-dashboard", pathMatch: 'full'},
     //{ path: "", component: CalendarComponent },
     {path: "home", component: HomePage},
     {path: "calendar", component: CalendarComponent},
     {path: "myclass", component: MyClassComponent},
+    {path: "kid-dashboard", component: KidDashboardComponent},
     {path: "todo", component: TodoPage},
     {path: "settings", component: SettingsPage},
     { path: "verify-password", component: VerifyPasswordPage },
@@ -31,7 +33,8 @@ export const navigatableComponents = [
     DrawerComponent,
     TodoListComponent,
     CalendarComponent,
-    MyClassComponent
+    MyClassComponent,
+    KidDashboardComponent
 ];
 
 export const authProviders = [

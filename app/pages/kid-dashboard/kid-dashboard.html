@@ -1,0 +1,13 @@
+<ActionBar title="Kid Profile">
+    <NavigationButton text="Menu" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
+</ActionBar>
+<RadSideDrawer #drawerComponent tkToggleNavButton>
+    <ScrollView tkDrawerContent class="drawer-content">
+        <StackLayout horizzontalAlign="left">
+            <drawer-content></drawer-content>
+        </StackLayout>
+    </ScrollView>
+    <GridLayout tkMainContent>
+        <Label text="Kid Dashboard"></Label>
+    </GridLayout>
+</RadSideDrawer>
