@@ -3,82 +3,92 @@
     <StackLayout orientation="horizontal"
                  ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
-         <!--<Image src="~/images/calendar-icon-60.png" class="action-image"></Image>-->
+        <!--<Image src="~/images/calendar-icon-60.png" class="action-image"></Image>-->
         <Label text="Dialy"  class="action-label"></Label>
     </StackLayout>
 </ActionBar>
 
-<ScrollView>
+<RadSideDrawer #drawerComponent tkToggleNavButton>
+    <ScrollView tkDrawerContent class="drawer-content">
+        <StackLayout horizzontalAlign="left">
+            <drawer-content></drawer-content>
+        </StackLayout>
+    </ScrollView>
     <StackLayout tkMainContent>
 
-        <StackLayout text="top" dock="top" class="today-date green font-weight-bold">
-            <Label text="Sunday, January 1st" class="text-center"></Label>
-        </StackLayout>
+        <ScrollView>
+            <StackLayout tkMainContent>
 
-        <StackLayout class="line-separator">
-        </StackLayout>
+                <StackLayout text="top" dock="top" class="today-date green font-weight-bold">
+                    <Label text="Sunday, January 1st" class="text-center"></Label>
+                </StackLayout>
+
+                <StackLayout class="line-separator">
+                </StackLayout>
 
 
-        <!-- ##################  Scheules-------------------------------------------------------------------------------->
-        <DockLayout stretchLastChild="false" class="calendar-schedule">
-            <Image dock="left" stretch ="none" verticalAlignment="center" class="schedule-icon"  src="~/images/schedule-icon-72.png"></Image>
-            <StackLayout text="top" dock="top">
-                <GridLayout rows="auto,auto" *ngFor="let item of schedules; let i = index" >
-                    <GridLayout row="0" columns="auto, auto" rows="auto,auto" class="item {{ item.read ? 'blue' :  '' }}">
-                        <Label col="0" text="{{item.time}}" row="0"></Label>
-                        <Label col="1" row="0"  class="event" text="{{ item.event }}"></Label>
-                    </GridLayout>
-                    <!-- Don't show horizontal line for last element -->
-                    <StackLayout *ngIf="schedules.length > (i+1)" class="hr-light" row="1"></StackLayout>
-                </GridLayout>
+                <!-- ##################  Scheules-------------------------------------------------------------------------------->
+                <DockLayout stretchLastChild="false" class="calendar-schedule">
+                    <Image dock="left" stretch ="none" verticalAlignment="center" class="schedule-icon"  src="~/images/schedule-icon-72.png"></Image>
+                    <StackLayout text="top" dock="top">
+                        <GridLayout rows="auto,auto" *ngFor="let item of schedules; let i = index" >
+                            <GridLayout row="0" columns="auto, auto" rows="auto,auto" class="item {{ item.read ? 'blue' :  '' }}">
+                                <Label col="0" text="{{item.time}}" row="0"></Label>
+                                <Label col="1" row="0"  class="event" text="{{ item.event }}"></Label>
+                            </GridLayout>
+                            <!-- Don't show horizontal line for last element -->
+                            <StackLayout *ngIf="schedules.length > (i+1)" class="hr-light" row="1"></StackLayout>
+                        </GridLayout>
+                    </StackLayout>
+                </DockLayout>
+
+                <StackLayout class="line-separator">
+                </StackLayout>
+
+                <!-- ##################  Reminders-------------------------------------------------------------------------------->
+
+                <DockLayout stretchLastChild="false" class="calendar-reminder">
+                    <Image dock="left" stretch ="none" verticalAlignment="center" class="reminder-icon"  src="~/images/reminder-icon-72.png"></Image>
+                    <StackLayout text="top" dock="top">
+                        <GridLayout rows="auto,auto" *ngFor="let item of reminders; let i = index" >
+                            <GridLayout row="0" columns="auto, auto" rows="auto,auto" class="item {{ item.read ? 'blue' :  '' }}">
+                                <Label col="0" text="{{item.text}}" row="0"></Label>
+                            </GridLayout>
+                            <!-- Don't show horizontal line for last element -->
+                            <StackLayout *ngIf="reminders.length > (i+1)" class="hr-light" row="1"></StackLayout>
+                        </GridLayout>
+                    </StackLayout>
+                </DockLayout>
+
+                <StackLayout class="line-separator">
+                </StackLayout>
+
+                <!-- ##################  Messages -------------------------------------------------------------------------------->
+
+                <DockLayout stretchLastChild="false" class="calendar-message">
+                    <Image dock="left" stretch ="none" verticalAlignment="center" class="message-icon"  src="~/images/message-icon-72.png"></Image>
+                    <StackLayout text="top" dock="top">
+                        <GridLayout rows="auto,auto" *ngFor="let item of messages; let i = index" >
+                            <GridLayout row="0" columns="50, *" rows="*" class="item">
+                                <StackLayout  verticalAlignment="center">
+                                    <Image stretch ="none" col="0" horizontalAlignment="center" class="rounded-corner-icon avatar-icon" src="~/images/avatar-icon-32.png"></Image>
+                                </StackLayout>
+                                <StackLayout col="1">
+                                    <StackLayout col="1" orientation="horizontal">
+                                        <Label class="kid-name" [text]="item.kid_name" textwrap="true"></Label>
+                                        <Label class="relation-name light-gray" [text]="item.relation" textwrap="true"></Label>
+                                    </StackLayout>
+                                    <Label [text]="item.text" class="{{ item.read ? 'blue' : 'very-light-gray'}}" col="1" textwrap="true"></Label>
+                                </StackLayout>
+                            </GridLayout>
+                            <!-- Don't show horizontal line for last element -->
+                            <StackLayout *ngIf="messages.length > (i+1)" class="hr-light" row="1"></StackLayout>
+                        </GridLayout>
+                    </StackLayout>
+                </DockLayout>
+
+
             </StackLayout>
-        </DockLayout>
-
-        <StackLayout class="line-separator">
-        </StackLayout>
-
-        <!-- ##################  Reminders-------------------------------------------------------------------------------->
-
-        <DockLayout stretchLastChild="false" class="calendar-reminder">
-            <Image dock="left" stretch ="none" verticalAlignment="center" class="reminder-icon"  src="~/images/reminder-icon-72.png"></Image>
-            <StackLayout text="top" dock="top">
-                <GridLayout rows="auto,auto" *ngFor="let item of reminders; let i = index" >
-                    <GridLayout row="0" columns="auto, auto" rows="auto,auto" class="item {{ item.read ? 'blue' :  '' }}">
-                        <Label col="0" text="{{item.text}}" row="0"></Label>
-                    </GridLayout>
-                    <!-- Don't show horizontal line for last element -->
-                    <StackLayout *ngIf="reminders.length > (i+1)" class="hr-light" row="1"></StackLayout>
-                </GridLayout>
-            </StackLayout>
-        </DockLayout>
-
-        <StackLayout class="line-separator">
-        </StackLayout>
-
-        <!-- ##################  Messages -------------------------------------------------------------------------------->
-
-        <DockLayout stretchLastChild="false" class="calendar-message">
-            <Image dock="left" stretch ="none" verticalAlignment="center" class="message-icon"  src="~/images/message-icon-72.png"></Image>
-            <StackLayout text="top" dock="top">
-                <GridLayout rows="auto,auto" *ngFor="let item of messages; let i = index" >
-                    <GridLayout row="0" columns="50, *" rows="*" class="item">
-                        <StackLayout  verticalAlignment="center">
-                            <Image stretch ="none" col="0" horizontalAlignment="center" class="rounded-corner-icon avatar-icon" src="~/images/avatar-icon-32.png"></Image>
-                        </StackLayout>
-                        <StackLayout col="1">
-                            <StackLayout col="1" orientation="horizontal">
-                                <Label class="kid-name" [text]="item.kid_name" textwrap="true"></Label>
-                                <Label class="relation-name light-gray" [text]="item.relation" textwrap="true"></Label>
-                            </StackLayout>
-                            <Label [text]="item.text" class="{{ item.read ? 'blue' : 'very-light-gray'}}" col="1" textwrap="true"></Label>
-                        </StackLayout>
-                    </GridLayout>
-                    <!-- Don't show horizontal line for last element -->
-                    <StackLayout *ngIf="messages.length > (i+1)" class="hr-light" row="1"></StackLayout>
-                </GridLayout>
-            </StackLayout>
-        </DockLayout>
-
-
+        </ScrollView>
     </StackLayout>
-</ScrollView>
+</RadSideDrawer>

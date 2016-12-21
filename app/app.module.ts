@@ -1,7 +1,7 @@
+import { NativeScriptModule } from 'nativescript-angular/platform';
 import {NgModule, NO_ERRORS_SCHEMA} from "@angular/core";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptHttpModule } from "nativescript-angular/http";
-import {NativeScriptModule} from "nativescript-angular/platform";
 import {AppComponent} from "./app.component";
 import {SIDEDRAWER_DIRECTIVES} from "nativescript-telerik-ui/sidedrawer/angular";
 import {NativeScriptRouterModule} from "nativescript-angular";

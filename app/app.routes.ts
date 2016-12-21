@@ -1,6 +1,6 @@
 import {SettingsPage} from "./pages/settings/settings.page";
 import {TodoPage} from "./pages/todo/todo.page";
-import {HomePage} from "./pages/home/home.page";
+//import {HomeComponent} from "./pages/home/home.component";
 import {DrawerComponent} from "./components/drawer/drawer.component";
 import {TodoListComponent} from "./components/todolist/todo.list.component";
 import { LoginPage } from "./pages/login/login.page";
@@ -12,9 +12,8 @@ import { KidDashboardComponent } from "./pages/kid-dashboard/kid-dashboard-compo
 import { AuthGuard } from "./auth-guard.service";
 
 export const APP_ROUTES = [
+
     {path: "", redirectTo: "/calendar", pathMatch: 'full'},
-    //{ path: "", component: CalendarComponent },
-    {path: "home", component: HomePage},
     {path: "calendar", component: CalendarComponent},
     {path: "myclass", component: MyClassComponent},
     {path: "kid-dashboard", component: KidDashboardComponent},
@@ -22,12 +21,23 @@ export const APP_ROUTES = [
     {path: "settings", component: SettingsPage},
     { path: "verify-password", component: VerifyPasswordPage },
     { path: "login", component: LoginPage },
+
+    /* incase path="" redirectTo: "/home" then uncomment{
+        path: "home",
+        component: HomeComponent,
+        children: [
+            // '/home' loaded into `router-outlet` in main content
+            { path: "", component: CalendarComponent },
+            // '/home/otherPath' loaded into `router-outlet` in main content
+           /!* { path: "otherPath", component: SomeOtherComponent },*!/
+            // etc.
+        ]
+    } */
 ];
 
 export const navigatableComponents = [
     LoginPage,
     VerifyPasswordPage,
-    HomePage,
     SettingsPage,
     TodoPage,
     DrawerComponent,

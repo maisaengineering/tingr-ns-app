@@ -1,5 +1,5 @@
 import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
-// import {DrawerPage} from "../drawer.page";
+import {DrawerPage} from "../drawer.page";
 import {CalendarService,Schedule,Reminder,  Message} from "../../shared/calendar.service";
 
 import { ListView } from 'ui/list-view';
@@ -13,14 +13,14 @@ import { TextView } from 'ui/text-view';
     templateUrl: 'pages/calendar/calendar.component.html',
     providers: [CalendarService]
 })
-export class CalendarComponent  implements OnInit{
+export class CalendarComponent extends DrawerPage implements OnInit{
     public schedules: Array<Schedule>;
     public reminders: Array<Reminder>;
     public messages: Array<Message>;
 
 
     constructor(private calendarService: CalendarService,private changeDetectorRef: ChangeDetectorRef) {
-       // super(changeDetectorRef);
+        super(changeDetectorRef);
         const calendar = calendarService.getCalendar();
         this.schedules = calendar.schedules;
         this.reminders = calendar.reminders;
