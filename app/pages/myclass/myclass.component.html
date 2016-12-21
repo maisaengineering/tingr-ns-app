@@ -1,6 +1,13 @@
-<ActionBar title="Caterpillars">
+<ActionBar title="">
     <NavigationButton text="Menu" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
+    <StackLayout orientation="horizontal"
+                 ios:horizontalAlignment="center"
+                 android:horizontalAlignment="center">
+        <!-- <Image src="res://nativescript_logo" class="action-image"></Image>-->
+        <Label text="Caterpillars"  class="action-label"></Label>
+    </StackLayout>
 </ActionBar>
+
 <RadSideDrawer #drawerComponent tkToggleNavButton>
     <ScrollView tkDrawerContent class="drawer-content">
         <StackLayout horizzontalAlign="left">
@@ -8,20 +15,11 @@
         </StackLayout>
     </ScrollView>
     <GridLayout tkMainContent>
-
-     <!--   <StackLayout style.backgroundColor="palegreen">
-            <GridLayout columns="*,3*,*" horizontalAlignment="left" verticalAlignment="top" style.backgroundColor="lightgray" >
-                <Label text="Label 1" col="0" backgroundColor="red"></Label>
-                <Label text="Label 2" col="1" backgroundColor="green"></Label>
-                <Label text="Label 3" col="2" backgroundColor="yellow"></Label>
-            </GridLayout>
-        </StackLayout>-->
-
             <ListView [items]="kids">
                 <template let-item="item">
-                    <DockLayout stretchLastChild="false" class="myclass-container" >
-                            <Image (longPress)="onLongPress($event)" dock="left" stretch ="none" class="profile-pic" verticalAlignment="center"   src="~/images/avatar-icon-50.png"></Image>
-                            <StackLayout verticalAlignment="center" dock="left">
+                    <DockLayout stretchLastChild="false" class="myclass-container">
+                            <Image (longPress)="onLongPress($event)" dock="left" stretch="none" class="rounded-corner-icon profile-pic" verticalAlignment="center"   src="~/images/avatar-icon-50.png"></Image>
+                            <StackLayout verticalAlignment="center" dock="left" class="kid-info">
                                 <Label [text]="item.fname+' '+item.lname" class="kid-name"></Label>
                                 <Label [text]="item.age+' years old'" class="kid-age very-light-gray"></Label>
                             </StackLayout>
@@ -37,9 +35,7 @@
                                 </StackLayout>
                             </StackLayout>
                     </DockLayout>
-
                 </template>
             </ListView>
-
     </GridLayout>>
 </RadSideDrawer>

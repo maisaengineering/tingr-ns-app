@@ -159,6 +159,11 @@ ActionBar {
     color: white;
 }
 
+.action-label{
+    font-size: 15px;
+    font-weight: bold;
+}
+
 .line-separator  {
     height: 1px;
     background-color: #dddddd;
@@ -175,4 +180,11 @@ ActionBar {
     color: white;
     text-align: center;
     font-size: 10px;
+}
+
+
+.rounded-corner-icon{
+    border-color:  #9fc5f8;
+    border-width: 2;
+    border-radius: 38;
 }

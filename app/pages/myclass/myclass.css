@@ -1,16 +1,30 @@
-
-
 .myclass-container .profile-pic{
-    margin: 20px;
+    margin: 0 5px 0 20px;
+    padding: 15px;
 }
+
 
 .myclass-container .kid-name{
     font-weight: bold;
     font-size: 15px;
 }
 .myclass-container .kid-age{
-    font-size: 12px;
+    font-size: 15px;
+    font-weight: 900;
 }
+
+StackLayout.kid-info{
+    margin: 20px 0px 20px 0;
+}
+
 .myclass-container .right-section{
     margin-right: 20px;
+}
+
+.number-with-circle.reminders-count{
+    background-color: orange;
+}
+.number-with-circle.notifications-count{
+    background-color:  #2b78e4;
+    margin-left: 2px;
 }
