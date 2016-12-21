@@ -12,7 +12,7 @@ import { KidDashboardComponent } from "./pages/kid-dashboard/kid-dashboard-compo
 import { AuthGuard } from "./auth-guard.service";
 
 export const APP_ROUTES = [
-    {path: "", redirectTo: "/myclass", pathMatch: 'full'},
+    {path: "", redirectTo: "/calendar", pathMatch: 'full'},
     //{ path: "", component: CalendarComponent },
     {path: "home", component: HomePage},
     {path: "calendar", component: CalendarComponent},

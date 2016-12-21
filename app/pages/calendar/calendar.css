@@ -101,13 +101,10 @@ GridLayout.message-box {
 
 
 /* Newly added for caledar*/
-.textcenter{
-    text-align: center;
-}
 
 StackLayout.today-date {
     margin: 5px;
-    font-size: 16px;
+    font-size: 14px;
     text-align: center;
 }
 
@@ -137,15 +134,8 @@ StackLayout.today-date {
 }
 
 
-.calendar-message .avatar-icon{
+.rounded-corner-icon.avatar-icon{
     padding: 8px;
-    display: inline-block;
-    box-shadow: 0px 0px 2px #2b78e4;
-    border-color: #2b78e4;
-    border-width: 1;
-    /*border-radius: 5;*/
-    border-radius: 30%;
-    line-height: 20px;
 }
 .calendar-message .item .kid-name{
     font-weight: bold;
