@@ -13,7 +13,7 @@ import { AuthGuard } from "./auth-guard.service";
 
 export const APP_ROUTES = [
 
-    {path: "", redirectTo: "/calendar", pathMatch: 'full'},
+    {path: "", redirectTo: "/myclass", pathMatch: 'full'},
     {path: "calendar", component: CalendarComponent},
     {path: "myclass", component: MyClassComponent},
     {path: "kid-dashboard", component: KidDashboardComponent},

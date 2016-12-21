@@ -17,7 +17,7 @@
     <GridLayout tkMainContent>
             <ListView [items]="kids">
                 <template let-item="item">
-                    <DockLayout stretchLastChild="false" class="myclass-container">
+                    <DockLayout stretchLastChild="false" class="myclass-container" [nsRouterLink]="['/kid-dashboard']">
                             <Image (longPress)="onLongPress($event)" dock="left" stretch="none" class="rounded-corner-icon profile-pic" verticalAlignment="center"   src="~/images/avatar-icon-50.png"></Image>
                             <StackLayout verticalAlignment="center" dock="left" class="kid-info">
                                 <Label [text]="item.fname+' '+item.lname" class="kid-name"></Label>

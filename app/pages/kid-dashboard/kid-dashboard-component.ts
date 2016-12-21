@@ -3,6 +3,10 @@ import { Page } from "ui/page";
 
 import {CalendarService,  Message} from "../../shared/calendar.service";
 
+import frameModule = require("ui/frame");
+
+
+
 export class DataItem {
     constructor(public itemDesc: string) {}
 }
@@ -18,11 +22,13 @@ export class KidDashboardComponent implements OnInit{
     public items: Array<DataItem>;
     public tags: Array<DataItem>;
     public messages: Array<Message>;
+    public topmost;
 
     constructor(private calendarService: CalendarService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef) {
         //super(changeDetectorRef);
 
+        this.topmost = frameModule.topmost();
         const calendar = calendarService.getCalendar();
         this.messages = calendar.messages;
 
@@ -42,6 +48,13 @@ export class KidDashboardComponent implements OnInit{
 
     ngOnInit() {
         //this.page.actionBarHidden = true;
+
+    }
+
+    goBack(){
+        this.topmost.goBack();
+        //Perhaps the simplest way to navigate is by specifying the file name of the page to which you want to navigate.
+        //this.topmost.navigate("myclass");
 
     }
 
