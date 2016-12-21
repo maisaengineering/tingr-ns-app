@@ -1,3 +1,13 @@
+<ActionBar title="">
+    <NavigationButton text="Back" icon="res://ic_back" (tap)="goBack()"></NavigationButton>
+    <StackLayout orientation="horizontal"
+                 ios:horizontalAlignment="center"
+                 android:horizontalAlignment="center">
+       <!-- <Image src="res://nativescript_logo" class="action-image"></Image>-->
+        <Label text="Kid info"  class="action-label"></Label>
+    </StackLayout>
+</ActionBar>
+
 <ScrollView>
 
     <GridLayout  rows="auto,auto,auto,auto,auto,auto,auto" tkMainContent class="kid-dashboard">
