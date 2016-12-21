@@ -1,10 +1,3 @@
-<!--
-<ActionBar title="Kid Profile">
-    <NavigationButton text="Menu" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
-</ActionBar>
--->
-
-
 <ScrollView>
 
     <GridLayout  rows="auto,auto,auto,auto,auto,auto,auto" tkMainContent class="kid-dashboard">
@@ -66,14 +59,14 @@
         </GridLayout>
 
         <GridLayout row="5">
-            <StackLayout   horizontalAlignment="center" orientation="vertical">
+            <StackLayout horizontalAlignment="center" orientation="vertical" class="capture-moment-section">
                 <Image text="top" horizontalAlignment="center" src="~/images/camera-icon-120.png" stretch="none"></Image>
-                <Label text="capture a moment, share with parent(s)..."></Label>
+                <Label text="capture a moment, share with parent(s)..." class="text very-light-gray"></Label>
             </StackLayout>
         </GridLayout>
 
         <GridLayout row="6" class="moment-image-container">
-            <GridLayout rows="auto,auto,auto,auto, auto">
+            <GridLayout rows="auto,auto,auto,auto, auto, auto">
                 <GridLayout row="0">
                     <Image stretch="aspectFill" [src]="other.coverUrl" class="cover-image"></Image>
                     <StackLayout class="org-container" horizontalAlignment="right">
@@ -86,47 +79,52 @@
                 </GridLayout>
 
                 <GridLayout row="1" class="moment-tags">
-                    <GridLayout columns="*, *" class="section2">
+                    <GridLayout columns="auto, *">
                         <StackLayout col="0" row="0" horizontalAlignment="left" orientation="horizontal">
-                            <StackLayout *ngFor="let item of tags">
-                                <Image src="~/images/avatar-icon-32.png" stretch="none"></Image>
+                            <StackLayout *ngFor="let item of tags" margin="3">
+                                <Image src="~/images/avatar-icon-32.png" stretch="none" class="rounded-corner-icon tagged-profile-pic"></Image>
                             </StackLayout>
                         </StackLayout>
                         <StackLayout col="1" row="0" horizontalAlignment="right" orientation="horizontal">
                             <StackLayout orientation="vertical">
-                                <Label text="January 01,2017"></Label>
+                                <Label text="January 01, 2017" class="tagged-on-date"></Label>
                                 <Image src="~/images/heart-icon-red-48.png" stretch="none" horizontalAlignment="right"></Image>
                             </StackLayout>
                         </StackLayout>
                     </GridLayout>
                 </GridLayout>
                 <GridLayout row="2">
-                    <StackLayout class="horizontal-separator">
+                    <StackLayout class="horizontal-separator" margin="0 10 0 10">
                     </StackLayout>
                 </GridLayout>
                 <GridLayout row="3" class="moment-comments">
 
                     <GridLayout rows="auto,auto,auto,auto,auto,auto">
                         <GridLayout row="{{ i }}" *ngFor="let item of messages; let i = index">
-                            <StackLayout orientation="horizontal" verticalAlignment="center">
-                                <Image verticalAlignment="center" src="~/images/avatar-icon-32.png" stretch="none"></Image>
-                                <StackLayout orientation="vertical">
+                            <StackLayout orientation="horizontal" verticalAlignment="center" class="moment-comment-item">
+                                <Image verticalAlignment="center" src="~/images/avatar-icon-32.png" stretch="none" class="rounded-corner-icon commenter-profile-pic"></Image>
+                                <StackLayout orientation="vertical" class="comment-details">
                                     <StackLayout orientation="horizontal">
-                                        <Label text="Kid Name"></Label>
-                                        <Label text="Father Name"></Label>
+                                        <Label [text]="item.kid_name" class="kid-name"></Label>
+                                        <Label [text]="item.relation" class="relation-name light-gray"></Label>
                                     </StackLayout>
-                                    <Label [text]="i" textwrap="true"></Label>
+                                    <Label [text]="item.text" textwrap="true"></Label>
                                 </StackLayout>
                             </StackLayout>
                             <GridLayout row="{{ i+1 }}">
-                                <StackLayout class="horizontal-separator">
+                                <StackLayout class="comment-hr-separator">
                                 </StackLayout>
                             </GridLayout>
                         </GridLayout>
                     </GridLayout>
                 </GridLayout>
+
                 <GridLayout row="4">
-                    <GridLayout columns="auto,auto,auto,*" class="section2">
+                    <StackLayout class="comment-hr-separator">
+                    </StackLayout>
+                </GridLayout>
+                <GridLayout row="5" class="moment-bottom-section">
+                    <GridLayout columns="auto,auto,auto,*">
                         <StackLayout col="0" row="0" horizontalAlignment="left" orientation="horizontal" marginLeft="10">
                             <Image src="~/images/heart-icon-gray-48.png" stretch="none"></Image>
                         </StackLayout>

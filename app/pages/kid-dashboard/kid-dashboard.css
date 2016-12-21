@@ -1,3 +1,5 @@
+/* kid cover phot and profile and name section*/
+
 Image.kid-profile-image {
     height: 75;
     width: 75;
@@ -22,7 +24,7 @@ StackLayout.kid-profile-container {
     height: 100;
 }
 
-Label.kid-name {
+.kid-profile-container .kid-name {
     border-color:  #9fc5f8;
     vertical-align: middle;
     margin-left: 10;
@@ -37,8 +39,6 @@ Label.kid-name {
 /*
 navigation-links-1 -> Profile details, Documents, Notes
 */
-
-
 
 .kid-dashboard .navigation-links-1 {
     margin: 10px;
@@ -59,9 +59,17 @@ navigation-links-1 -> Profile details, Documents, Notes
     margin-right: 5px;
 }
 
+/* capture image section */
+.capture-moment-section {
+    margin-bottom: 10px;
+}
+.capture-moment-section .text{
+    font-style: italic;
+    font-size: small;
+    margin-top: -2px;
+}
 
 /* Moment Container with Cover Image and Org Logo */
-
 .moment-image-container .cover-image{
     height: 150;
 }
@@ -70,16 +78,69 @@ navigation-links-1 -> Profile details, Documents, Notes
     margin: 10;
 }
 
+/*Moment Tags section */
 
+GridLayout.moment-tags{
+    margin: 2px 10px 10px 5px;
+}
+
+.rounded-corner-icon.tagged-profile-pic{
+    padding: 6px;
+}
+
+.moment-tags .tagged-on-date{
+    font-size: 10px;
+}
+
+/* Moment comments */
+.rounded-corner-icon.commenter-profile-pic{
+    padding: 15px;
+}
+
+StackLayout.moment-comment-item{
+ margin: 5px 10px 5px 5px;
+}
+
+
+.moment-comment-item .kid-name{
+    font-weight: bold;
+    font-size: 13px;
+}
+.moment-comment-item .relation-name{
+    font-size: 11px;
+    font-style: italic;
+    margin-left: 5px;
+    margin-top: 1px;
+}
+
+.moment-comment-item .comment-details{
+    margin: 10px 5px 5px 5px;
+}
+
+GridLayout.moment-bottom-section{
+    margin: 10px 10px 5px 5px;
+}
+
+    /* common for all*/
 .horizontal-separator  {
     height: 1px;
     background-color: #dddddd;
     /*margin:0 20px 0 20px;*/
 }
 
-.vertical-divider{
-    border-left: 1px solid red;
+.comment-hr-separator{
+    height: 1px;
+    background-color: #dddddd;
+    margin: 0 10px 0 10px;
 }
+
+
+.rounded-corner-icon{
+    border-color:  #9fc5f8;
+    border-width: 2;
+    border-radius: 38;
+}
+
 
 
 
