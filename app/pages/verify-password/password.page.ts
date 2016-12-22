@@ -36,8 +36,8 @@ export class VerifyPasswordPage implements OnInit {
 
     signIn() {
         this.isAuthenticating = true;
-        this.router.navigate(["calendar"]);
-        /*this.teacherService.signIn(this.teacher)
+        //this.router.navigate(["calendar"]);
+        this.teacherService.signIn(this.teacher)
             .subscribe(
                 (result) => {
                     console.log("SignIN Response: "+ JSON.stringify(result));
@@ -46,9 +46,9 @@ export class VerifyPasswordPage implements OnInit {
                 },
                 (error) => {
                     console.log('Error: '+ JSON.stringify(error));
-                    alert(JSON.stringify(error))
+                    alert(error.message)
                 }
-            );*/
+            );
     }
 
     forgotPassword() {

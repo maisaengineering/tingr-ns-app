@@ -3,10 +3,10 @@ import { getString, setString , setNumber, getNumber} from "application-settings
 
 //const tokenKey = "token";
 
-export class DataService {
+export class TokenService {
 
     static isLoggedIn(): boolean {
-        return !!getString("token");
+        return !!getString("authToken");
     }
 
     static get accessToken(): string {

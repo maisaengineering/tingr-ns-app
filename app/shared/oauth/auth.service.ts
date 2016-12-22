@@ -9,7 +9,7 @@ import { Config } from "../config";
 export class AuthService {
     constructor(private http: Http) {}
 
-    getClientToken() {
+    getAccessToken() {
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         return this.http.post(

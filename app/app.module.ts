@@ -7,8 +7,8 @@ import {SIDEDRAWER_DIRECTIVES} from "nativescript-telerik-ui/sidedrawer/angular"
 import {NativeScriptRouterModule} from "nativescript-angular";
 import {TNSFontIconModule} from "nativescript-ng2-fonticon";
 import {APP_ROUTES, authProviders, navigatableComponents} from "./app.routes";
-import { AuthData } from "./providers/data/oauth_data";
-import { BackendService } from "./shared/backend.service";
+import { TeacherInfo } from "./providers/data/teacher_info";
+import { TokenService } from "./shared/token.service";
 @NgModule({
     declarations: [
         SIDEDRAWER_DIRECTIVES,
@@ -29,8 +29,8 @@ import { BackendService } from "./shared/backend.service";
         })
     ],
     providers: [
-        AuthData,
-        BackendService,
+        TeacherInfo,
+        TokenService,
         authProviders
     ],
     schemas: [

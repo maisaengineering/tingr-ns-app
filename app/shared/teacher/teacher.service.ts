@@ -6,19 +6,20 @@ import "rxjs/add/operator/map";
 
 import { Teacher } from "./teacher";
 import { Config } from "../config";
-import * as appSettings from "application-settings"
-import { BackendService } from "../backend.service";
-import { AuthData } from "../../providers/data/oauth_data";
+//import * as appSettings from "application-settings"
+import { TokenService } from "../token.service";
+import { TeacherInfo } from "../../providers/data/teacher_info";
 
 @Injectable()
 export class TeacherService {
-    constructor(private http: Http,private authData: AuthData) {}
+    constructor(private http: Http,private teacherInfo: TeacherInfo) {}
 
     signIn(teacher: Teacher) {
+        console.log("signIn accessToken:" + TokenService.accessToken);
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({
-            access_token: appSettings.getString("accessToken"),
+            access_token: TokenService.accessToken,
             command: "authentication",
             body: {
                 user_email: teacher.email,
@@ -33,16 +34,12 @@ export class TeacherService {
         )
             .map(response => response.json())
             .do(result => {
-                BackendService.token = result.access_token;
-                appSettings.setString("authToken", result.body.auth_token);
-                console.log("Before Data"+ JSON.stringify(this.authData.storage));
-                // add user info to authData to use in other components
+                TokenService.authToken = result.body.auth_token;
                 var body = result.body;
-                this.authData.storage.auth_token = body.auth_token;
-                this.authData.storage.fname = body.fname;
-                this.authData.storage.lname = body.lname;
-                this.authData.storage.email = body.email;
-                console.log("After Data"+ JSON.stringify(this.authData.storage));
+
+                this.teacherInfo.storage  = body;
+                // save teacher info in app-settings to invoke rest api's using season, room etc...
+                TeacherInfo.details = JSON.stringify(body);
 
             })
             .catch(this.handleErrors);
@@ -50,16 +47,15 @@ export class TeacherService {
 
 
     logoff() {
-        BackendService.token = "";
+        TokenService.authToken = "";
     }
 
     evaluteUser(teacher: Teacher) {
-        console.log("I am in service method now");
-        console.log("Token:" + appSettings.getString("accessToken"));
+        console.log("evaluser accessToken:" + TokenService.accessToken);
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({
-            access_token: appSettings.getString("accessToken"),
+            access_token: TokenService.accessToken,
             command: "evaluate_user",
             body: {
                 email: teacher.email
