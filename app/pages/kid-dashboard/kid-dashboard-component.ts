@@ -5,6 +5,7 @@ import {CalendarService,  Message} from "../../shared/calendar.service";
 
 import frameModule = require("ui/frame");
 import { Router, NavigationExtras } from "@angular/router";
+import { RouterExtensions, PageRoute } from "nativescript-angular/router";
 
 
 
@@ -27,7 +28,8 @@ export class KidDashboardComponent implements OnInit{
 
     constructor(private calendarService: CalendarService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
-                private router: Router) {
+                private router: Router,
+                private nav: RouterExtensions) {
         //super(changeDetectorRef);
 
         this.topmost = frameModule.topmost();
@@ -54,8 +56,9 @@ export class KidDashboardComponent implements OnInit{
     }
 
     goBack(){
-        this.router.navigate(['/myclass']);
-        //this.topmost.goBack();
+        //this.nav.backToPreviousPage();
+        //this.router.navigate(['/myclass']);
+         this.topmost.goBack();
         //Perhaps the simplest way to navigate is by specifying the file name of the page to which you want to navigate.
         //this.topmost.navigate("myclass");
 
