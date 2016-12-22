@@ -14,9 +14,9 @@ import { AuthGuard } from "./auth-guard.service";
 export const APP_ROUTES = [
 
     {path: "", redirectTo: "/calendar", pathMatch: 'full'},
-    {path: "calendar", component: CalendarComponent},
-    {path: "myclass", component: MyClassComponent},
-    {path: "kid-dashboard", component: KidDashboardComponent},
+    {path: "calendar", component: CalendarComponent, canActivate: [AuthGuard] },
+    {path: "myclass", component: MyClassComponent, canActivate: [AuthGuard] },
+    {path: "kid-dashboard", component: KidDashboardComponent, canActivate: [AuthGuard]},
     {path: "todo", component: TodoPage},
     {path: "settings", component: SettingsPage},
     { path: "verify-password", component: VerifyPasswordPage },
