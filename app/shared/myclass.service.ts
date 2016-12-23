@@ -1,41 +1,50 @@
-import { Injectable } from '@angular/core';
-//const faker = require('faker');
+import { Injectable } from "@angular/core";
+import { Http, Headers, Response } from "@angular/http";
+import { Observable } from "rxjs/Rx";
+import "rxjs/add/operator/do";
+import "rxjs/add/operator/map";
+import { Config } from "../shared/config";
+import { TokenService } from "../shared/token.service";
+import { TeacherInfo } from "../providers/data/teacher_info";
 
 @Injectable()
 export class MyClassService {
-    getMyClass(): MyClass {
+    constructor(private http: Http) {
 
-        const kids = [];
+    }
 
+    getManagedKids() {
+        var room = TeacherInfo.parsedDetails.rooms[0];
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: "managed_kids",
+            body: {
+                session_id: room.session_id,
+                season_id: room.season_id
+            }
+        });
 
-        /* Message Data */
-        kids.push(
-            {fname: 'Janie',lname: 'Deo' , age: 2, kid_klid: "", reminders_count: 2, notifications_count: 0},
-            {fname: 'Johnny',lname: 'Deo' , age: 3, kid_klid: "", reminders_count: 0, notifications_count: 0},
-            {fname: 'Janie',lname: 'Reo' , age: 3, kid_klid: "", reminders_count: 1, notifications_count: 0},
-            {fname: 'Johnny',lname: 'Reo' , age: 2, kid_klid: "", reminders_count: 2, notifications_count: 1},
-            {fname: 'Johnny',lname: 'Reo' , age: 2, kid_klid: "", reminders_count: 2, notifications_count: 1}
-        );
+        return this.http.post(
+            Config.apiUrl + "teachers", data, {
+                headers: headers
+            }
+        ).map((res:Response) => res.json())
+            .catch(this.handleErrors);
+    }
 
-        const myclass = {
-            kids: kids
-        };
-
-        return myclass;
+    handleErrors(error: any)  {
+        console.error('An error occurred', error); // for demo purposes only
+        return Observable.throw(error.message || error);
     }
 }
-
-
-export interface Kid {
-    fname: String;
-    lname: String;
-    age: Number;
-    kid_klid: String;
-    reminders_count: Number;
-    notifications_count: Number
-}
-
-
-export interface MyClass {
-    kids: Array<Kid>;
+export interface ManagedKid {
+    fname: string,
+    lname: string,
+    age: number,
+    reminders_count: number,
+    notifications_count: number,
+    kid_klid: string
 }
