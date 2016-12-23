@@ -78,11 +78,11 @@
         <GridLayout row="6" class="moment-image-container">
             <GridLayout rows="auto,auto,auto,auto, auto, auto">
                 <GridLayout row="0">
-                    <Image stretch="aspectFill" [src]="other.coverUrl" class="cover-image"></Image>
+                    <Image stretch="aspectFill" [src]="moment.cover_image" class="cover-image"></Image>
                     <StackLayout class="org-container" horizontalAlignment="right">
                         <StackLayout orientation="horizontal">
                             <StackLayout class="org-image-container">
-                                <Image [src]="other.pictureUrl" class="kid-profile-image"> </Image>
+                                <Image [src]="moment.org_logo" stretch="none"> </Image>
                             </StackLayout>
                         </StackLayout>
                     </StackLayout>
@@ -92,7 +92,10 @@
                     <GridLayout columns="auto, *">
                         <StackLayout col="0" row="0" horizontalAlignment="left" orientation="horizontal">
                             <StackLayout *ngFor="let item of tags" margin="3">
-                                <Image src="~/images/avatar-icon-32.png" stretch="none" class="rounded-corner-icon tagged-profile-pic"></Image>
+                                <!--<Image src="~/images/avatar-icon-32.png" stretch="none" class="rounded-corner-icon tagged-profile-pic"></Image>-->
+                                <Image stretch ="none" col="0" horizontalAlignment="center"
+                                       [nsRouterLink]="['/kid-dashboard']"
+                                       class="img-circle blue-circle-border" [src]="moment.tagged_img"></Image>
                             </StackLayout>
                         </StackLayout>
                         <StackLayout col="1" row="0" horizontalAlignment="right" orientation="horizontal">
@@ -112,11 +115,16 @@
                     <GridLayout rows="auto,auto,auto,auto,auto,auto">
                         <GridLayout row="{{ i }}" *ngFor="let item of messages; let i = index">
                             <StackLayout orientation="horizontal" verticalAlignment="center" class="moment-comment-item">
-                                <Image verticalAlignment="center" src="~/images/avatar-icon-32.png" stretch="none" class="rounded-corner-icon commenter-profile-pic"></Image>
+                                <!--<Image verticalAlignment="center" src="~/images/avatar-icon-32.png" stretch="none" class="rounded-corner-icon commenter-profile-pic"></Image>-->
+
+                                <Image stretch ="none" col="0"verticalAlignment="center"
+                                       [nsRouterLink]="['/kid-dashboard']"
+                                       class="img-circle blue-circle-border" [src]="item.photograph"></Image>
+
                                 <StackLayout orientation="vertical" class="comment-details">
                                     <StackLayout orientation="horizontal">
-                                        <Label [text]="item.kid_name" class="kid-name"></Label>
-                                        <Label [text]="item.relation" class="relation-name light-gray"></Label>
+                                        <Label [text]="item.kid_name" class="kid-name font-weight-bold"></Label>
+                                        <Label [text]="item.relation" class="relation-name light-gray font-italic"></Label>
                                     </StackLayout>
                                     <Label [text]="item.text" textwrap="true"></Label>
                                 </StackLayout>

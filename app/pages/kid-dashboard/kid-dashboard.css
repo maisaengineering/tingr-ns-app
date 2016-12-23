@@ -103,12 +103,10 @@ StackLayout.moment-comment-item{
 
 
 .moment-comment-item .kid-name{
-    font-weight: bold;
     font-size: 13px;
 }
 .moment-comment-item .relation-name{
     font-size: 11px;
-    font-style: italic;
     margin-left: 5px;
     margin-top: 1px;
 }
