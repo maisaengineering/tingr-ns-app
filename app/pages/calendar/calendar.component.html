@@ -21,7 +21,7 @@
             <StackLayout tkMainContent>
 
                 <StackLayout text="top" dock="top" class="today-date green font-weight-bold">
-                    <Label text="Sunday, January 1st" class="text-center"></Label>
+                    <Label text="{{ currentDate  | date: 'EEEE, MMMM d' }}" class="text-center"></Label>
                 </StackLayout>
 
                 <StackLayout class="line-separator">
@@ -33,9 +33,11 @@
                     <Image dock="left" stretch ="none" verticalAlignment="center" class="schedule-icon"  src="~/images/schedule-icon-72.png"></Image>
                     <StackLayout text="top" dock="top">
                         <GridLayout rows="auto,auto" *ngFor="let item of schedules; let i = index" >
-                            <GridLayout row="0" columns="auto, auto" rows="auto,auto" class="item {{ item.read ? 'blue' :  '' }}">
-                                <Label col="0" text="{{item.time}}" row="0"></Label>
-                                <Label col="1" row="0"  class="event" text="{{ item.event }}"></Label>
+                            <GridLayout row="0" columns="auto, auto" rows="auto,auto" class="item">
+                                <Label col="0"  row="0"
+                                       text="{{item.start_time | date: 'HH:mm' }}-{{ item.end_time | date: 'HH:mm a' }}">
+                                </Label>
+                                <Label col="1" row="0"  class="event" text="{{ item.name }}"></Label>
                             </GridLayout>
                             <!-- Don't show horizontal line for last element -->
                             <StackLayout *ngIf="schedules.length > (i+1)" class="hr-light" row="1"></StackLayout>

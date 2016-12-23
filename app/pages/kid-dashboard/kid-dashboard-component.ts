@@ -32,7 +32,7 @@ export class KidDashboardComponent implements OnInit{
                 private nav: RouterExtensions) {
         //super(changeDetectorRef);
 
-        this.topmost = frameModule.topmost();
+       /* this.topmost = frameModule.topmost();
         const calendar = calendarService.getCalendar();
         this.messages = calendar.messages;
 
@@ -47,7 +47,7 @@ export class KidDashboardComponent implements OnInit{
         for (let i = 0; i < 5; i++) {
             this.items.push(new DataItem("item " + i));
             this.tags.push(new DataItem("tag " + i))
-        }
+        }*/
     }
 
     ngOnInit() {

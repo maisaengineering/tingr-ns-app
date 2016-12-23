@@ -17,18 +17,26 @@ export class CalendarComponent extends DrawerPage implements OnInit{
     public schedules: Array<Schedule>;
     public reminders: Array<Reminder>;
     public messages: Array<Message>;
+    public today: currentDate;
 
 
     constructor(private calendarService: CalendarService,private changeDetectorRef: ChangeDetectorRef) {
         super(changeDetectorRef);
-        const calendar = calendarService.getCalendar();
-        this.schedules = calendar.schedules;
-        this.reminders = calendar.reminders;
-        this.messages = calendar.messages;
+        this.currentDate = new Date()
     }
 
     ngOnInit() {
-
+        this.calendarService.getCalendarData(this.currentDate)
+            .subscribe(
+                (result) => {
+                     var body = result.body;
+                     this.schedules = body.events;
+                },
+                (error) => {
+                    console.log('Error: '+ JSON.stringify(error));
+                    alert(JSON.stringify(error))
+                }
+            );
     }
 
     public onItemTap(args) {
@@ -36,7 +44,7 @@ export class CalendarComponent extends DrawerPage implements OnInit{
     }
 
     public bubbleClass(schedule: Schedule): string {
-        const sender =  'me'
+        const sender =  'me';
 
         return `bubble-from-${sender}`;
     }

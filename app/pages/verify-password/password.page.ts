@@ -7,7 +7,8 @@ import { TeacherService } from "../../shared/teacher/teacher.service";
 import { Page } from "ui/page";
 
 import * as appSettings from "application-settings"
-
+import { TokenService } from "../../shared/token.service";
+import { TeacherInfo } from "../../providers/data/teacher_info";
 
 @Component({
     selector: "my-app",
@@ -21,7 +22,8 @@ export class VerifyPasswordPage implements OnInit {
     isAuthenticating = false;
 
     constructor(private router: Router, private route: ActivatedRoute,
-                private teacherService: TeacherService, private page: Page) {
+                private teacherService: TeacherService, private page: Page,
+                private teacherInfo: TeacherInfo) {
         this.teacher = new Teacher();
         this.route.queryParams.subscribe(params => {
             this.teacher.email = params["email"];
@@ -40,9 +42,13 @@ export class VerifyPasswordPage implements OnInit {
         this.teacherService.signIn(this.teacher)
             .subscribe(
                 (result) => {
+                    TokenService.authToken = result.body.auth_token;
+                    var body = result.body;
+                    this.teacherInfo.storage  = body;
+                    // save teacher info in app-settings to invoke rest api's using season, room etc...
+                    TeacherInfo.details = JSON.stringify(body);
                     console.log("SignIN Response: "+ JSON.stringify(result));
                     this.router.navigate(["calendar"]);
-
                 },
                 (error) => {
                     console.log('Error: '+ JSON.stringify(error));

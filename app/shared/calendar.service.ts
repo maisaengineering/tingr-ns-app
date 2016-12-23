@@ -1,55 +1,67 @@
 import { Injectable } from '@angular/core';
 //const faker = require('faker');
+import { Observable } from "rxjs/Rx";
+import { Http, Headers, Response } from "@angular/http";
+import "rxjs/add/operator/do";
+import "rxjs/add/operator/map";
+
+import { TeacherInfo } from "../providers/data/teacher_info";
+import {TokenService} from "../shared/token.service";
+import {Config} from "../shared/config";
+
+import { DatePipe } from '@angular/common';
+
 
 @Injectable()
 export class CalendarService {
-    getCalendar(): Calendar {
-        const today = "Sunday January, 1st";
-        const schedules = [];
-        const reminders = [];
-        const messages = [];
+    currentDate: Date;
+    currentDateStr: String;
+    //schedules: Array<any>;
 
-        /* Scedule Data */
-        schedules.push(
-            { time: "2-00:2-30pm", event: "Kis Arrival" },
-            { time: "2-30:3-00pm", event: "Snacks" },
-            { time: "3-00:3-30pm", event: "HomeWork/Worksheet" },
-            { time: "3-00:3-30pm", event: "HomeWork/Worksheet" },
-            { time: "3-00:4-15pm", event: "Dance" },
-            { time: "4-15:5-00pm", event: "Spelling practice" },
-            { time: "5-00:5-30pm", event: "Reading Practice"  },
-            { time: "5-30:6-00pm", event: "Evening Snacks, Free Play & Outdoor",  read: true }
-        );
+    constructor(private http: Http,private teacherInfo: TeacherInfo, datePipe: DatePipe) {
 
-        /* Reminders Data */
-        reminders.push(
-            {text: "Jonie's birthday Turing 3 years"},
-            {text: "Ask parent's to bring toys"},
-            {text: "TOMORROW is school holiday", read: true}
-        );
+    }
 
-        /* Message Data */
-        messages.push(
-            {kid_name: 'John Reo', relation: "Jonie's father", text: "Jonie has bit cold.Please call us if it get worst!", read: true},
-            {kid_name: 'Jane Deo', relation: "Johnny's mather", text: "We would like to pickup him up around 5pm today", read: false},
-            {kid_name: 'Jane Deo', relation: "Johnny's mather", text: "I am on-my way", read: true}
-        );
 
-        const calendar = {
-            schedules: schedules,
-            reminders: reminders,
-            messages: messages
-        };
+    getCalendarData(currentDate) {
+        this.currentDateStr = this.datePipe.transform(this.currentDate, 'dd/MM/yyyy');
+        var room = TeacherInfo.parsedDetails.rooms[0];
+        console.log("TEACHER INFO :" +JSON.stringify(TeacherInfo.parsedDetails.rooms[0]));
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: "all_events",
+            body: {
+                session_id: room.session_id,
+                season_id: room.season_id,
+                date: this.currentDateStr
+            }
+        });
 
-        return calendar;
+        return this.http.post(
+            Config.apiUrl + "teachers", data, {
+                headers: headers
+            }
+        ).map((res:Response) => res.json())
+            .catch(this.handleErrors);
+    }
+
+
+
+    handleErrors(error: any)  {
+        console.error('An error occurred', error); // for demo purposes only
+        return Observable.throw(error.message || error);
     }
 }
 
 
 export interface Schedule {
-    time: String;
-    event: String;
-    read: Boolean;
+    name: String;
+    description: String;
+    start_time: String,
+    end_time: String
 }
 
 export interface Reminder {
@@ -67,6 +79,7 @@ export interface Message {
 }
 
 export interface Calendar {
+    today: Date;
     schedules: Array<Schedule>;
     reminders: Array<Reminder>;
     messages: Array<Message>;

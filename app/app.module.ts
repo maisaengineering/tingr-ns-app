@@ -9,6 +9,9 @@ import {TNSFontIconModule} from "nativescript-ng2-fonticon";
 import {APP_ROUTES, authProviders, navigatableComponents} from "./app.routes";
 import { TeacherInfo } from "./providers/data/teacher_info";
 import { TokenService } from "./shared/token.service";
+
+import { DatePipe } from '@angular/common';
+
 @NgModule({
     declarations: [
         SIDEDRAWER_DIRECTIVES,
@@ -31,7 +34,8 @@ import { TokenService } from "./shared/token.service";
     providers: [
         TeacherInfo,
         TokenService,
-        authProviders
+        authProviders,
+        DatePipe
     ],
     schemas: [
         NO_ERRORS_SCHEMA

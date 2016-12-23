@@ -32,17 +32,8 @@ export class TeacherService {
                 headers: headers
             }
         )
-            .map(response => response.json())
-            .do(result => {
-                TokenService.authToken = result.body.auth_token;
-                var body = result.body;
-
-                this.teacherInfo.storage  = body;
-                // save teacher info in app-settings to invoke rest api's using season, room etc...
-                TeacherInfo.details = JSON.stringify(body);
-
-            })
-            .catch(this.handleErrors);
+        .map(response => response.json())
+        .catch(this.handleErrors);
     }
 
 
