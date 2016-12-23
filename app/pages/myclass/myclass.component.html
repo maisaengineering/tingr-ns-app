@@ -5,7 +5,7 @@
                  android:horizontalAlignment="center">
         <Image src="~/images/caterpiller-icon-white-48.png"
                class="m-r-5 action-image" stretch="none"></Image>
-        <Label text="Caterpillar"  class="action-label"></Label>
+        <Label [text]="room"  class="action-label"></Label>
     </StackLayout>
 </ActionBar>
 
@@ -22,7 +22,7 @@
                     <!--<Image (longPress)="onLongPress($event)" dock="left" stretch="none"
                            class="rounded-corner-icon profile-pic"
                            verticalAlignment="center"  src="~/images/avatar-icon-50.png"></Image>-->
-                    <Image (longPress)="onLongPress($event)" dock="left" stretch="none" verticalAlignment="center"
+                    <Image (longPress)="onLongPress($event, item)" dock="left" stretch="none" verticalAlignment="center"
                            class="img-circle blue-circle-border profile-pic" src="https://placeimg.com/90/90/people"></Image>
                     <StackLayout verticalAlignment="center" dock="left" class="kid-info">
                         <Label [text]="item.fname+' '+item.lname" class="kid-name font-weight-bold"></Label>

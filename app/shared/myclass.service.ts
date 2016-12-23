@@ -40,6 +40,11 @@ export class MyClassService {
         return Observable.throw(error.message || error);
     }
 }
+
+export interface Room {
+    name: string
+}
+
 export interface ManagedKid {
     fname: string,
     lname: string,
