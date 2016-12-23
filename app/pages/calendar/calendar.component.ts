@@ -5,7 +5,7 @@ import {CalendarService,Schedule, Birthday,EventReminder, Holiday,  Message} fro
 import { ListView } from 'ui/list-view';
 import { TextView } from 'ui/text-view';
 
-
+import { TeacherInfo } from "../../providers/data/teacher_info";
 
 @Component({
     selector: 'my-app',
@@ -20,6 +20,7 @@ export class CalendarComponent extends DrawerPage implements OnInit{
     public holidays: Array<Holiday>;
     public messages: Array<Message>;
     public currentDate: Date;
+    public teacherName: String;
 
 
 
@@ -32,9 +33,13 @@ export class CalendarComponent extends DrawerPage implements OnInit{
         this.event_reminders = [];
         this.holidays = [];
         this.messages = [];
+        var teacherDetails = TeacherInfo.parsedDetails;
+        this.teacherName = teacherDetails.fname +' '+ teacherDetails.lname;
     }
 
     ngOnInit() {
+
+
         this.calendarService.getCalendarData(this.currentDate)
             .subscribe(
                 (result) => {

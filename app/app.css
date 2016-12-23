@@ -116,6 +116,11 @@ ActionBar {
     margin-bottom: 7px;
 }
 
+.drawer-content .drawer-header .teacher-name{
+    color: white;
+    margin-top: 10px;
+}
+
 .drawer-content .drawer-links .drawer-link {
     font-size: 15px;
     padding: 15px;
