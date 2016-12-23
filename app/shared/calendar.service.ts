@@ -14,19 +14,18 @@ import { DatePipe } from '@angular/common';
 
 @Injectable()
 export class CalendarService {
-    currentDate: Date;
+
     currentDateStr: String;
     //schedules: Array<any>;
 
-    constructor(private http: Http,private teacherInfo: TeacherInfo, datePipe: DatePipe) {
+    constructor(private http: Http,private teacherInfo: TeacherInfo, private datePipe: DatePipe) {
 
     }
 
 
     getCalendarData(currentDate) {
-        this.currentDateStr = this.datePipe.transform(this.currentDate, 'dd/MM/yyyy');
-        var room = TeacherInfo.parsedDetails.rooms[0];
-        console.log("TEACHER INFO :" +JSON.stringify(TeacherInfo.parsedDetails.rooms[0]));
+        this.currentDateStr = this.datePipe.transform(currentDate, 'dd/MM/yyyy');
+        var room = TeacherInfo.parsedDetails.rooms[0]; 
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({

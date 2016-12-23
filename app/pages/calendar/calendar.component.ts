@@ -17,7 +17,7 @@ export class CalendarComponent extends DrawerPage implements OnInit{
     public schedules: Array<Schedule>;
     public reminders: Array<Reminder>;
     public messages: Array<Message>;
-    public today: currentDate;
+    public currentDate: Date;
 
 
     constructor(private calendarService: CalendarService,private changeDetectorRef: ChangeDetectorRef) {
