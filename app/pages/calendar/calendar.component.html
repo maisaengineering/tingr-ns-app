@@ -71,7 +71,7 @@
                         <StackLayout *ngIf="event_reminders.length > 0 && birthdays.length > 0 && holidays.length > 0"
                                      class="hr-light" row="1"></StackLayout>
                         <SatckLayout orientation="horizontal" *ngFor="let item of holidays; let i = index" >
-                            <Label col="0" text="Tomorrow is holiday {{ item.name }}" class="item blue"></Label>
+                            <Label col="0" text="Tomorrow is holiday ({{ item.name }})" class="item blue"></Label>
                             <StackLayout *ngIf="holidays.length > (i+1)" class="hr-light" row="1"></StackLayout>
                         </SatckLayout>
 
@@ -89,14 +89,18 @@
                         <GridLayout rows="auto,auto" *ngFor="let item of messages; let i = index" >
                             <GridLayout row="0" columns="50, *" rows="*" class="item">
                                 <StackLayout  verticalAlignment="center">
-                                    <Image stretch ="none" col="0" horizontalAlignment="center" class="rounded-corner-icon avatar-icon" src="~/images/avatar-icon-32.png"></Image>
+                                    <!--<Image stretch ="none" col="0" horizontalAlignment="center"
+                                           class="{{ item.photograph ? 'img-circle' : 'rounded-corner-icon avatar-icon'}}"
+                                           src="{{ item.photograph ? item.photograph : '~/images/avatar-icon-32.png' }}"></Image>-->
+                                    <Image stretch ="none" col="0" horizontalAlignment="center"
+                                           class="img-circle blue-circle-border" src="http://lorempixel.com/70/70/"></Image>
                                 </StackLayout>
                                 <StackLayout col="1">
                                     <StackLayout col="1" orientation="horizontal">
-                                        <Label class="kid-name" [text]="item.kid_name" textwrap="true"></Label>
-                                        <Label class="relation-name light-gray" [text]="item.relation" textwrap="true"></Label>
+                                        <Label class="kid-name" [text]="item.child_name" textwrap="true"></Label>
+                                        <Label class="relation-name light-gray" [text]="item.child_relationship" textwrap="true"></Label>
                                     </StackLayout>
-                                    <Label [text]="item.text" class="{{ item.read ? 'blue' : 'very-light-gray'}}" col="1" textwrap="true"></Label>
+                                    <Label [text]="item.text" class="{{ item.read_message ? 'very-light-gray' : 'blue' }}" col="1" textwrap="true"></Label>
                                 </StackLayout>
                             </GridLayout>
                             <!-- Don't show horizontal line for last element -->

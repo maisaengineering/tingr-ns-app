@@ -38,13 +38,15 @@ export class CalendarComponent extends DrawerPage implements OnInit{
         this.calendarService.getCalendarData(this.currentDate)
             .subscribe(
                 (result) => {
-                     var body = result.body;
-                     console.log("Calendar Respone: " + JSON.stringify(body));
-                     this.schedules = body.events;
-                     var reminders = body.reminders;
-                     this.birthdays = reminders.birthdays;
-                     this.event_reminders = reminders.event_reminders;
-                     this.holidays = reminders.holidays;
+                    var body = result.body;
+                    console.log("Calendar Respone: " + JSON.stringify(body));
+                    this.schedules = body.events;
+                    this.messages = body.messages;
+                    var reminders = body.reminders;
+                    this.birthdays = reminders.birthdays;
+                    this.event_reminders = reminders.event_reminders;
+                    this.holidays = reminders.holidays;
+
                 },
                 (error) => {
                     console.log('Error: '+ JSON.stringify(error));

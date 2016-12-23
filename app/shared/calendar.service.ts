@@ -35,7 +35,7 @@ export class CalendarService {
             body: {
                 session_id: room.session_id,
                 season_id: room.season_id,
-                date: this.currentDateStr
+                date: '23/12/2016'//this.currentDateStr
             }
         });
 
@@ -46,8 +46,6 @@ export class CalendarService {
         ).map((res:Response) => res.json())
             .catch(this.handleErrors);
     }
-
-
 
     handleErrors(error: any)  {
         console.error('An error occurred', error); // for demo purposes only
@@ -70,11 +68,14 @@ export interface Reminder {
 
 
 export interface Message {
-    kid_name: String;
-    relation: String;
-    text: String;
-    read: Boolean;
-
+    text: string,
+    sender_name: string,
+    photograph: string,
+    child_name: string,
+    child_relationship: string,
+    conversation_klid: string,
+    created_at: string,
+    read_message: boolean
 }
 
 export interface Calendar {

@@ -96,7 +96,11 @@ ActionBar {
     border-radius: 38;
 }
 
-
+/* border for circle images ..*/
+.blue-circle-border {
+    border-color:  #9fc5f8;
+    border-width: 1;
+}
 
 
 
