@@ -1,6 +1,6 @@
 import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {DrawerPage} from "../drawer.page";
-import {MyClassService, Kid} from "../../shared/myclass.service";
+import {MyClassService, ManagedKid} from "../../shared/myclass.service";
 
 import { ListView } from 'ui/list-view';
 import { TextView } from 'ui/text-view';
@@ -16,17 +16,25 @@ import { GestureEventData } from "ui/gestures";
     providers: [MyClassService]
 })
 export class MyClassComponent extends DrawerPage implements OnInit{
-    public kids: Array<Kid>;
+    public managed_kids: Array<ManagedKid>;
 
     constructor(private myClassService: MyClassService,private changeDetectorRef: ChangeDetectorRef) {
         super(changeDetectorRef);
-        const myclass = myClassService.getMyClass();
-        this.kids = myclass.kids;
 
     }
 
     ngOnInit() {
-
+        this.myClassService.getManagedKids()
+            .subscribe(
+                (result) => {
+                    var body = result.body;
+                    this.managed_kids = body.managed_kids
+                },
+                (error) => {
+                    console.log('Error: '+ JSON.stringify(error));
+                    alert(JSON.stringify(error))
+                }
+            );
     }
 
     onLongPress(args: GestureEventData) {
@@ -34,12 +42,5 @@ export class MyClassComponent extends DrawerPage implements OnInit{
         console.log("Object that triggered the event: " + args.object);
         console.log("View that triggered the event: " + args.view);
         console.log("Event name: " + args.eventName);
-
-        let grid = <GridLayout>args.object;
-        grid.rotate = 0;
-        grid.animate({
-            rotate: 360,
-            duration: 2000
-        });
     }
 }
