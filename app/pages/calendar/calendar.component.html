@@ -37,7 +37,7 @@
                                 <Label col="0"  row="0"
                                        text="{{item.start_time | date: 'HH:mm' }}-{{ item.end_time | date: 'HH:mm a' }}">
                                 </Label>
-                                <Label col="1" row="0"  class="event" text="{{ item.name }}"></Label>
+                                <Label col="1" row="0"  class="event" text="{{ item.name }}" textWrap="true"></Label>
                             </GridLayout>
                             <!-- Don't show horizontal line for last element -->
                             <StackLayout *ngIf="schedules.length > (i+1)" class="hr-light" row="1"></StackLayout>
@@ -63,7 +63,7 @@
                         <!-- Event Reminders -->
                         <StackLayout *ngIf="birthdays.length > 0 && event_reminders.length > 0"  class="hr-light" row="1"></StackLayout>
                         <SatckLayout orientation="horizontal" *ngFor="let item of event_reminders; let i = index" >
-                            <Label col="0" text="{{ item.description }}" class="item"></Label>
+                            <Label col="0" text="{{ item.description }}" class="item" textWrap="true"></Label>
                             <StackLayout *ngIf="event_reminders.length > (i+1)" class="hr-light" row="1"></StackLayout>
                         </SatckLayout>
 
@@ -71,7 +71,7 @@
                         <StackLayout *ngIf="event_reminders.length > 0 && birthdays.length > 0 && holidays.length > 0"
                                      class="hr-light" row="1"></StackLayout>
                         <SatckLayout orientation="horizontal" *ngFor="let item of holidays; let i = index" >
-                            <Label col="0" text="Tomorrow is holiday ({{ item.name }})" class="item blue"></Label>
+                            <Label col="0" text="Tomorrow is holiday ({{ item.name }})" class="item blue" textWrap="true"></Label>
                             <StackLayout *ngIf="holidays.length > (i+1)" class="hr-light" row="1"></StackLayout>
                         </SatckLayout>
 
@@ -82,7 +82,6 @@
                 </StackLayout>
 
                 <!-- ##################  Messages -------------------------------------------------------------------------------->
-
                 <DockLayout stretchLastChild="false" class="calendar-message">
                     <Image dock="left" stretch ="none" verticalAlignment="center" class="message-icon"  src="~/images/message-icon-72.png"></Image>
                     <StackLayout text="top" dock="top">
