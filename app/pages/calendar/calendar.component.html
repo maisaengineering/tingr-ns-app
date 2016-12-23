@@ -50,16 +50,31 @@
 
                 <!-- ##################  Reminders-------------------------------------------------------------------------------->
 
-                <DockLayout stretchLastChild="false" class="calendar-reminder">
+                <DockLayout stretchLastChild="false" class="calendar-reminder font-italic">
                     <Image dock="left" stretch ="none" verticalAlignment="center" class="reminder-icon"  src="~/images/reminder-icon-72.png"></Image>
                     <StackLayout text="top" dock="top">
-                        <GridLayout rows="auto,auto" *ngFor="let item of reminders; let i = index" >
-                            <GridLayout row="0" columns="auto, auto" rows="auto,auto" class="item {{ item.read ? 'blue' :  '' }}">
-                                <Label col="0" text="{{item.text}}" row="0"></Label>
-                            </GridLayout>
-                            <!-- Don't show horizontal line for last element -->
-                            <StackLayout *ngIf="reminders.length > (i+1)" class="hr-light" row="1"></StackLayout>
-                        </GridLayout>
+
+                        <!-- Birthdays -->
+                        <SatckLayout orientation="horizontal" *ngFor="let item of birthdays; let i = index" >
+                            <Label col="0" text="{{item.child_name}} Turning {{ item.age + 1 }} years" class="item"></Label>
+                            <StackLayout *ngIf="birthdays.length > (i+1)" class="hr-light" row="1"></StackLayout>
+                        </SatckLayout>
+
+                        <!-- Event Reminders -->
+                        <StackLayout *ngIf="birthdays.length > 0 && event_reminders.length > 0"  class="hr-light" row="1"></StackLayout>
+                        <SatckLayout orientation="horizontal" *ngFor="let item of event_reminders; let i = index" >
+                            <Label col="0" text="{{ item.description }}" class="item"></Label>
+                            <StackLayout *ngIf="event_reminders.length > (i+1)" class="hr-light" row="1"></StackLayout>
+                        </SatckLayout>
+
+                        <!-- Holidays -->
+                        <StackLayout *ngIf="event_reminders.length > 0 && birthdays.length > 0 && holidays.length > 0"
+                                     class="hr-light" row="1"></StackLayout>
+                        <SatckLayout orientation="horizontal" *ngFor="let item of holidays; let i = index" >
+                            <Label col="0" text="Tomorrow is holiday {{ item.name }}" class="item blue"></Label>
+                            <StackLayout *ngIf="holidays.length > (i+1)" class="hr-light" row="1"></StackLayout>
+                        </SatckLayout>
+
                     </StackLayout>
                 </DockLayout>
 

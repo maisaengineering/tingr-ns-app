@@ -25,7 +25,7 @@ export class CalendarService {
 
     getCalendarData(currentDate) {
         this.currentDateStr = this.datePipe.transform(currentDate, 'dd/MM/yyyy');
-        var room = TeacherInfo.parsedDetails.rooms[0]; 
+        var room = TeacherInfo.parsedDetails.rooms[0];
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({
@@ -83,3 +83,24 @@ export interface Calendar {
     reminders: Array<Reminder>;
     messages: Array<Message>;
 }
+
+export interface Birthday {
+    child_name: string,
+    age: number,
+    birthdate: string
+}
+
+export interface EventReminder {
+    name: string,
+    description: string,
+    start_time: string,
+    end_time: string
+}
+
+export interface Holiday {
+    name: string,
+    description: string,
+    start_time: string,
+    end_time: string
+}
+
