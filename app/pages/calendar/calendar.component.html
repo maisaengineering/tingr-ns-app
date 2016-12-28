@@ -29,7 +29,7 @@
 
 
                 <!-- ##################  Scheules-------------------------------------------------------------------------------->
-                <DockLayout stretchLastChild="false" class="calendar-schedule">
+                <DockLayout *ngIf="schedules.length" stretchLastChild="false" class="calendar-schedule">
                     <Image dock="left" stretch ="none" verticalAlignment="center" class="schedule-icon"  src="~/images/schedule-icon-72.png"></Image>
                     <StackLayout text="top" dock="top">
                         <GridLayout rows="auto,auto" *ngFor="let item of schedules; let i = index" >
@@ -45,12 +45,12 @@
                     </StackLayout>
                 </DockLayout>
 
-                <StackLayout class="line-separator">
+                <StackLayout *ngIf="schedules.length" class="line-separator">
                 </StackLayout>
 
                 <!-- ##################  Reminders-------------------------------------------------------------------------------->
 
-                <DockLayout stretchLastChild="false" class="calendar-reminder font-italic">
+                <DockLayout *ngIf="event_reminders.length || birthdays.length || holidays.length" stretchLastChild="false" class="calendar-reminder font-italic">
                     <Image dock="left" stretch ="none" verticalAlignment="center" class="reminder-icon"  src="~/images/reminder-icon-72.png"></Image>
                     <StackLayout text="top" dock="top">
 
@@ -78,11 +78,11 @@
                     </StackLayout>
                 </DockLayout>
 
-                <StackLayout class="line-separator">
+                <StackLayout class="line-separator" *ngIf="event_reminders.length || birthdays.length || holidays.length" >
                 </StackLayout>
 
                 <!-- ##################  Messages -------------------------------------------------------------------------------->
-                <DockLayout stretchLastChild="false" class="calendar-message">
+                <DockLayout *ngIf="messages.length"  stretchLastChild="false" class="calendar-message">
                     <Image dock="left" stretch ="none" verticalAlignment="center" class="message-icon"  src="~/images/message-icon-72.png"></Image>
                     <StackLayout text="top" dock="top">
                         <GridLayout rows="auto,auto" *ngFor="let item of messages; let i = index" >

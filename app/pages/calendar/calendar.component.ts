@@ -33,8 +33,9 @@ export class CalendarComponent extends DrawerPage implements OnInit, AfterViewIn
     public teacherName: String;
     public result:Date;
 
-    constructor(private page: Page,private modal: ModalDialogService, private vcRef: ViewContainerRef,
-                private calendarService: CalendarService,private changeDetectorRef: ChangeDetectorRef) {
+    constructor(private changeDetectorRef: ChangeDetectorRef,
+                private modal: ModalDialogService, private vcRef: ViewContainerRef,
+                private calendarService: CalendarService) {
         super(changeDetectorRef);
         this.currentDate = new Date();
         this.schedules = [];
@@ -67,7 +68,7 @@ export class CalendarComponent extends DrawerPage implements OnInit, AfterViewIn
         this.modal.showModal(ModalDatePicker, options)
             .then((dateresult: Date) => {
 
-                console.log("date result in cal component "+dateresult);
+                console.log("date result in calendar component "+dateresult);
 
 
                 /*console.log("date result in cal component "+dateresult);

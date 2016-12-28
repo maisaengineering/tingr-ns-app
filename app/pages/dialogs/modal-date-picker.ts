@@ -54,6 +54,7 @@ export class ModalDatePicker implements OnInit{
        // this.params.closeCallback(new Date(datePicker.year, datePicker.month, datePicker.day));
         // this.router.navigate(["/calendar"], navigationExtras);
 
+        //console.log('HEEEEEEEEEEEEEEEEEEE  '+datePicker.date);
 
         this.params.closeCallback(datePicker.date);
 
