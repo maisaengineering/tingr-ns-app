@@ -10,8 +10,12 @@ import {APP_ROUTES, authProviders, navigatableComponents} from "./app.routes";
 import { TeacherInfo } from "./providers/data/teacher_info";
 import { TokenService } from "./shared/token.service";
 
+import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/modal-dialog";
+
 import { DatePipe } from '@angular/common';
 
+
+import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
 @NgModule({
     declarations: [
         SIDEDRAWER_DIRECTIVES,
@@ -35,11 +39,13 @@ import { DatePipe } from '@angular/common';
         TeacherInfo,
         TokenService,
         authProviders,
-        DatePipe
+        DatePipe,
+        ModalDialogService
     ],
     schemas: [
         NO_ERRORS_SCHEMA
-    ]
+    ],
+    entryComponents: [ModalDatePicker]
 })
 export class AppModule {
 }

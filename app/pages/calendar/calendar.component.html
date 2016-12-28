@@ -21,7 +21,7 @@
             <StackLayout tkMainContent>
 
                 <StackLayout text="top" dock="top" orientation="vertical" class="today-date green font-weight-bold">
-                    <Label text="{{ currentDate  | date: 'EEEE, MMMM d' }}" class="text-center"></Label>
+                    <Label (tap)="createModalDatePickerView()" text="{{ currentDate  | date: 'EEEE, MMMM d' }}" class="text-center"></Label>
                 </StackLayout>
 
                 <StackLayout class="line-separator">

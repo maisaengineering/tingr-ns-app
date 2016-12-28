@@ -8,8 +8,10 @@ import { VerifyPasswordPage } from "./pages/verify-password/password.page";
 import { CalendarComponent } from "./pages/calendar/calendar.component";
 import { MyClassComponent } from "./pages/myclass/myclass.component";
 import { KidDashboardComponent } from "./pages/kid-dashboard/kid-dashboard-component";
+import { ModalTest } from "./pages/modal-test";
 
 import { AuthGuard } from "./auth-guard.service";
+import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
 
 export const APP_ROUTES = [
 
@@ -44,7 +46,8 @@ export const navigatableComponents = [
     TodoListComponent,
     CalendarComponent,
     MyClassComponent,
-    KidDashboardComponent
+    KidDashboardComponent,
+    ModalDatePicker
 ];
 
 export const authProviders = [
