@@ -27,7 +27,9 @@ export class ModalDatePicker implements OnInit{
         let datePicker:DatePicker =<DatePicker> this.page.getViewById<DatePicker>("datePicker");
         let currentDate = new Date();
         datePicker.year = currentDate.getFullYear();
-        datePicker.month = currentDate.getMonth();
+        console.log("Current Month: "+ currentDate.getMonth());
+
+        datePicker.month = currentDate.getMonth() +1;
         datePicker.day = currentDate.getDate();
         datePicker.minDate = new Date(1975, 0, 29);
         datePicker.maxDate = new Date(2045, 4, 12);
