@@ -20,7 +20,7 @@
         <ScrollView>
             <StackLayout tkMainContent>
 
-                <StackLayout text="top" dock="top" class="today-date green font-weight-bold">
+                <StackLayout text="top" dock="top" orientation="vertical" class="today-date green font-weight-bold">
                     <Label text="{{ currentDate  | date: 'EEEE, MMMM d' }}" class="text-center"></Label>
                 </StackLayout>
 
@@ -56,7 +56,7 @@
 
                         <!-- Birthdays -->
                         <SatckLayout orientation="horizontal" *ngFor="let item of birthdays; let i = index" >
-                            <Label col="0" text="{{item.child_name}} Turning {{ item.age + 1 }} years" class="item"></Label>
+                            <Label col="0" text="{{item.description}}" class="item"></Label>
                             <StackLayout *ngIf="birthdays.length > (i+1)" class="hr-light" row="1"></StackLayout>
                         </SatckLayout>
 
@@ -71,7 +71,7 @@
                         <StackLayout *ngIf="event_reminders.length > 0 && birthdays.length > 0 && holidays.length > 0"
                                      class="hr-light" row="1"></StackLayout>
                         <SatckLayout orientation="horizontal" *ngFor="let item of holidays; let i = index" >
-                            <Label col="0" text="Tomorrow is holiday ({{ item.name }})" class="item blue" textWrap="true"></Label>
+                            <Label col="0" text="{{ item.description }}" class="item blue" textWrap="true"></Label>
                             <StackLayout *ngIf="holidays.length > (i+1)" class="hr-light" row="1"></StackLayout>
                         </SatckLayout>
 
