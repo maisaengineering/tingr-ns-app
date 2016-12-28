@@ -4,7 +4,10 @@
   "readme": "NativeScript Application",
   "repository": "<fill-your-repository-here>",
   "nativescript": {
-    "id": "org.nativescript.tingrnsapp"
+    "id": "org.nativescript.tingrnsapp",
+    "tns-android": {
+      "version": "2.4.1"
+    }
   },
   "dependencies": {
     "@angular/common": "2.2.1",

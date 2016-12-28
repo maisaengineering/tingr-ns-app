@@ -72,11 +72,11 @@ export class CalendarComponent extends DrawerPage implements OnInit, AfterViewIn
                 /*console.log("date result in cal component "+dateresult);
                 that.result = dateresult;*/
 
-                var yesterday = new Date();
-                yesterday.setDate(yesterday.getDate() - 1);
+               // var yesterday = new Date();
+               // yesterday.setDate(yesterday.getDate() - 1);
 
-                this.currentDate = yesterday;
-                this.loadCalendarDataByDay(this.currentDate);
+               // this.currentDate = yesterday;
+                this.loadCalendarDataByDay(dateresult);
 
             })
     }
@@ -87,6 +87,7 @@ export class CalendarComponent extends DrawerPage implements OnInit, AfterViewIn
 
 
     loadCalendarDataByDay(currentDate){
+        this.currentDate = currentDate;
         this.calendarService.getCalendarData(currentDate)
             .subscribe((result) => {
                     var body = result.body;
