@@ -6,8 +6,6 @@ import { ListView } from 'ui/list-view';
 import { TextView } from 'ui/text-view';
 
 import { TeacherInfo } from "../../providers/data/teacher_info";
-import {LoadingIndicator} from "nativescript-loading-indicator";
-
 import * as dialogs from "ui/dialogs";
 import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/directives/dialogs";
 import { ModalDatePicker } from "../../pages/dialogs/modal-date-picker";
