@@ -35,7 +35,8 @@ export class ModalDatePicker implements OnInit{
 
     public submit(res: string) {
 
-        let datePicker:DatePicker =<DatePicker> this.page.getViewById<DatePicker>("datePicker");
+        //TODO get the result in Calendar Component
+        let datePicker: DatePicker = <DatePicker>this.page.getViewById<DatePicker>("datePicker");
 
         /* console.log("Year1111111111111 " + datePicker.year);
          console.log("MOnth " + datePicker.month);
@@ -43,15 +44,18 @@ export class ModalDatePicker implements OnInit{
         // this.params.closeCallback(res);
 
 
-        let navigationExtras: NavigationExtras = {
+        /*let navigationExtras: NavigationExtras = {
             queryParams: {
                 "date": '28/12/2016'
             }
-        };
+        };*/
 
-        //TODO get the result in Calendar Component
-        this.params.closeCallback(new Date(datePicker.year, datePicker.month, datePicker.day));
+
+       // this.params.closeCallback(new Date(datePicker.year, datePicker.month, datePicker.day));
         // this.router.navigate(["/calendar"], navigationExtras);
+
+
+        this.params.closeCallback(datePicker.date);
 
 
 

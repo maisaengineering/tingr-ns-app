@@ -66,6 +66,10 @@ export class CalendarComponent extends DrawerPage implements OnInit, AfterViewIn
         // >> returning-result
         this.modal.showModal(ModalDatePicker, options)
             .then((dateresult: Date) => {
+
+                console.log("date result in cal component "+dateresult);
+
+
                 /*console.log("date result in cal component "+dateresult);
                 that.result = dateresult;*/
 

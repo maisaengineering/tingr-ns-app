@@ -25,7 +25,7 @@ export class CalendarService {
 
     getCalendarData(currentDate) {
         this.currentDateStr = this.datePipe.transform(currentDate, 'dd/MM/yyyy');
-        console.log("CUrrent Date "+ this.currentDateStr);
+        console.log("Current Date "+ this.currentDateStr);
 
 
         var room = TeacherInfo.parsedDetails.rooms[0];
