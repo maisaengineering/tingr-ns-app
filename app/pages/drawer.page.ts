@@ -15,10 +15,13 @@ export class DrawerPage implements AfterViewInit {
     }
 
     protected openDrawer() {
-        this.drawer.showDrawer();
+        console.log("Open Drawer invoked.........");
+       // this.drawer.showDrawer();
+        this.drawer.toggleDrawerState();
     }
 
     protected closeDrawer() {
+        console.log("Close Drawer invoked.........");
         this.drawer.closeDrawer();
     }
 }

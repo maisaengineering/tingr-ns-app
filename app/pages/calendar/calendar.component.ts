@@ -1,4 +1,4 @@
-import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit, AfterViewInit} from "@angular/core";
+import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {DrawerPage} from "../drawer.page";
 import {CalendarService,Schedule, Birthday,EventReminder, Holiday,  Message} from "../../shared/calendar.service";
 
@@ -18,7 +18,7 @@ import {Page} from "ui/page";
     templateUrl: 'pages/calendar/calendar.component.html',
     providers: [CalendarService, ModalDialogService]
 })
-export class CalendarComponent extends DrawerPage implements OnInit, AfterViewInit{
+export class CalendarComponent extends DrawerPage implements OnInit{
     public schedules: Array<Schedule>;
     public birthdays: Array<Birthday>;
     public event_reminders: Array<EventReminder>;
@@ -107,8 +107,6 @@ export class CalendarComponent extends DrawerPage implements OnInit, AfterViewIn
             );
     }
 
-    ngAfterViewInit() {
-    }
 
 
 }
