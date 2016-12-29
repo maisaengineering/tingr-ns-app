@@ -10,6 +10,7 @@ import { GridLayout } from "ui/layouts/grid-layout";
 import { GestureEventData } from "ui/gestures";
 import dialogs = require("ui/dialogs");
 import { DatePipe } from '@angular/common';
+var nstoasts = require("nativescript-toasts");
 
 
 @Component({
@@ -89,6 +90,11 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     inputType: dialogs.inputType.text
                 }).then(r => {
                     console.log("Dialog result: " + r.result + ", text: " + r.text);
+                    var options = {
+                        text: "Message sent successfully",
+                        duration : nstoasts.DURATION.SHORT
+                    };
+                    nstoasts.show(options);
                 });
             }
         });
