@@ -16,31 +16,39 @@
         </StackLayout>
     </ScrollView>
     <GridLayout tkMainContent>
-        <ListView [items]="managed_kids">
-            <template let-item="item">
-                <DockLayout  (longPress)="onLongPress($event, item)" stretchLastChild="false" class="myclass-container" [nsRouterLink]="['/kid-dashboard']">
-                    <!--<Image (longPress)="onLongPress($event)" dock="left" stretch="none"
-                           class="rounded-corner-icon profile-pic"
-                           verticalAlignment="center"  src="~/images/avatar-icon-50.png"></Image>-->
-                    <Image dock="left" stretch="none" verticalAlignment="center"
-                           class="img-circle blue-circle-border profile-pic" src="https://placeimg.com/90/90/people"></Image>
-                    <StackLayout verticalAlignment="center" dock="left" class="kid-info">
-                        <Label [text]="item.fname+' '+item.lname" class="kid-name font-weight-bold"></Label>
-                        <Label [text]="item.age+' years old'" class="kid-age very-light-gray"></Label>
-                    </StackLayout>
-                    <StackLayout dock="right" verticalAlignment="center" class="right-section">
-                        <Image  stretch ="none" src="~/images/profile-details-60.png"></Image>
-                        <StackLayout orientation="horizontal">
-                            <StackLayout *ngIf="item.reminders_count != 0"  class="number-with-circle reminders-count">
-                                <Label [text]="item.reminders_count"></Label>
-                            </StackLayout>
-                            <StackLayout *ngIf="item.notifications_count != 0" class="number-with-circle notifications-count">
-                                <Label [text]="item.notifications_count"></Label>
+        <StackLayout>
+            <ListView [items]="managed_kids">
+                <template let-item="item">
+                    <DockLayout  (longPress)="onLongPress($event, item)" stretchLastChild="false" class="myclass-container" [nsRouterLink]="['/kid-dashboard']">
+                        <!--<Image (longPress)="onLongPress($event)" dock="left" stretch="none"
+                               class="rounded-corner-icon profile-pic"
+                               verticalAlignment="center"  src="~/images/avatar-icon-50.png"></Image>-->
+                        <Image dock="left" stretch="none" verticalAlignment="center"
+                               class="img-circle blue-circle-border profile-pic" src="https://placeimg.com/90/90/people"></Image>
+                        <StackLayout verticalAlignment="center" dock="left" class="kid-info">
+                            <Label [text]="item.fname+' '+item.lname" class="kid-name font-weight-bold"></Label>
+                            <Label [text]="item.age+' years old'" class="kid-age very-light-gray"></Label>
+                        </StackLayout>
+                        <StackLayout dock="right" verticalAlignment="center" class="right-section">
+                            <Image  stretch ="none" src="~/images/profile-details-60.png"></Image>
+                            <StackLayout orientation="horizontal">
+                                <StackLayout *ngIf="item.reminders_count != 0"  class="number-with-circle reminders-count">
+                                    <Label [text]="item.reminders_count"></Label>
+                                </StackLayout>
+                                <StackLayout *ngIf="item.notifications_count != 0" class="number-with-circle notifications-count">
+                                    <Label [text]="item.notifications_count"></Label>
+                                </StackLayout>
                             </StackLayout>
                         </StackLayout>
-                    </StackLayout>
-                </DockLayout>
-            </template>
-        </ListView>
+                    </DockLayout>
+                </template>
+            </ListView>
+        </StackLayout>
+
+        <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+        <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+            <ActivityIndicator class="busy" busy="true"></ActivityIndicator>
+        </GridLayout>
+
     </GridLayout>>
 </RadSideDrawer>

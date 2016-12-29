@@ -23,6 +23,7 @@ var nstoasts = require("nativescript-toasts");
 export class MyClassComponent extends DrawerPage implements OnInit{
     public managed_kids: Array<ManagedKid>;
     public room: String;
+    public isLoading: Boolean = false;
 
     constructor(private myClassService: MyClassService,
                 private kidSignInOutService: KidSignInOutService,
@@ -30,19 +31,21 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                 private changeDetectorRef: ChangeDetectorRef,
                 private datePipe: DatePipe) {
         super(changeDetectorRef);
-
     }
 
     ngOnInit() {
+        this.isLoading = true;
         this.myClassService.getManagedKids()
             .subscribe(
                 (result) => {
                     console.log("MyClass resp: "+JSON.stringify(result));
                     var body = result.body;
                     this.managed_kids = body.managed_kids;
-                    this.room = body.session_name
+                    this.room = body.session_name;
+                    this.isLoading = false;
                 },
                 (error) => {
+                    this.isLoading = false;
                     console.log('Error: '+ JSON.stringify(error));
                     alert(JSON.stringify(error))
                 }

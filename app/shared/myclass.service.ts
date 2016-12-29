@@ -9,6 +9,7 @@ import { TeacherInfo } from "../providers/data/teacher_info";
 
 @Injectable()
 export class MyClassService {
+
     constructor(private http: Http) {
 
     }

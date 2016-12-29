@@ -200,3 +200,14 @@ ActionBar {
     animation-duration: 1s;
     animation-fill-mode: forwards;
 }
+
+/*Activity Indicator*/
+StackLayout.dimmer{
+    /*background-color:rgba(0, 0, 0, 0.1);*/
+    opacity: 0.5;
+}
+ActivityIndicator.busy {
+    height: 70px;
+    width: 70px;
+    color: #9fc5f8;
+}
