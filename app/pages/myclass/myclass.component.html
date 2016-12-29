@@ -1,5 +1,7 @@
 <ActionBar title="">
-    <NavigationButton text="Menu" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
+    <NavigationButton *ngIf="isAndroid" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
+    <ActionItem *ngIf="isIos" icon="res://ic_menu" ios.position="left" (tap)="openDrawer()"></ActionItem>
+
     <StackLayout orientation="horizontal"
                  ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
@@ -8,6 +10,8 @@
         <Label [text]="room"  class="action-label"></Label>
     </StackLayout>
 </ActionBar>
+
+
 
 <RadSideDrawer #drawerComponent tkToggleNavButton>
     <ScrollView tkDrawerContent class="drawer-content">

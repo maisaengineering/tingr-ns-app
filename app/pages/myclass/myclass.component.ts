@@ -12,7 +12,9 @@ import { GestureEventData } from "ui/gestures";
 import dialogs = require("ui/dialogs");
 import { DatePipe } from '@angular/common';
 var nstoasts = require("nativescript-toasts");
-
+import app = require("application");
+import platform = require("platform");
+var frameModule = require("ui/frame");
 
 @Component({
     selector: 'my-app',
@@ -24,6 +26,8 @@ export class MyClassComponent extends DrawerPage implements OnInit{
     public managed_kids: Array<ManagedKid>;
     public room: String;
     public isLoading: Boolean = false;
+    public isAndroid: Boolean = false;
+    public isIos: Boolean = false;
 
     constructor(private myClassService: MyClassService,
                 private kidSignInOutService: KidSignInOutService,
@@ -31,9 +35,23 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                 private changeDetectorRef: ChangeDetectorRef,
                 private datePipe: DatePipe) {
         super(changeDetectorRef);
+        if (app.android) {
+            this.isAndroid = true;
+        } else if (app.ios) {
+            this.isIos = true;
+        }
     }
 
     ngOnInit() {
+        // Hide 'Default Back button'
+        if(this.isIos){
+            var controller = frameModule.topmost().ios.controller;
+            // get the view controller navigation item
+            var navigationItem = controller.visibleViewController.navigationItem;
+            // hide back button
+            navigationItem.setHidesBackButtonAnimated(true, false);
+        }
+
         this.isLoading = true;
         this.myClassService.getManagedKids()
             .subscribe(

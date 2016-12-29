@@ -12,6 +12,12 @@ import { ModalDatePicker } from "../../pages/dialogs/modal-date-picker";
 import { DatePicker } from "ui/date-picker";
 import {Page} from "ui/page";
 
+import app = require("application");
+import platform = require("platform");
+var frameModule = require("ui/frame");
+
+
+
 @Component({
     selector: 'my-app',
     styleUrls: ['pages/calendar/calendar.css'],
@@ -28,11 +34,20 @@ export class CalendarComponent extends DrawerPage implements OnInit{
     public teacherName: String;
     public result:Date;
     public isLoading: Boolean = false;
+    public isAndroid: Boolean = false;
+    public isIos: Boolean = false;
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
                 private modal: ModalDialogService, private vcRef: ViewContainerRef,
                 private calendarService: CalendarService) {
         super(changeDetectorRef);
+
+        if (app.android) {
+            this.isAndroid = true;
+        } else if (app.ios) {
+            this.isIos = true;
+        }
+
         this.currentDate = new Date();
         this.schedules = [];
         this.birthdays = [];
@@ -80,6 +95,15 @@ export class CalendarComponent extends DrawerPage implements OnInit{
     }
 
     ngOnInit() {
+        // Hide 'Default Back button'
+        if(this.isIos){
+            var controller = frameModule.topmost().ios.controller;
+            // get the view controller navigation item
+            var navigationItem = controller.visibleViewController.navigationItem;
+            // hide back button
+            navigationItem.setHidesBackButtonAnimated(true, false);
+        }
+        // load data
         this.loadCalendarDataByDay(this.currentDate);
     }
 
