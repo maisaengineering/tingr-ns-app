@@ -15,6 +15,7 @@ export class LoginPage implements OnInit {
     teacher: Teacher;
     isLoggingIn = false;
     email = 'teacher1@org1.com';
+    public isLoading: Boolean = false;
 
     ngOnInit() {
         this.page.actionBarHidden = true;
@@ -30,6 +31,7 @@ export class LoginPage implements OnInit {
     }
 
     submitEmail() {
+        this.isLoading = true;
         console.log('in submit mail');
         this.teacher.email = this.email;
         // pass user provided email to next page using NavigationExtras via routing
@@ -48,10 +50,12 @@ export class LoginPage implements OnInit {
                     }else{
                         this.router.navigate(["/verify-password"], navigationExtras);
                     }
+                    this.isLoading = false;
                 },
                 (error) => {
                     console.log('Error: '+ JSON.stringify(error));
-                    alert(JSON.stringify(error))
+                    alert(JSON.stringify(error));
+                    this.isLoading = false;
                 }
             );
     }
