@@ -27,6 +27,7 @@ export class CalendarComponent extends DrawerPage implements OnInit, AfterViewIn
     public currentDate: Date;
     public teacherName: String;
     public result:Date;
+    public isLoading: Boolean = false;
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
                 private modal: ModalDialogService, private vcRef: ViewContainerRef,
@@ -85,6 +86,7 @@ export class CalendarComponent extends DrawerPage implements OnInit, AfterViewIn
 
     loadCalendarDataByDay(currentDate){
         this.currentDate = currentDate;
+        this.isLoading = true;
         this.calendarService.getCalendarData(currentDate)
             .subscribe((result) => {
                     var body = result.body;
@@ -95,8 +97,10 @@ export class CalendarComponent extends DrawerPage implements OnInit, AfterViewIn
                     this.birthdays = reminders.birthdays;
                     this.event_reminders = reminders.event_reminders;
                     this.holidays = reminders.holidays;
+                    this.isLoading = false;
                 },
                 (error) => {
+                    this.isLoading = false;
                     console.log('Error: '+ JSON.stringify(error));
                     alert(JSON.stringify(error))
                 }

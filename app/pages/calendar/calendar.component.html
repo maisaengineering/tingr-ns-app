@@ -15,9 +15,9 @@
             <drawer-content></drawer-content>
         </StackLayout>
     </ScrollView>
-    <StackLayout tkMainContent>
+    <GridLayout tkMainContent>
         <ScrollView>
-            <StackLayout tkMainContent>
+            <StackLayout>
 
                 <StackLayout text="top" dock="top" orientation="vertical" class="today-date green font-weight-bold">
                     <Label (tap)="createModalDatePickerView()" text="{{ currentDate  | date: 'EEEE, MMMM d' }}" class="text-center"></Label>
@@ -111,5 +111,11 @@
 
             </StackLayout>
         </ScrollView>
-    </StackLayout>
+
+        <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+        <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+            <ActivityIndicator class="busy" busy="true"></ActivityIndicator>
+        </GridLayout>
+    </GridLayout>
+
 </RadSideDrawer>
