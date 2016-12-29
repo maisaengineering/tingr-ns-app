@@ -11,6 +11,7 @@ import { KidDashboardComponent } from "./pages/kid-dashboard/kid-dashboard-compo
 
 import { AuthGuard } from "./auth-guard.service";
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
+import { LogoutComponent } from "./pages/login/logout.component";
 
 export const APP_ROUTES = [
 
@@ -22,6 +23,7 @@ export const APP_ROUTES = [
     {path: "settings", component: SettingsPage},
     { path: "verify-password", component: VerifyPasswordPage },
     { path: "login", component: LoginPage },
+    { path: "logout", component: LogoutComponent, canActivate: [AuthGuard] },
 
     /* incase path="" redirectTo: "/home" then uncomment{
         path: "home",
@@ -46,7 +48,8 @@ export const navigatableComponents = [
     CalendarComponent,
     MyClassComponent,
     KidDashboardComponent,
-    ModalDatePicker
+    ModalDatePicker,
+    LogoutComponent
 ];
 
 export const authProviders = [
