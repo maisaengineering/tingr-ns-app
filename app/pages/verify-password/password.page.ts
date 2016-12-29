@@ -20,6 +20,7 @@ export class VerifyPasswordPage implements OnInit {
     teacher: Teacher;
     public email: string;
     isAuthenticating = false;
+    public isLoading: Boolean = false;
 
     constructor(private router: Router, private route: ActivatedRoute,
                 private teacherService: TeacherService, private page: Page,
@@ -38,6 +39,7 @@ export class VerifyPasswordPage implements OnInit {
 
     signIn() {
         this.isAuthenticating = true;
+        this.isLoading = true;
         //this.router.navigate(["calendar"]);
         this.teacherService.signIn(this.teacher)
             .subscribe(
@@ -48,10 +50,12 @@ export class VerifyPasswordPage implements OnInit {
                     // save teacher info in app-settings to invoke rest api's using season, room etc...
                     TeacherInfo.details = JSON.stringify(body);
                     console.log("SignIN Response: "+ JSON.stringify(result));
+                    this.isLoading = false;
                     this.router.navigate(["calendar"]);
                 },
                 (error) => {
                     console.log('Error: '+ JSON.stringify(error));
+                    this.isLoading = false;
                     alert(error.message)
                 }
             );
