@@ -1,4 +1,5 @@
 import {Component} from "@angular/core";
+import { TeacherInfo } from "../../providers/data/teacher_info";
 
 @Component({
     selector: 'drawer-content',
@@ -6,6 +7,11 @@ import {Component} from "@angular/core";
 })
 export class DrawerComponent {
 
+    public teacherInfo;
+    public teacherFullname: String;
+
     constructor() {
+        this.teacherInfo = TeacherInfo.parsedDetails;
+        this.teacherFullname = this.teacherInfo.fname+ ' '+this.teacherInfo.lname;
     }
 }
