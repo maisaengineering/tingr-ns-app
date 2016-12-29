@@ -8,7 +8,7 @@ import { Router, NavigationExtras } from "@angular/router";
 @Component({
     selector: 'modal-content',
     template: `
-       <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: #9fc5f8;">
+       <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white;">
     <DatePicker id="datePicker"></DatePicker>
     <Button class="btn btn-primary btn-active" text="Submit" (tap)="submit('Cancel')"></Button>
 </StackLayout>

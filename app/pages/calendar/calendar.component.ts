@@ -9,10 +9,7 @@ import { TeacherInfo } from "../../providers/data/teacher_info";
 import * as dialogs from "ui/dialogs";
 import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/directives/dialogs";
 import { ModalDatePicker } from "../../pages/dialogs/modal-date-picker";
-
 import { DatePicker } from "ui/date-picker";
-
-
 import {Page} from "ui/page";
 
 @Component({

@@ -1,7 +1,8 @@
 import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {DrawerPage} from "../drawer.page";
-import {MyClassService, ManagedKid, Room} from "../../shared/myclass.service";
+import { MyClassService, ManagedKid, Room} from "../../shared/myclass.service";
 import { KidSignInOutService } from "../../shared/kid-signinout.service";
+import { MessageService } from "../../shared/message.service";
 
 import { ListView } from 'ui/list-view';
 import { TextView } from 'ui/text-view';
@@ -17,7 +18,7 @@ var nstoasts = require("nativescript-toasts");
     selector: 'my-app',
     styleUrls: ['pages/myclass/myclass.css'],
     templateUrl: 'pages/myclass/myclass.component.html',
-    providers: [ MyClassService, KidSignInOutService ]
+    providers: [ MyClassService, KidSignInOutService, MessageService ]
 })
 export class MyClassComponent extends DrawerPage implements OnInit{
     public managed_kids: Array<ManagedKid>;
@@ -25,6 +26,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
 
     constructor(private myClassService: MyClassService,
                 private kidSignInOutService: KidSignInOutService,
+                private messageService: MessageService,
                 private changeDetectorRef: ChangeDetectorRef,
                 private datePipe: DatePipe) {
         super(changeDetectorRef);
@@ -48,38 +50,14 @@ export class MyClassComponent extends DrawerPage implements OnInit{
     }
 
     onLongPress(event, kid) {
-        /*alert("Long Press event raised")
-        console.log("LongPress!");
-        console.log("Object that triggered the event: " + args.object);
-        console.log("View that triggered the event: " + args.view);
-        console.log("Event name: " + args.eventName);*/
-        //var kidName = kid.fname + ' '+ kid.lname;
-        //kidName = "'"+kidName+"'";
-
         dialogs.action({
             message: "Your message",
             cancelButtonText: "Cancel",
             actions: ["Sign-in/Sign-out","Inform Parent"]
         }).then(result => {
             if(result === 'Sign-in/Sign-out'){
-                //var time = this.datePipe.transform(new Date(), 'HH:MM a');
-                //alert(kidName + " signed in successfully at " + time)
-                this.kidSignInOutService.signInOrSingOut(kid.kid_klid)
-                    .subscribe(
-                        (result) => {
-                            console.log("Sign-in/Sign-out resp: "+JSON.stringify(result));
-                            var body = result.body;
-                            alert(body.text)
-                        },
-                        (error) => {
-                            console.log('Error in Sing-in/Sign-out: '+ JSON.stringify(error));
-                            alert(error._body.message || 'internal server error')
-                        }
-                    );
-
-
+                this.signInOrSignOutKid(kid);
             }else if(result === "Inform Parent") {
-
                 dialogs.prompt({
                     title: "Message",
                     message: "Type your message here",
@@ -90,14 +68,47 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     inputType: dialogs.inputType.text
                 }).then(r => {
                     console.log("Dialog result: " + r.result + ", text: " + r.text);
-                    var options = {
-                        text: "Message sent successfully",
-                        duration : nstoasts.DURATION.SHORT
-                    };
-                    nstoasts.show(options);
+                    this.sendMessageForKid(r.text, kid);
                 });
             }
         });
 
+    }
+
+    signInOrSignOutKid(kid){
+        //var time = this.datePipe.transform(new Date(), 'HH:MM a');
+        //alert(kidName + " signed in successfully at " + time)
+        this.kidSignInOutService.signInOrSingOut(kid.kid_klid)
+            .subscribe(
+                (result) => {
+                    console.log("Sign-in/Sign-out resp: "+JSON.stringify(result));
+                    var body = result.body;
+                    alert(body.text)
+                },
+                (error) => {
+                    console.log('Error in Sing-in/Sign-out: '+ JSON.stringify(error));
+                    alert(error._body.message || 'something went wrong')
+                }
+            );
+
+    }
+
+    sendMessageForKid(text, kid){
+        this.messageService.sendMessage(text, kid.kid_klid)
+            .subscribe(
+                (result) => {
+                    console.log("Send Message resp: "+JSON.stringify(result));
+                    //var body = result;
+                    var options = {
+                        text: result.message,
+                        duration : nstoasts.DURATION.SHORT
+                    };
+                    nstoasts.show(options);
+                },
+                (error) => {
+                    console.log('Error in Send Message: '+ JSON.stringify(error));
+                    alert(error._body.message || 'something went wrong')
+                }
+            );
     }
 }
