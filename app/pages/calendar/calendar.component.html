@@ -91,7 +91,7 @@
                             <GridLayout row="0" columns="50, *" rows="*" class="item">
                                 <StackLayout  verticalAlignment="center">
                                     <Image height="40" width="40" class="kid-profile-pic blue-circle-border"
-                                           [nsRouterLink]="['/kid-dashboard']" src="https://placehold.it/100x100"></Image>
+                                           [nsRouterLink]="['/kid-dashboard']" src="{{ item.photograph ? item.photograph : '~/images/avatar-100.png' }}"></Image>
                                 </StackLayout>
                                 <StackLayout col="1">
                                     <StackLayout col="1" orientation="horizontal">

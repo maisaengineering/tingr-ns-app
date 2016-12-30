@@ -52,5 +52,6 @@ export interface ManagedKid {
     age: number,
     reminders_count: number,
     notifications_count: number,
-    kid_klid: string
+    kid_klid: string,
+    photograph: string
 }

@@ -2,7 +2,7 @@
     <StackLayout orientation="vertical" class="m-t-20">
         <StackLayout horizontalAlignment="center"  verticalAlignment="center">
             <Image height="100" width="100" class="teacher-profile-pic blue-circle-border"
-                   [nsRouterLink]="['/kid-dashboard']" src="https://placehold.it/100x100"></Image>
+                   [nsRouterLink]="['/kid-dashboard']" src="{{ teacherPhotograph ? teacherPhotograph : '~/images/avatar-100.png' }}"></Image>
 
         </StackLayout>
         <StackLayout class="m-t-10 m-b-10" horizontalAlignment="center"  verticalAlignment="center">

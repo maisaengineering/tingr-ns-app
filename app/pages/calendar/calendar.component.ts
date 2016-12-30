@@ -29,7 +29,7 @@ export class CalendarComponent extends DrawerPage implements OnInit{
     public birthdays: Array<Birthday>;
     public event_reminders: Array<EventReminder>;
     public holidays: Array<Holiday>;
-    public messages: Array<any>;
+    public messages: Array<Message>;
     public currentDate: Date;
     public teacherName: String;
     public result:Date;
@@ -116,16 +116,15 @@ export class CalendarComponent extends DrawerPage implements OnInit{
                     var body = result.body;
                     console.log("Calendar Respone: " + JSON.stringify(body));
                     this.schedules = body.events;
-                    //this.messages = body.messages;
+                    this.messages = body.messages;
 
                     // TODO load dynaamically once tested and update message property from array to Message class in above declaration
-                    this.messages.push(
+                    /*this.messages.push(
                         { read_message: true, text: 'Hello world',sender_name: 'Sender name' , child_name: 'child name',child_relationship: 'relationship' },
                         { read_message: false, text: 'Hello world',sender_name: 'Sender name' , child_name: 'child name',child_relationship: 'relationship' },
                         { read_message: true, text: 'Hello world',sender_name: 'Sender name' , child_name: 'child name',child_relationship: 'relationship' }
                         );
-
-
+                     */
 
                     var reminders = body.reminders;
                     this.birthdays = reminders.birthdays;
