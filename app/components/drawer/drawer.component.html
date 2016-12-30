@@ -1,9 +1,11 @@
 <GridLayout class="drawer-header">
     <StackLayout orientation="vertical" class="m-t-20">
         <StackLayout horizontalAlignment="center"  verticalAlignment="center">
-            <Image stretch ="none" class="img-circle" src="http://placeimg.com/200/200/people"></Image>
+            <Image height="100" width="100" class="teacher-profile-pic blue-circle-border"
+                   [nsRouterLink]="['/kid-dashboard']" src="https://placehold.it/100x100"></Image>
+
         </StackLayout>
-        <StackLayout horizontalAlignment="center"  verticalAlignment="center">
+        <StackLayout class="m-t-10 m-b-10" horizontalAlignment="center"  verticalAlignment="center">
             <Label text="{{ teacherFullname }}"  class="teacher-name"></Label>
         </StackLayout>
     </StackLayout>

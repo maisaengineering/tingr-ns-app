@@ -109,13 +109,15 @@ ActionBar {
 .drawer-content .drawer-header {
     height: 150;
     background-color: #9fc5f8;
-    margin-bottom: 7;
 }
 
+.drawer-content .drawer-header .teacher-profile-pic {
+    border-radius: 50;
+}
 .drawer-content .drawer-header .teacher-name{
     color: white;
-    margin-top: 10;
 }
+
 
 .drawer-content .drawer-links .drawer-link {
     font-size: 15;
