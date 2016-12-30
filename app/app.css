@@ -9,7 +9,7 @@ For example, the following CSS rule changes the font size of all UI
 components that have the btn class name.
 */
 .btn {
-    font-size: 18px;
+    font-size: 18;
 }
 
 /*
@@ -29,11 +29,11 @@ refer to http://docs.nativescript.org/ui/theme.
 
 Page {
     background-color: white;
-    font-size: 15px;
+    font-size: 15;
 }
 TextField {
-    padding: 10px;
-    font-size: 13px;
+    padding: 10;
+    font-size: 13;
 }
 
 /*colors --*/
@@ -67,26 +67,26 @@ ActionBar {
 }
 
 .action-label{
-    font-size: 15px;
+    font-size: 15;
     font-weight: bold;
 }
 
 .line-separator  {
-    height: 1px;
+    height: 1;
     background-color: #dddddd;
-    margin: 7px 0;
+    margin: 7 0;
 }
 
 
 .number-with-circle{
-    display: block;
-    height: 15px;
-    width: 15px;
-    line-height: 15px;
-    border-radius: 10px;
-    color: white;
+    height: 20;
+    width: 20;
+    display: table-cell;
     text-align: center;
-    font-size: 10px;
+    vertical-align: middle;
+    border-radius: 50;
+    color: #fff;
+    font-size: 12;
 }
 
 
@@ -111,28 +111,28 @@ ActionBar {
 }
 
 .drawer-content .drawer-header {
-    height: 150px;
+    height: 150;
     background-color: #9fc5f8;
-    margin-bottom: 7px;
+    margin-bottom: 7;
 }
 
 .drawer-content .drawer-header .teacher-name{
     color: white;
-    margin-top: 10px;
+    margin-top: 10;
 }
 
 .drawer-content .drawer-links .drawer-link {
-    font-size: 15px;
-    padding: 15px;
+    font-size: 15;
+    padding: 15;
 }
 
 .drawer-content .drawer-links .drawer-link .fa {
-    font-size: 20px;
-    margin-right: 10px;
+    font-size: 20;
+    margin-right: 10;
 }
 
 .drawer-content .drawer-links .drawer-link .text {
-    margin-left: 30px;
+    margin-left: 30;
 }
 
 .drawer-content .drawer-links .current {
@@ -140,17 +140,17 @@ ActionBar {
 }
 
 .drawer-content .drawer-separator  {
-    height: 1px;
+    height: 1;
     background-color: #dddddd;
-    margin: 7px 0;
+    margin: 7 0;
 }
 
 .todo-next {
-    padding: 20px;
+    padding: 20;
 }
 
 .todo-next > Button {
-    font-size: 24px;
+    font-size: 24;
 }
 
 .todo-next > Button.disabled {
@@ -158,7 +158,7 @@ ActionBar {
 }
 
 .todo-filter {
-    padding: 20px;
+    padding: 20;
 }
 
 .todo-filter > Label {
@@ -171,15 +171,15 @@ ActionBar {
 }
 
 .todo-item {
-    margin: 20px 20px 0 20px;
-    padding: 10px;
+    margin: 20 20 0 20;
+    padding: 10;
 
 }
 
 .checkbox {
-    width: 22px;
-    height: 22px;
-    margin: 0 10px 0 0;
+    width: 22;
+    height: 22;
+    margin: 0 10 0 0;
     horizontal-align: left;
 }
 
@@ -207,7 +207,7 @@ StackLayout.dimmer{
     opacity: 0.7;
 }
 ActivityIndicator.busy {
-    height: 70px;
-    width: 70px;
+    height: 70;
+    width: 70;
     color: #9fc5f8;
 }

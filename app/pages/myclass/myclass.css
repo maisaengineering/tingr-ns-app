@@ -1,29 +1,70 @@
-.myclass-container .profile-pic{
-    margin: 0 10px 0 20px;
-   /* padding: 15px;*/
+Image.header-image{
+    background-repeat: no-repeat;
+    background-position: 50;
+    border-radius: 100;
+    width: 100;
+    height: 100;
+
+    margin: 20;
 }
 
+/*
 
-.myclass-container .kid-name{
-    font-size: 15px;
-}
-.myclass-container .kid-age{
-    font-size: 15px;
-    font-weight: 900;
-}
-
-StackLayout.kid-info{
-    margin: 20px 0px 20px 0;
+StackLayout.kid-profile-container {
+    vertical-align: middle;
+    horizontal-align: center;
+    margin-left: 10;
+    height: 100;
 }
 
-.myclass-container .right-section{
-    margin-right: 20px;
+StackLayout.kid-profile-image-container {
+    border-color:  #9fc5f8;
+    border-width: 2;
+    border-radius: 38;
+
 }
+
+Image.kid-profile-image {
+    height: 75;
+    width: 75;
+    border-radius: 36;
+}
+*/
+
+
+
+/*.profile-pic{
+    height: 75;
+    width: 75;
+    border-radius: 100;
+}*/
+
+    /*.myclass-container .profile-pic{
+        margin: 0 10px 0 20px;
+       !* padding: 15px;*!
+    }
+
+
+    .myclass-container .kid-name{
+        font-size: 15px;
+    }
+    .myclass-container .kid-age{
+        font-size: 15px;
+        font-weight: 900;
+    }
+
+    StackLayout.kid-info{
+        margin: 20px 0px 20px 0;
+    }
+
+    .myclass-container .right-section{
+        margin-right: 20px;
+    }*/
 
 .number-with-circle.reminders-count{
     background-color: orange;
 }
 .number-with-circle.notifications-count{
     background-color:  #2b78e4;
-    margin-left: 2px;
+    margin-left: 3px;
 }
