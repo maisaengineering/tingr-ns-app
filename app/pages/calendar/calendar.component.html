@@ -6,8 +6,8 @@
     <StackLayout orientation="horizontal"
                  ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
-        <Image src="~/images/calendar-icon-white-48.png"
-               class="m-r-5 action-image" stretch="none"></Image>
+        <Image height="30" width="30" src="~/images/calendar-icon-white-48.png"
+               class="m-r-5 action-image" stretch="aspectFill"></Image>
         <Label text="Dialy"  class="action-label"></Label>
     </StackLayout>
 </ActionBar>
@@ -32,7 +32,7 @@
 
                 <!-- ##################  Scheules-------------------------------------------------------------------------------->
                 <DockLayout *ngIf="schedules.length" stretchLastChild="false" class="calendar-schedule">
-                    <Image dock="left" stretch ="none" verticalAlignment="center" class="schedule-icon"  src="~/images/schedule-icon-72.png"></Image>
+                    <Image dock="left" height="50" width="50" stretch ="aspectFill" verticalAlignment="center" class="schedule-icon"  src="~/images/schedule-icon-72.png"></Image>
                     <StackLayout text="top" dock="top">
                         <GridLayout rows="auto,auto" *ngFor="let item of schedules; let i = index" >
                             <GridLayout row="0" columns="auto, auto" rows="auto,auto" class="item">
@@ -53,7 +53,7 @@
                 <!-- ##################  Reminders-------------------------------------------------------------------------------->
 
                 <DockLayout *ngIf="event_reminders.length || birthdays.length || holidays.length" stretchLastChild="false" class="calendar-reminder font-italic">
-                    <Image dock="left" stretch ="none" verticalAlignment="center" class="reminder-icon"  src="~/images/reminder-icon-72.png"></Image>
+                    <Image dock="left" height="50" width="50" stretch ="aspectFill" verticalAlignment="center" class="reminder-icon"  src="~/images/reminder-icon-72.png"></Image>
                     <StackLayout text="top" dock="top">
 
                         <!-- Birthdays -->
@@ -85,7 +85,7 @@
 
                 <!-- ##################  Messages -------------------------------------------------------------------------------->
                 <DockLayout *ngIf="messages.length"  stretchLastChild="false" class="calendar-message">
-                    <Image dock="left" stretch ="none" verticalAlignment="center" class="message-icon"  src="~/images/message-icon-72.png"></Image>
+                    <Image dock="left" height="50" width="50" stretch ="aspectFill" verticalAlignment="center" class="message-icon"  src="~/images/message-icon-72.png"></Image>
                     <StackLayout text="top" dock="top">
                         <GridLayout rows="auto,auto" *ngFor="let item of messages; let i = index" >
                             <GridLayout row="0" columns="50, *" rows="*" class="item">
@@ -93,9 +93,9 @@
                                     <!--<Image stretch ="none" col="0" horizontalAlignment="center"
                                            class="{{ item.photograph ? 'img-circle' : 'rounded-corner-icon avatar-icon'}}"
                                            src="{{ item.photograph ? item.photograph : '~/images/avatar-icon-32.png' }}"></Image>-->
-                                    <Image stretch ="none" col="0" horizontalAlignment="center"
+                                    <Image height="40" width="40" stretch ="aspectFill" col="0" horizontalAlignment="center"
                                            [nsRouterLink]="['/kid-dashboard']"
-                                           class="img-circle blue-circle-border" src="https://placeimg.com/70/70/people"></Image>
+                                           class="img-circle blue-circle-border" src="https://placeimg.com/40/40/people"></Image>
                                 </StackLayout>
                                 <StackLayout col="1">
                                     <StackLayout col="1" orientation="horizontal">

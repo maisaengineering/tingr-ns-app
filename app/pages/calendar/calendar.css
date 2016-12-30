@@ -122,7 +122,7 @@ StackLayout.today-date {
 .calendar-reminder .item,
 .calendar-message .item  {
     padding: 6px;
-    font-size: 12px
+    font-size: 13px
 }
 
 .calendar-schedule .item .event{
