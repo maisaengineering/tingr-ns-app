@@ -42,7 +42,7 @@ export class KidDashboardComponent implements OnInit{
 
     ngOnInit() {
         //this.page.actionBarHidden = true;
-
+        this.kid = this.kidData.info;
     }
 
     goBack(){

@@ -76,10 +76,8 @@ export class MyClassComponent extends DrawerPage implements OnInit{
     }
 
     redirectToKidDashboard(kid){
-
         this.kidData.info =  kid;
         this.router.navigate(["kid-dashboard"]);
-
     }
 
     onLongPress(event, kid) {
