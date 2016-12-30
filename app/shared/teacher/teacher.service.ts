@@ -37,8 +37,22 @@ export class TeacherService {
     }
 
 
-    logoff() {
-        TokenService.authToken = "";
+    logOff() {
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: "revoke_authentication",
+            body: {}
+        });
+        return this.http.post(
+            Config.apiUrl + "users", data, {
+                headers: headers
+            }
+        )
+        .map(response => response.json())
+        .catch(this.handleErrors);
     }
 
     evaluteUser(teacher: Teacher) {

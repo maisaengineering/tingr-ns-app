@@ -1,32 +1,50 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import {Page} from "../page";
 import * as appSettings from "application-settings"
 import { TokenService } from "../../shared/token.service";
 import { TeacherInfo } from "../../providers/data/teacher_info";
+import { TeacherService } from "../../shared/teacher/teacher.service";
+
 var nstoasts = require("nativescript-toasts");
 
 @Component({
-    selector: 'my-app',
-    templateUrl: 'pages/login/login.html'
+    selector: "my-app",
+    providers: [TeacherService],
+    templateUrl: "pages/login/login.html",
+    styleUrls: ["pages/login/login-common.css", "pages/login/login.css"]
 })
 export class LogoutComponent  implements OnInit {
+    public isLoading: Boolean = false;
 
-    constructor(private router: Router, private route: ActivatedRoute) {
+    constructor(private router: Router, private route: ActivatedRoute,
+                private teacherService: TeacherService) {
     }
 
     ngOnInit() {
-        // clear teacher authToken and details
-        TokenService.authToken = '';
-        TeacherInfo.details = '';
-        //appSettings.clear();
-        //TODO invoke logout API
-        var options = {
-            text: 'Logged out successfully',
-            duration : nstoasts.DURATION.SHORT
-        };
-        nstoasts.show(options);
-        // redirect to login page
-        this.router.navigate(["login"]);
+        this.isLoading = true;
+        this.teacherService.logOff()
+            .subscribe(
+                (result) => {
+                    // clear teacher accessToke, authToken and details
+                    TokenService.authToken = '';
+                    TokenService.accessToken = '';
+                    TeacherInfo.details = '';
+                    appSettings.clear();
+                    var options = {
+                        text: 'Logged out successfully',
+                        duration : nstoasts.DURATION.SHORT
+                    };
+                    nstoasts.show(options);
+                    this.isLoading = false;
+                    // redirect to login page
+                    this.router.navigate(["login"]);
+
+                },
+                (error) => {
+                    console.log('Error in Logoff: '+ JSON.stringify(error));
+                    alert(JSON.stringify(error));
+                    this.isLoading = false;
+                }
+            );
     }
 }

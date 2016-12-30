@@ -207,5 +207,5 @@ StackLayout.dimmer{
 ActivityIndicator.busy {
     height: 70;
     width: 70;
-    color: #fff;
+    color: #2b78e4;
 }
