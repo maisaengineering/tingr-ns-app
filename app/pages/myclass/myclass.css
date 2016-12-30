@@ -1,62 +1,9 @@
 Image.kid-profile-pic{
     border-radius: 36;
     border-color:  #9fc5f8;
-    border-width: 2;
+    border-width: 1;
     border-radius: 38;
 }
-
-/*
-
-StackLayout.kid-profile-container {
-    vertical-align: middle;
-    horizontal-align: center;
-    margin-left: 10;
-    height: 100;
-}
-
-StackLayout.kid-profile-image-container {
-    border-color:  #9fc5f8;
-    border-width: 2;
-    border-radius: 38;
-
-}
-
-Image.kid-profile-image {
-    height: 75;
-    width: 75;
-    border-radius: 36;
-}
-*/
-
-
-
-/*.profile-pic{
-    height: 75;
-    width: 75;
-    border-radius: 100;
-}*/
-
-    /*.myclass-container .profile-pic{
-        margin: 0 10px 0 20px;
-       !* padding: 15px;*!
-    }
-
-
-    .myclass-container .kid-name{
-        font-size: 15px;
-    }
-    .myclass-container .kid-age{
-        font-size: 15px;
-        font-weight: 900;
-    }
-
-    StackLayout.kid-info{
-        margin: 20px 0px 20px 0;
-    }
-
-    .myclass-container .right-section{
-        margin-right: 20px;
-    }*/
 
 .number-with-circle.reminders-count{
     background-color: orange;
