@@ -16,9 +16,9 @@
             <!--<Image stretch="aspectFill" [src]="other.coverUrl" class="kid-cover-image"></Image>-->
             <StackLayout class="kid-profile-container">
                 <StackLayout orientation="horizontal">
-                    <Label class="kid-name" [text]="other.name"></Label>
+                    <Label class="kid-name" text="{{ kid.fname }} {{ kid.lname }}"></Label>
                     <StackLayout class="kid-profile-image-container">
-                        <Image [src]="other.pictureUrl" class="kid-profile-image"> </Image>
+                        <Image src="{{ kid.photograph_url || '~/images/avatar-100.png'}}" class="kid-profile-image"> </Image>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>

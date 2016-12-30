@@ -4,6 +4,9 @@ import { MyClassService, ManagedKid, Room} from "../../shared/myclass.service";
 import { KidSignInOutService } from "../../shared/kid-signinout.service";
 import { MessageService } from "../../shared/message.service";
 
+import { KidData } from "../../providers/data/kid_data";
+import { Router, ActivatedRoute } from "@angular/router";
+
 import { ListView } from 'ui/list-view';
 import { TextView } from 'ui/text-view';
 import { GridLayout } from "ui/layouts/grid-layout";
@@ -33,7 +36,9 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                 private kidSignInOutService: KidSignInOutService,
                 private messageService: MessageService,
                 private changeDetectorRef: ChangeDetectorRef,
-                private datePipe: DatePipe) {
+                private datePipe: DatePipe,
+                private kidData: KidData,
+                private router: Router) {
         super(changeDetectorRef);
         if (app.android) {
             this.isAndroid = true;
@@ -68,6 +73,13 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     alert(JSON.stringify(error))
                 }
             );
+    }
+
+    redirectToKidDashboard(kid){
+
+        this.kidData.info =  kid;
+        this.router.navigate(["kid-dashboard"]);
+
     }
 
     onLongPress(event, kid) {
