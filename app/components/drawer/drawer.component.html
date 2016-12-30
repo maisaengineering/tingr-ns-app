@@ -13,6 +13,7 @@
 
 <StackLayout class="drawer-links" orientation="vertical">
     <StackLayout class="drawer-link"
+                 [nsRouterLinkActive]="['bg-primary']"
                  orientation="horizontal"
                  [nsRouterLink]="['/calendar']">
         <Label class="fa" text="{{'fa-calendar-o' | fonticon}}"></Label>
@@ -20,7 +21,8 @@
     </StackLayout>
     <StackLayout class="drawer-link"
                  orientation="horizontal"
-                 [nsRouterLink]="['/myclass']">
+                 [nsRouterLink]="['/myclass']"
+                 [nsRouterLinkActive]="['bg-primary']">
         <Label class="fa" text="{{'fa-child' | fonticon}}"></Label>
         <Label class="text" text="My Class"></Label>
     </StackLayout>
@@ -44,7 +46,7 @@
 
     <StackLayout class="drawer-separator">
     </StackLayout>
-    <StackLayout class="drawer-link"
+    <StackLayout class="drawer-link text-primary"
                  orientation="horizontal"
                  [nsRouterLink]="['/logout']">
         <Label class="fa" text="{{'fa-sign-out' | fonticon}}"></Label>
