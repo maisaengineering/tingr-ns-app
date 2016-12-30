@@ -105,10 +105,10 @@
                     <GridLayout columns="auto, *">
                         <StackLayout col="0" row="0" horizontalAlignment="left" orientation="horizontal">
                             <StackLayout *ngFor="let item of tags" margin="3">
-                                <!--<Image src="~/images/avatar-icon-32.png" stretch="none" class="rounded-corner-icon tagged-profile-pic"></Image>-->
-                                <Image stretch ="aspectFill" height="40" width="40" col="0" horizontalAlignment="center"
-                                       [nsRouterLink]="['/kid-dashboard']"
-                                       class="img-circle blue-circle-border" src="https://placeimg.com/50/50/people"></Image>
+
+
+                                <Image height="40" width="40" class="kid-profile-pic blue-circle-border"
+                                       [nsRouterLink]="['/kid-dashboard']" src="https://placehold.it/100x100"></Image>
                             </StackLayout>
                         </StackLayout>
                         <StackLayout col="1" row="0" horizontalAlignment="right" orientation="horizontal">
@@ -130,9 +130,11 @@
                             <StackLayout orientation="horizontal" verticalAlignment="center" class="moment-comment-item">
                                 <!--<Image verticalAlignment="center" src="~/images/avatar-icon-32.png" stretch="none" class="rounded-corner-icon commenter-profile-pic"></Image>-->
 
-                                <Image stretch ="aspectFit" height="60" width="60" col="0"  horizontalAlignment="center"
+                                <!--<Image stretch ="aspectFit" height="60" width="60" col="0"  horizontalAlignment="center"
                                        [nsRouterLink]="['/kid-dashboard']"
-                                       class="img-circle blue-circle-border p-10" src="https://placeimg.com/60/60/people"></Image>
+                                       class="img-circle blue-circle-border p-10" src="https://placeimg.com/60/60/people"></Image>-->
+
+                                <Image height="60" width="60" class="parent-profile-pic blue-circle-border" src="https://placehold.it/100x100"></Image>
 
                                 <StackLayout orientation="vertical" class="comment-details p-l-5">
                                     <StackLayout orientation="horizontal">

@@ -133,6 +133,15 @@ GridLayout.moment-bottom-section{
 }
 
 
+Image.kid-profile-pic{
+    border-radius: 20;
+}
+
+Image.parent-profile-pic{
+    border-radius: 30;
+}
+
+
 
 
 

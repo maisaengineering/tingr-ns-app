@@ -90,12 +90,8 @@
                         <GridLayout rows="auto,auto" *ngFor="let item of messages; let i = index" >
                             <GridLayout row="0" columns="50, *" rows="*" class="item">
                                 <StackLayout  verticalAlignment="center">
-                                    <!--<Image stretch ="none" col="0" horizontalAlignment="center"
-                                           class="{{ item.photograph ? 'img-circle' : 'rounded-corner-icon avatar-icon'}}"
-                                           src="{{ item.photograph ? item.photograph : '~/images/avatar-icon-32.png' }}"></Image>-->
-                                    <Image height="40" width="40" stretch ="aspectFill" col="0" horizontalAlignment="center"
-                                           [nsRouterLink]="['/kid-dashboard']"
-                                           class="img-circle blue-circle-border" src="https://placeimg.com/40/40/people"></Image>
+                                    <Image height="40" width="40" class="kid-profile-pic blue-circle-border"
+                                           [nsRouterLink]="['/kid-dashboard']" src="https://placehold.it/100x100"></Image>
                                 </StackLayout>
                                 <StackLayout col="1">
                                     <StackLayout col="1" orientation="horizontal">
