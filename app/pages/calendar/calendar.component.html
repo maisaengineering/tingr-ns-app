@@ -99,8 +99,8 @@
                                 </StackLayout>
                                 <StackLayout col="1">
                                     <StackLayout col="1" orientation="horizontal">
-                                        <Label class="kid-name" [text]="item.child_name" textwrap="true"></Label>
-                                        <Label class="relation-name light-gray" [text]="item.child_relationship" textwrap="true"></Label>
+                                        <Label class="kid-name" [text]="item.sender_name" textwrap="true"></Label>
+                                        <Label class="relation-name light-gray" text="{{ item.child_name }}'s {{ item.child_relationship }}" textwrap="true"></Label>
                                     </StackLayout>
                                     <Label [text]="item.text" class="{{ item.read_message ? 'very-light-gray' : 'blue' }}" col="1" textwrap="true"></Label>
                                 </StackLayout>
