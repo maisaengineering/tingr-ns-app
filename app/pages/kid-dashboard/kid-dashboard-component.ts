@@ -46,7 +46,7 @@ export class KidDashboardComponent implements OnInit{
 
         this.moment = {
             cover_image: 'https://placeimg.com/500/500/nature',
-            org_logo: 'https://placeimg.com/75/75/tech',
+            org_logo: 'https://placeimg.com/60/60/tech',
             tagged_img: 'https://placeimg.com/50/50/people'
         }
 
@@ -59,9 +59,9 @@ export class KidDashboardComponent implements OnInit{
 
 
         this.messages.push(
-            {photograph: 'http://placeimg.com/75/75/people',kid_name: 'John Reo', relation: "Jonie's father", text: "Jonie has bit cold.Please call us if it get worst!", read: true},
-            {photograph: 'https://placeimg.com/75/75/people',kid_name: 'Jane Deo', relation: "Johnny's mather", text: "We would like to pickup him up around 5pm today", read: false},
-            {photograph: 'https://placeimg.com/75/75/people',kid_name: 'Jane Deo', relation: "Johnny's mather", text: "I am on-my way", read: true}
+            {photograph: 'http://placehold.it/100x100',kid_name: 'John Reo', relation: "Jonie's father", text: "Jonie has bit cold.Please call us if it get worst!", read: true},
+            {photograph: 'http://placehold.it/100x100',kid_name: 'Jane Deo', relation: "Johnny's mather", text: "We would like to pickup him up around 5pm today", read: false},
+            {photograph: 'http://placehold.it/100x100',kid_name: 'Jane Deo', relation: "Johnny's mather", text: "I am on-my way", read: true}
         );
 
 
