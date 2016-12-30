@@ -9,3 +9,9 @@ Image.kid-profile-pic{
     background-color:  #2b78e4;
     margin-left: 3px;
 }
+
+/*Override for list-group-item*/
+
+.list-group-item{
+    padding: 10px;
+}
