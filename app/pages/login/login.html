@@ -6,11 +6,11 @@
         <Image src="~/images/logo-72@2x.png" stretch="none" horizontalAlignment="center" class="m-b-30"></Image>
         <TextField class="m-t-30" hint="Email Address" keyboardType="email" [(ngModel)]="email"
                    autocorrect="false" autocapitalizationType="none"></TextField>
-        <Button text="Continue" class="blue-background submit-button" (tap)="submitEmail()"></Button>
-    </StackLayout>
+        <Button isEnabled="{{ isLoading ? false : true }}" text="Continue" class="blue-background submit-button" (tap)="submitEmail()"></Button>
 
-    <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
-    <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
-        <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
-    </GridLayout>
+        <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+        <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+            <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
+        </GridLayout>
+    </StackLayout>
 </GridLayout>
