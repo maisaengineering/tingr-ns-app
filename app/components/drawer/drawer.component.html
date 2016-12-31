@@ -27,18 +27,19 @@
         <Label class="text" text="My Class"></Label>
     </StackLayout>
 
-    <StackLayout class="drawer-link"
+    <!--<StackLayout class="drawer-link"
                  orientation="horizontal"
                  [nsRouterLink]="['/']">
         <Label class="fa" text="{{'fa-comments' | fonticon}}"></Label>
         <Label class="text" text="Messages"></Label>
-    </StackLayout>
+    </StackLayout>-->
 
     <StackLayout class="drawer-separator">
     </StackLayout>
     <StackLayout class="drawer-link"
                  orientation="horizontal"
-                 [nsRouterLink]="['/settings']">
+                 [nsRouterLink]="['/settings']"
+                 [nsRouterLinkActive]="['bg-primary']">
         <Label class="fa" text="{{'fa-cogs' | fonticon}}"></Label>
         <Label class="text" text="Settings"></Label>
     </StackLayout>

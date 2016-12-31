@@ -21,6 +21,13 @@ refer to http://docs.nativescript.org/ui/theme.
 @import url("~/platform.css");
 
 
+/* THEME OVERRIDES*/
+.bg-primary{
+    background-color: #b7d4f9;
+}
+
+
+
 .fa {
     font-family: FontAwesome, fontawesome-webfont;
 }
