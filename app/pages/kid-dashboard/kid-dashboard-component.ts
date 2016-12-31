@@ -39,23 +39,24 @@ export class KidDashboardComponent implements OnInit{
         this.kid = kidData.info;
         this.posts = [];
 
-        console.log("##### KID INfo "+ JSON.stringify(this.kid));
-
     }
 
     ngOnInit() {
         //this.page.actionBarHidden = true;
         // this.kid = this.kidData.info;
+        this.isLoading = true;
         this.postService.getPosts(this.kid.kid_klid)
             .subscribe(
                 (result) => {
                     var body = result.body;
                     this.posts = body.posts;
                     console.log("Kid-Dashboard resp: "+JSON.stringify(this.posts));
+                    this.isLoading = false;
                 },
                 (error) => {
                     this.isLoading = false;
                     console.log('Error: '+ JSON.stringify(error));
+                    this.isLoading = false;
                     alert(JSON.stringify(error))
                 }
             );

@@ -10,12 +10,12 @@
 
 <ScrollView>
 
-    <GridLayout  rows="auto,auto,auto,auto,auto,auto,auto" tkMainContent class="kid-dashboard">
+    <GridLayout  rows="auto,auto,auto,auto,auto,auto,auto,auto" tkMainContent class="kid-dashboard">
 
         <GridLayout row="0" class="section1" backgroundColor="#e9e9e9">
             <StackLayout class="kid-profile-container">
                 <StackLayout orientation="horizontal">
-                    <Label class="kid-name" text="{{ kid.fname }} {{ kid.lname }}"></Label>
+                    <Label class="kid-name" text="{{ kid.fname }} {{ kid.lname }}" textWrap="true"></Label>
                     <StackLayout class="kid-profile-image-container">
                         <Image src="{{ kid.photograph_url || '~/images/avatar-100.png' }}" class="kid-profile-image"> </Image>
                     </StackLayout>
@@ -168,5 +168,14 @@
                 </GridLayout>
             </GridLayout>
         </GridLayout>
+
+        <GridLayout row="7">
+        <StackLayout visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+        <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+            <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
+        </GridLayout>
+        </GridLayout>
     </GridLayout>
+
+
 </ScrollView>
