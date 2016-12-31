@@ -1,13 +1,13 @@
 {
     "private": false,
     "nativescript": {
-        "id": "org.nativescript.helloworldng"
+        "id": "org.tingr.teacher"
     },
-    "name": "tns-template-hello-world-ng",
+    "name": "Tingr",
     "main": "main.js",
     "version": "2.4.2",
-    "author": "Telerik <support@telerik.com>",
-    "description": "Nativescript Angular Hello World template",
+    "author": "MaisaLabs <contact@maisasolutions.com>",
+    "description": "Tingr",
     "license": "BSD",
     "keywords": [
         "telerik",
@@ -21,9 +21,9 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git://github.com/NativeScript/template-hello-world-ng"
+        "url": "git://github.com/maisaengineering/tingr-ns-app"
     },
-    "homepage": "https://github.com/NativeScript/template-hello-world-ng",
+    "homepage": "https://github.com/maisaengineering/tingr-ns-app",
     "android": {
         "v8Flags": "--expose_gc"
     },
