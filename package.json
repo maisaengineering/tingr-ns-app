@@ -1,12 +1,15 @@
 {
-  "description": "NativeScript Application",
+  "description": "Tingr Teacher Application",
   "license": "SEE LICENSE IN <your-license-filename>",
-  "readme": "NativeScript Application",
-  "repository": "<fill-your-repository-here>",
+  "readme": "Tingr Application",
+  "repository": "https://github.com/maisaengineering/tingr-ns-app",
   "nativescript": {
-    "id": "org.nativescript.tingrnsapp",
+    "id": "org.tingr.teacher",
     "tns-android": {
       "version": "2.4.1"
+    },
+    "tns-ios": {
+      "version": "2.4.0"
     }
   },
   "dependencies": {
