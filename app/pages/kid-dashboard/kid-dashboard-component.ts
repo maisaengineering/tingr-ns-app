@@ -21,11 +21,12 @@ export class DataItem {
     providers: [ PostService ]
 })
 export class KidDashboardComponent implements OnInit{
-    public kid: ManagedKid;
-    public posts: Array<Post>;
+    public kid: any;
+    public posts: Array<any>;
     public comments: Array<Comment>;
     public tagged_to: Array<TaggedTo>;
     public topmost;
+    public isLoading: Boolean = false;
 
     constructor(private postService: PostService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
@@ -34,15 +35,30 @@ export class KidDashboardComponent implements OnInit{
                 private kidData: KidData) {
         //super(changeDetectorRef);
 
+        this.kid = {};
         this.kid = kidData.info;
+        this.posts = [];
 
-        console.log("#####   "+ JSON.stringify(this.kid))
+        console.log("##### KID INfo "+ JSON.stringify(this.kid));
 
     }
 
     ngOnInit() {
         //this.page.actionBarHidden = true;
-        this.kid = this.kidData.info;
+        // this.kid = this.kidData.info;
+        this.postService.getPosts(this.kid.kid_klid)
+            .subscribe(
+                (result) => {
+                    var body = result.body;
+                    this.posts = body.posts;
+                    console.log("Kid-Dashboard resp: "+JSON.stringify(this.posts));
+                },
+                (error) => {
+                    this.isLoading = false;
+                    console.log('Error: '+ JSON.stringify(error));
+                    alert(JSON.stringify(error))
+                }
+            );
     }
 
     goBack(){

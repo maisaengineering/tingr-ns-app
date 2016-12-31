@@ -17,7 +17,7 @@
                 <StackLayout orientation="horizontal">
                     <Label class="kid-name" text="{{ kid.fname }} {{ kid.lname }}"></Label>
                     <StackLayout class="kid-profile-image-container">
-                        <Image src="{{ kid.photograph_url || '~/images/avatar-100.png'}}" class="kid-profile-image"> </Image>
+                        <Image src="{{ kid.photograph_url || '~/images/avatar-100.png' }}" class="kid-profile-image"> </Image>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
@@ -87,32 +87,30 @@
             </StackLayout>
         </GridLayout>
 
-        <GridLayout row="6" class="moment-image-container">
-            <GridLayout rows="auto,auto,auto,auto, auto, auto">
+        <GridLayout row="6" class="moment-image-container" *ngIf="posts.length">
+            <GridLayout rows="auto,auto,auto,auto, auto, auto" *ngFor="let post of posts">
                 <GridLayout row="0">
-                    <Image stretch="aspectFill" [src]="moment.cover_image" class="cover-image"></Image>
-                    <StackLayout class="org-container" horizontalAlignment="right">
+                    <Image stretch="aspectFill" src="{{ post.image || 'https://placehold.it/500x500' }}" class="cover-image"></Image>
+                    <!--<StackLayout class="org-container" horizontalAlignment="right">
                         <StackLayout orientation="horizontal">
                             <StackLayout class="org-image-container">
                                 <Image [src]="moment.org_logo" stretch="none"> </Image>
                             </StackLayout>
                         </StackLayout>
-                    </StackLayout>
+                    </StackLayout>-->
                 </GridLayout>
 
                 <GridLayout row="1" class="moment-tags">
-                    <GridLayout columns="auto, *">
+                    <GridLayout columns="auto, *" *ngIf="post.tagged_to.length">
                         <StackLayout col="0" row="0" horizontalAlignment="left" orientation="horizontal">
-                            <StackLayout *ngFor="let item of tags" margin="3">
-
-
+                            <StackLayout *ngFor="let item of post.tagged_to" margin="3">
                                 <Image height="40" width="40" class="kid-profile-pic blue-circle-border"
-                                       [nsRouterLink]="['/kid-dashboard']" src="https://placehold.it/100x100"></Image>
+                                       src="{{ item.photograph ||  '~/images/avatar-100.png' }}"></Image>
                             </StackLayout>
                         </StackLayout>
                         <StackLayout col="1" row="0" horizontalAlignment="right" orientation="horizontal">
                             <StackLayout orientation="vertical">
-                                <Label text="January 01, 2017" class="tagged-on-date"></Label>
+                                <Label text="{{  post.created_at.substring(0,10) |  date: 'MMMM dd, yyyy' }}" class="tagged-on-date"></Label>
                                 <Image src="~/images/heart-icon-red-48.png" height="30" width="30" stretch="aspectFill" horizontalAlignment="right"></Image>
                             </StackLayout>
                         </StackLayout>
@@ -124,23 +122,19 @@
                 </GridLayout>
                 <GridLayout row="3" class="moment-comments">
 
-                    <GridLayout rows="auto,auto,auto,auto,auto,auto">
-                        <GridLayout row="{{ i }}" *ngFor="let item of messages; let i = index">
+                    <GridLayout rows="auto,auto,auto,auto,auto,auto" *ngIf="post.comments">
+                        <GridLayout row="{{ i }}" *ngFor="let comment of post.comments; let i = index">
                             <StackLayout orientation="horizontal" verticalAlignment="center" class="moment-comment-item">
-                                <!--<Image verticalAlignment="center" src="~/images/avatar-icon-32.png" stretch="none" class="rounded-corner-icon commenter-profile-pic"></Image>-->
 
-                                <!--<Image stretch ="aspectFit" height="60" width="60" col="0"  horizontalAlignment="center"
-                                       [nsRouterLink]="['/kid-dashboard']"
-                                       class="img-circle blue-circle-border p-10" src="https://placeimg.com/60/60/people"></Image>-->
-
-                                <Image height="60" width="60" class="parent-profile-pic blue-circle-border" src="https://placehold.it/100x100"></Image>
+                                <Image height="60" width="60" class="parent-profile-pic blue-circle-border"
+                                       src="{{ comment.commenter_photo || '~/images/avatar-100.png' }}"></Image>
 
                                 <StackLayout orientation="vertical" class="comment-details p-l-5">
                                     <StackLayout orientation="horizontal">
-                                        <Label [text]="item.kid_name" class="kid-name font-weight-bold"></Label>
-                                        <Label [text]="item.relation" class="relation-name light-gray font-italic"></Label>
+                                        <Label [text]="comment.commented_by" class="kid-name font-weight-bold"></Label>
+                                        <Label text="{{ comment.child_names }}'s {{ comment.child_relationship }}" class="relation-name light-gray font-italic"></Label>
                                     </StackLayout>
-                                    <Label [text]="item.text" textwrap="true"></Label>
+                                    <Label [text]="comment.content" textwrap="true"></Label>
                                 </StackLayout>
                             </StackLayout>
                             <GridLayout row="{{ i+1 }}">

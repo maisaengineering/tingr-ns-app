@@ -14,24 +14,31 @@ export class PostService {
 
     }
 
-    getPosts() {
-        //command 'kid_posts'
+    getPosts(kl_id) {
 
-        // request
-        /*
-        * {
-         "access_token":"b232357efe151310493349fb1b00dec0565b3c1ff8fcf7b74dcd94f3ee48ada7",
-         "auth_token": "PdDn1TjvJsbS_Jr7HwjU",
-         "command":"kid_posts",
-         "body":{
-         "last_modified":"",
-         "post_count":0,
-         "step":"next",
-         "paginate":true,
-         "profile_id": "d631e8da-908f-4792-b403-696a8d9b1b22" => kid_klid
-         }
-         }
-        * */
+
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: "kid_posts",
+            body: {
+                last_modified: "",
+                post_count: 0,
+                step: "next",
+                paginate:true,
+                profile_id: kl_id
+            }
+        });
+
+        return this.http.post(
+            Config.apiUrl + "posts", data, {
+                headers: headers
+            }
+        ).map((res:Response) => res.json())
+            .catch(this.handleErrors)
+
 
     }
 
@@ -79,7 +86,9 @@ export interface Comment {
     created_at: string,
     commenter_photo: string,
     content: string,
-    unknown_commenter: boolean
+    unknown_commenter: boolean,
+    child_name: string,
+    child_relationship: string
 }
 
 export interface TaggedTo {
