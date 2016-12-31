@@ -49,7 +49,7 @@ export class KidDashboardComponent implements OnInit{
             .subscribe(
                 (result) => {
                     var body = result.body;
-                    this.posts = body.posts;
+                    this.posts = body.posts.length ? [body.posts[0]] : [];
                     console.log("Kid-Dashboard resp: "+JSON.stringify(this.posts));
                     this.isLoading = false;
                 },
