@@ -132,7 +132,7 @@
                                 <StackLayout orientation="vertical" class="comment-details p-l-5">
                                     <StackLayout orientation="horizontal">
                                         <Label [text]="comment.commented_by" class="kid-name font-weight-bold"></Label>
-                                        <Label text="{{ comment.child_names }}'s {{ comment.child_relationship }}" class="relation-name light-gray font-italic"></Label>
+                                        <Label *ngIf="comment.child_name" text="{{ comment.child_name }}'s {{ comment.child_relationship }}" class="relation-name light-gray font-italic"></Label>
                                     </StackLayout>
                                     <Label [text]="comment.content" textwrap="true"></Label>
                                 </StackLayout>
