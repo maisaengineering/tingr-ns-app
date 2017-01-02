@@ -3,9 +3,13 @@
 /* Newly added for caledar*/
 
 StackLayout.today-date {
-    margin: 5px;
     font-size: 14px;
     text-align: center;
+}
+
+StackLayout.today-date.active{
+   background-color: #e6e6e6;
+    color: white;
 }
 
 .calendar-schedule {

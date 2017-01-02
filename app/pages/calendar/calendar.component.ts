@@ -36,6 +36,7 @@ export class CalendarComponent extends DrawerPage implements OnInit{
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
+    public iscurrentDateSelected: Boolean = false;
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
                 private modal: ModalDialogService, private vcRef: ViewContainerRef,
@@ -68,6 +69,7 @@ export class CalendarComponent extends DrawerPage implements OnInit{
 
 
     createModalDatePickerView() {
+        this.iscurrentDateSelected = true;
         let that = this;
         let currentDate = new Date();
         let options: ModalDialogOptions = {
@@ -79,7 +81,7 @@ export class CalendarComponent extends DrawerPage implements OnInit{
         this.modal.showModal(ModalDatePicker, options)
             .then((dateresult: Date) => {
 
-
+                this.iscurrentDateSelected = false;
                // var yesterday = new Date();
                // yesterday.setDate(yesterday.getDate() - 1);
 

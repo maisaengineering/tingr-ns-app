@@ -22,13 +22,13 @@
         <ScrollView>
             <StackLayout>
 
-                <StackLayout (tap)="createModalDatePickerView()"  text="top" dock="top" orientation="vertical" class="today-date green font-weight-bold p-t-10">
+                <StackLayout (tap)="createModalDatePickerView()"
+                             class="today-date green font-weight-bold p-y-10 {{ iscurrentDateSelected ? 'active' : ''}}">
                     <Label text="{{ currentDate  | date: 'EEEE, MMMM d' }}" class="text-center"></Label>
                 </StackLayout>
 
-                <StackLayout class="line-separator">
+                <StackLayout style="height: 1; background-color: #dddddd;margin-bottom: 7;">
                 </StackLayout>
-
 
                 <!-- ##################  Scheules-------------------------------------------------------------------------------->
                 <DockLayout *ngIf="schedules.length" stretchLastChild="false" class="calendar-schedule">
