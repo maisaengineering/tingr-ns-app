@@ -87,8 +87,10 @@
             </StackLayout>
         </GridLayout>
 
-        <GridLayout row="6" class="moment-image-container" *ngIf="posts.length">
-            <GridLayout rows="auto,auto,auto,auto, auto, auto" *ngFor="let post of posts">
+        <StackLayout  row="6">
+
+        <StackLayout class="moment-image-container" *ngIf="posts.length" orientation="vertical" >
+            <GridLayout rows="auto,auto,auto,auto, auto, auto, auto" *ngFor="let post of posts">
                 <GridLayout row="0">
                     <Image stretch="aspectFill" src="{{ post.image || 'https://placehold.it/500x500' }}" class="cover-image"></Image>
                     <!--<StackLayout class="org-container" horizontalAlignment="right">
@@ -166,8 +168,12 @@
                         </StackLayout>
                     </GridLayout>
                 </GridLayout>
+                <GridLayout row="6" height="20" backgroundColor="#e9e9e9"></GridLayout>
+
             </GridLayout>
-        </GridLayout>
+
+        </StackLayout>
+        </StackLayout>
 
         <GridLayout row="7">
         <StackLayout visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
