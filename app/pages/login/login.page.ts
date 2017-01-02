@@ -18,12 +18,14 @@ import {  getString } from "application-settings";
 export class LoginPage implements OnInit {
     teacher: Teacher;
     isLoggingIn = false;
-    email = 'teacher1@org1.com';
+    //email = 'teacher1@org1.com';
+    email = '';
     public isLoading: Boolean = false;
 
     constructor(private authService: AuthService,private router: Router, private teacherService: TeacherService, private page: Page) {
         this.teacher = new Teacher();
-        this.teacher.email = "teacher1@org1.com";
+        //this.teacher.email = "teacher1@org1.com";
+        this.teacher.email = "";
     }
 
     ngOnInit() {
