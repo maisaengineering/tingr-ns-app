@@ -49,12 +49,10 @@ export class VerifyPasswordPage implements OnInit {
                     this.teacherInfo.storage  = body;
                     // save teacher info in app-settings to invoke rest api's using season, room etc...
                     TeacherInfo.details = JSON.stringify(body);
-                    console.log("SignIN Response: "+ JSON.stringify(result));
                     this.isLoading = false;
                     this.router.navigate(["calendar"]);
                 },
                 (error) => {
-                    console.log('Error: '+ JSON.stringify(error));
                     this.isLoading = false;
                     alert(error.message)
                 }

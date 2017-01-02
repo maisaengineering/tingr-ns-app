@@ -61,7 +61,6 @@ export class MyClassComponent extends DrawerPage implements OnInit{
         this.myClassService.getManagedKids()
             .subscribe(
                 (result) => {
-                    console.log("MyClass resp: "+JSON.stringify(result));
                     var body = result.body;
                     this.managed_kids = body.managed_kids;
                     this.room = body.session_name;
@@ -69,7 +68,6 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log('Error: '+ JSON.stringify(error));
                     alert(JSON.stringify(error))
                 }
             );
@@ -98,7 +96,6 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     //defaultText: "message",
                     inputType: dialogs.inputType.text
                 }).then(r => {
-                    console.log("Dialog result: " + r.result + ", text: " + r.text);
                     this.sendMessageForKid(r.text, kid);
                 });
             }
@@ -112,12 +109,10 @@ export class MyClassComponent extends DrawerPage implements OnInit{
         this.kidSignInOutService.signInOrSingOut(kid.kid_klid)
             .subscribe(
                 (result) => {
-                    console.log("Sign-in/Sign-out resp: "+JSON.stringify(result));
                     var body = result.body;
                     alert(body.text)
                 },
                 (error) => {
-                    console.log('Error in Sing-in/Sign-out: '+ JSON.stringify(error));
                     alert(error._body.message || 'something went wrong')
                 }
             );
@@ -128,7 +123,6 @@ export class MyClassComponent extends DrawerPage implements OnInit{
         this.messageService.sendMessage(text, kid.kid_klid)
             .subscribe(
                 (result) => {
-                    console.log("Send Message resp: "+JSON.stringify(result));
                     //var body = result;
                     var options = {
                         text: result.message,
@@ -137,7 +131,6 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     nstoasts.show(options);
                 },
                 (error) => {
-                    console.log('Error in Send Message: '+ JSON.stringify(error));
                     alert(error._body.message || 'something went wrong')
                 }
             );

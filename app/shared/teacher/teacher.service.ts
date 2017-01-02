@@ -15,7 +15,6 @@ export class TeacherService {
     constructor(private http: Http,private teacherInfo: TeacherInfo) {}
 
     signIn(teacher: Teacher) {
-        console.log("signIn accessToken:" + TokenService.accessToken);
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({
@@ -56,7 +55,6 @@ export class TeacherService {
     }
 
     evaluteUser(teacher: Teacher) {
-        console.log("evaluser accessToken:" + TokenService.accessToken);
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({
@@ -76,7 +74,6 @@ export class TeacherService {
     }
 
     handleErrors(error: Response) {
-        console.log("handleErrors:"+ JSON.stringify(error.json()));
         // return Observable.throw(error.json() || {error: 'Server error'})
         return Observable.throw(error.json() || {error: 'Server error'})
     }

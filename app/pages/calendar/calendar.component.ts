@@ -79,11 +79,6 @@ export class CalendarComponent extends DrawerPage implements OnInit{
         this.modal.showModal(ModalDatePicker, options)
             .then((dateresult: Date) => {
 
-                console.log("date result in calendar component "+dateresult);
-
-
-                /*console.log("date result in cal component "+dateresult);
-                that.result = dateresult;*/
 
                // var yesterday = new Date();
                // yesterday.setDate(yesterday.getDate() - 1);
@@ -114,7 +109,6 @@ export class CalendarComponent extends DrawerPage implements OnInit{
         this.calendarService.getCalendarData(currentDate)
             .subscribe((result) => {
                     var body = result.body;
-                    console.log("Calendar Respone: " + JSON.stringify(body));
                     this.schedules = body.events;
                     this.messages = body.messages;
 
@@ -134,7 +128,6 @@ export class CalendarComponent extends DrawerPage implements OnInit{
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log('Error: '+ JSON.stringify(error));
                     alert(JSON.stringify(error))
                 }
             );

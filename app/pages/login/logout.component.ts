@@ -41,7 +41,6 @@ export class LogoutComponent  implements OnInit {
 
                 },
                 (error) => {
-                    console.log('Error in Logoff: '+ JSON.stringify(error));
                     alert(JSON.stringify(error));
                     this.isLoading = false;
                 }
