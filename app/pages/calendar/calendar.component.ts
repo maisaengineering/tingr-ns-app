@@ -135,6 +135,40 @@ export class CalendarComponent extends DrawerPage implements OnInit{
             );
     }
 
+    // check if local current time is b/w schedule start and end times
+    isScheduleTimeIsCurrent(scheduleStartTimeStr,scheduleEndTimeStr){
+        //console.log(" scheduleStartTimeStr "+ scheduleStartTimeStr);
+        //console.log(" scheduleEndTimeStr "+ scheduleEndTimeStr);
+        // convert api time to localtime
+        let scheduleStartTime = new Date(scheduleStartTimeStr);
+        let scheduleEndTime = new Date(scheduleEndTimeStr);
+
+        // to get timestamp like '11:1:10';
+        // add padding zero
+        let startTime = ("0" + scheduleStartTime.getHours()).slice(-2)+
+            ":"+("0" + scheduleStartTime.getMinutes()).slice(-2)+":"
+            +("0" + scheduleStartTime.getSeconds()).slice(-2);
+
+        let endTime = ("0" + scheduleEndTime.getHours()).slice(-2)+
+            ":"+("0" + scheduleEndTime.getMinutes()).slice(-2)+":"
+            +("0" + scheduleEndTime.getSeconds()).slice(-2);
+
+        let currentDate = new Date();
+        let startDate = new Date(currentDate.getTime());
+
+        startDate.setHours(parseInt(startTime.split(":")[0]));
+        startDate.setMinutes(parseInt(startTime.split(":")[1]));
+        startDate.setSeconds(parseInt(startTime.split(":")[2]));
+
+        let endDate = new Date(currentDate.getTime());
+        endDate.setHours(parseInt(endTime.split(":")[0]));
+        endDate.setMinutes(parseInt(endTime.split(":")[1]));
+        endDate.setSeconds(parseInt(endTime.split(":")[2]));
+        let valid = startDate < currentDate && endDate > currentDate;
+
+        return valid;
+    }
+
 
 
 }

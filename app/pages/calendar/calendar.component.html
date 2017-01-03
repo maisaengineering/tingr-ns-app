@@ -35,7 +35,8 @@
                     <Image dock="left" stretch ="none" verticalAlignment="center" class="schedule-icon"  src="res://schedule_icon"></Image>
                     <StackLayout text="top" dock="top">
                         <GridLayout rows="auto,auto" *ngFor="let item of schedules; let i = index" >
-                            <GridLayout row="0" columns="auto, auto" rows="auto,auto" class="item">
+                            <GridLayout row="0" columns="auto, auto" rows="auto,auto"
+                                        class="item {{ isScheduleTimeIsCurrent(item.start_time, item.end_time) ? 'blue' : '' }}">
                                 <Label col="0"  row="0"
                                        text="{{item.start_time | date: 'HH:mm' }}-{{ item.end_time | date: 'HH:mm a' }}">
                                 </Label>
