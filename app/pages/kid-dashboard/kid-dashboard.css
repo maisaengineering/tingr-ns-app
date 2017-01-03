@@ -72,6 +72,7 @@ navigation-links-1 -> Profile details, Documents, Notes
 /* Moment Container with Cover Image and Org Logo */
 .moment-image-container .cover-image{
    /* height: 300;*/
+    min-height: 200;
 }
 
 .moment-image-container .org-container {
