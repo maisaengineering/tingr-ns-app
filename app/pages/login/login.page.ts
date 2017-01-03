@@ -1,12 +1,13 @@
 import { Router, NavigationExtras } from "@angular/router";
 import { connectionType, getConnectionType } from "connectivity";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, Injectable } from "@angular/core";
 import { Page } from "ui/page";
 import { Teacher } from "../../shared/teacher/teacher";
 import { TeacherService } from "../../shared/teacher/teacher.service";
 import { TokenService } from "../../shared/token.service";
 import { AuthService } from "../../shared/oauth/auth.service";
 import {  getString } from "application-settings";
+import { Label } from "ui/label";
 
 @Component({
     selector: "my-app",
@@ -21,6 +22,10 @@ export class LoginPage implements OnInit {
     //email = 'teacher1@org1.com';
     email = '';
     public isLoading: Boolean = false;
+
+
+    @ViewChild("formErrors") formErrorsRef: ElementRef;
+
 
     constructor(private authService: AuthService,private router: Router, private teacherService: TeacherService, private page: Page) {
         this.teacher = new Teacher();
@@ -54,6 +59,14 @@ export class LoginPage implements OnInit {
 
 
     submitEmail() {
+        let labelError = <Label>this.formErrorsRef.nativeElement;
+        if(this.email === ''){
+            labelError.text = "Email can't be blank";
+            return;
+        }else{
+            labelError.text = "";
+        }
+
         this.isLoading = true;
         this.teacher.email = this.email;
         // pass user provided email to next page using NavigationExtras via routing
