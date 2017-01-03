@@ -8,7 +8,7 @@ import {enableProdMode} from '@angular/core';
 enableProdMode();
 
 
-StatusBar.setColor('#388e3c');
+StatusBar.setColor('#9fc5f8');
 
 platformNativeScriptDynamic().bootstrapModule(AppModule);
 
