@@ -1,12 +1,13 @@
 import { Router, NavigationExtras } from "@angular/router";
 import { connectionType, getConnectionType } from "connectivity";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, Injectable } from "@angular/core";
 import { Page } from "ui/page";
 import { Teacher } from "../../shared/teacher/teacher";
 import { TeacherService } from "../../shared/teacher/teacher.service";
 import { TokenService } from "../../shared/token.service";
 import { AuthService } from "../../shared/oauth/auth.service";
 import {  getString } from "application-settings";
+import { Label } from "ui/label";
 
 @Component({
     selector: "my-app",
@@ -18,12 +19,18 @@ import {  getString } from "application-settings";
 export class LoginPage implements OnInit {
     teacher: Teacher;
     isLoggingIn = false;
-    email = 'teacher1@org1.com';
+    //email = 'teacher1@org1.com';
+    email = '';
     public isLoading: Boolean = false;
+
+
+    @ViewChild("formErrors") formErrorsRef: ElementRef;
+
 
     constructor(private authService: AuthService,private router: Router, private teacherService: TeacherService, private page: Page) {
         this.teacher = new Teacher();
-        this.teacher.email = "teacher1@org1.com";
+        //this.teacher.email = "teacher1@org1.com";
+        this.teacher.email = "";
     }
 
     ngOnInit() {
@@ -41,11 +48,9 @@ export class LoginPage implements OnInit {
                         // save accessToken in appSettings and authData
                         TokenService.accessToken = result.access_token;
                         TokenService.accessTokenExpiry = result.expires_in;
-                        console.log("New AccessTOKEN: "+getString("accessToken"));
                         this.isLoading = false;
                     },
                     (error) => {
-                        console.log('AccessToken-Error: '+ JSON.stringify(error));
                         this.isLoading = false;
                     }
                 );
@@ -54,8 +59,15 @@ export class LoginPage implements OnInit {
 
 
     submitEmail() {
+        let labelError = <Label>this.formErrorsRef.nativeElement;
+        if(this.email === ''){
+            labelError.text = "Email can't be blank";
+            return;
+        }else{
+            labelError.text = "";
+        }
+
         this.isLoading = true;
-        console.log('in submit mail');
         this.teacher.email = this.email;
         // pass user provided email to next page using NavigationExtras via routing
         let navigationExtras: NavigationExtras = {
@@ -66,7 +78,6 @@ export class LoginPage implements OnInit {
         this.teacherService.evaluteUser(this.teacher)
             .subscribe(
                 (result) => {
-                    console.log("evaluteUser Response: "+ JSON.stringify(result));
                     // save user auth_token and info in appSettings
                     if(result.body.goto === 'signup'){
                         alert("Email does not exists")
@@ -76,7 +87,6 @@ export class LoginPage implements OnInit {
                     this.isLoading = false;
                 },
                 (error) => {
-                    console.log('Error: '+ JSON.stringify(error));
                     alert(JSON.stringify(error));
                     this.isLoading = false;
                 }

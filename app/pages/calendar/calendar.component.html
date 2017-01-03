@@ -22,20 +22,21 @@
         <ScrollView>
             <StackLayout>
 
-                <StackLayout text="top" dock="top" orientation="vertical" class="today-date green font-weight-bold p-t-10">
-                    <Label (tap)="createModalDatePickerView()" text="{{ currentDate  | date: 'EEEE, MMMM d' }}" class="text-center"></Label>
+                <StackLayout (tap)="createModalDatePickerView()"
+                             class="today-date green font-weight-bold p-y-10 {{ iscurrentDateSelected ? 'active' : ''}}">
+                    <Label text="{{ currentDate  | date: 'EEEE, MMMM d' }}" class="text-center"></Label>
                 </StackLayout>
 
-                <StackLayout class="line-separator">
+                <StackLayout style="height: 1; background-color: #dddddd;margin-bottom: 7;">
                 </StackLayout>
-
 
                 <!-- ##################  Scheules-------------------------------------------------------------------------------->
                 <DockLayout *ngIf="schedules.length" stretchLastChild="false" class="calendar-schedule">
-                    <Image dock="left" height="50" width="50" stretch ="aspectFill" verticalAlignment="center" class="schedule-icon"  src="~/images/schedule-icon-72.png"></Image>
+                    <Image dock="left" stretch ="none" verticalAlignment="center" class="schedule-icon"  src="res://schedule_icon"></Image>
                     <StackLayout text="top" dock="top">
                         <GridLayout rows="auto,auto" *ngFor="let item of schedules; let i = index" >
-                            <GridLayout row="0" columns="auto, auto" rows="auto,auto" class="item">
+                            <GridLayout row="0" columns="auto, auto" rows="auto,auto"
+                                        class="item {{ isScheduleTimeIsCurrent(item.start_time, item.end_time) ? 'blue' : '' }}">
                                 <Label col="0"  row="0"
                                        text="{{item.start_time | date: 'HH:mm' }}-{{ item.end_time | date: 'HH:mm a' }}">
                                 </Label>
@@ -53,7 +54,7 @@
                 <!-- ##################  Reminders-------------------------------------------------------------------------------->
 
                 <DockLayout *ngIf="event_reminders.length || birthdays.length || holidays.length" stretchLastChild="false" class="calendar-reminder font-italic">
-                    <Image dock="left" height="50" width="50" stretch ="aspectFill" verticalAlignment="center" class="reminder-icon"  src="~/images/reminder-icon-72.png"></Image>
+                    <Image dock="left" stretch ="none" verticalAlignment="center" class="reminder-icon"  src="res://reminder_icon"></Image>
                     <StackLayout text="top" dock="top">
 
                         <!-- Birthdays -->
@@ -85,7 +86,7 @@
 
                 <!-- ##################  Messages -------------------------------------------------------------------------------->
                 <DockLayout *ngIf="messages.length"  stretchLastChild="false" class="calendar-message">
-                    <Image dock="left" height="50" width="50" stretch ="aspectFill" verticalAlignment="center" class="message-icon"  src="~/images/message-icon-72.png"></Image>
+                    <Image dock="left" stretch ="none" verticalAlignment="center" class="message-icon"  src="res://message_icon"></Image>
                     <StackLayout text="top" dock="top">
                         <GridLayout rows="auto,auto" *ngFor="let item of messages; let i = index" >
                             <GridLayout row="0" columns="50, *" rows="*" class="item">

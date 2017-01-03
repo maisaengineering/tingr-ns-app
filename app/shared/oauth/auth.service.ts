@@ -28,7 +28,6 @@ export class AuthService {
     }
 
     handleErrors(error: Response) {
-        console.log("handleErrors:"+ JSON.stringify(error.json()));
         return Observable.throw(error.json() || {error: 'Server error'})
     }
 

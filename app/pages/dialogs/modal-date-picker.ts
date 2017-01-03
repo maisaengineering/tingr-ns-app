@@ -7,27 +7,27 @@ import { Router, NavigationExtras } from "@angular/router";
 
 @Component({
     selector: 'modal-content',
-    template: `
-       <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white;">
-    <DatePicker id="datePicker"></DatePicker>
-    <Button class="btn btn-primary btn-active" text="Submit" (tap)="submit('Cancel')"></Button>
-</StackLayout>
+    template: ` 
+       <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white;"> 
+         <StackLayout class="m-10">
+            <Button class="btn text-left" text="Cancel" (tap)="cancel()"></Button>
+         </StackLayout>
+         <DatePicker id="datePicker"></DatePicker> 
+          <Button class="btn btn-primary btn-rounded-sm btn-active" text="Submit" (tap)="submit('Cancel')"></Button> 
+       </StackLayout>
     `
 })
 export class ModalDatePicker implements OnInit{
     @Input() public prompt: string;
     constructor(private router: Router,private params: ModalDialogParams,private page: Page) {
-        console.log("ModalContent.constructor: " + JSON.stringify(params));
         this.prompt = params.context.promptMsg;
     }
 
 
     ngOnInit(){
-        console.log("ModalContent.ngOnInit");
         let datePicker:DatePicker =<DatePicker> this.page.getViewById<DatePicker>("datePicker");
         let currentDate = new Date();
         datePicker.year = currentDate.getFullYear();
-        console.log("Current Month: "+ currentDate.getMonth());
 
         datePicker.month = currentDate.getMonth() +1;
         datePicker.day = currentDate.getDate();
@@ -40,9 +40,6 @@ export class ModalDatePicker implements OnInit{
         //TODO get the result in Calendar Component
         let datePicker: DatePicker = <DatePicker>this.page.getViewById<DatePicker>("datePicker");
 
-        /* console.log("Year1111111111111 " + datePicker.year);
-         console.log("MOnth " + datePicker.month);
-         console.log("Date " + datePicker.day);*/
         // this.params.closeCallback(res);
 
 
@@ -56,8 +53,6 @@ export class ModalDatePicker implements OnInit{
        // this.params.closeCallback(new Date(datePicker.year, datePicker.month, datePicker.day));
         // this.router.navigate(["/calendar"], navigationExtras);
 
-        //console.log('HEEEEEEEEEEEEEEEEEEE  '+datePicker.date);
-
         this.params.closeCallback(datePicker.date);
 
 
@@ -66,9 +61,13 @@ export class ModalDatePicker implements OnInit{
         //this.params.closeCallback();
     }
 
+    public cancel() {
+        this.params.closeCallback('');
+
+    }
+
 
 
     ngOnDestroy() {
-        console.log("ModalContent.ngOnDestroy");
     }
 }

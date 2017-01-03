@@ -5,7 +5,9 @@
     <StackLayout orientation="vertical" verticalAlignment="center">
         <Image src="~/images/logo-72@2x.png" stretch="none" horizontalAlignment="center" class="m-b-30"></Image>
         <TextField class="m-t-30" hint="Email Address" keyboardType="email" [(ngModel)]="email"
-                   autocorrect="false" autocapitalizationType="none"></TextField>
+                   autocorrect="false" autocapitalizationType="none" id="email"></TextField>
+        <Label #formErrors class="font-italic m-l-20" text="" textWrap="true" style="color: red;"></Label>
+
         <Button isEnabled="{{ isLoading ? false : true }}" text="Continue" class="blue-background submit-button" (tap)="submitEmail()"></Button>
 
         <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>

@@ -3,7 +3,12 @@ import {platformNativeScriptDynamic} from "nativescript-angular/platform";
 import {AppModule} from "./app.module";
 import {StatusBar} from "./utils/native";
 
-StatusBar.setColor('#388e3c');
+// enable production mode...
+import {enableProdMode} from '@angular/core';
+enableProdMode();
+
+
+StatusBar.setColor('#9fc5f8');
 
 platformNativeScriptDynamic().bootstrapModule(AppModule);
 

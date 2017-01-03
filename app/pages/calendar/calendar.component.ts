@@ -36,6 +36,7 @@ export class CalendarComponent extends DrawerPage implements OnInit{
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
+    public iscurrentDateSelected: Boolean = false;
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
                 private modal: ModalDialogService, private vcRef: ViewContainerRef,
@@ -68,6 +69,7 @@ export class CalendarComponent extends DrawerPage implements OnInit{
 
 
     createModalDatePickerView() {
+        this.iscurrentDateSelected = true;
         let that = this;
         let currentDate = new Date();
         let options: ModalDialogOptions = {
@@ -78,19 +80,10 @@ export class CalendarComponent extends DrawerPage implements OnInit{
         // >> returning-result
         this.modal.showModal(ModalDatePicker, options)
             .then((dateresult: Date) => {
-
-                console.log("date result in calendar component "+dateresult);
-
-
-                /*console.log("date result in cal component "+dateresult);
-                that.result = dateresult;*/
-
-               // var yesterday = new Date();
-               // yesterday.setDate(yesterday.getDate() - 1);
-
-               // this.currentDate = yesterday;
-                this.loadCalendarDataByDay(dateresult);
-
+                this.iscurrentDateSelected = false;
+               if(dateresult){
+                   this.loadCalendarDataByDay(dateresult);
+               } 
             })
     }
 
@@ -114,7 +107,6 @@ export class CalendarComponent extends DrawerPage implements OnInit{
         this.calendarService.getCalendarData(currentDate)
             .subscribe((result) => {
                     var body = result.body;
-                    console.log("Calendar Respone: " + JSON.stringify(body));
                     this.schedules = body.events;
                     this.messages = body.messages;
 
@@ -134,10 +126,43 @@ export class CalendarComponent extends DrawerPage implements OnInit{
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log('Error: '+ JSON.stringify(error));
                     alert(JSON.stringify(error))
                 }
             );
+    }
+
+    // check if local current time is b/w schedule start and end times
+    isScheduleTimeIsCurrent(scheduleStartTimeStr,scheduleEndTimeStr){
+        //console.log(" scheduleStartTimeStr "+ scheduleStartTimeStr);
+        //console.log(" scheduleEndTimeStr "+ scheduleEndTimeStr);
+        // convert api time to localtime
+        let scheduleStartTime = new Date(scheduleStartTimeStr);
+        let scheduleEndTime = new Date(scheduleEndTimeStr);
+
+        // to get timestamp like '11:1:10';
+        // add padding zero
+        let startTime = ("0" + scheduleStartTime.getHours()).slice(-2)+
+            ":"+("0" + scheduleStartTime.getMinutes()).slice(-2)+":"
+            +("0" + scheduleStartTime.getSeconds()).slice(-2);
+
+        let endTime = ("0" + scheduleEndTime.getHours()).slice(-2)+
+            ":"+("0" + scheduleEndTime.getMinutes()).slice(-2)+":"
+            +("0" + scheduleEndTime.getSeconds()).slice(-2);
+
+        let currentDate = new Date();
+        let startDate = new Date(currentDate.getTime());
+
+        startDate.setHours(parseInt(startTime.split(":")[0]));
+        startDate.setMinutes(parseInt(startTime.split(":")[1]));
+        startDate.setSeconds(parseInt(startTime.split(":")[2]));
+
+        let endDate = new Date(currentDate.getTime());
+        endDate.setHours(parseInt(endTime.split(":")[0]));
+        endDate.setMinutes(parseInt(endTime.split(":")[1]));
+        endDate.setSeconds(parseInt(endTime.split(":")[2]));
+        let valid = startDate < currentDate && endDate > currentDate;
+
+        return valid;
     }
 
 

@@ -50,12 +50,10 @@ export class KidDashboardComponent implements OnInit{
                 (result) => {
                     var body = result.body;
                     this.posts = body.posts;
-                    console.log("Kid-Dashboard resp: "+JSON.stringify(this.posts));
                     this.isLoading = false;
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log('Error: '+ JSON.stringify(error));
                     this.isLoading = false;
                     alert(JSON.stringify(error))
                 }

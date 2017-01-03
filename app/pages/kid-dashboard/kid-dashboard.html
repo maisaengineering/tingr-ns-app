@@ -28,7 +28,7 @@
             <GridLayout columns="auto, auto, *, auto,*" class="navigation-links-1">
 
                 <StackLayout col="0" row="0" horizontalAlignment="center" orientation="vertical" class="profile-details">
-                    <Image text="top" height="40" width="40" stretch ="aspectFill" horizontalAlignment="center" src="~/images/profile-details-60.png"></Image>
+                    <Image text="top" stretch ="none" horizontalAlignment="center" src="res://profile_details_40"></Image>
                     <Label text="Profile Details"></Label>
                 </StackLayout>
                 <StackLayout col="1" row="0" horizontalAlignment="center" verticalAlignment="center" orientation="vertical">
@@ -37,16 +37,16 @@
 
 
                 <StackLayout col="2" row="0" horizontalAlignment="center" orientation="vertical" class="documents">
-                    <Image text="top" height="40" width="40" stretch ="aspectFill" horizontalAlignment="center" src="~/images/doc-lock-icon-60.png"></Image>
+                    <Image text="top" stretch ="none" horizontalAlignment="center" src="res://doc_lock_icon_40"></Image>
                     <Label text="form&docs"></Label>
                 </StackLayout>
 
                 <StackLayout col="3" row="0" horizontalAlignment="center" verticalAlignment="center" orientation="vertical">
-                    <Image  height="40" width="40" stretch ="aspectFill" horizontalAlignment="center" src="~/images/line_icon-50.png"></Image>
+                    <Image  stretch ="none" horizontalAlignment="center" src="~/images/line_icon-50.png"></Image>
                 </StackLayout>
 
                 <StackLayout col="4" row="0" horizontalAlignment="center" orientation="vertical" class="notes">
-                    <Image text="top" height="40" width="40" stretch ="aspectFill" horizontalAlignment="center" src="~/images/notes-icon-60.png"></Image>
+                    <Image text="top" stretch ="none" horizontalAlignment="center" src="res://notes_icon_40"></Image>
                     <Label text="Notes"></Label>
                 </StackLayout>
             </GridLayout>
@@ -82,13 +82,16 @@
 
         <GridLayout row="5">
             <StackLayout horizontalAlignment="center" orientation="vertical" class="capture-moment-section">
-                <Image text="top" height="60" width="60" stretch ="aspectFill" horizontalAlignment="center" src="~/images/camera-icon-120.png"></Image>
+                <Image text="top" stretch ="none" horizontalAlignment="center" src="res://camera_icon_60"></Image>
                 <Label text="capture a moment, share with parent(s)..." style="font-size: 10;" class="font-italic very-light-gray"></Label>
             </StackLayout>
         </GridLayout>
 
-        <GridLayout row="6" class="moment-image-container" *ngIf="posts.length">
-            <GridLayout rows="auto,auto,auto,auto, auto, auto" *ngFor="let post of posts">
+        <StackLayout  row="6">
+            <GridLayout height="15" backgroundColor="#e9e9e9"  *ngIf="posts.length"></GridLayout>
+
+        <StackLayout class="moment-image-container" *ngIf="posts.length" orientation="vertical" >
+            <GridLayout rows="auto,auto,auto,auto, auto, auto, auto" *ngFor="let post of posts">
                 <GridLayout row="0">
                     <Image stretch="aspectFill" src="{{ post.image || 'https://placehold.it/500x500' }}" class="cover-image"></Image>
                     <!--<StackLayout class="org-container" horizontalAlignment="right">
@@ -111,7 +114,12 @@
                         <StackLayout col="1" row="0" horizontalAlignment="right" orientation="horizontal">
                             <StackLayout orientation="vertical">
                                 <Label text="{{  post.created_at.substring(0,10) |  date: 'MMMM dd, yyyy' }}" class="tagged-on-date"></Label>
-                                <Image src="~/images/heart-icon-red-48.png" height="30" width="30" stretch="aspectFill" horizontalAlignment="right"></Image>
+                                <Image class="m-t-5" id="post-hearted-#{{ post.kl_id }}"
+                                       visibility="{{ post.hearted ? 'visible' : 'collapsed'}}"
+                                       height="30" width="40" stretch="aspectFit"
+                                       src="{{ post.hearted ? (post.asset_base_url + post.heart_icon) : 'res://heart-icon-red-48.png' }}"
+                                       horizontalAlignment="right">
+                                </Image>
                             </StackLayout>
                         </StackLayout>
                     </GridLayout>
@@ -132,7 +140,7 @@
                                 <StackLayout orientation="vertical" class="comment-details p-l-5">
                                     <StackLayout orientation="horizontal">
                                         <Label [text]="comment.commented_by" class="kid-name font-weight-bold"></Label>
-                                        <Label text="{{ comment.child_names }}'s {{ comment.child_relationship }}" class="relation-name light-gray font-italic"></Label>
+                                        <Label *ngIf="comment.child_name" text="{{ comment.child_name }}'s {{ comment.child_relationship }}" class="relation-name light-gray font-italic"></Label>
                                     </StackLayout>
                                     <Label [text]="comment.content" textwrap="true"></Label>
                                 </StackLayout>
@@ -152,22 +160,26 @@
                 <GridLayout row="5" class="moment-bottom-section">
                     <GridLayout columns="auto,auto,auto,*">
                         <StackLayout col="0" row="0" horizontalAlignment="left" orientation="horizontal" marginLeft="10">
-                            <Image height="30" width="30" stretch="aspectFill" src="~/images/heart-icon-gray-48.png"></Image>
+                            <Image stretch="none" id="post-heart-icon-{{ post.kl_id }}" src="res://heart_icon_{{ post.hearted ? 'gray' : 'light' }}"></Image>
                         </StackLayout>
 
                         <StackLayout col="1" row="0" horizontalAlignment="left" orientation="horizontal" marginLeft="10">
-                            <Image height="30" width="30" stretch="aspectFill" src="~/images/comment-icon-48.png"></Image>
+                            <Image stretch="none" src="res://comment_icon"></Image>
                         </StackLayout>
                         <StackLayout col="2" row="0" horizontalAlignment="center" orientation="horizontal" marginLeft="10">
                             <Label text="Comment"></Label>
                         </StackLayout>
                         <StackLayout col="3" row="0" horizontalAlignment="right" orientation="horizontal" margin="0 10 0 0">
-                            <Image height="30" width="30" stretch="aspectFill" src="~/images/more-icon-48.png" horizontalAlignment="right" marginLeft="30"></Image>
+                            <Image stretch="none" src="res://more_icon" horizontalAlignment="right" marginLeft="30"></Image>
                         </StackLayout>
                     </GridLayout>
                 </GridLayout>
+                <GridLayout row="6" height="15" backgroundColor="#e9e9e9"></GridLayout>
+
             </GridLayout>
-        </GridLayout>
+
+        </StackLayout>
+        </StackLayout>
 
         <GridLayout row="7">
         <StackLayout visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
