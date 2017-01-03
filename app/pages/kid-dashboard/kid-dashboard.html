@@ -114,9 +114,12 @@
                         <StackLayout col="1" row="0" horizontalAlignment="right" orientation="horizontal">
                             <StackLayout orientation="vertical">
                                 <Label text="{{  post.created_at.substring(0,10) |  date: 'MMMM dd, yyyy' }}" class="tagged-on-date"></Label>
-
-                                <Image id="post-hearted-#{{ post.kl_id }}" visibility="{{ post.hearted ? 'visible' : 'collapsed'}}"
-                                       src="{{ post.asset_base_url }}{{ post.heart_icon }}" stretch="none" horizontalAlignment="right"></Image>
+                                <Image class="m-t-5" id="post-hearted-#{{ post.kl_id }}"
+                                       visibility="{{ post.hearted ? 'visible' : 'collapsed'}}"
+                                       height="30" width="40" stretch="aspectFit"
+                                       src="{{ post.hearted ? (post.asset_base_url + post.heart_icon) : 'res://heart-icon-red-48.png' }}"
+                                       horizontalAlignment="right">
+                                </Image>
                             </StackLayout>
                         </StackLayout>
                     </GridLayout>
@@ -157,7 +160,7 @@
                 <GridLayout row="5" class="moment-bottom-section">
                     <GridLayout columns="auto,auto,auto,*">
                         <StackLayout col="0" row="0" horizontalAlignment="left" orientation="horizontal" marginLeft="10">
-                            <Image stretch="none" src="res://heart_icon_{{ post.hearted ? 'gray' : 'light' }}"></Image>
+                            <Image stretch="none" (tap)="addOrRemoveHeart(post.kl_id)" id="post-heart-icon-{{ post.kl_id }}" src="res://heart_icon_{{ post.hearted ? 'gray' : 'light' }}"></Image>
                         </StackLayout>
 
                         <StackLayout col="1" row="0" horizontalAlignment="left" orientation="horizontal" marginLeft="10">
