@@ -9,6 +9,7 @@ import { Page } from "ui/page";
 import * as appSettings from "application-settings"
 import { TokenService } from "../../shared/token.service";
 import { TeacherInfo } from "../../providers/data/teacher_info";
+var view = require("ui/core/view");
 
 @Component({
     selector: "my-app",
@@ -38,26 +39,43 @@ export class VerifyPasswordPage implements OnInit {
 
 
     signIn() {
+        // validate form
+        let errorLabel = view.getViewById(this.page, "form-errors");
+        let emailTextField = view.getViewById(this.page, "email");
+        let passTextField = view.getViewById(this.page, "password");
+        if (emailTextField.text === "" || passTextField.text === "" ){
+            errorLabel.text = "All fields required";
+            // animate error label with fading opacity
+            /*errorLabel.text.animate({
+                opacity: 1,
+                duration: 1000
+            });*/
+            return;
+        }else{
+            errorLabel.text = "";
+        }
+
+
         this.isAuthenticating = true;
-        this.isLoading = true;
-        //this.router.navigate(["calendar"]);
-        this.teacherService.signIn(this.teacher)
-            .subscribe(
-                (result) => {
-                    TokenService.authToken = result.body.auth_token;
-                    var body = result.body;
-                    this.teacherInfo.storage  = body;
-                    // save teacher info in app-settings to invoke rest api's using season, room etc...
-                    TeacherInfo.details = JSON.stringify(body);
-                    this.isLoading = false;
-                    this.router.navigate(["calendar"]);
-                },
-                (error) => {
-                    this.isLoading = false;
-                    alert(error.message)
-                }
-            );
-    }
+            this.isLoading = true;
+            //this.router.navigate(["calendar"]);
+            this.teacherService.signIn(this.teacher)
+                .subscribe(
+                    (result) => {
+                        TokenService.authToken = result.body.auth_token;
+                        var body = result.body;
+                        this.teacherInfo.storage  = body;
+                        // save teacher info in app-settings to invoke rest api's using season, room etc...
+                        TeacherInfo.details = JSON.stringify(body);
+                        this.isLoading = false;
+                        this.router.navigate(["calendar"]);
+                    },
+                    (error) => {
+                        this.isLoading = false;
+                        alert(error.message)
+                    }
+                );
+        }
 
     forgotPassword() {
         //TODO: to define
