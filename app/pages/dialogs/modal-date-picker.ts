@@ -7,11 +7,14 @@ import { Router, NavigationExtras } from "@angular/router";
 
 @Component({
     selector: 'modal-content',
-    template: `
-       <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white;">
-    <DatePicker id="datePicker"></DatePicker>
-    <Button class="btn btn-primary btn-active" text="Submit" (tap)="submit('Cancel')"></Button>
-</StackLayout>
+    template: ` 
+       <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white;"> 
+         <StackLayout class="m-10">
+            <Button class="btn text-left" text="Cancel" (tap)="cancel()"></Button>
+         </StackLayout>
+         <DatePicker id="datePicker"></DatePicker> 
+          <Button class="btn btn-primary btn-rounded-sm btn-active" text="Submit" (tap)="submit('Cancel')"></Button> 
+       </StackLayout>
     `
 })
 export class ModalDatePicker implements OnInit{
@@ -56,6 +59,11 @@ export class ModalDatePicker implements OnInit{
 
         //let datePicker:DatePicker =<DatePicker> this.page.getViewById<DatePicker>("datePicker");
         //this.params.closeCallback();
+    }
+
+    public cancel() {
+        this.params.closeCallback('');
+
     }
 
 

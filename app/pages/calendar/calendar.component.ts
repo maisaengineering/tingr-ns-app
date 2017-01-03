@@ -80,14 +80,10 @@ export class CalendarComponent extends DrawerPage implements OnInit{
         // >> returning-result
         this.modal.showModal(ModalDatePicker, options)
             .then((dateresult: Date) => {
-
                 this.iscurrentDateSelected = false;
-               // var yesterday = new Date();
-               // yesterday.setDate(yesterday.getDate() - 1);
-
-               // this.currentDate = yesterday;
-                this.loadCalendarDataByDay(dateresult);
-
+               if(dateresult){
+                   this.loadCalendarDataByDay(dateresult);
+               } 
             })
     }
 
