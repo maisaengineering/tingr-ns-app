@@ -1,15 +1,15 @@
 {
-  "description": "Tingr Teacher Application",
+  "description": "Tingr product suite digitalizes school record management using cutting edge technologies. Working in parallel with proximity devices, our software application(s) help schools/organizations in maintaining digital records of students",
   "license": "SEE LICENSE IN <your-license-filename>",
-  "readme": "Tingr Application",
+  "readme": "please checkout https://Tingr.org",
   "repository": "https://github.com/maisaengineering/tingr-ns-app",
   "nativescript": {
     "id": "org.tingr.teacher",
-    "tns-android": {
-      "version": "2.4.1"
-    },
     "tns-ios": {
       "version": "2.4.0"
+    },
+    "tns-android": {
+      "version": "2.4.1"
     }
   },
   "dependencies": {
@@ -36,7 +36,6 @@
     "babel-types": "6.20.0",
     "babylon": "6.14.1",
     "lazy": "1.0.11",
-    "nativescript-dev-android-snapshot": "^0.*.*",
     "nativescript-dev-typescript": "^0.3.2",
     "typescript": "^2.1.4",
     "zone.js": "~0.6.21"
