@@ -81,9 +81,5 @@ export class VerifyPasswordPage implements OnInit {
             );
     }
 
-    forgotPassword() {
-        //TODO: to define
-    }
-
 
 }

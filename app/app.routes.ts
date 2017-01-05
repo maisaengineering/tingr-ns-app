@@ -4,6 +4,7 @@ import {TodoPage} from "./pages/todo/todo.page";
 import {DrawerComponent} from "./components/drawer/drawer.component";
 import {TodoListComponent} from "./components/todolist/todo.list.component";
 import { LoginPage } from "./pages/login/login.page";
+import { ForgotPasswordComponent } from "./pages/login/forgot-password.component";
 import { VerifyPasswordPage } from "./pages/verify-password/password.page";
 import { CalendarComponent } from "./pages/calendar/calendar.component";
 import { MyClassComponent } from "./pages/myclass/myclass.component";
@@ -24,6 +25,7 @@ export const APP_ROUTES = [
     { path: "verify-password", component: VerifyPasswordPage },
     { path: "login", component: LoginPage },
     { path: "logout", component: LogoutComponent, canActivate: [AuthGuard] },
+    { path: "forgot-password", component: ForgotPasswordComponent  },
 
     /* incase path="" redirectTo: "/home" then uncomment{
         path: "home",
@@ -49,7 +51,9 @@ export const navigatableComponents = [
     MyClassComponent,
     KidDashboardComponent,
     ModalDatePicker,
-    LogoutComponent
+    LogoutComponent,
+    ForgotPasswordComponent
+
 ];
 
 export const authProviders = [
