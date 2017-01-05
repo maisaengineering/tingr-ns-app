@@ -26,7 +26,7 @@
                         <Gridlayout cols="auto,auto" verticalAlignment="center">
                                 <Label row="0" col="0" text="{{ currentDate  | date: 'EEEE, MMMM d' }}" class="text-center font-weight-bold"></Label>
                             <Label row="0" col="1" horizontalAlignment="right" class="fa m-r-20 text-right" text="{{'fa-chevron-right' | fonticon}}"></Label>
-                        </Gridlayout> 
+                        </Gridlayout>
                 </StackLayout>
 
                 <StackLayout style="height: 1; background-color: #dddddd;margin-bottom: 7;">
@@ -101,7 +101,7 @@
                                         <Label class="kid-name" [text]="item.sender_name" textwrap="true"></Label>
                                         <Label class="relation-name light-gray" text="{{ item.child_name }}'s {{ item.child_relationship }}" textwrap="true"></Label>
                                     </StackLayout>
-                                    <Label [text]="item.text" class="{{ item.read_message ? 'very-light-gray' : 'blue' }}" col="1" textwrap="true"></Label>
+                                    <Label [text]="item.text" class="{{ item.read_message ? 'text-muted' : 'blue' }}" col="1" textwrap="true"></Label>
                                 </StackLayout>
                             </GridLayout>
                             <!-- Don't show horizontal line for last element -->

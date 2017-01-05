@@ -9,9 +9,10 @@ import { Router, NavigationExtras } from "@angular/router";
     selector: 'modal-content',
     template: ` 
        <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white;"> 
-         <StackLayout class="m-10">
-            <Button class="btn text-left" text="Cancel" (tap)="cancel()"></Button>
+         <StackLayout class="m-x-10 m-t-15"> 
+            <Button class="text-primary text-left font-weight-bold" text="Cancel" (tap)="cancel()"></Button>
          </StackLayout>
+         <StackLayout class="hr-light m-15"></StackLayout>
          <DatePicker id="datePicker"></DatePicker> 
           <Button class="btn btn-primary btn-rounded-sm btn-active" text="Submit" (tap)="submit('Cancel')"></Button> 
        </StackLayout>
