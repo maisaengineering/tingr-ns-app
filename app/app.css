@@ -69,13 +69,14 @@ TextField {
 
 
 ActionBar {
-    background-color: #9fc5f8;
-    color: white;
+    background-color: #fffff;
+    color: black;
 }
 
 .action-label{
     font-size: 18;
     font-weight: bold;
+    color: #9fc5f8;
 }
 
 .line-separator  {
@@ -115,14 +116,14 @@ ActionBar {
 
 .drawer-content .drawer-header {
     height: 160;
-    background-color: #9fc5f8;
+    /*background-color: #9fc5f8;*/
 }
 
 .drawer-content .drawer-header .teacher-profile-pic {
     border-radius: 50;
 }
 .drawer-content .drawer-header .teacher-name{
-    color: white;
+    color: black;
 }
 
 

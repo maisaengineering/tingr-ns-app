@@ -80,20 +80,20 @@ export class MyClassComponent extends DrawerPage implements OnInit{
 
     onLongPress(event, kid) {
         dialogs.action({
-            message: "Your message",
+            //message: "Your message",
             cancelButtonText: "Cancel",
-            actions: ["Sign-in/Sign-out","Inform Parent"]
+            actions: ["Sign-in/Sign-out","Message a Parent"]
         }).then(result => {
             if(result === 'Sign-in/Sign-out'){
                 this.signInOrSignOutKid(kid);
-            }else if(result === "Inform Parent") {
+            }else if(result === "Message a Parent") {
                 dialogs.prompt({
                     title: "Message",
-                    message: "Type your message here",
+                    //message: "Type your message here",
                     okButtonText: "Send",
                     cancelButtonText: "Cancel",
                     //neutralButtonText: "Neutral text",
-                    //defaultText: "message",
+                    defaultText: "Type your message here",
                     inputType: dialogs.inputType.text
                 }).then(r => {
                     this.sendMessageForKid(r.text, kid);
