@@ -1,13 +1,14 @@
-import { Router, NavigationExtras } from "@angular/router";
-import { connectionType, getConnectionType } from "connectivity";
-import { Component, OnInit, ViewChild, ElementRef, Injectable } from "@angular/core";
-import { Page } from "ui/page";
-import { Teacher } from "../../shared/teacher/teacher";
-import { TeacherService } from "../../shared/teacher/teacher.service";
-import { TokenService } from "../../shared/token.service";
-import { AuthService } from "../../shared/oauth/auth.service";
-import {  getString } from "application-settings";
-import { Label } from "ui/label";
+import {Router, NavigationExtras} from "@angular/router";
+import {connectionType, getConnectionType} from "connectivity";
+import {Component, OnInit, ViewChild, ElementRef, Injectable} from "@angular/core";
+import {Page} from "ui/page";
+import {Teacher} from "../../shared/teacher/teacher";
+import {TeacherService} from "../../shared/teacher/teacher.service";
+import {TokenService} from "../../shared/token.service";
+import {AuthService} from "../../shared/oauth/auth.service";
+import {getString} from "application-settings";
+import {Label} from "ui/label";
+var view = require("ui/core/view");
 
 @Component({
     selector: "my-app",
@@ -19,28 +20,32 @@ import { Label } from "ui/label";
 export class LoginPage implements OnInit {
     teacher: Teacher;
     isLoggingIn = false;
-    //email = 'teacher1@org1.com';
-    email = '';
-    public isLoading: Boolean = false;
+    email = 'teacher1@org1.com';
+    isLoading: Boolean = false;
 
 
     @ViewChild("formErrors") formErrorsRef: ElementRef;
 
 
-    constructor(private authService: AuthService,private router: Router, private teacherService: TeacherService, private page: Page) {
+    constructor(private authService: AuthService, private router: Router, private teacherService: TeacherService, private page: Page) {
         this.teacher = new Teacher();
-        //this.teacher.email = "teacher1@org1.com";
+        this.teacher.email = this.email;
         this.teacher.email = "";
     }
 
     ngOnInit() {
         this.page.actionBarHidden = true;
         /*if (getConnectionType() === connectionType.none) {
-            alert("Tingr requires an internet connection to log in.");
-            return;
-        }*/
+         alert("Tingr requires an internet connection to log in.");
+         return;
+         }*/
+
+        // focus on email field
+        let emailTextField = view.getViewById(this.page, "email");
+        emailTextField.focus();
+
         // get AccessToken
-        if(!!TokenService.accessToken === false){
+        if (!!TokenService.accessToken === false) {
             this.isLoading = true;
             this.authService.getAccessToken()
                 .subscribe(
@@ -60,10 +65,10 @@ export class LoginPage implements OnInit {
 
     submitEmail() {
         let labelError = <Label>this.formErrorsRef.nativeElement;
-        if(this.email === ''){
+        if (this.email === '') {
             labelError.text = "Email can't be blank";
             return;
-        }else{
+        } else {
             labelError.text = "";
         }
 
@@ -78,13 +83,14 @@ export class LoginPage implements OnInit {
         this.teacherService.evaluteUser(this.teacher)
             .subscribe(
                 (result) => {
+                    this.isLoading = false;
                     // save user auth_token and info in appSettings
-                    if(result.body.goto === 'signup'){
+                    if (result.body.goto === 'signup') {
                         alert("Email does not exists")
-                    }else{
+                    } else {
                         this.router.navigate(["/verify-password"], navigationExtras);
                     }
-                    this.isLoading = false;
+
                 },
                 (error) => {
                     alert(JSON.stringify(error));
