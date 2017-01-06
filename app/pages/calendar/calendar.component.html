@@ -67,8 +67,8 @@
 
                         <!-- Event Reminders -->
                         <StackLayout *ngIf="birthdays.length > 0 && event_reminders.length > 0"  class="hr-light" row="1"></StackLayout>
-                        <SatckLayout orientation="horizontal" *ngFor="let item of event_reminders; let i = index" >
-                            <Label col="0" text="{{ item.description }}" class="item" textWrap="true"></Label>
+                        <SatckLayout  orientation="horizontal" *ngFor="let item of event_reminders; let i = index" >
+                            <Label (tap)="openDescription(item.description)" col="0" text="{{ item.description }}" class="item" textWrap="true"></Label>
                             <StackLayout *ngIf="event_reminders.length > (i+1)" class="hr-light" row="1"></StackLayout>
                         </SatckLayout>
 

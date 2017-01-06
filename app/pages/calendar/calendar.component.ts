@@ -166,6 +166,15 @@ export class CalendarComponent extends DrawerPage implements OnInit{
         return valid;
     }
 
+    openDescription(description) {
+        dialogs.alert({
+            //title: "Error",
+            message: description,
+            okButtonText: "Ok"
+        }).then(function () {
+            //console.log("Dialog closed!");
+        });
+    }
 
 
 }
