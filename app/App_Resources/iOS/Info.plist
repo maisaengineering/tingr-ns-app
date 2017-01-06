@@ -49,5 +49,8 @@
           <key>NSAllowsArbitraryLoads</key>
          <true/>
      </dict>
+
+     <key>NSCalendarsUsageDescription</key>
+     <string>Tingr would like to access your calendar to show scheduled events.</string>
 </dict>
 </plist>
