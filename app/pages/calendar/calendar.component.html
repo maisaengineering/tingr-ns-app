@@ -23,9 +23,9 @@
             <StackLayout>
 
                 <StackLayout (tap)="createModalDatePickerView()" class="today-date green p-y-15 {{ iscurrentDateSelected ? 'active' : ''}}">
-                        <Gridlayout cols="auto,auto" verticalAlignment="center">
-                                <Label row="0" col="0" text="{{ currentDate  | date: 'EEEE, MMMM d' }}" class="text-center font-weight-bold"></Label>
-                            <Label row="0" col="1" horizontalAlignment="right" class="fa m-r-20 text-right" text="{{'fa-chevron-right' | fonticon}}"></Label>
+                        <Gridlayout cols="auto,auto" verticalAlignment="center" orientation="horizontal">
+                            <Label row="0" col="0" verticalAlignment="center" text="{{ currentDate  | date: 'EEEE, MMMM d' }}" class="text-center font-weight-bold"></Label>
+                            <Label row="0" col="1" verticalAlignment="center" horizontalAlignment="right" class="fa m-r-20 text-right" text="{{'fa-chevron-right' | fonticon}}"></Label>
                         </Gridlayout>
                 </StackLayout>
 
