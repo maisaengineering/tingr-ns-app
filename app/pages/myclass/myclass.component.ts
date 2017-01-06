@@ -68,7 +68,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                 },
                 (error) => {
                     this.isLoading = false;
-                    alert(JSON.stringify(error))
+                    alert('Internal server error.');
                 }
             );
     }
@@ -113,7 +113,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     alert(body.text)
                 },
                 (error) => {
-                    alert(error._body.message || 'something went wrong')
+                    alert('Internal server error.');
                 }
             );
 
@@ -131,7 +131,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     nstoasts.show(options);
                 },
                 (error) => {
-                    alert(error._body.message || 'something went wrong')
+                    alert('Internal server error.');
                 }
             );
     }

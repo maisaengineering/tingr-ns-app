@@ -76,7 +76,7 @@ export class VerifyPasswordPage implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    alert(error.message)
+                    alert('Internal server error.');
                 }
             );
     }

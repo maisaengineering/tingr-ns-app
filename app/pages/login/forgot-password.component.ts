@@ -74,7 +74,7 @@ export class ForgotPasswordComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log("Error:  "+JSON.stringify(error));
+                    //console.log("Error:  "+JSON.stringify(error));
                     dialogs.alert({
                         //title: "Error",
                         message: error.message,

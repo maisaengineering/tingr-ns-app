@@ -54,8 +54,7 @@ export class KidDashboardComponent implements OnInit{
                 },
                 (error) => {
                     this.isLoading = false;
-                    this.isLoading = false;
-                    alert(JSON.stringify(error))
+                    alert('Internal server error.');
                 }
             );
     }

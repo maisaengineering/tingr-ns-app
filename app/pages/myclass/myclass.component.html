@@ -23,7 +23,7 @@
         <ListView [items]="managed_kids" class="list-group">
             <template let-item="item">
 
-                <GridLayout class="list-group-item" rows="*" columns="auto, *,*" (longPress)="onLongPress($event, item)" (itemTap)="redirectToKidDashboard(item)">
+                <GridLayout class="list-group-item" rows="*" columns="auto, *,*" (longPress)="onLongPress($event, item)" (tap)="redirectToKidDashboard(item)">
                     <StackLayout row="0" col="0">
 
                         <Image height="75" width="75" class="kid-profile-pic blue-circle-border" src="{{ item.photograph_url ? item.photograph_url : '~/images/avatar-100.png' }}"></Image>

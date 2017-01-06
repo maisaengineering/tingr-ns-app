@@ -41,8 +41,8 @@ export class LogoutComponent  implements OnInit {
 
                 },
                 (error) => {
-                    alert(JSON.stringify(error));
                     this.isLoading = false;
+                    alert('Internal server error.');
                 }
             );
     }
