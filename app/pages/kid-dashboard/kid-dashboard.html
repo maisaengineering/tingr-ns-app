@@ -25,9 +25,9 @@
 
 
         <GridLayout row="1">
-            <GridLayout columns="auto, auto, *, auto,*" class="navigation-links-1">
+            <GridLayout columns="100,*,100,*,100" verticalAlignment="center" class="navigation-links-1">
 
-                <StackLayout col="0" row="0" horizontalAlignment="center" orientation="vertical" class="profile-details">
+                <StackLayout col="0" row="0" horizontalAlignment="center" orientation="vertical">
                     <Image text="top" stretch ="none" horizontalAlignment="center" src="res://profile_details_40"></Image>
                     <Label text="Profile Details"></Label>
                 </StackLayout>
@@ -36,7 +36,7 @@
                 </StackLayout>
 
 
-                <StackLayout col="2" row="0" horizontalAlignment="center" orientation="vertical" class="documents">
+                <StackLayout col="2" row="0" horizontalAlignment="center" orientation="vertical">
                     <Image text="top" stretch ="none" horizontalAlignment="center" src="res://doc_lock_icon_40"></Image>
                     <Label text="form&docs"></Label>
                 </StackLayout>
@@ -45,7 +45,7 @@
                     <Image  stretch ="none" horizontalAlignment="center" src="~/images/line_icon-50.png"></Image>
                 </StackLayout>
 
-                <StackLayout col="4" row="0" horizontalAlignment="center" orientation="vertical" class="notes">
+                <StackLayout col="4" row="0" horizontalAlignment="center" orientation="vertical">
                     <Image text="top" stretch ="none" horizontalAlignment="center" src="res://notes_icon_40"></Image>
                     <Label text="Notes"></Label>
                 </StackLayout>
@@ -83,7 +83,7 @@
         <GridLayout row="5">
             <StackLayout horizontalAlignment="center" orientation="vertical" class="capture-moment-section">
                 <Image text="top" stretch ="none" horizontalAlignment="center" src="res://camera_icon_60"></Image>
-                <Label text="capture a moment, share with parent(s)..." class="footnote font-italic text-muted"></Label>
+                <Label text="capture a moment, share with parent(s)..." class="footnote font-italic very-light-gray"></Label>
             </StackLayout>
         </GridLayout>
 
@@ -113,7 +113,7 @@
                         </StackLayout>
                         <StackLayout col="1" row="0" horizontalAlignment="right" orientation="horizontal">
                             <StackLayout orientation="vertical">
-                                <Label text="{{  post.created_at.substring(0,10) |  date: 'MMMM dd, yyyy' }}" class="tagged-on-date"></Label>
+                                <Label text="{{  post.created_at.substring(0,10) |  date: 'MMMM dd, yyyy' }}" class="tagged-on-date font-weight-bold text-muted"></Label>
                                 <Image class="m-t-5" id="post-hearted-#{{ post.kl_id }}"
                                        visibility="{{ post.hearted ? 'visible' : 'collapsed'}}"
                                        height="30" width="40" stretch="aspectFit"
