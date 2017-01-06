@@ -47,6 +47,6 @@
      </dict>
 
      <key>NSCalendarsUsageDescription</key>
-     <string>Tingr would like to access your calendar to show scheduled events.</string>
+     <string>Tingr would like to access calendar to pick a date for showing an event.</string>
 </dict>
 </plist>
