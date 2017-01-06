@@ -45,6 +45,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
         } else if (app.ios) {
             this.isIos = true;
         }
+        this.managed_kids = [];
     }
 
     ngOnInit() {
@@ -106,13 +107,20 @@ export class MyClassComponent extends DrawerPage implements OnInit{
     signInOrSignOutKid(kid){
         //var time = this.datePipe.transform(new Date(), 'HH:MM a');
         //alert(kidName + " signed in successfully at " + time)
+        this.isLoading = true;
         this.kidSignInOutService.signInOrSingOut(kid.kid_klid)
             .subscribe(
                 (result) => {
+                    this.isLoading = false;
                     var body = result.body;
-                    alert(body.text)
+                    var options = {
+                        text: body.text,
+                        duration : nstoasts.DURATION.SHORT
+                    };
+                    nstoasts.show(options);
                 },
                 (error) => {
+                    this.isLoading = false;
                     alert('Internal server error.');
                 }
             );
@@ -120,9 +128,11 @@ export class MyClassComponent extends DrawerPage implements OnInit{
     }
 
     sendMessageForKid(text, kid){
+        this.isLoading = true;
         this.messageService.sendMessage(text, kid.kid_klid)
             .subscribe(
                 (result) => {
+                    this.isLoading = false
                     //var body = result;
                     var options = {
                         text: result.message,
@@ -131,6 +141,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     nstoasts.show(options);
                 },
                 (error) => {
+                    this.isLoading = false;
                     alert('Internal server error.');
                 }
             );
