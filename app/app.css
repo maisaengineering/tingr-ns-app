@@ -33,6 +33,11 @@ refer to http://docs.nativescript.org/ui/theme.
     background-color: #2b78e4;
 }
 
+/* kid last sing in/out label */
+.bg-green-label{
+    background-color: #b7d6a9;
+}
+
 
 
 .fa {
