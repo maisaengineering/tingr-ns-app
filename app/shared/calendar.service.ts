@@ -33,7 +33,7 @@ export class CalendarService {
         let data = JSON.stringify({
             access_token: TokenService.accessToken,
             auth_token: TokenService.authToken,
-            command: "all_evexxnts",
+            command: "all_events",
             body: {
                 session_id: room.session_id,
                 season_id: room.season_id,
