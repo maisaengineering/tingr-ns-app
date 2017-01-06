@@ -26,6 +26,13 @@ refer to http://docs.nativescript.org/ui/theme.
     background-color: #b7d4f9;
 }
 
+.text-primary{
+    color: #2b78e4;
+}
+.btn-primary{
+    background-color: #2b78e4;
+}
+
 
 
 .fa {
@@ -70,7 +77,7 @@ TextField {
 
 ActionBar {
     background-color: #fffff;
-    color: black;
+    color: #2b78e4;
 }
 
 .action-label{
