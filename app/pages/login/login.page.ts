@@ -8,7 +8,9 @@ import {TokenService} from "../../shared/token.service";
 import {AuthService} from "../../shared/oauth/auth.service";
 import {getString} from "application-settings";
 import {Label} from "ui/label";
+import app = require("application");
 var view = require("ui/core/view");
+
 
 @Component({
     selector: "my-app",

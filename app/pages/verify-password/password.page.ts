@@ -9,6 +9,7 @@ import {Page} from "ui/page";
 import * as appSettings from "application-settings"
 import {TokenService} from "../../shared/token.service";
 import {TeacherInfo} from "../../providers/data/teacher_info";
+import app = require("application");
 var view = require("ui/core/view");
 
 @Component({
