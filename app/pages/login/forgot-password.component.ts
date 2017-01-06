@@ -22,6 +22,7 @@ export class ForgotPasswordComponent implements OnInit {
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
 
+
     constructor(private router: Router, private route: ActivatedRoute,
                 private teacherService: TeacherService,
                 private page: Page,private location: Location,

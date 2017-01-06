@@ -9,7 +9,7 @@
         <Label #formErrors class="text-danger font-italic m-l-20" text="" textWrap="true"></Label>
 
         <Button isEnabled="{{ isLoading ? false : true }}" text="Continue" class="btn btn-rounded-sm blue-background submit-button" (tap)="submitEmail()"></Button>
-        <ActivityIndicator visibility="{{ isLoading ? 'visible' : 'collapsed'}}" class="busy activity-indicator"></ActivityIndicator>
+        <ActivityIndicator visibility="{{ isLoading ? 'visible' : 'collapsed'}}" class="busy activity-indicator" busy="{{isAndroid ? true : false }}"></ActivityIndicator>
 
     </StackLayout>
 </GridLayout>

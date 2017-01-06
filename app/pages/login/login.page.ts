@@ -22,6 +22,8 @@ export class LoginPage implements OnInit {
     isLoggingIn = false;
     email = 'teacher1@org1.com';
     isLoading: Boolean = false;
+    public isAndroid: Boolean = false;
+    public isIos: Boolean = false;
 
 
     @ViewChild("formErrors") formErrorsRef: ElementRef;
@@ -31,6 +33,12 @@ export class LoginPage implements OnInit {
         this.teacher = new Teacher();
         this.teacher.email = this.email;
         this.teacher.email = "";
+        if (app.android) {
+            this.isAndroid = true;
+        } else if (app.ios) {
+            this.isIos = true;
+        }
+
     }
 
     ngOnInit() {
