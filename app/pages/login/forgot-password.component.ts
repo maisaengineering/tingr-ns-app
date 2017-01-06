@@ -7,6 +7,7 @@ import {TokenService} from "../../shared/token.service";
 import {TeacherInfo} from "../../providers/data/teacher_info";
 import dialogs = require("ui/dialogs");
 var view = require("ui/core/view");
+import app = require("application");
 
 
 @Component({
@@ -18,11 +19,19 @@ var view = require("ui/core/view");
 export class ForgotPasswordComponent implements OnInit {
     public email: string;
     isLoading: Boolean = false;
+    public isAndroid: Boolean = false;
+    public isIos: Boolean = false;
 
     constructor(private router: Router, private route: ActivatedRoute,
                 private teacherService: TeacherService,
                 private page: Page,private location: Location,
                 private teacherInfo: TeacherInfo) {
+
+        if (app.android) {
+            this.isAndroid = true;
+        } else if (app.ios) {
+            this.isIos = true;
+        }
     }
 
     ngOnInit() {
