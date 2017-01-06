@@ -76,14 +76,14 @@ TextField {
 
 
 ActionBar {
-    background-color: #fffff;
-    color: #2b78e4;
+   /* background-color: white;*/
+    color: #9fc5f8;
 }
-NavigationButton, ActionItem, ActionItem{
-    color: #2b78e4;
+NavigationButton, ActionItem, .action-label{
+    color: #9fc5f8;
 }
 
-c{
+.action-label{
     font-size: 18;
     font-weight: bold;
 }
@@ -93,7 +93,6 @@ c{
     background-color: #dddddd;
     margin: 7 0;
 }
-
 
 .number-with-circle{
     font-size: 12;
