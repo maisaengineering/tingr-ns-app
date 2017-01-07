@@ -1,6 +1,7 @@
 import {View} from "ui/core/view";
-import {Router, ActivatedRoute} from "@angular/router";
-import {Component, OnInit, ViewChild} from "@angular/core";
+import {Router, ActivatedRoute } from "@angular/router";
+import {Component, OnInit, ViewChild, } from "@angular/core";
+import { RouterExtensions } from 'nativescript-angular/router';
 
 import {Teacher} from "../../shared/teacher/teacher";
 import {TeacherService} from "../../shared/teacher/teacher.service";
@@ -26,6 +27,7 @@ export class VerifyPasswordPage implements OnInit {
     public isIos: Boolean = false;
 
     constructor(private router: Router, private route: ActivatedRoute,
+                private routerExtensions: RouterExtensions,
                 private teacherService: TeacherService, private page: Page,
                 private teacherInfo: TeacherInfo) {
         this.teacher = new Teacher();
@@ -80,7 +82,7 @@ export class VerifyPasswordPage implements OnInit {
                     // save teacher info in app-settings to invoke rest api's using season, room etc...
                     TeacherInfo.details = JSON.stringify(body);
                     this.isLoading = false;
-                    this.router.navigate(["calendar"], { clearHistory: true });
+                    this.routerExtensions.navigate(["/calendar"], { clearHistory: true });
                 },
                 (error) => {
                     this.isLoading = false;
