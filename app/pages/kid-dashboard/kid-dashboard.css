@@ -60,9 +60,7 @@ navigation-links-1 -> Profile details, Documents, Notes
 }
 
 /* capture image section */
-.capture-moment-section {
-    margin-bottom: 10px;
-}
+
 .capture-moment-section .text{
     font-style: italic;
     font-size: small;
