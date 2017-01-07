@@ -230,3 +230,11 @@ ActivityIndicator.busy {
     width: 70;*/
     color: #2b78e4;
 }
+
+.hr-shadow{
+    height:2;
+    background-color:#e0e0e0;
+    width:100%;
+    border: 0;
+    box-shadow: 0 10 10 -10 #8c8b8b inset;
+}

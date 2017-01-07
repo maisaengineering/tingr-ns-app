@@ -19,44 +19,47 @@
         </StackLayout>
     </ScrollView>
     <GridLayout tkMainContent>
-        <ListView [items]="managed_kids" class="list-group">
-            <template let-item="item">
-                <StackLayout class="list-group-item" (longPress)="onLongPress($event, item)" (tap)="redirectToKidDashboard(item)">
-                    <GridLayout  rows="*" columns="auto, *,*">
-                        <StackLayout row="0" col="0">
-                            <Image height="75" width="75" class="kid-profile-pic blue-circle-border"
-                                   src="{{ item.photograph_url ? item.photograph_url : '~/images/avatar-100.png' }}"></Image>
-                        </StackLayout>
+        <ScrollView>
+            <StackLayout>
+                <StackLayout *ngFor="let item of managed_kids" >
+                    <StackLayout class="list-group-item" (longPress)="onLongPress($event, item)" (tap)="redirectToKidDashboard(item)">
+                        <GridLayout  rows="*" columns="auto, *,*">
+                            <StackLayout row="0" col="0">
+                                <Image height="75" width="75" class="kid-profile-pic blue-circle-border"
+                                       src="{{ item.photograph_url ? item.photograph_url : '~/images/avatar-100.png' }}"></Image>
+                            </StackLayout>
 
-                        <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical" class="p-l-20">
-                            <Label [text]="item.fname+' '+item.lname" class="font-weight-bold"></Label>
-                            <Label [text]="item.age+' years old'" class="text-muted"></Label>
-                        </StackLayout>
+                            <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical" class="p-l-20">
+                                <Label [text]="item.fname+' '+item.lname" class="font-weight-bold"></Label>
+                                <Label [text]="item.age+' years old'" class="text-muted"></Label>
+                            </StackLayout>
 
-                        <StackLayout row="0" col="2" verticalAlignment="center" orientation="vertical" horizontalAlignment="right">
-                            <Image height="30" width="30" verticalAlignment="center" stretch="aspectFill"
-                                   src="~/images/profile-details-40.png"></Image>
-                            <StackLayout orientation="horizontal" verticalAlignment="center"
-                                         horizontalAlignment="center">
-                                <StackLayout *ngIf="item.reminders_count != 0">
-                                    <Label [text]="item.reminders_count"
-                                           class="number-with-circle reminders-count text-center"></Label>
-                                </StackLayout>
-                                <StackLayout *ngIf="item.notifications_count != 0">
-                                    <Label [text]="item.notifications_count"
-                                           class="number-with-circle notifications-count text-center"></Label>
+                            <StackLayout row="0" col="2" class="m-t-5" verticalAlignment="center" orientation="vertical" horizontalAlignment="right">
+                                <Image height="30" width="40" verticalAlignment="center" stretch="aspectFill"
+                                       src="~/images/profile-details-40.png"></Image>
+                                <StackLayout class="m-t-5" orientation="horizontal" verticalAlignment="center"
+                                             horizontalAlignment="center">
+                                    <StackLayout *ngIf="item.reminders_count != 0">
+                                        <Label [text]="item.reminders_count"
+                                               class="number-with-circle reminders-count text-center"></Label>
+                                    </StackLayout>
+                                    <StackLayout *ngIf="item.notifications_count != 0">
+                                        <Label [text]="item.notifications_count"
+                                               class="number-with-circle notifications-count text-center"></Label>
+                                    </StackLayout>
                                 </StackLayout>
                             </StackLayout>
-                        </StackLayout>
-                    </GridLayout>
+                        </GridLayout>
 
-                    <StackLayout verticalAlignment="center" orientation="vertical" horizontalAlignment="center">
-                        <Label class="bg-primary bg-green-label light-gray font-italic p-x-10 m-t-5" text="last singed-out at 05:45pm on 01/05"></Label>
+                        <StackLayout verticalAlignment="center" orientation="vertical" horizontalAlignment="center">
+                            <Label class="bg-primary bg-green-label light-gray font-italic p-x-10 m-t-5" text="last singed-out at 05:45pm on 01/05"></Label>
+                        </StackLayout>
                     </StackLayout>
+                    <StackLayout class="hr-shadow m-t-5"></StackLayout>
                 </StackLayout>
 
-            </template>
-        </ListView>
+            </StackLayout>
+        </ScrollView>
 
         <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
         <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
@@ -64,5 +67,4 @@
         </GridLayout>
 
     </GridLayout>
-    >
 </RadSideDrawer>
