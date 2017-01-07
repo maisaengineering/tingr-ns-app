@@ -80,7 +80,7 @@ export class VerifyPasswordPage implements OnInit {
                     // save teacher info in app-settings to invoke rest api's using season, room etc...
                     TeacherInfo.details = JSON.stringify(body);
                     this.isLoading = false;
-                    this.router.navigate(["calendar"]);
+                    this.router.navigate(["calendar"], { clearHistory: true });
                 },
                 (error) => {
                     this.isLoading = false;
