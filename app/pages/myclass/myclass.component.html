@@ -50,12 +50,11 @@
                                 </StackLayout>
                             </StackLayout>
                         </GridLayout>
-
-                        <StackLayout verticalAlignment="center" orientation="vertical" horizontalAlignment="center">
-                            <Label class="bg-primary bg-green-label light-gray font-italic p-x-10 m-t-5" text="last singed-out at 05:45pm on 01/05"></Label>
+                        <StackLayout *ngIf="item.in_or_out_time" verticalAlignment="center" orientation="vertical" horizontalAlignment="center">
+                            <Label class="bg-primary bg-green-label light-gray font-italic p-x-10 m-t-5" text="{{ item.in_or_out_time }}"></Label>
                         </StackLayout>
                     </StackLayout>
-                    <StackLayout class="hr-shadow m-t-5"></StackLayout>
+                    <StackLayout class="hr-shadow m-t-0"></StackLayout>
                 </StackLayout>
 
             </StackLayout>

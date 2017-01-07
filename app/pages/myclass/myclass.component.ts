@@ -66,6 +66,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     this.managed_kids = body.managed_kids;
                     this.room = body.session_name;
                     this.isLoading = false;
+                    console.log("Managed Kids :" + JSON.stringify(body.managed_kids))
                 },
                 (error) => {
                     this.isLoading = false;
