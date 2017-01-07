@@ -3,7 +3,7 @@ import {DrawerPage} from "../drawer.page";
 import { MyClassService, ManagedKid, Room} from "../../shared/myclass.service";
 import { KidSignInOutService } from "../../shared/kid-signinout.service";
 import { MessageService } from "../../shared/message.service";
-
+import { TeacherInfo } from "../../providers/data/teacher_info";
 import { KidData } from "../../providers/data/kid_data";
 import { Router, ActivatedRoute } from "@angular/router";
 
@@ -19,6 +19,7 @@ import app = require("application");
 import platform = require("platform");
 var frameModule = require("ui/frame");
 
+
 @Component({
     selector: 'my-app',
     styleUrls: ['pages/myclass/myclass.css'],
@@ -27,7 +28,7 @@ var frameModule = require("ui/frame");
 })
 export class MyClassComponent extends DrawerPage implements OnInit{
     public managed_kids: Array<ManagedKid>;
-    public room: String;
+    public room;
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
@@ -46,6 +47,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
             this.isIos = true;
         }
         this.managed_kids = [];
+        this.room =  {};
     }
 
     ngOnInit() {
@@ -57,14 +59,17 @@ export class MyClassComponent extends DrawerPage implements OnInit{
             // hide back button
             navigationItem.setHidesBackButtonAnimated(true, false);
         }
+        this.room =  TeacherInfo.parsedDetails.rooms[0];
+        this.loadManagedKids(this.room);
+    }
 
+    loadManagedKids(room){
         this.isLoading = true;
-        this.myClassService.getManagedKids()
+        this.myClassService.getManagedKids(room)
             .subscribe(
                 (result) => {
                     var body = result.body;
                     this.managed_kids = body.managed_kids;
-                    this.room = body.session_name;
                     this.isLoading = false;
                     console.log("Managed Kids :" + JSON.stringify(body.managed_kids))
                 },
@@ -73,6 +78,24 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     alert('Internal server error.');
                 }
             );
+    }
+
+    openRooms(){
+        let rooms = TeacherInfo.parsedDetails.rooms;
+        console.log("Rooms "+ JSON.stringify(rooms));
+        let actions =[];
+        for (let room of rooms) {
+            actions.push(room.session_name);
+        }
+        dialogs.action({
+            message: "Select Room",
+            cancelButtonText: "Cancel",
+            actions: actions
+        }).then(result => {
+           this.room = rooms.filter(report => report.session_name === result)[0]; 
+           this.loadManagedKids(this.room);
+
+        });
     }
 
     redirectToKidDashboard(kid){
@@ -113,8 +136,8 @@ export class MyClassComponent extends DrawerPage implements OnInit{
             .subscribe(
                 (result) => {
                     this.isLoading = false;
-                    var body = result.body;
-                    var options = {
+                    let body = result.body;
+                    let options = {
                         text: body.text,
                         duration : nstoasts.DURATION.SHORT
                     };
@@ -133,9 +156,9 @@ export class MyClassComponent extends DrawerPage implements OnInit{
         this.messageService.sendMessage(text, kid.kid_klid)
             .subscribe(
                 (result) => {
-                    this.isLoading = false
+                    this.isLoading = false;
                     //var body = result;
-                    var options = {
+                    let options = {
                         text: result.message,
                         duration : nstoasts.DURATION.SHORT
                     };

@@ -14,8 +14,7 @@ export class MyClassService {
 
     }
 
-    getManagedKids() {
-        var room = TeacherInfo.parsedDetails.rooms[0];
+    getManagedKids(room) {
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({
