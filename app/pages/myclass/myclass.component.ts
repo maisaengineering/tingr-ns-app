@@ -81,6 +81,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
     }
 
     openRooms(){
+        //TODO get latest rooms by calling API
         let rooms = TeacherInfo.parsedDetails.rooms;
         console.log("Rooms "+ JSON.stringify(rooms));
         let actions =[];
@@ -92,7 +93,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
             cancelButtonText: "Cancel",
             actions: actions
         }).then(result => {
-           this.room = rooms.filter(report => report.session_name === result)[0]; 
+           this.room = rooms.filter(report => report.session_name === result)[0];
            this.loadManagedKids(this.room);
 
         });
@@ -121,7 +122,9 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     defaultText: "Type your message here",
                     inputType: dialogs.inputType.text
                 }).then(r => {
-                    this.sendMessageForKid(r.text, kid);
+                    if(r.result === true ){
+                        this.sendMessageForKid(r.text, kid);
+                    } 
                 });
             }
         });
