@@ -50,8 +50,8 @@
                                 </StackLayout>
                             </StackLayout>
                         </GridLayout>
-                        <StackLayout *ngIf="item.in_or_out_time" verticalAlignment="center" orientation="vertical" horizontalAlignment="center">
-                            <Label class="bg-primary bg-green-label light-gray font-italic p-x-10 m-t-5" text="{{ item.in_or_out_time }}"></Label>
+                        <StackLayout visibility="{{ item.in_or_out_time? 'visible' : 'collapsed' }}" verticalAlignment="center" orientation="vertical" horizontalAlignment="center">
+                            <Label id="in-or-out-time-{{ item.kid_klid }}" class="bg-primary bg-green-label light-gray font-italic p-x-10 m-t-5" text="{{ item.in_or_out_time }}"></Label>
                         </StackLayout>
                     </StackLayout>
                     <StackLayout class="hr-shadow m-t-0"></StackLayout>

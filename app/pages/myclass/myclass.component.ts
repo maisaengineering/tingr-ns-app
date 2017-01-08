@@ -6,6 +6,7 @@ import { MessageService } from "../../shared/message.service";
 import { TeacherInfo } from "../../providers/data/teacher_info";
 import { KidData } from "../../providers/data/kid_data";
 import { Router, ActivatedRoute } from "@angular/router";
+import {Page} from "ui/page";
 
 import { ListView } from 'ui/list-view';
 import { TextView } from 'ui/text-view';
@@ -18,6 +19,7 @@ var nstoasts = require("nativescript-toasts");
 import app = require("application");
 import platform = require("platform");
 var frameModule = require("ui/frame");
+var view = require("ui/core/view");
 
 
 @Component({
@@ -39,7 +41,8 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                 private changeDetectorRef: ChangeDetectorRef,
                 private datePipe: DatePipe,
                 private kidData: KidData,
-                private router: Router) {
+                private router: Router,
+                private page: Page) {
         super(changeDetectorRef);
         if (app.android) {
             this.isAndroid = true;
@@ -124,7 +127,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                 }).then(r => {
                     if(r.result === true ){
                         this.sendMessageForKid(r.text, kid);
-                    } 
+                    }
                 });
             }
         });
@@ -134,10 +137,13 @@ export class MyClassComponent extends DrawerPage implements OnInit{
     signInOrSignOutKid(kid){
         //var time = this.datePipe.transform(new Date(), 'HH:MM a');
         //alert(kidName + " signed in successfully at " + time)
+
+        let inoutTimeLabel = view.getViewById(this.page, "in-or-out-time-"+kid.kid_klid);
         this.isLoading = true;
         this.kidSignInOutService.signInOrSingOut(kid.kid_klid)
             .subscribe(
                 (result) => {
+                    console.log("REsult  "+ JSON.stringify(result));
                     this.isLoading = false;
                     let body = result.body;
                     let options = {
@@ -145,6 +151,10 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                         duration : nstoasts.DURATION.SHORT
                     };
                     nstoasts.show(options);
+                    inoutTimeLabel.parent.visibility= 'visible'; // show parent
+                    if(body.in_or_out_time){
+                        inoutTimeLabel.body.in_or_out_time; // update label with result
+                    }
                 },
                 (error) => {
                     this.isLoading = false;
