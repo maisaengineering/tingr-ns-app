@@ -15,8 +15,6 @@ export class PostService {
     }
 
     getPosts(kl_id) {
-
-
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({
@@ -60,8 +58,6 @@ export class PostService {
         ).map((res:Response) => res.json())
             .catch(this.handleErrors)
     }
-
-
 
     handleErrors(error: any)  {
         console.error('An error occurred', error); // for demo purposes only

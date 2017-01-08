@@ -3,6 +3,7 @@ import {DrawerPage} from "../drawer.page";
 import { MyClassService, ManagedKid, Room} from "../../shared/myclass.service";
 import { KidSignInOutService } from "../../shared/kid-signinout.service";
 import { MessageService } from "../../shared/message.service";
+import { TeacherService } from "../../shared/teacher/teacher.service";
 import { TeacherInfo } from "../../providers/data/teacher_info";
 import { KidData } from "../../providers/data/kid_data";
 import { Router, ActivatedRoute } from "@angular/router";
@@ -27,7 +28,7 @@ var tnsfx = require('nativescript-effects');
     selector: 'my-app',
     styleUrls: ['pages/myclass/myclass.css'],
     templateUrl: 'pages/myclass/myclass.component.html',
-    providers: [ MyClassService, KidSignInOutService, MessageService ]
+    providers: [ MyClassService, KidSignInOutService, MessageService, TeacherService ]
 })
 export class MyClassComponent extends DrawerPage implements OnInit{
     public managed_kids: Array<ManagedKid>;
@@ -35,9 +36,11 @@ export class MyClassComponent extends DrawerPage implements OnInit{
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
+    public assignedRooms: Array<any>;
 
     constructor(private myClassService: MyClassService,
                 private kidSignInOutService: KidSignInOutService,
+                private teacherService: TeacherService,
                 private messageService: MessageService,
                 private changeDetectorRef: ChangeDetectorRef,
                 private datePipe: DatePipe,
@@ -52,6 +55,8 @@ export class MyClassComponent extends DrawerPage implements OnInit{
         }
         this.managed_kids = [];
         this.room =  {};
+        // initialize with when user logged in data and then invoke assignedrooms api to get updated ones
+        this.assignedRooms = TeacherInfo.parsedDetails.rooms;
     }
 
     ngOnInit() {
@@ -63,8 +68,9 @@ export class MyClassComponent extends DrawerPage implements OnInit{
             // hide back button
             navigationItem.setHidesBackButtonAnimated(true, false);
         }
-        this.room =  TeacherInfo.parsedDetails.rooms[0];
+        this.room =  this.assignedRooms[0];
         this.loadManagedKids(this.room);
+        this.getAssignedRooms();
     }
 
     loadManagedKids(room){
@@ -84,10 +90,21 @@ export class MyClassComponent extends DrawerPage implements OnInit{
             );
     }
 
+    getAssignedRooms(){
+        this.teacherService.getAssignedRooms()
+            .subscribe(
+                (result) => {
+                    let body = result.body;
+                    this.assignedRooms = body.rooms;
+                },
+                (error) => {
+                }
+            );
+    }
+
     openRooms(){
-        //TODO get latest rooms by calling API
-        let rooms = TeacherInfo.parsedDetails.rooms;
-        console.log("Rooms "+ JSON.stringify(rooms));
+        let rooms = this.assignedRooms;
+        console.log("Rooms "+ JSON.stringify(this.assignedRooms))
         let actions =[];
         for (let room of rooms) {
             actions.push(room.session_name);

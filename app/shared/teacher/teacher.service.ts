@@ -31,8 +31,8 @@ export class TeacherService {
                 headers: headers
             }
         )
-        .map(response => response.json())
-        .catch(this.handleErrors);
+            .map(response => response.json())
+            .catch(this.handleErrors);
     }
 
 
@@ -50,8 +50,8 @@ export class TeacherService {
                 headers: headers
             }
         )
-        .map(response => response.json())
-        .catch(this.handleErrors);
+            .map(response => response.json())
+            .catch(this.handleErrors);
     }
 
     forgotPassword(email) {
@@ -91,6 +91,27 @@ export class TeacherService {
             .map((res:Response) => res.json())
             .catch(this.handleErrors);
     }
+
+    getAssignedRooms(){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: "assigned_rooms",
+            body: {
+                teacher_klid: TeacherInfo.parsedDetails.teacher_klid
+            }
+        });
+
+        return this.http.post(
+            Config.apiUrl + "teachers", data, {
+                headers: headers
+            }
+        ).map((res:Response) => res.json())
+            .catch(this.handleErrors)
+    }
+
 
     handleErrors(error: Response) {
         // return Observable.throw(error.json() || {error: 'Server error'})
