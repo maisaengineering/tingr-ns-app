@@ -114,7 +114,7 @@
                         <StackLayout col="1" row="0" horizontalAlignment="right" orientation="horizontal">
                             <StackLayout orientation="vertical">
                                 <Label text="{{  post.created_at.substring(0,10) |  date: 'MMMM dd, yyyy' }}" class="tagged-on-date font-weight-bold text-muted"></Label>
-                                <Image class="m-t-5" id="post-hearted-#{{ post.kl_id }}"
+                                <Image class="m-t-5" id="post-hearted-image-{{ post.kl_id }}"
                                        visibility="{{ post.hearted ? 'visible' : 'collapsed'}}"
                                        height="30" width="40" stretch="aspectFit"
                                        src="{{ post.hearted ? (post.asset_base_url + post.heart_icon) : '~/images/heart-icon-red-48.png' }}"
@@ -160,7 +160,10 @@
                 <GridLayout row="5" class="moment-bottom-section">
                     <GridLayout columns="auto,auto,auto,*">
                         <StackLayout col="0" row="0" horizontalAlignment="left" orientation="horizontal" marginLeft="10">
-                            <Image stretch="none" id="post-heart-icon-{{ post.kl_id }}" src="res://heart_icon_{{ post.hearted ? 'gray' : 'light' }}"></Image>
+                            <Image visibility="visible"  stretch="none" class="{{ post.hearted ? 'hearted' : 'not-hearted' }}"
+                                   (tap)="addOrRemoveHeart(post)" id="post-add-remove-heart-{{ post.kl_id }}"
+                                   src="res://heart_icon_{{ post.hearted ? 'gray' : 'light' }}"></Image>
+                            <ActivityIndicator height="25" width="25" id="post-add-remove-heart-indicator-{{ post.kl_id }}" visibility="collapsed" class="busy activity-indicator" busy="true"></ActivityIndicator>
                         </StackLayout>
 
                         <StackLayout col="1" row="0" horizontalAlignment="left" orientation="horizontal" marginLeft="10">
