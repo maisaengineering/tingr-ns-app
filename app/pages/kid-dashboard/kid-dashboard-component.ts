@@ -64,7 +64,7 @@ export class KidDashboardComponent implements OnInit{
     goBack(){
         //this.nav.backToPreviousPage();
         this.router.navigate(['/myclass']);
-       //  this.topmost.goBack();
+        //  this.topmost.goBack();
         //Perhaps the simplest way to navigate is by specifying the file name of the page to which you want to navigate.
         //this.topmost.navigate("myclass");
 
@@ -91,8 +91,6 @@ export class KidDashboardComponent implements OnInit{
                         activityIndicator.visibility = 'collapsed';
                         heartIconImage.className = 'not-hearted';
 
-
-                        //heartedImage.src = "~/images/heart-icon-red-48.png";
                         heartedImage.floatOut('slow', 'left').then(function (){
                             heartedImage.visibility = "collapsed";
                         });
@@ -100,11 +98,13 @@ export class KidDashboardComponent implements OnInit{
                         //add heart
                         heartIconImage.src = 'res://heart_icon_gray';
                         heartIconImage.visibility = 'visible';
-                        activityIndicator.visibility = 'collapsed';
                         heartIconImage.className = 'hearted';
+                        activityIndicator.visibility = 'collapsed';
 
+
+                        heartedImage.visibility = "collapsed";
                         heartedImage.src = body.asset_base_url + body.heart_icon;
-                        heartedImage.visibility = "visible"
+                        heartedImage.visibility = "visible";
                         heartedImage.floatIn('slow', 'left');
                     }
 
