@@ -20,6 +20,7 @@ import app = require("application");
 import platform = require("platform");
 var frameModule = require("ui/frame");
 var view = require("ui/core/view");
+var tnsfx = require('nativescript-effects');
 
 
 @Component({
@@ -151,9 +152,10 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                         duration : nstoasts.DURATION.SHORT
                     };
                     nstoasts.show(options);
-                    inoutTimeLabel.parent.visibility= 'visible'; // show parent
                     if(body.in_or_out_time){
                         inoutTimeLabel.body.in_or_out_time; // update label with result
+                        inoutTimeLabel.parent.visibility= 'visible'; // show parent
+                        inoutTimeLabel.shake(); //shake effect
                     }
                 },
                 (error) => {
