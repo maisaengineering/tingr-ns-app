@@ -15,14 +15,16 @@
     <StackLayout class="drawer-link"
                  [nsRouterLinkActive]="['bg-primary']"
                  orientation="horizontal"
-                 [nsRouterLink]="['/calendar']">
+                 [nsRouterLink]="['/calendar']"
+                 pageTransition="slideLeft">
         <Label class="fa" text="{{'fa-calendar-o' | fonticon}}"></Label>
         <Label class="text" text="Calendar"></Label>
     </StackLayout>
     <StackLayout class="drawer-link"
                  orientation="horizontal"
                  [nsRouterLink]="['/myclass']"
-                 [nsRouterLinkActive]="['bg-primary']">
+                 [nsRouterLinkActive]="['bg-primary']"
+                 pageTransition="slideLeft">
         <Label class="fa" text="{{'fa-child' | fonticon}}"></Label>
         <Label class="text" text="Class Room"></Label>
     </StackLayout>
@@ -39,7 +41,8 @@
     <StackLayout class="drawer-link"
                  orientation="horizontal"
                  [nsRouterLink]="['/settings']"
-                 [nsRouterLinkActive]="['bg-primary']">
+                 [nsRouterLinkActive]="['bg-primary']"
+                 pageTransition="slideLeft">
         <Label class="fa" text="{{'fa-cogs' | fonticon}}"></Label>
         <Label class="text" text="Settings"></Label>
     </StackLayout>

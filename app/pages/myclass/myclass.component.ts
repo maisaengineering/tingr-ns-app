@@ -7,6 +7,7 @@ import { TeacherService } from "../../shared/teacher/teacher.service";
 import { TeacherInfo } from "../../providers/data/teacher_info";
 import { KidData } from "../../providers/data/kid_data";
 import { Router, ActivatedRoute } from "@angular/router";
+import { RouterExtensions, PageRoute } from "nativescript-angular/router";
 import {Page} from "ui/page";
 
 import { ListView } from 'ui/list-view';
@@ -45,7 +46,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                 private changeDetectorRef: ChangeDetectorRef,
                 private datePipe: DatePipe,
                 private kidData: KidData,
-                private router: Router,
+                private routerExtensions: RouterExtensions,
                 private page: Page) {
         super(changeDetectorRef);
         if (app.android) {
@@ -122,7 +123,12 @@ export class MyClassComponent extends DrawerPage implements OnInit{
 
     redirectToKidDashboard(kid){
         this.kidData.info =  kid;
-        this.router.navigate(["kid-dashboard"]);
+
+        this.routerExtensions.navigate(["/kid-dashboard"], {
+            transition: {
+                name: "slideLeft"
+            }
+        });
     }
 
     onLongPress(event, kid) {

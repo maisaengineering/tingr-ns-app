@@ -33,7 +33,7 @@ export class KidDashboardComponent implements OnInit{
     constructor(private postService: PostService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
                 private router: Router,
-                private nav: RouterExtensions,
+                private routerExtensions: RouterExtensions,
                 private kidData: KidData) {
         //super(changeDetectorRef);
 
@@ -62,8 +62,15 @@ export class KidDashboardComponent implements OnInit{
     }
 
     goBack(){
-        //this.nav.backToPreviousPage();
-        this.router.navigate(['/myclass']);
+        this.routerExtensions.navigate(["/myclass"], {
+            transition: {
+                name: "slideRight"
+            }
+        });
+        //this.routerExtensions.backToPreviousPage();
+        //this.routerExtensions.back();
+        //this.routerExtensions.backToPreviousPage();
+        //this.router.navigate(['/myclass']);
         //  this.topmost.goBack();
         //Perhaps the simplest way to navigate is by specifying the file name of the page to which you want to navigate.
         //this.topmost.navigate("myclass");
