@@ -3,6 +3,7 @@ import {Component, OnInit } from "@angular/core";
 import {TeacherService} from "../../shared/teacher/teacher.service";
 import {Page} from "ui/page";
 import {Location} from "@angular/common";
+import { RouterExtensions, PageRoute } from "nativescript-angular/router";
 import {TokenService} from "../../shared/token.service";
 import {TeacherInfo} from "../../providers/data/teacher_info";
 import dialogs = require("ui/dialogs");
@@ -26,7 +27,8 @@ export class ForgotPasswordComponent implements OnInit {
     constructor(private router: Router, private route: ActivatedRoute,
                 private teacherService: TeacherService,
                 private page: Page,private location: Location,
-                private teacherInfo: TeacherInfo) {
+                private teacherInfo: TeacherInfo,
+                private routerExtensions: RouterExtensions) {
 
         if (app.android) {
             this.isAndroid = true;
@@ -43,7 +45,12 @@ export class ForgotPasswordComponent implements OnInit {
     }
 
     goBack(): void {
-        this.location.back();
+       // this.location.back();
+        this.routerExtensions.navigate(["/verify-password"], {
+            transition: {
+                name: "slideRight"
+            }
+        });
     }
 
     sendEmail() {
