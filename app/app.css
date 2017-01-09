@@ -47,9 +47,11 @@ refer to http://docs.nativescript.org/ui/theme.
 /* application css*/
 
 Page {
-    background-color: white;
+    background-color: #ffffff;
     font-size: 15;
+    font-family: Roboto-Light;
 }
+
 TextField {
     padding: 10;
     font-size: 13;
@@ -68,6 +70,8 @@ TextField {
 .green {
     color: #93c47d;
 }
+
+
 .dark-gray{
     color: #333333;
 }
