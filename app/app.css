@@ -84,7 +84,10 @@ ActionBar {
    /* background-color: white;*/
     color: #9fc5f8;
 }
-NavigationButton, ActionItem, .action-label{
+NavigationButton, ActionItem{
+    color: #2b78e4;
+}
+.action-label{
     color: #9fc5f8;
 }
 

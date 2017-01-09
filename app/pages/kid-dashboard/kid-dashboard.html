@@ -4,7 +4,7 @@
                  ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
        <!-- <Image src="res://nativescript_logo" class="action-image"></Image>-->
-        <Label text="Kid Info"  class="action-label"></Label>
+        <!--<Label text="Kid Info"  class="action-label"></Label>-->
     </StackLayout>
 </ActionBar>
 
@@ -116,7 +116,7 @@
                                 <Label text="{{  post.created_at.substring(0,10) |  date: 'MMMM dd, yyyy' }}" class="tagged-on-date font-weight-bold text-muted"></Label>
                                 <Image class="m-t-5" id="post-hearted-image-{{ post.kl_id }}"
                                        visibility="{{ post.hearted ? 'visible' : 'collapsed'}}"
-                                       height="30" width="40" stretch="aspectFit"
+                                       height="25" width="40" stretch="aspectFit"
                                        src="{{ post.hearted ? (post.asset_base_url + post.heart_icon) : '~/images/heart-icon-red-48.png' }}"
                                        horizontalAlignment="right">
                                 </Image>
@@ -163,7 +163,7 @@
                             <Image visibility="visible"  stretch="none" class="{{ post.hearted ? 'hearted' : 'not-hearted' }}"
                                    (tap)="addOrRemoveHeart(post)" id="post-add-remove-heart-{{ post.kl_id }}"
                                    src="res://heart_icon_{{ post.hearted ? 'gray' : 'light' }}"></Image>
-                            <ActivityIndicator height="25" width="25" id="post-add-remove-heart-indicator-{{ post.kl_id }}"
+                            <ActivityIndicator height="30" width="30" id="post-add-remove-heart-indicator-{{ post.kl_id }}"
                                                visibility="collapsed" class="busy activity-indicator" busy="{{isAndroid ? true : false }}"></ActivityIndicator>
                         </StackLayout>
 
