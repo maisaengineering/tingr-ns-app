@@ -70,11 +70,13 @@ export class KidDashboardComponent implements OnInit{
     }
 
     goBack(){
-        this.routerExtensions.navigate(["/myclass"], {
+        /*this.routerExtensions.navigate(["/myclass"], {
             transition: {
                 name: "slideRight"
             }
-        });
+        });*/
+
+        this.routerExtensions.back();
         //this.routerExtensions.backToPreviousPage();
         //this.routerExtensions.back();
         //this.routerExtensions.backToPreviousPage();

@@ -6,8 +6,8 @@
     <StackLayout orientation="horizontal"
                  ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
-        <Image height="30" width="30" src="~/images/calender-icon-32.png"
-               class="m-r-10 action-image" stretch="aspectFill"></Image>
+        <Image height="32" width="32" src="~/images/calender-icon-32.png"
+               class="m-r-10 action-image"></Image>
         <Label verticalAlignment="center" text="Daily"  class="action-label"></Label>
     </StackLayout>
 </ActionBar>
@@ -94,7 +94,7 @@
                             <GridLayout row="0" columns="50, *" rows="*" class="item">
                                 <StackLayout  verticalAlignment="center">
                                     <Image height="40" width="40" class="kid-profile-pic blue-circle-border"
-                                           [nsRouterLink]="['/kid-dashboard']" src="{{ item.photograph ? item.photograph : '~/images/avatar-100.png' }}"></Image>
+                                           src="{{ item.photograph ? item.photograph : '~/images/avatar-100.png' }}"></Image>
                                 </StackLayout>
                                 <StackLayout col="1">
                                     <StackLayout col="1" orientation="horizontal">

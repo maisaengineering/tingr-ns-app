@@ -33,6 +33,7 @@ var tnsfx = require('nativescript-effects');
 })
 export class MyClassComponent extends DrawerPage implements OnInit{
     public managed_kids: Array<ManagedKid>;
+    public roomName: String;
     public room;
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
@@ -55,9 +56,10 @@ export class MyClassComponent extends DrawerPage implements OnInit{
             this.isIos = true;
         }
         this.managed_kids = [];
-        this.room =  {};
+        this.room = {};
         // initialize with when user logged in data and then invoke assignedrooms api to get updated ones
-        this.assignedRooms = TeacherInfo.parsedDetails.rooms;
+        //this.assignedRooms = TeacherInfo.parsedDetails.rooms;
+        this.assignedRooms = [];
     }
 
     ngOnInit() {
@@ -69,9 +71,24 @@ export class MyClassComponent extends DrawerPage implements OnInit{
             // hide back button
             navigationItem.setHidesBackButtonAnimated(true, false);
         }
-        this.room =  this.assignedRooms[0];
-        this.loadManagedKids(this.room);
+        //this.room =  this.assignedRooms[0];
         this.getAssignedRooms();
+    }
+
+    getAssignedRooms(){
+        this.isLoading = true;
+        this.teacherService.getAssignedRooms()
+            .subscribe(
+                (result) => {
+                    let body = result.body;
+                    this.assignedRooms = body.rooms;
+                    this.room = this.assignedRooms[0];
+                    this.roomName = this.room.session_name;
+                    this.loadManagedKids(this.room);
+                },
+                (error) => {
+                }
+            );
     }
 
     loadManagedKids(room){
@@ -82,7 +99,6 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     var body = result.body;
                     this.managed_kids = body.managed_kids;
                     this.isLoading = false;
-                    console.log("Managed Kids :" + JSON.stringify(body.managed_kids))
                 },
                 (error) => {
                     this.isLoading = false;
@@ -90,22 +106,10 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                 }
             );
     }
-
-    getAssignedRooms(){
-        this.teacherService.getAssignedRooms()
-            .subscribe(
-                (result) => {
-                    let body = result.body;
-                    this.assignedRooms = body.rooms;
-                },
-                (error) => {
-                }
-            );
-    }
+ 
 
     openRooms(){
         let rooms = this.assignedRooms;
-        console.log("Rooms "+ JSON.stringify(this.assignedRooms))
         let actions =[];
         for (let room of rooms) {
             actions.push(room.session_name);
@@ -116,8 +120,8 @@ export class MyClassComponent extends DrawerPage implements OnInit{
             actions: actions
         }).then(result => {
            this.room = rooms.filter(report => report.session_name === result)[0];
+           this.roomName = this.room.session_name;
            this.loadManagedKids(this.room);
-
         });
     }
 
@@ -146,9 +150,12 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     okButtonText: "Send",
                     cancelButtonText: "Cancel",
                     //neutralButtonText: "Neutral text",
-                    defaultText: "Type your message here",
+                    //defaultText: "Type your message here",
                     inputType: dialogs.inputType.text
                 }).then(r => {
+                    if(r.text === '' ){
+                        return;
+                    }
                     if(r.result === true ){
                         this.sendMessageForKid(r.text, kid);
                     }
@@ -176,7 +183,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     };
                     nstoasts.show(options);
                     if(body.in_or_out_time){
-                        inoutTimeLabel.body.in_or_out_time; // update label with result
+                        inoutTimeLabel.text = body.in_or_out_time; // update label with result
                         inoutTimeLabel.parent.visibility= 'visible'; // show parent
                         inoutTimeLabel.shake(); //shake effect
                     }
