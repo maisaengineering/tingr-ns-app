@@ -13,7 +13,7 @@ import {Router, NavigationExtras} from "@angular/router";
             <Gridlayout cols="auto,auto" verticalAlignment="center">
             <StackLayout (tap)="cancel()" class="text-primary" row="0" col="0" orientation="horizontal">
                <!-- <Label class="fa m-r-5" text="{{'fa-times' | fonticon}}"></Label>-->
-                <Label class="text-left font-weight-bold" text="Cancel"></Label>
+                <Label class="text-left font-weight-bold" text="Close"></Label>
             </StackLayout>
              <StackLayout (tap)="submit('Cancel')"  class="text-primary" row="0" col="0"  horizontalAlignment="right" orientation="horizontal">
                 <!--<Label class="fa m-r-5" text="{{'fa-check' | fonticon}}"></Label>-->

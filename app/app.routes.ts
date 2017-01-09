@@ -1,8 +1,5 @@
 import {SettingsPage} from "./pages/settings/settings.page";
-import {TodoPage} from "./pages/todo/todo.page";
-//import {HomeComponent} from "./pages/home/home.component";
 import {DrawerComponent} from "./components/drawer/drawer.component";
-import {TodoListComponent} from "./components/todolist/todo.list.component";
 import { LoginPage } from "./pages/login/login.page";
 import { ForgotPasswordComponent } from "./pages/login/forgot-password.component";
 import { VerifyPasswordPage } from "./pages/verify-password/password.page";
@@ -12,19 +9,16 @@ import { KidDashboardComponent } from "./pages/kid-dashboard/kid-dashboard-compo
 
 import { AuthGuard } from "./auth-guard.service";
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
-import { LogoutComponent } from "./pages/login/logout.component";
 
 export const APP_ROUTES = [
 
-    {path: "", redirectTo: "/calendar", pathMatch: 'full'},
-    {path: "calendar", component: CalendarComponent, canActivate: [AuthGuard] },
-    {path: "myclass", component: MyClassComponent, canActivate: [AuthGuard] },
-    {path: "kid-dashboard", component: KidDashboardComponent, canActivate: [AuthGuard]},
-    {path: "todo", component: TodoPage},
-    {path: "settings", component: SettingsPage},
+    { path: "", redirectTo: "/calendar", pathMatch: 'full'},
+    { path: "calendar", component: CalendarComponent, canActivate: [AuthGuard] },
+    { path: "myclass", component: MyClassComponent, canActivate: [AuthGuard] },
+    { path: "kid-dashboard", component: KidDashboardComponent, canActivate: [AuthGuard]},
+    { path: "settings", component: SettingsPage, canActivate: [AuthGuard]},
     { path: "verify-password", component: VerifyPasswordPage },
     { path: "login", component: LoginPage },
-    { path: "logout", component: LogoutComponent, canActivate: [AuthGuard] },
     { path: "forgot-password", component: ForgotPasswordComponent  },
 
     /* incase path="" redirectTo: "/home" then uncomment{
@@ -44,14 +38,11 @@ export const navigatableComponents = [
     LoginPage,
     VerifyPasswordPage,
     SettingsPage,
-    TodoPage,
     DrawerComponent,
-    TodoListComponent,
     CalendarComponent,
     MyClassComponent,
     KidDashboardComponent,
     ModalDatePicker,
-    LogoutComponent,
     ForgotPasswordComponent
 
 ];
