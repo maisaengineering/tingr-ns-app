@@ -36,13 +36,13 @@
                 <DockLayout *ngIf="schedules.length" stretchLastChild="false" class="calendar-schedule">
                     <Image dock="left" stretch ="none" verticalAlignment="center" class="schedule-icon"  src="res://schedule_icon"></Image>
                     <StackLayout verticalAlignment="center">
-                        <GridLayout rows="auto,auto" *ngFor="let item of schedules; let i = index" >
+                        <GridLayout rows="auto,*" *ngFor="let item of schedules; let i = index" >
                             <GridLayout row="0" columns="auto, auto" rows="auto,auto"
                                         class="item {{ isScheduleTimeIsCurrent(item.start_time, item.end_time) ? 'blue' : '' }}">
                                 <Label col="0"  row="0"
                                        text="{{item.start_time | date: 'HH:mm' }}-{{ item.end_time | date: 'HH:mm a' }}">
                                 </Label>
-                                <Label col="1" row="0"  class="event" text="{{ item.name }}" textWrap="true"></Label>
+                                <Label col="1" row="0"  class="event m-r-5" text="{{ item.name }}" textWrap="true"></Label>
                             </GridLayout>
                             <!-- Don't show horizontal line for last element -->
                             <StackLayout *ngIf="schedules.length > (i+1)" class="hr-light" row="1"></StackLayout>
