@@ -10,6 +10,7 @@ import { RouterExtensions, PageRoute } from "nativescript-angular/router";
 import { KidData } from "../../providers/data/kid_data";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
+import app = require("application");
 
 
 export class DataItem {
@@ -29,6 +30,8 @@ export class KidDashboardComponent implements OnInit{
     public tagged_to: Array<TaggedTo>;
     public topmost;
     public isLoading: Boolean = false;
+    public isAndroid: Boolean = false;
+    public isIos: Boolean = false;
 
     constructor(private postService: PostService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
@@ -40,6 +43,11 @@ export class KidDashboardComponent implements OnInit{
         this.kid = {};
         this.kid = kidData.info;
         this.posts = [];
+        if (app.android) {
+            this.isAndroid = true;
+        } else if (app.ios) {
+            this.isIos = true;
+        }
 
     }
 
