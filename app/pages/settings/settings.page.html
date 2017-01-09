@@ -1,6 +1,29 @@
 <ActionBar title="Settings">
     <NavigationButton text="Back" icon="res://ic_back" (tap)="goBack()"></NavigationButton>
 </ActionBar>
-<StackLayout>
-    <Label text="SETTINGS content.." verticalAlignment="center" class="m-30"></Label>
+
+<StackLayout style="background-color: #f9f9f9">
+    <StackLayout  class="p-y-15 settings-item" verticalAlignment="center" orientation="horizontal">
+        <Label class="fa m-x-20" text="{{'fa-cog' | fonticon}}"></Label>
+        <Gridlayout cols="auto,auto" verticalAlignment="center" orientation="horizontal">
+            <Label row="0" col="0" verticalAlignment="center" text="General" class="text-left font-weight-bold"></Label>
+            <Label row="0" col="1" verticalAlignment="center" horizontalAlignment="right" class="fa m-r-20 text-right" text="{{'fa-chevron-right' | fonticon}}"></Label>
+        </Gridlayout>
+    </StackLayout>
+
+    <StackLayout  class="p-y-15 settings-item" verticalAlignment="center" orientation="horizontal">
+        <Label class="fa m-x-20" text="{{'fa-info-circle' | fonticon}}"></Label>
+        <Gridlayout cols="auto,auto" verticalAlignment="center" orientation="horizontal">
+            <Label row="0" col="0" verticalAlignment="center" text="About" class="text-left font-weight-bold"></Label>
+            <Label row="0" col="1" verticalAlignment="center" horizontalAlignment="right" class="fa m-r-20 text-right" text="{{'fa-chevron-right' | fonticon}}"></Label>
+        </Gridlayout>
+    </StackLayout>
+
+    <StackLayout (tap)="logOff()" class="p-y-15 settings-item" verticalAlignment="center" orientation="horizontal">
+        <Label class="fa m-x-20" text="{{'fa-sign-out' | fonticon}}"></Label>
+        <Gridlayout cols="auto,auto" verticalAlignment="center" orientation="horizontal">
+            <Label row="0" col="0" verticalAlignment="center" text="Logout" class="text-left font-weight-bold"></Label>
+            <Label row="0" col="1" verticalAlignment="center" horizontalAlignment="right" class="fa m-r-20 text-right" text="{{'fa-chevron-right' | fonticon}}"></Label>
+        </Gridlayout>
+    </StackLayout>
 </StackLayout>
