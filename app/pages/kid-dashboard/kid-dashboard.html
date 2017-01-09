@@ -1,26 +1,22 @@
-<ActionBar title="">
-    <NavigationButton text="Back" icon="res://ic_back" (tap)="goBack()"></NavigationButton>
-    <StackLayout orientation="horizontal"
-                 ios:horizontalAlignment="center"
-                 android:horizontalAlignment="center">
-       <!-- <Image src="res://nativescript_logo" class="action-image"></Image>-->
-        <!--<Label text="Kid Info"  class="action-label"></Label>-->
-    </StackLayout>
-</ActionBar>
 
 <ScrollView>
 
     <GridLayout  rows="auto,auto,auto,auto,auto,auto,auto,auto" tkMainContent class="kid-dashboard">
+        <!--- Profile section -->
 
-        <GridLayout row="0" class="section1" backgroundColor="#e9e9e9">
-            <StackLayout class="kid-profile-container">
-                <StackLayout orientation="horizontal" horizontalAlignment="center" class="">
-                    <Label width="200" class="kid-name text-center" text="{{ kid.fname }} {{ kid.lname }}" textWrap="true"></Label>
-                    <StackLayout width="auto" class="kid-profile-image-container text-left">
-                        <Image src="{{ kid.photograph_url || '~/images/avatar-100.png' }}" class="kid-profile-image"> </Image>
+        <GridLayout row="0" class="section1 p-t-20" backgroundColor="#e9e9e9">
+                <GridLayout row="0" cols="auto,auto" class="kid-profile-container m-b-10" orientation="vertical">
+                    <StackLayout col="0" verticalAlignment="top" orientation="horizontal" (tap)="goBack()" class="blue m-l-20 m-t-5 font-weight-bold">
+                        <Image src="res://ic_back" stretch="none"></Image>
+                        <Label text="Back"></Label>
                     </StackLayout>
-                </StackLayout>
-            </StackLayout>
+                    <StackLayout col="1" orientation="horizontal" horizontalAlignment="center" class="">
+                        <Label width="200" class="kid-name text-center" text="{{ kid.fname }} {{ kid.lname }}" textWrap="true"></Label>
+                        <StackLayout width="auto" class="kid-profile-image-container text-left">
+                            <Image src="{{ kid.photograph_url || '~/images/avatar-100.png' }}" class="kid-profile-image"> </Image>
+                        </StackLayout>
+                    </StackLayout>
+                </GridLayout>
         </GridLayout>
 
 

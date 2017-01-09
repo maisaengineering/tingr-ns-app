@@ -106,7 +106,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                 }
             );
     }
- 
+
 
     openRooms(){
         let rooms = this.assignedRooms;
@@ -183,9 +183,14 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     };
                     nstoasts.show(options);
                     if(body.in_or_out_time){
-                        inoutTimeLabel.text = body.in_or_out_time; // update label with result
-                        inoutTimeLabel.parent.visibility= 'visible'; // show parent
-                        inoutTimeLabel.shake(); //shake effect
+                            inoutTimeLabel.text = body.in_or_out_time; // update label with result
+                            inoutTimeLabel.parent.visibility= 'visible'; // show parent
+                        try{
+                            inoutTimeLabel.shake(); //shake effect
+                        }catch(err) {
+                            // may be page redirected kid-dashboard
+                        }
+
                     }
                 },
                 (error) => {

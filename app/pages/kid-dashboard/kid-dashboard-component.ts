@@ -52,7 +52,7 @@ export class KidDashboardComponent implements OnInit{
     }
 
     ngOnInit() {
-        //this.page.actionBarHidden = true;
+        this.page.actionBarHidden = true;
         // this.kid = this.kidData.info;
         this.isLoading = true;
         this.postService.getPosts(this.kid.kid_klid)
