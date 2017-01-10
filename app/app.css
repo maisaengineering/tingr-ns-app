@@ -49,7 +49,7 @@ refer to http://docs.nativescript.org/ui/theme.
 Page {
     background-color: #ffffff;
     font-size: 15;
-    font-family: Roboto-Light;
+    font-family: Roboto-Regular;
 }
 
 TextField {
