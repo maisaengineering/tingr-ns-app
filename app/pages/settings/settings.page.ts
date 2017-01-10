@@ -12,9 +12,10 @@ var nstoasts = require("nativescript-toasts");
 
 
 @Component({
+    moduleId: module.id,
     selector: 'settings-page',
-    templateUrl: 'pages/settings/settings.page.html',
-    styleUrls: ["pages/settings/settings.css"],
+    templateUrl: './settings.page.html',
+    styleUrls: ["./settings.css"],
     providers: [ TeacherService ]
 })
 export class SettingsPage extends Page implements OnInit{

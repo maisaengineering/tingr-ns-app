@@ -1,10 +1,12 @@
-import { NativeScriptModule } from 'nativescript-angular/platform';
-import {NgModule, NO_ERRORS_SCHEMA} from "@angular/core";
-import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { NativeScriptModule } from "nativescript-angular/nativescript.module";
+import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptHttpModule } from "nativescript-angular/http";
+import { NativeScriptRouterModule } from "nativescript-angular/router";
+
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
+
 import {AppComponent} from "./app.component";
 import {SIDEDRAWER_DIRECTIVES} from "nativescript-telerik-ui/sidedrawer/angular";
-import {NativeScriptRouterModule} from "nativescript-angular";
 import {TNSFontIconModule} from "nativescript-ng2-fonticon";
 import {APP_ROUTES, authProviders, navigatableComponents} from "./app.routes";
 import { TeacherInfo } from "./providers/data/teacher_info";

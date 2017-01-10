@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import connectivity = require("connectivity");
+var connectivity = require("connectivity");
 var dialogs = require("ui/dialogs");
 
 @Injectable()

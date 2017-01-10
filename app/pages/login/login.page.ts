@@ -1,6 +1,5 @@
 import {Router, NavigationExtras} from "@angular/router";
 import {RouterExtensions, PageRoute} from "nativescript-angular/router";
-import {connectionType, getConnectionType} from "connectivity";
 import {Component, OnInit, ViewChild, ElementRef, Injectable} from "@angular/core";
 import {Page} from "ui/page";
 import {Teacher} from "../../shared/teacher/teacher";
@@ -9,17 +8,16 @@ import {TokenService} from "../../shared/token.service";
 import {AuthService} from "../../shared/oauth/auth.service";
 import {SharedData} from "../../providers/data/shared_data"
 import {InternetService} from "../../shared/internet.service";
-import {getString} from "application-settings";
 import {Label} from "ui/label";
-import app = require("application");
+var app = require("application");
 var view = require("ui/core/view");
 
-
 @Component({
+    moduleId: module.id,
     selector: "my-app",
     providers: [TeacherService, AuthService],
-    templateUrl: "pages/login/login.html",
-    styleUrls: ["pages/login/login-common.css", "pages/login/login.css"]
+    templateUrl: "./login.html",
+    styleUrls: ["./login-common.css", "./login.css"]
 })
 
 export class LoginPage implements OnInit {

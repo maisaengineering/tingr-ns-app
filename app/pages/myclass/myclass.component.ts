@@ -14,17 +14,18 @@ import dialogs = require("ui/dialogs");
 import { DatePipe } from '@angular/common';
 import {InternetService} from "../../shared/internet.service";
 var nstoasts = require("nativescript-toasts");
-import app = require("application");
-import platform = require("platform");
+var app = require("application");
+var platform = require("platform");
 var frameModule = require("ui/frame");
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
 
 
 @Component({
+    moduleId: module.id,
     selector: 'my-app',
-    styleUrls: ['pages/myclass/myclass.css'],
-    templateUrl: 'pages/myclass/myclass.component.html',
+    styleUrls: ['./myclass.css'],
+    templateUrl: './myclass.component.html',
     providers: [ MyClassService, KidSignInOutService, MessageService, TeacherService ]
 })
 export class MyClassComponent extends DrawerPage implements OnInit{

@@ -13,15 +13,16 @@ import {InternetService} from "../../shared/internet.service";
 import {DatePicker} from "ui/date-picker";
 import {Page} from "ui/page";
 
-import app = require("application");
-import platform = require("platform");
+var app = require("application");
+var platform = require("platform");
 var frameModule = require("ui/frame");
 
 
 @Component({
+    moduleId: module.id,
     selector: 'my-app',
-    styleUrls: ['pages/calendar/calendar.css'],
-    templateUrl: 'pages/calendar/calendar.component.html',
+    styleUrls: ['./calendar.css'],
+    templateUrl: './calendar.component.html',
     providers: [CalendarService, ModalDialogService]
 })
 export class CalendarComponent extends DrawerPage implements OnInit {

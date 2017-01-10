@@ -8,14 +8,15 @@ import {TokenService} from "../../shared/token.service";
 import {TeacherInfo} from "../../providers/data/teacher_info";
 import dialogs = require("ui/dialogs");
 var view = require("ui/core/view");
-import app = require("application");
+var app = require("application");
 
 
 @Component({
+    moduleId: module.id,
     selector: "my-app",
     providers: [TeacherService],
-    templateUrl: "pages/login/forgot-password.html",
-    styleUrls: ["pages/login/login-common.css", "pages/login/login.css"]
+    templateUrl: "./forgot-password.html",
+    styleUrls: ["./login-common.css", "./login.css"]
 })
 export class ForgotPasswordComponent implements OnInit {
     public email: string;

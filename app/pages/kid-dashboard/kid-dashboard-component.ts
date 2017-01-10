@@ -11,7 +11,7 @@ import { KidData } from "../../providers/data/kid_data";
 import {InternetService} from "../../shared/internet.service";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
-import app = require("application");
+var app = require("application");
 
 
 export class DataItem {
@@ -19,9 +19,10 @@ export class DataItem {
 }
 
 @Component({
+    moduleId: module.id,
     selector: 'my-app',
-    styleUrls: ['pages/kid-dashboard/kid-dashboard.css'],
-    templateUrl: 'pages/kid-dashboard/kid-dashboard.html',
+    styleUrls: ['./kid-dashboard.css'],
+    templateUrl: './kid-dashboard.html',
     providers: [ PostService ]
 })
 export class KidDashboardComponent implements OnInit{

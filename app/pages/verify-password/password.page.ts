@@ -11,14 +11,15 @@ import * as appSettings from "application-settings"
 import {TokenService} from "../../shared/token.service";
 import {TeacherInfo} from "../../providers/data/teacher_info";
 import {SharedData} from "../../providers/data/shared_data"
-import app = require("application");
+var app = require("application");
 var view = require("ui/core/view");
 
 @Component({
+    moduleId: module.id,
     selector: "my-app",
     providers: [TeacherService],
-    templateUrl: "pages/verify-password/password.html",
-    styleUrls: ["pages/login/login-common.css", "pages/login/login.css"]
+    templateUrl: "./password.html",
+    styleUrls: ["./login-common.css", "./login.css"]
 })
 export class VerifyPasswordPage implements OnInit {
     teacher: Teacher;

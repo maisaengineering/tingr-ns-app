@@ -2,8 +2,9 @@ import {Component} from "@angular/core";
 import { TeacherInfo } from "../../providers/data/teacher_info";
 
 @Component({
+    moduleId: module.id,
     selector: 'drawer-content',
-    templateUrl: 'components/drawer/drawer.component.html',
+    templateUrl: './drawer.component.html',
 })
 export class DrawerComponent {
 
