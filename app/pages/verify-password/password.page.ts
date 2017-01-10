@@ -1,7 +1,7 @@
 import {View} from "ui/core/view";
-import {Router, ActivatedRoute } from "@angular/router";
-import {Component, OnInit, ViewChild, } from "@angular/core";
-import { RouterExtensions } from 'nativescript-angular/router';
+import {Router, ActivatedRoute} from "@angular/router";
+import {Component, OnInit, ViewChild,} from "@angular/core";
+import {RouterExtensions} from 'nativescript-angular/router';
 
 import {Teacher} from "../../shared/teacher/teacher";
 import {TeacherService} from "../../shared/teacher/teacher.service";
@@ -10,6 +10,7 @@ import {Page} from "ui/page";
 import * as appSettings from "application-settings"
 import {TokenService} from "../../shared/token.service";
 import {TeacherInfo} from "../../providers/data/teacher_info";
+import {SharedData} from "../../providers/data/shared_data"
 import app = require("application");
 var view = require("ui/core/view");
 
@@ -29,12 +30,11 @@ export class VerifyPasswordPage implements OnInit {
     constructor(private router: Router, private route: ActivatedRoute,
                 private routerExtensions: RouterExtensions,
                 private teacherService: TeacherService, private page: Page,
-                private teacherInfo: TeacherInfo) {
+                private teacherInfo: TeacherInfo,
+                private sharedData: SharedData) {
         this.teacher = new Teacher();
         this.isLoading = false;
-        this.route.queryParams.subscribe(params => {
-            this.teacher.email = params["email"];
-        });
+        this.teacher.email = sharedData.email; // get the value from previous page through provider
         if (app.android) {
             this.isAndroid = true;
         } else if (app.ios) {
@@ -82,7 +82,11 @@ export class VerifyPasswordPage implements OnInit {
                     // save teacher info in app-settings to invoke rest api's using season, room etc...
                     TeacherInfo.details = JSON.stringify(body);
                     this.isLoading = false;
-                    this.routerExtensions.navigate(["/calendar"], { clearHistory: true });
+                    this.routerExtensions.navigate(["/calendar"],
+                        {
+                            transition: {name: "slideLeft"},
+                            clearHistory: true
+                        });
                 },
                 (error) => {
                     this.isLoading = false;

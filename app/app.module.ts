@@ -10,6 +10,7 @@ import {APP_ROUTES, authProviders, navigatableComponents} from "./app.routes";
 import { TeacherInfo } from "./providers/data/teacher_info";
 import { TokenService } from "./shared/token.service";
 import {KidData} from "./providers/data/kid_data"
+import {SharedData} from "./providers/data/shared_data"
 
 import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/modal-dialog";
 
@@ -42,7 +43,8 @@ import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
         authProviders,
         DatePipe,
         ModalDialogService,
-        KidData
+        KidData,
+        SharedData
     ],
     schemas: [
         NO_ERRORS_SCHEMA

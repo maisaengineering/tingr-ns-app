@@ -1,4 +1,5 @@
 import {Router, NavigationExtras} from "@angular/router";
+import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {connectionType, getConnectionType} from "connectivity";
 import {Component, OnInit, ViewChild, ElementRef, Injectable} from "@angular/core";
 import {Page} from "ui/page";
@@ -6,6 +7,7 @@ import {Teacher} from "../../shared/teacher/teacher";
 import {TeacherService} from "../../shared/teacher/teacher.service";
 import {TokenService} from "../../shared/token.service";
 import {AuthService} from "../../shared/oauth/auth.service";
+import {SharedData} from "../../providers/data/shared_data"
 import {getString} from "application-settings";
 import {Label} from "ui/label";
 import app = require("application");
@@ -22,8 +24,8 @@ var view = require("ui/core/view");
 export class LoginPage implements OnInit {
     teacher: Teacher;
     isLoggingIn = false;
-    //email = 'teacher1@org1.com';
-    email = '';
+    email = 'teacher1@org1.com';
+    //email = '';
     isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
@@ -32,7 +34,10 @@ export class LoginPage implements OnInit {
     @ViewChild("formErrors") formErrorsRef: ElementRef;
 
 
-    constructor(private authService: AuthService, private router: Router, private teacherService: TeacherService, private page: Page) {
+    constructor(private authService: AuthService, private router: Router,
+                private routerExtensions: RouterExtensions,
+                private teacherService: TeacherService, private page: Page,
+                private sharedData: SharedData) {
         this.teacher = new Teacher();
         this.teacher.email = this.email;
         this.teacher.email = "";
@@ -86,12 +91,7 @@ export class LoginPage implements OnInit {
 
         this.isLoading = true;
         this.teacher.email = this.email;
-        // pass user provided email to next page using NavigationExtras via routing
-        let navigationExtras: NavigationExtras = {
-            queryParams: {
-                "email": this.teacher.email
-            }
-        };
+        this.sharedData.email = this.teacher.email; // use this provider in next page get the value
         this.teacherService.evaluteUser(this.teacher)
             .subscribe(
                 (result) => {
@@ -100,13 +100,18 @@ export class LoginPage implements OnInit {
                     if (result.body.goto === 'signup') {
                         alert("Email does not exists")
                     } else {
-                        this.router.navigate(["/verify-password"], navigationExtras);
+                        this.routerExtensions.navigate(["/verify-password"], {
+                            transition: {
+                                name: "flip"
+                            },
+                        });
                     }
 
                 },
                 (error) => {
                     this.isLoading = false;
-                    alert('Internal server error.');
+                    //alert('Internal server error.');
+                    console.log("Login ERROR: " + JSON.stringify(error));
                 }
             );
     }
