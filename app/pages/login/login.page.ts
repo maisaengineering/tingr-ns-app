@@ -8,6 +8,7 @@ import {TeacherService} from "../../shared/teacher/teacher.service";
 import {TokenService} from "../../shared/token.service";
 import {AuthService} from "../../shared/oauth/auth.service";
 import {SharedData} from "../../providers/data/shared_data"
+import {InternetService} from "../../shared/internet.service";
 import {getString} from "application-settings";
 import {Label} from "ui/label";
 import app = require("application");
@@ -37,7 +38,8 @@ export class LoginPage implements OnInit {
     constructor(private authService: AuthService, private router: Router,
                 private routerExtensions: RouterExtensions,
                 private teacherService: TeacherService, private page: Page,
-                private sharedData: SharedData) {
+                private sharedData: SharedData,
+                private internetService: InternetService) {
         this.teacher = new Teacher();
         this.teacher.email = this.email;
         this.teacher.email = "";
@@ -50,6 +52,9 @@ export class LoginPage implements OnInit {
     }
 
     ngOnInit() {
+        // show alert if no internet connection
+        this.internetService.alertIfOffline();
+
         this.page.actionBarHidden = true;
         /*if (getConnectionType() === connectionType.none) {
          alert("Tingr requires an internet connection to log in.");

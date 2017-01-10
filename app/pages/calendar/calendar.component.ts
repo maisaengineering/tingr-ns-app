@@ -1,21 +1,21 @@
 import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {DrawerPage} from "../drawer.page";
-import {CalendarService,Schedule, Birthday,EventReminder, Holiday,  Message} from "../../shared/calendar.service";
+import {CalendarService, Schedule, Birthday, EventReminder, Holiday, Message} from "../../shared/calendar.service";
 
-import { ListView } from 'ui/list-view';
-import { TextView } from 'ui/text-view';
+import {ListView} from 'ui/list-view';
+import {TextView} from 'ui/text-view';
 
-import { TeacherInfo } from "../../providers/data/teacher_info";
+import {TeacherInfo} from "../../providers/data/teacher_info";
 import * as dialogs from "ui/dialogs";
-import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/directives/dialogs";
-import { ModalDatePicker } from "../../pages/dialogs/modal-date-picker";
-import { DatePicker } from "ui/date-picker";
+import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/directives/dialogs";
+import {ModalDatePicker} from "../../pages/dialogs/modal-date-picker";
+import {InternetService} from "../../shared/internet.service";
+import {DatePicker} from "ui/date-picker";
 import {Page} from "ui/page";
 
 import app = require("application");
 import platform = require("platform");
 var frameModule = require("ui/frame");
-
 
 
 @Component({
@@ -24,7 +24,7 @@ var frameModule = require("ui/frame");
     templateUrl: 'pages/calendar/calendar.component.html',
     providers: [CalendarService, ModalDialogService]
 })
-export class CalendarComponent extends DrawerPage implements OnInit{
+export class CalendarComponent extends DrawerPage implements OnInit {
     public schedules: Array<Schedule>;
     public birthdays: Array<Birthday>;
     public event_reminders: Array<EventReminder>;
@@ -32,7 +32,7 @@ export class CalendarComponent extends DrawerPage implements OnInit{
     public messages: Array<Message>;
     public currentDate: Date;
     public teacherName: String;
-    public result:Date;
+    public result: Date;
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
@@ -40,7 +40,8 @@ export class CalendarComponent extends DrawerPage implements OnInit{
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
                 private modal: ModalDialogService, private vcRef: ViewContainerRef,
-                private calendarService: CalendarService) {
+                private calendarService: CalendarService,
+                private internetService: InternetService) {
         super(changeDetectorRef);
 
         if (app.android) {
@@ -56,7 +57,7 @@ export class CalendarComponent extends DrawerPage implements OnInit{
         this.holidays = [];
         this.messages = [];
         var teacherDetails = TeacherInfo.parsedDetails;
-        this.teacherName = teacherDetails.fname +' '+ teacherDetails.lname;
+        this.teacherName = teacherDetails.fname + ' ' + teacherDetails.lname;
     }
 
     static entries = [
@@ -81,15 +82,18 @@ export class CalendarComponent extends DrawerPage implements OnInit{
         this.modal.showModal(ModalDatePicker, options)
             .then((dateresult: Date) => {
                 this.iscurrentDateSelected = false;
-               if(dateresult){
-                   this.loadCalendarDataByDay(dateresult);
-               } 
+                if (dateresult) {
+                    this.loadCalendarDataByDay(dateresult);
+                }
             })
     }
 
     ngOnInit() {
+        // show alert if no internet connection
+        this.internetService.alertIfOffline();
+
         // Hide 'Default Back button'
-        if(this.isIos){
+        if (this.isIos) {
             var controller = frameModule.topmost().ios.controller;
             // get the view controller navigation item
             var navigationItem = controller.visibleViewController.navigationItem;
@@ -101,7 +105,7 @@ export class CalendarComponent extends DrawerPage implements OnInit{
     }
 
 
-    loadCalendarDataByDay(currentDate){
+    loadCalendarDataByDay(currentDate) {
         this.currentDate = currentDate;
         this.isLoading = true;
         this.calendarService.getCalendarData(currentDate)
@@ -112,10 +116,10 @@ export class CalendarComponent extends DrawerPage implements OnInit{
 
                     // TODO load dynaamically once tested and update message property from array to Message class in above declaration
                     /*this.messages.push(
-                        { read_message: true, text: 'Hello world',sender_name: 'Sender name' , child_name: 'child name',child_relationship: 'relationship' },
-                        { read_message: false, text: 'Hello world',sender_name: 'Sender name' , child_name: 'child name',child_relationship: 'relationship' },
-                        { read_message: true, text: 'Hello world',sender_name: 'Sender name' , child_name: 'child name',child_relationship: 'relationship' }
-                        );
+                     { read_message: true, text: 'Hello world',sender_name: 'Sender name' , child_name: 'child name',child_relationship: 'relationship' },
+                     { read_message: false, text: 'Hello world',sender_name: 'Sender name' , child_name: 'child name',child_relationship: 'relationship' },
+                     { read_message: true, text: 'Hello world',sender_name: 'Sender name' , child_name: 'child name',child_relationship: 'relationship' }
+                     );
                      */
 
                     var reminders = body.reminders;
@@ -133,7 +137,7 @@ export class CalendarComponent extends DrawerPage implements OnInit{
     }
 
     // check if local current time is b/w schedule start and end times
-    isScheduleTimeIsCurrent(scheduleStartTimeStr,scheduleEndTimeStr){
+    isScheduleTimeIsCurrent(scheduleStartTimeStr, scheduleEndTimeStr) {
         //console.log(" scheduleStartTimeStr "+ scheduleStartTimeStr);
         //console.log(" scheduleEndTimeStr "+ scheduleEndTimeStr);
         // convert api time to localtime
@@ -142,13 +146,13 @@ export class CalendarComponent extends DrawerPage implements OnInit{
 
         // to get timestamp like '11:1:10';
         // add padding zero
-        let startTime = ("0" + scheduleStartTime.getHours()).slice(-2)+
-            ":"+("0" + scheduleStartTime.getMinutes()).slice(-2)+":"
-            +("0" + scheduleStartTime.getSeconds()).slice(-2);
+        let startTime = ("0" + scheduleStartTime.getHours()).slice(-2) +
+            ":" + ("0" + scheduleStartTime.getMinutes()).slice(-2) + ":"
+            + ("0" + scheduleStartTime.getSeconds()).slice(-2);
 
-        let endTime = ("0" + scheduleEndTime.getHours()).slice(-2)+
-            ":"+("0" + scheduleEndTime.getMinutes()).slice(-2)+":"
-            +("0" + scheduleEndTime.getSeconds()).slice(-2);
+        let endTime = ("0" + scheduleEndTime.getHours()).slice(-2) +
+            ":" + ("0" + scheduleEndTime.getMinutes()).slice(-2) + ":"
+            + ("0" + scheduleEndTime.getSeconds()).slice(-2);
 
         let currentDate = new Date();
         let startDate = new Date(currentDate.getTime());

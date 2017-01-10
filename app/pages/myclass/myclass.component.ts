@@ -17,6 +17,7 @@ import { GridLayout } from "ui/layouts/grid-layout";
 import { GestureEventData } from "ui/gestures";
 import dialogs = require("ui/dialogs");
 import { DatePipe } from '@angular/common';
+import {InternetService} from "../../shared/internet.service";
 var nstoasts = require("nativescript-toasts");
 import app = require("application");
 import platform = require("platform");
@@ -48,7 +49,8 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                 private datePipe: DatePipe,
                 private kidData: KidData,
                 private routerExtensions: RouterExtensions,
-                private page: Page) {
+                private page: Page,
+                private internetService: InternetService) {
         super(changeDetectorRef);
         if (app.android) {
             this.isAndroid = true;
@@ -63,6 +65,8 @@ export class MyClassComponent extends DrawerPage implements OnInit{
     }
 
     ngOnInit() {
+        // show alert if no internet connection
+        this.internetService.alertIfOffline();
         // Hide 'Default Back button'
         if(this.isIos){
             var controller = frameModule.topmost().ios.controller;

@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {Location} from "@angular/common";
 import {Page} from "../page";
 import { RouterExtensions } from 'nativescript-angular/router';
@@ -6,6 +6,7 @@ import * as appSettings from "application-settings"
 import { TokenService } from "../../shared/token.service";
 import { TeacherInfo } from "../../providers/data/teacher_info";
 import { TeacherService } from "../../shared/teacher/teacher.service";
+import {InternetService} from "../../shared/internet.service";
 
 var nstoasts = require("nativescript-toasts");
 
@@ -16,12 +17,19 @@ var nstoasts = require("nativescript-toasts");
     styleUrls: ["pages/settings/settings.css"],
     providers: [ TeacherService ]
 })
-export class SettingsPage extends Page {
+export class SettingsPage extends Page implements OnInit{
     public isLoading: Boolean = false;
 
-    constructor(private location: Location,private routerExtensions: RouterExtensions,
-                private teacherService: TeacherService) {
+    constructor(private location: Location,
+                private routerExtensions: RouterExtensions,
+                private teacherService: TeacherService,
+                private internetService: InternetService) {
         super(location);
+    }
+
+    ngOnInit(){
+        // show alert if no internet connection
+        this.internetService.alertIfOffline();
     }
 
 

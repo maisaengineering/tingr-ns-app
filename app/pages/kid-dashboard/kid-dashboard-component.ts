@@ -8,6 +8,7 @@ import frameModule = require("ui/frame");
 import { Router, NavigationExtras } from "@angular/router";
 import { RouterExtensions, PageRoute } from "nativescript-angular/router";
 import { KidData } from "../../providers/data/kid_data";
+import {InternetService} from "../../shared/internet.service";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
 import app = require("application");
@@ -37,7 +38,8 @@ export class KidDashboardComponent implements OnInit{
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
                 private router: Router,
                 private routerExtensions: RouterExtensions,
-                private kidData: KidData) {
+                private kidData: KidData,
+                private internetService: InternetService) {
         //super(changeDetectorRef);
 
         this.kid = {};
@@ -52,6 +54,8 @@ export class KidDashboardComponent implements OnInit{
     }
 
     ngOnInit() {
+        // show alert if no internet connection
+        this.internetService.alertIfOffline();
         //this.page.actionBarHidden = true;
         // this.kid = this.kidData.info;
         this.isLoading = true;
