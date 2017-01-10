@@ -11,6 +11,7 @@ import { TeacherInfo } from "./providers/data/teacher_info";
 import { TokenService } from "./shared/token.service";
 import {KidData} from "./providers/data/kid_data"
 import {SharedData} from "./providers/data/shared_data"
+import { InternetService } from "./shared/internet.service"
 
 import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/modal-dialog";
 
@@ -44,7 +45,8 @@ import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
         DatePipe,
         ModalDialogService,
         KidData,
-        SharedData
+        SharedData,
+        InternetService
     ],
     schemas: [
         NO_ERRORS_SCHEMA
