@@ -4,15 +4,10 @@ import { MyClassService, ManagedKid, Room} from "../../shared/myclass.service";
 import { KidSignInOutService } from "../../shared/kid-signinout.service";
 import { MessageService } from "../../shared/message.service";
 import { TeacherService } from "../../shared/teacher/teacher.service";
-import { TeacherInfo } from "../../providers/data/teacher_info";
 import { KidData } from "../../providers/data/kid_data";
-import { Router, ActivatedRoute } from "@angular/router";
-import { RouterExtensions, PageRoute } from "nativescript-angular/router";
+import { RouterExtensions } from "nativescript-angular/router";
 import {Page} from "ui/page";
 
-import { ListView } from 'ui/list-view';
-import { TextView } from 'ui/text-view';
-import { GridLayout } from "ui/layouts/grid-layout";
 // >> long-press-code
 import { GestureEventData } from "ui/gestures";
 import dialogs = require("ui/dialogs");
@@ -40,6 +35,22 @@ export class MyClassComponent extends DrawerPage implements OnInit{
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
     public assignedRooms: Array<any>;
+
+    /*
+    * Gesture examples
+    *
+     onTap(args: GestureEventData) {
+        console.log("Tap!")
+     }
+     onDoubleTap(args: GestureEventData) {
+        console.log("DoubleTap!")
+
+     }
+     onLongPress(args: GestureEventData) {
+         console.log("LongPress!")
+     }
+    * */
+
 
     constructor(private myClassService: MyClassService,
                 private kidSignInOutService: KidSignInOutService,
@@ -139,7 +150,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
         });
     }
 
-    onLongPress(event, kid) {
+    onLongPressKid(event, kid) {
         dialogs.action({
             //message: "Your message",
             cancelButtonText: "Cancel",

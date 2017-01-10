@@ -22,7 +22,7 @@
         <ScrollView>
             <StackLayout>
                 <StackLayout *ngFor="let item of managed_kids" >
-                    <StackLayout class="list-group-item" (longPress)="onLongPress($event, item)" (tap)="redirectToKidDashboard(item)">
+                    <StackLayout class="list-group-item" (longPress)="onLongPressKid($event, item)" (tap)="redirectToKidDashboard(item)">
                         <GridLayout  rows="*" columns="auto, *,*">
                             <StackLayout row="0" col="0">
                                 <Image height="75" width="75" class="kid-profile-pic blue-circle-border"
