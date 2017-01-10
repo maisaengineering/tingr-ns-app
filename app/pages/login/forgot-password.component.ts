@@ -1,9 +1,9 @@
 import {Router, ActivatedRoute} from "@angular/router";
+import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {Component, OnInit } from "@angular/core";
 import {TeacherService} from "../../shared/teacher/teacher.service";
 import {Page} from "ui/page";
 import {Location} from "@angular/common";
-import { RouterExtensions, PageRoute } from "nativescript-angular/router";
 import {TokenService} from "../../shared/token.service";
 import {TeacherInfo} from "../../providers/data/teacher_info";
 import dialogs = require("ui/dialogs");
@@ -75,8 +75,11 @@ export class ForgotPasswordComponent implements OnInit {
                         cancelButtonText: "Login"
                     }).then(result => {
                         if(result === false) {
-                           // this.router.navigate(["verify-password"]);
-                            this.location.back();
+                            this.routerExtensions.navigate(["/login"], {
+                                transition: {
+                                    name: "slideRight"
+                                },
+                            });
                         }
                     });
                 },
