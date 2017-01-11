@@ -245,3 +245,15 @@ ActivityIndicator.busy {
     border: 0;
     box-shadow: 0 10 10 -10 #8c8b8b inset;
 }
+
+
+/* Card related styles */
+.cardWhiteBg{
+    background-color: white;
+    color: black;
+}
+
+.cardBlueBg {
+    background-color: #3489db;
+    color: #fff;
+}

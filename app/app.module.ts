@@ -18,6 +18,8 @@ import { InternetService } from "./shared/internet.service"
 import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/modal-dialog";
 
 import { DatePipe } from '@angular/common';
+import {registerElement} from "nativescript-angular/element-registry";
+registerElement("CardView", () => require("nativescript-cardview").CardView);
 
 
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
