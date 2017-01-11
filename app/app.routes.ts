@@ -5,8 +5,8 @@ import { ForgotPasswordComponent } from "./pages/login/forgot-password.component
 import { VerifyPasswordPage } from "./pages/verify-password/password.page";
 import { CalendarComponent } from "./pages/calendar/calendar.component";
 import { MyClassComponent } from "./pages/myclass/myclass.component";
-import { KidDashboardComponent } from "./pages/kid-dashboard/kid-dashboard-component";
-import { KidProfileComponent } from "./pages/kid-dashboard/kid.profile.component";
+import { KidDashboardComponent } from "./pages/kid/dashboard/kid-dashboard-component";
+import { KidProfileComponent } from "./pages/kid/profile/kid.profile.component";
 
 import { AuthGuard } from "./auth-guard.service";
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";

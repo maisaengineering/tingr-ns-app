@@ -1,14 +1,14 @@
 import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 
-import {ManagedKid} from "../../shared/myclass.service";
-import {PostService, Post, TaggedTo, Comment} from "../../shared/post.service";
+import {ManagedKid} from "../../../shared/myclass.service";
+import {PostService, Post, TaggedTo, Comment} from "../../../shared/post.service";
 
 import frameModule = require("ui/frame");
 import {Router, NavigationExtras} from "@angular/router";
 import {RouterExtensions, PageRoute} from "nativescript-angular/router";
-import {KidData} from "../../providers/data/kid_data";
-import {InternetService} from "../../shared/internet.service";
+import {KidData} from "../../../providers/data/kid_data";
+import {InternetService} from "../../../shared/internet.service";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
 var app = require("application");
