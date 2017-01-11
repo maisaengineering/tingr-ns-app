@@ -53,7 +53,7 @@ export class SettingsPage extends Page implements OnInit{
                     // redirect to login page
                     this.routerExtensions.navigate(["/login"], {
                         transition: {
-                            name: "slideRight"
+                            name: "slideTop"
                         }
                     });
 
