@@ -1,9 +1,8 @@
 /* kid cover phot and profile and name section*/
 
 Image.kid-profile-image {
-    height: 75;
-    width: 75;
-    border-radius: 36;
+    height: 100;
+    width: 100;
 }
 
 Image.kid-cover-image {
@@ -13,14 +12,11 @@ Image.kid-cover-image {
 StackLayout.kid-profile-image-container {
     border-color:  #9fc5f8;
     border-width: 2;
-    border-radius: 38;
+    border-radius: 50;
 
 }
 
 StackLayout.kid-profile-container {
-    vertical-align: middle;
-    horizontal-align: center;
-    margin-left: 10;
     height: 100;
 }
 

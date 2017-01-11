@@ -104,13 +104,12 @@ ActionBar {
 NavigationButton, ActionItem{
     color: #2b78e4;
 }
-.action-label{
-    color: #9fc5f8;
-}
+
 
 .action-label{
-    font-size: 18;
+    font-size: 22;
     font-weight: bold;
+    color: #9fc5f8;
 }
 
 .line-separator  {
