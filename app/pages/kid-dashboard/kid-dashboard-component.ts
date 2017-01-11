@@ -1,13 +1,13 @@
 import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
-import { Page } from "ui/page";
+import {Page} from "ui/page";
 
-import { ManagedKid } from "../../shared/myclass.service";
-import { PostService,  Post, TaggedTo, Comment} from "../../shared/post.service";
+import {ManagedKid} from "../../shared/myclass.service";
+import {PostService, Post, TaggedTo, Comment} from "../../shared/post.service";
 
 import frameModule = require("ui/frame");
-import { Router, NavigationExtras } from "@angular/router";
-import { RouterExtensions, PageRoute } from "nativescript-angular/router";
-import { KidData } from "../../providers/data/kid_data";
+import {Router, NavigationExtras} from "@angular/router";
+import {RouterExtensions, PageRoute} from "nativescript-angular/router";
+import {KidData} from "../../providers/data/kid_data";
 import {InternetService} from "../../shared/internet.service";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
@@ -15,7 +15,8 @@ var app = require("application");
 
 
 export class DataItem {
-    constructor(public itemDesc: string) {}
+    constructor(public itemDesc: string) {
+    }
 }
 
 @Component({
@@ -23,9 +24,9 @@ export class DataItem {
     selector: 'my-app',
     styleUrls: ['./kid-dashboard.css'],
     templateUrl: './kid-dashboard.html',
-    providers: [ PostService ]
+    providers: [PostService]
 })
-export class KidDashboardComponent implements OnInit{
+export class KidDashboardComponent implements OnInit {
     public kid: any;
     public posts: Array<any>;
     public comments: Array<Comment>;
@@ -74,12 +75,12 @@ export class KidDashboardComponent implements OnInit{
             );
     }
 
-    goBack(){
+    goBack() {
         /*this.routerExtensions.navigate(["/myclass"], {
-            transition: {
-                name: "slideRight"
-            }
-        });*/
+         transition: {
+         name: "slideRight"
+         }
+         });*/
 
         this.routerExtensions.back();
         //this.routerExtensions.backToPreviousPage();
@@ -93,30 +94,30 @@ export class KidDashboardComponent implements OnInit{
     }
 
     addOrRemoveHeart(post) {
-        let heartIconImage = view.getViewById(this.page, "post-add-remove-heart-"+post.kl_id);
-        let heartedImage = view.getViewById(this.page, "post-hearted-image-"+post.kl_id);
-        let activityIndicator = view.getViewById(this.page, "post-add-remove-heart-indicator-"+post.kl_id);
+        let heartIconImage = view.getViewById(this.page, "post-add-remove-heart-" + post.kl_id);
+        let heartedImage = view.getViewById(this.page, "post-hearted-image-" + post.kl_id);
+        let activityIndicator = view.getViewById(this.page, "post-add-remove-heart-indicator-" + post.kl_id);
         let isHearted = heartIconImage.className === 'hearted' ? true : false
         this.isLoading = true;
         heartIconImage.visibility = 'collapsed';
         activityIndicator.visibility = 'visible';
 
-        this.postService.addOrRemoveHeart(post,isHearted)
+        this.postService.addOrRemoveHeart(post, isHearted)
             .subscribe(
                 (result) => {
                     this.isLoading = false;
                     let body = result.body;
-                    if(isHearted){
+                    if (isHearted) {
                         // remove heart
                         heartIconImage.src = 'res://heart_icon_light';
                         heartIconImage.visibility = 'visible';
                         activityIndicator.visibility = 'collapsed';
                         heartIconImage.className = 'not-hearted';
 
-                        heartedImage.floatOut('slow', 'left').then(function (){
+                        heartedImage.floatOut('slow', 'left').then(function () {
                             heartedImage.visibility = "collapsed";
                         });
-                    }else{
+                    } else {
                         //add heart
                         heartIconImage.src = 'res://heart_icon_gray';
                         heartIconImage.visibility = 'visible';
@@ -139,15 +140,22 @@ export class KidDashboardComponent implements OnInit{
 
     }
 
-    openKidProfile(kid){
-        this.routerExtensions.navigate(["/kid-profile"], {
-            transition: {
-               /* name: this.isIos ? 'curlUp' : 'explode',
-                duration: 1000,
-                curve: "linear"*/
-               name: 'slideUp'
-            }
-        });
+    openKidProfile(kid) {
+        if(this.isIos){
+            this.routerExtensions.navigate(["/kid-profile"], {
+                transition: {
+                    name: 'curl',
+                    duration: 700
+                }
+            });
+        }else{
+            this.routerExtensions.navigate(["/kid-profile"], {
+                transition: {
+                    name: 'slideUp'
+                }
+            });
+        } 
+
     }
 
 
