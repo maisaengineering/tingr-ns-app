@@ -139,5 +139,16 @@ export class KidDashboardComponent implements OnInit{
 
     }
 
+    openKidProfile(kid){
+        this.routerExtensions.navigate(["/kid-profile"], {
+            transition: {
+               /* name: this.isIos ? 'curlUp' : 'explode',
+                duration: 1000,
+                curve: "linear"*/
+               name: 'slideUp'
+            }
+        });
+    }
+
 
 }

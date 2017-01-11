@@ -1,0 +1,30 @@
+Image.kid-profile-pic{
+    border-radius: 50;
+}
+
+GridLayout.kid-profile {
+   /* background-color: #e4e4e4;*/
+}
+
+.kid-profile .kid-profile-header{
+    margin: 15;
+}
+
+.kid-profile .fname {
+    color: #9fc5f8;
+    font-size: 22;
+    font-style: italic;
+    font-weight: bold;
+}
+
+.kid-profile .item-details{
+    margin: 15;
+}
+.kid-profile .item-details .header{
+
+}
+.kid-profile .item-details .value{
+    font-size: 18;
+    font-weight: 600;
+
+}
