@@ -6,6 +6,7 @@ import { VerifyPasswordPage } from "./pages/verify-password/password.page";
 import { CalendarComponent } from "./pages/calendar/calendar.component";
 import { MyClassComponent } from "./pages/myclass/myclass.component";
 import { KidDashboardComponent } from "./pages/kid/dashboard/kid-dashboard-component";
+import { KidDocumentsComponent } from "./pages/kid/documents/kid.documents.component";
 import { KidProfileComponent } from "./pages/kid/profile/kid.profile.component";
 
 import { AuthGuard } from "./auth-guard.service";
@@ -18,6 +19,7 @@ export const APP_ROUTES = [
     { path: "myclass", component: MyClassComponent, canActivate: [AuthGuard] },
     { path: "kid-dashboard", component: KidDashboardComponent, canActivate: [AuthGuard]},
     { path: "kid-profile", component: KidProfileComponent, canActivate: [AuthGuard]},
+    { path: "kid-documents", component: KidDocumentsComponent, canActivate: [AuthGuard]},
     { path: "settings", component: SettingsPage, canActivate: [AuthGuard]},
     { path: "verify-password", component: VerifyPasswordPage },
     { path: "login", component: LoginPage },
@@ -46,7 +48,8 @@ export const navigatableComponents = [
     KidDashboardComponent,
     KidProfileComponent,
     ModalDatePicker,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    KidDocumentsComponent
 
 ];
 
