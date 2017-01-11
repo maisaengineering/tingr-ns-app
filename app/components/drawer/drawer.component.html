@@ -17,7 +17,7 @@
                  orientation="horizontal"
                  [nsRouterLink]="['/calendar']"
                  pageTransition="slideLeft">
-        <Label class="fa" text="{{'fa-calendar-o' | fonticon}}"></Label>
+        <Label  class="material-icons md-24 md-calendar" text="&#xE8A3;"></Label>
         <Label class="text" text="Calendar"></Label>
     </StackLayout>
     <StackLayout class="drawer-link"
@@ -25,16 +25,11 @@
                  [nsRouterLink]="['/myclass']"
                  [nsRouterLinkActive]="['bg-primary']"
                  pageTransition="slideLeft">
-        <Label class="fa" text="{{'fa-child' | fonticon}}"></Label>
+        <Label class="material-icons md-24 md-group" text="&#xE7EF;"></Label>
         <Label class="text" text="Class Room"></Label>
     </StackLayout>
 
-    <!--<StackLayout class="drawer-link"
-                 orientation="horizontal"
-                 [nsRouterLink]="['/']">
-        <Label class="fa" text="{{'fa-comments' | fonticon}}"></Label>
-        <Label class="text" text="Messages"></Label>
-    </StackLayout>-->
+
 
     <StackLayout class="drawer-separator">
     </StackLayout>
@@ -43,18 +38,12 @@
                  [nsRouterLink]="['/settings']"
                  [nsRouterLinkActive]="['bg-primary']"
                  pageTransition="slideLeft">
-        <Label class="fa" text="{{'fa-cogs' | fonticon}}"></Label>
+        <Label class="material-icons md-24 md-settings" text="&#xE8B8;"></Label>
         <Label class="text" text="Settings"></Label>
     </StackLayout>
 
 
     <StackLayout class="drawer-separator">
     </StackLayout>
-    <!--<StackLayout class="drawer-link"
-                 orientation="horizontal"
-                 [nsRouterLink]="['/logout']">
-        <Label class="fa" text="{{'fa-sign-out' | fonticon}}"></Label>
-        <Label class="text" text="Logout"></Label>
-    </StackLayout>-->
 
 </StackLayout>
