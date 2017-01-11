@@ -7,7 +7,6 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 import {AppComponent} from "./app.component";
 import {SIDEDRAWER_DIRECTIVES} from "nativescript-telerik-ui/sidedrawer/angular";
-import {TNSFontIconModule} from "nativescript-ng2-fonticon";
 import {APP_ROUTES, authProviders, navigatableComponents} from "./app.routes";
 import { TeacherInfo } from "./providers/data/teacher_info";
 import { TokenService } from "./shared/token.service";
@@ -37,10 +36,7 @@ import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
         NativeScriptFormsModule,
         NativeScriptHttpModule,
         NativeScriptRouterModule,
-        NativeScriptRouterModule.forRoot(APP_ROUTES),
-        TNSFontIconModule.forRoot({
-            'fa': 'fonts/font-awesome.css'
-        })
+        NativeScriptRouterModule.forRoot(APP_ROUTES)
     ],
     providers: [
         TeacherInfo,
