@@ -5,9 +5,10 @@
     <StackLayout orientation="horizontal"
                  ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
-       <!-- <Image height="32" width="32" src="~/images/caterpiller-icon-32.png"
-               class="m-r-10 action-i age"></Image>-->
-        <Label verticalAlignment="center" [text]="roomName" class="action-label" (tap)="openRooms()"></Label>
+        <StackLayout *ngIf="roomName" orientation="horizontal" (tap)="openRooms()" verticalAlignment="center">
+            <Label [text]="roomName" class="action-label"></Label>
+            <Label class="blue2 material-icons md-36 md-arrow-drop-down m-r-10" text="&#xE5C5;"></Label>
+        </StackLayout>
     </StackLayout>
 </ActionBar>
 
