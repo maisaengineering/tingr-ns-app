@@ -6,11 +6,12 @@ import "rxjs/add/operator/map";
 import { Config } from "../shared/config";
 import { TokenService } from "../shared/token.service";
 import { TeacherInfo } from "../providers/data/teacher_info";
+import { DatePipe } from '@angular/common';
 
 @Injectable()
 export class PostService {
 
-    constructor(private http: Http) {
+    constructor(private http: Http,private datePipe: DatePipe) {
 
     }
 
@@ -59,10 +60,59 @@ export class PostService {
             .catch(this.handleErrors)
     }
 
+    uploadToS3(imageFilename, imageBase64Data){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: 'upload_to_s3',
+            body: {
+                name: imageFilename,
+                content_type: "image/jpeg",
+                content: imageBase64Data
+            }
+        });
+
+        return this.http.post(
+            Config.apiUrl + "posts", data, {
+                headers: headers
+            }
+        ).map((res:Response) => res.json())
+            .catch(this.handleErrors)
+    }
+
+    createPost(createdAt, additionalDetails, taggedKidIds, s3_key){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: 'create_post',
+            body: {
+                date: this.datePipe.transform(createdAt, 'dd/MM/yyyy'),
+                additional_text : additionalDetails,
+                tags: taggedKidIds,
+                key: s3_key,
+                scope: "public",
+                tzone: 'EST'
+            }
+        });
+        return this.http.post(
+            Config.apiUrl + "posts", data, {
+                headers: headers
+            }
+        ).map((res:Response) => res.json())
+            .catch(this.handleErrors)
+    }
+
     handleErrors(error: any)  {
         console.error('An error occurred', error); // for demo purposes only
         return Observable.throw(error.message || error);
     }
+
+
+
 }
 
 export interface Post {

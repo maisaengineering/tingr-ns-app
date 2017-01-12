@@ -48,6 +48,7 @@ export interface Room {
 export interface ManagedKid {
     fname: string,
     lname: string,
+    mname: string,
     age: number,
     reminders_count: number,
     notifications_count: number,

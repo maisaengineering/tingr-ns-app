@@ -5,6 +5,7 @@ import { KidSignInOutService } from "../../shared/kid-signinout.service";
 import { MessageService } from "../../shared/message.service";
 import { TeacherService } from "../../shared/teacher/teacher.service";
 import { KidData } from "../../providers/data/kid_data";
+import { SharedData } from "../../providers/data/shared_data";
 import { RouterExtensions } from "nativescript-angular/router";
 import {Page} from "ui/page";
 
@@ -60,6 +61,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                 private changeDetectorRef: ChangeDetectorRef,
                 private datePipe: DatePipe,
                 private kidData: KidData,
+                private sharedData: SharedData,
                 private routerExtensions: RouterExtensions,
                 private page: Page,
                 private internetService: InternetService) {
@@ -115,6 +117,9 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     var body = result.body;
                     this.managed_kids = body.managed_kids;
                     this.isLoading = false;
+                    // save managed kids in SharedData Provider, so data will be available to all components
+                    this.sharedData.managedKids = this.managed_kids;
+
                 },
                 (error) => {
                     this.isLoading = false;

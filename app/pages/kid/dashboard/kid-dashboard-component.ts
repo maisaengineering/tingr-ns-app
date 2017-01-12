@@ -1,17 +1,20 @@
 import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
-
-import {ManagedKid} from "../../../shared/myclass.service";
 import {PostService, Post, TaggedTo, Comment} from "../../../shared/post.service";
-
 import frameModule = require("ui/frame");
 import {Router, NavigationExtras} from "@angular/router";
 import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../../providers/data/kid_data";
+import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
 var app = require("application");
+
+var cameraModule = require("camera");
+
+import { ImageAsset } from "image-asset";
+var enums = require("ui/enums");
 
 
 export class DataItem {
@@ -35,12 +38,14 @@ export class KidDashboardComponent implements OnInit {
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
+    public imageTaken: ImageAsset;
 
     constructor(private postService: PostService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
                 private router: Router,
                 private routerExtensions: RouterExtensions,
                 private kidData: KidData,
+                private sharedData: SharedData,
                 private internetService: InternetService) {
         //super(changeDetectorRef);
 
@@ -52,6 +57,49 @@ export class KidDashboardComponent implements OnInit {
         } else if (app.ios) {
             this.isIos = true;
         }
+
+    }
+
+    captureKidMoment(){
+        //TODO check for android if not working: https://github.com/NativeScript/NativeScript/issues/2353
+        //var imageView = view.getViewById(this.page, 'kid-profile-picture');
+        let options = {
+            width: 500,
+            height: 500,
+            keepAspectRatio: false,
+            saveToGallery: false
+        };
+        cameraModule.takePicture(options).then((imageAsset) => {
+            let imageBase64Data = imageAsset.toBase64String(enums.ImageFormat.jpeg);
+            let imageFilename = 'img_' + new Date().getTime() + enums.ImageFormat.jpeg;
+
+            this.isLoading = true;
+            this.postService.uploadToS3(imageFilename, imageBase64Data)
+                .subscribe(
+                    (result) => {
+                        let body = result.body;
+                        this.sharedData.momentCaptureDetails = {
+                            imageBase64Data: imageBase64Data,
+                            imageAsset: imageAsset,
+                            imageFileName: imageFilename,
+                            s3_key: body.key
+                        };
+                        this.isLoading = false;
+                        console.log("Result S3 "+ JSON.stringify(body));
+
+                        this.routerExtensions.navigate(["/kid-moment"], {
+                            transition: {
+                                name: "slideLeft"
+                            }
+                        });
+                    },
+                    (error) => {
+                        this.isLoading = false;
+                        alert('Internal server error.');
+                    }
+                );
+
+        });
 
     }
 

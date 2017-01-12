@@ -1,0 +1,8 @@
+.kid-profile-pic {
+    border-radius: 20;
+}
+
+.kid-list .item{
+    margin: 10;
+    border-bottom: solid 2px grey;
+}

@@ -5,49 +5,56 @@
     <StackLayout orientation="horizontal"
                  ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
-        <Label verticalAlignment="center" text="{{ kid.fname }} {{ kid.lname }}"  class="action-label"></Label>
+        <Label verticalAlignment="center" text="{{ kid.fname }} {{ kid.lname }}" class="action-label"></Label>
     </StackLayout>
 </ActionBar>
 
 
 <ScrollView>
-    <GridLayout  rows="auto,auto,auto,auto,auto,auto,auto,auto" tkMainContent class="kid-dashboard">
+    <GridLayout rows="auto,auto,auto,auto,auto,auto,auto,auto" tkMainContent class="kid-dashboard">
         <!--- Profile section -->
         <GridLayout row="0" class="section1 p-y-10 p-x-20" backgroundColor="#e9e9e9">
-                <GridLayout row="0" cols="auto,auto" class="kid-profile-container" orientation="vertical">
-                    <StackLayout col="1" orientation="horizontal" horizontalAlignment="right" class="">
-                        <!--<Label width="200" class="kid-name text-center" text="{{ kid.fname }} {{ kid.lname }}" textWrap="true"></Label>-->
-                        <StackLayout width="auto" class="kid-profile-image-container text-left">
-                            <Image src="{{ kid.photograph_url || '~/images/avatar-100.png' }}" class="kid-profile-image"> </Image>
-                        </StackLayout>
+            <GridLayout row="0" cols="auto,auto" class="kid-profile-container" orientation="vertical">
+                <StackLayout col="1" orientation="horizontal" horizontalAlignment="right" class="">
+                    <!--<Label width="200" class="kid-name text-center" text="{{ kid.fname }} {{ kid.lname }}" textWrap="true"></Label>-->
+                    <StackLayout width="auto" class="kid-profile-image-container text-left">
+                        <Image src="{{ kid.photograph_url || '~/images/avatar-100.png' }}"
+                               class="kid-profile-image"></Image>
                     </StackLayout>
-                </GridLayout>
+                </StackLayout>
+            </GridLayout>
         </GridLayout>
 
 
         <GridLayout row="1">
             <GridLayout columns="*,30,*,30,*" verticalAlignment="center" class="navigation-links-1">
 
-                <StackLayout col="0" row="0" horizontalAlignment="center" orientation="vertical" (tap)="openKidProfile(kid)">
-                    <Image text="top" stretch ="none" horizontalAlignment="center" src="res://profile_details_40"></Image>
+                <StackLayout col="0" row="0" horizontalAlignment="center" orientation="vertical"
+                             (tap)="openKidProfile(kid)">
+                    <Image text="top" stretch="none" horizontalAlignment="center"
+                           src="res://profile_details_40"></Image>
                     <Label text="Profile Details"></Label>
                 </StackLayout>
-                <StackLayout col="1" row="0" horizontalAlignment="center" verticalAlignment="center" orientation="vertical">
-                    <Image  height="50" width="50" stretch ="aspectFill" horizontalAlignment="center" src="~/images/line_icon-50.png"></Image>
+                <StackLayout col="1" row="0" horizontalAlignment="center" verticalAlignment="center"
+                             orientation="vertical">
+                    <Image height="50" width="50" stretch="aspectFill" horizontalAlignment="center"
+                           src="~/images/line_icon-50.png"></Image>
                 </StackLayout>
 
 
                 <StackLayout col="2" row="0" horizontalAlignment="center" orientation="vertical">
-                    <Image text="top" stretch ="none" horizontalAlignment="center" src="res://doc_lock_icon_40"></Image>
+                    <Image text="top" stretch="none" horizontalAlignment="center" src="res://doc_lock_icon_40"></Image>
                     <Label text="form&docs"></Label>
                 </StackLayout>
 
-                <StackLayout col="3" row="0" horizontalAlignment="center" verticalAlignment="center" orientation="vertical">
-                    <Image  height="50" width="50" stretch ="aspectFill" horizontalAlignment="center" src="~/images/line_icon-50.png"></Image>
+                <StackLayout col="3" row="0" horizontalAlignment="center" verticalAlignment="center"
+                             orientation="vertical">
+                    <Image height="50" width="50" stretch="aspectFill" horizontalAlignment="center"
+                           src="~/images/line_icon-50.png"></Image>
                 </StackLayout>
 
                 <StackLayout col="4" row="0" horizontalAlignment="center" orientation="vertical">
-                    <Image text="top" stretch ="none" horizontalAlignment="center" src="res://notes_icon_40"></Image>
+                    <Image text="top" stretch="none" horizontalAlignment="center" src="res://notes_icon_40"></Image>
                     <Label text="Notes"></Label>
                 </StackLayout>
             </GridLayout>
@@ -60,18 +67,22 @@
 
         <GridLayout row="3">
             <GridLayout columns="*, auto ,*" class="navigation-links-2">
-                <StackLayout col="0" row="0" verticalAlignment="center" horizontalAlignment="center" orientation="horizontal">
+                <StackLayout col="0" row="0" verticalAlignment="center" horizontalAlignment="center"
+                             orientation="horizontal">
                     <Label text="" class="number-with-circle reminders"></Label>
                     <Label text="Reminders"></Label>
                 </StackLayout>
 
-                <StackLayout col="1" row="0" verticalAlignment="center" horizontalAlignment="center" orientation="vertical">
-                    <Image  height="50" width="50" stretch ="aspectFill" horizontalAlignment="center" src="~/images/line_icon-50.png"></Image>
+                <StackLayout col="1" row="0" verticalAlignment="center" horizontalAlignment="center"
+                             orientation="vertical">
+                    <Image height="50" width="50" stretch="aspectFill" horizontalAlignment="center"
+                           src="~/images/line_icon-50.png"></Image>
                 </StackLayout>
 
-                <StackLayout col="2" row="0" verticalAlignment="center" horizontalAlignment="center" orientation="horizontal">
+                <StackLayout col="2" row="0" verticalAlignment="center" horizontalAlignment="center"
+                             orientation="horizontal">
                     <Label text="" class="number-with-circle notifications"></Label>
-                    <Label text="Notifications"></Label>
+                    <Label text="Messages"></Label>
                 </StackLayout>
             </GridLayout>
         </GridLayout>
@@ -82,115 +93,130 @@
         </GridLayout>
 
         <GridLayout row="5">
-            <StackLayout horizontalAlignment="center" orientation="vertical" class="capture-moment-section p-t-5 p-b-20">
-                <Image text="top" stretch ="none" horizontalAlignment="center" src="res://camera_icon_60"></Image>
+            <StackLayout (tap)="captureKidMoment()" horizontalAlignment="center" orientation="vertical"
+                         class="capture-moment-section p-t-5 p-b-20">
+                <Image text="top" stretch="none" horizontalAlignment="center" src="res://camera_icon_60"></Image>
                 <Label text="capture a moment, share with parent(s)..." class="font-italic text-muted"></Label>
             </StackLayout>
         </GridLayout>
 
-        <StackLayout  row="6">
-            <GridLayout height="15" backgroundColor="#e9e9e9"  *ngIf="posts.length"></GridLayout>
+        <StackLayout row="6">
+            <GridLayout height="15" backgroundColor="#e9e9e9" *ngIf="posts.length"></GridLayout>
 
-        <StackLayout class="moment-image-container" *ngIf="posts.length" orientation="vertical" >
-            <GridLayout rows="auto,auto,auto,auto, auto, auto, auto" *ngFor="let post of posts">
-                <GridLayout row="0">
-                    <Image stretch="aspectFill" src="{{ post.image || 'https://placehold.it/500x500' }}" class="cover-image"></Image>
-                    <!--<StackLayout class="org-container" horizontalAlignment="right">
-                        <StackLayout orientation="horizontal">
-                            <StackLayout class="org-image-container">
-                                <Image [src]="moment.org_logo" stretch="none"> </Image>
+            <StackLayout class="moment-image-container" *ngIf="posts.length" orientation="vertical">
+                <GridLayout rows="auto,auto,auto,auto, auto, auto, auto" *ngFor="let post of posts">
+                    <GridLayout row="0">
+                        <Image stretch="aspectFill" src="{{ post.image || 'https://placehold.it/500x500' }}"
+                               class="cover-image"></Image>
+                        <!--<StackLayout class="org-container" horizontalAlignment="right">
+                            <StackLayout orientation="horizontal">
+                                <StackLayout class="org-image-container">
+                                    <Image [src]="moment.org_logo" stretch="none"> </Image>
+                                </StackLayout>
                             </StackLayout>
-                        </StackLayout>
-                    </StackLayout>-->
-                </GridLayout>
+                        </StackLayout>-->
+                    </GridLayout>
 
-                <GridLayout row="1" class="moment-tags">
-                    <GridLayout columns="auto, *" *ngIf="post.tagged_to.length">
-                        <StackLayout col="0" row="0" horizontalAlignment="left" orientation="horizontal">
-                            <StackLayout *ngFor="let item of post.tagged_to" margin="3">
-                                <Image height="40" width="40" class="kid-profile-pic blue-circle-border"
-                                       src="{{ item.photograph ||  '~/images/avatar-100.png' }}"></Image>
+                    <GridLayout row="1" class="moment-tags">
+                        <GridLayout columns="auto, *" *ngIf="post.tagged_to.length">
+                            <StackLayout col="0" row="0" horizontalAlignment="left" orientation="horizontal">
+                                <StackLayout *ngFor="let item of post.tagged_to" margin="3">
+                                    <Image height="40" width="40" class="kid-profile-pic blue-circle-border"
+                                           src="{{ item.photograph ||  '~/images/avatar-100.png' }}"></Image>
+                                </StackLayout>
                             </StackLayout>
-                        </StackLayout>
-                        <StackLayout col="1" row="0" horizontalAlignment="right" orientation="horizontal">
-                            <StackLayout orientation="vertical">
-                                <Label text="{{  post.created_at.substring(0,10) |  date: 'MMMM dd, yyyy' }}" class="tagged-on-date font-weight-bold text-muted"></Label>
-                                <Image class="m-t-5" id="post-hearted-image-{{ post.kl_id }}"
-                                       visibility="{{ post.hearted ? 'visible' : 'collapsed'}}"
-                                       height="25" width="40" stretch="aspectFit"
-                                       src="{{ post.hearted ? (post.asset_base_url + post.heart_icon) : '~/images/heart-icon-red-48.png' }}"
-                                       horizontalAlignment="right">
-                                </Image>
+                            <StackLayout col="1" row="0" horizontalAlignment="right" orientation="horizontal">
+                                <StackLayout orientation="vertical">
+                                    <Label text="{{  post.created_at.substring(0,10) |  date: 'MMMM dd, yyyy' }}"
+                                           class="tagged-on-date font-weight-bold text-muted"></Label>
+                                    <Image class="m-t-5" id="post-hearted-image-{{ post.kl_id }}"
+                                           visibility="{{ post.hearted ? 'visible' : 'collapsed'}}"
+                                           height="25" width="40" stretch="aspectFit"
+                                           src="{{ post.hearted ? (post.asset_base_url + post.heart_icon) : '~/images/heart-icon-red-48.png' }}"
+                                           horizontalAlignment="right">
+                                    </Image>
+                                </StackLayout>
                             </StackLayout>
+                        </GridLayout>
+                    </GridLayout>
+                    <GridLayout row="2">
+                        <StackLayout class="horizontal-separator" margin="0 10 0 10">
                         </StackLayout>
                     </GridLayout>
-                </GridLayout>
-                <GridLayout row="2">
-                    <StackLayout class="horizontal-separator" margin="0 10 0 10">
-                    </StackLayout>
-                </GridLayout>
-                <GridLayout row="3" class="moment-comments">
+                    <GridLayout row="3" class="moment-comments">
 
-                    <GridLayout rows="auto,auto,auto,auto,auto,auto" *ngIf="post.comments">
-                        <GridLayout row="{{ i }}" *ngFor="let comment of post.comments; let i = index">
-                            <StackLayout orientation="horizontal" verticalAlignment="center" class="moment-comment-item">
+                        <GridLayout rows="auto,auto,auto,auto,auto,auto" *ngIf="post.comments">
+                            <GridLayout row="{{ i }}" *ngFor="let comment of post.comments; let i = index">
+                                <StackLayout orientation="horizontal" verticalAlignment="center"
+                                             class="moment-comment-item">
 
-                                <Image height="60" width="60" class="parent-profile-pic blue-circle-border"
-                                       src="{{ comment.commenter_photo || '~/images/avatar-100.png' }}"></Image>
+                                    <Image height="60" width="60" class="parent-profile-pic blue-circle-border"
+                                           src="{{ comment.commenter_photo || '~/images/avatar-100.png' }}"></Image>
 
-                                <StackLayout orientation="vertical" class="comment-details p-l-5">
-                                    <StackLayout orientation="horizontal">
-                                        <Label [text]="comment.commented_by" class="kid-name font-weight-bold"></Label>
-                                        <Label *ngIf="comment.child_name" text="{{ comment.child_name }}'s {{ comment.child_relationship }}" class="relation-name light-gray font-italic"></Label>
+                                    <StackLayout orientation="vertical" class="comment-details p-l-5">
+                                        <StackLayout orientation="horizontal">
+                                            <Label [text]="comment.commented_by"
+                                                   class="kid-name font-weight-bold"></Label>
+                                            <Label *ngIf="comment.child_name"
+                                                   text="{{ comment.child_name }}'s {{ comment.child_relationship }}"
+                                                   class="relation-name light-gray font-italic"></Label>
+                                        </StackLayout>
+                                        <Label [text]="comment.content" textwrap="true"></Label>
                                     </StackLayout>
-                                    <Label [text]="comment.content" textwrap="true"></Label>
                                 </StackLayout>
-                            </StackLayout>
-                            <GridLayout row="{{ i+1 }}">
-                                <StackLayout class="comment-hr-separator">
-                                </StackLayout>
+                                <GridLayout row="{{ i+1 }}">
+                                    <StackLayout class="comment-hr-separator">
+                                    </StackLayout>
+                                </GridLayout>
                             </GridLayout>
                         </GridLayout>
                     </GridLayout>
-                </GridLayout>
 
-                <GridLayout row="4">
-                    <StackLayout class="comment-hr-separator">
-                    </StackLayout>
-                </GridLayout>
-                <GridLayout row="5" class="moment-bottom-section">
-                    <GridLayout columns="auto,auto,auto,*">
-                        <StackLayout col="0" row="0" horizontalAlignment="left" orientation="horizontal" marginLeft="10">
-                            <Image visibility="visible"  stretch="none" class="{{ post.hearted ? 'hearted' : 'not-hearted' }}"
-                                   (tap)="addOrRemoveHeart(post)" id="post-add-remove-heart-{{ post.kl_id }}"
-                                   src="res://heart_icon_{{ post.hearted ? 'gray' : 'light' }}"></Image>
-                            <ActivityIndicator height="30" width="30" id="post-add-remove-heart-indicator-{{ post.kl_id }}"
-                                               visibility="collapsed" class="busy activity-indicator" busy="{{isAndroid ? true : false }}"></ActivityIndicator>
-                        </StackLayout>
-
-                        <StackLayout col="1" row="0" horizontalAlignment="left" orientation="horizontal" marginLeft="10">
-                            <Image stretch="none" src="res://comment_icon"></Image>
-                        </StackLayout>
-                        <StackLayout col="2" row="0" horizontalAlignment="center" orientation="horizontal" marginLeft="10">
-                            <Label text="Comment"></Label>
-                        </StackLayout>
-                        <StackLayout col="3" row="0" horizontalAlignment="right" orientation="horizontal" margin="0 10 0 0">
-                            <Image stretch="none" src="res://more_icon" horizontalAlignment="right" marginLeft="30"></Image>
+                    <GridLayout row="4">
+                        <StackLayout class="comment-hr-separator">
                         </StackLayout>
                     </GridLayout>
+                    <GridLayout row="5" class="moment-bottom-section">
+                        <GridLayout columns="auto,auto,auto,*">
+                            <StackLayout col="0" row="0" horizontalAlignment="left" orientation="horizontal"
+                                         marginLeft="10">
+                                <Image visibility="visible" stretch="none"
+                                       class="{{ post.hearted ? 'hearted' : 'not-hearted' }}"
+                                       (tap)="addOrRemoveHeart(post)" id="post-add-remove-heart-{{ post.kl_id }}"
+                                       src="res://heart_icon_{{ post.hearted ? 'gray' : 'light' }}"></Image>
+                                <ActivityIndicator height="30" width="30"
+                                                   id="post-add-remove-heart-indicator-{{ post.kl_id }}"
+                                                   visibility="collapsed" class="busy activity-indicator"
+                                                   busy="{{isAndroid ? true : false }}"></ActivityIndicator>
+                            </StackLayout>
+
+                            <StackLayout col="1" row="0" horizontalAlignment="left" orientation="horizontal"
+                                         marginLeft="10">
+                                <Image stretch="none" src="res://comment_icon"></Image>
+                            </StackLayout>
+                            <StackLayout col="2" row="0" horizontalAlignment="center" orientation="horizontal"
+                                         marginLeft="10">
+                                <Label text="Comment"></Label>
+                            </StackLayout>
+                            <StackLayout col="3" row="0" horizontalAlignment="right" orientation="horizontal"
+                                         margin="0 10 0 0">
+                                <Image stretch="none" src="res://more_icon" horizontalAlignment="right"
+                                       marginLeft="30"></Image>
+                            </StackLayout>
+                        </GridLayout>
+                    </GridLayout>
+                    <GridLayout row="6" height="15" backgroundColor="#e9e9e9"></GridLayout>
+
                 </GridLayout>
-                <GridLayout row="6" height="15" backgroundColor="#e9e9e9"></GridLayout>
 
-            </GridLayout>
-
-        </StackLayout>
+            </StackLayout>
         </StackLayout>
 
         <GridLayout row="7">
-        <StackLayout visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
-        <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
-            <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
-        </GridLayout>
+            <StackLayout visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+            <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+                <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
+            </GridLayout>
         </GridLayout>
     </GridLayout>
 

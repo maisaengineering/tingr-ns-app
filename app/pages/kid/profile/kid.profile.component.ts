@@ -53,6 +53,9 @@ export class KidProfileComponent implements OnInit {
                 (result) => {
                     this.kid =  result.body; // update kid info
                     this.isLoading = false;
+
+                    // save details in provider
+                    this.kidData.info = this.kid;
                 },
                 (error) => {
                     this.isLoading = false;
