@@ -16,6 +16,7 @@ var cameraModule = require("camera");
 
 import { ImageAsset } from "image-asset";
 var enums = require("ui/enums");
+var nstoasts = require("nativescript-toasts");
 
 @Component({
     moduleId: module.id,
@@ -132,6 +133,12 @@ export class KidMomentComponent implements OnInit {
                     let body = result.body;
                     console.log("Result ---- "+ JSON.stringify(body));
                     this.isLoading = false;
+
+                    let toastOptions = {
+                        text: 'Moment added successfully',
+                        duration : nstoasts.DURATION.SHORT
+                    };
+                    nstoasts.show(toastOptions);
 
                     this.routerExtensions.navigate(["/kid-dashboard"], {
                         transition: {
