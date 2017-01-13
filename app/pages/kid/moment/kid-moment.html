@@ -1,8 +1,13 @@
 <ActionBar title="">
     <NavigationButton text="Back" icon="res://ic_back" (tap)="goBack()"></NavigationButton>
     <ActionItem ios.position="right" android.position="right">
-        <Label (tap)="saveMoment()" class="blue material-icons md-36 md-chevron-right text-right"
+        <Label *ngIf="s3_key" (tap)="saveMoment()"
+               class="blue material-icons md-36 md-chevron-right text-right"
                text="&#xE5CA;"></Label>
+        <ActivityIndicator visibility="{{ s3_key === '' ? 'visible' : 'collapsed'}}"
+                           class="busy activity-indicator text-right"
+                           busy="{{ s3_key === '' ? true : false }}">
+        </ActivityIndicator>
     </ActionItem>
 </ActionBar>
 

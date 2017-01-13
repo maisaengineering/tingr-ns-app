@@ -68,17 +68,39 @@ export class KidMomentComponent implements OnInit {
         var momentImageVIew = view.getViewById(this.page, 'moment-image');
         momentImageVIew.src = this.momentCaptureDetails.imageAsset;
         momentImageVIew.visibility = 'visible';
-        this.s3_key = this.momentCaptureDetails.s3_key;
+        // get s3 in background
+        console.log("S3-Key Before" + this.s3_key);
 
+        this.getS3Key();
         let addDetailsTextField = view.getViewById(this.page, "moment-additional-details");
         //addDetailsTextField.focus();
+    }
+
+    getS3Key(){
+        this.s3_key = ''; // set key to empty to show activity indicator
+        this.postService.uploadToS3(this.momentCaptureDetails.imageFileName, this.momentCaptureDetails.imageBase64Data)
+            .subscribe(
+                (result) => {
+                    let body = result.body;
+                    console.log("Result ---- "+ JSON.stringify(body));
+                    this.s3_key = body.key;
+                    this.isLoading = false;
+
+                    console.log("S3-Key After" + this.s3_key);
+                },
+                (error) => {
+                    console.log("ERRROR :" + JSON.stringify(error));
+                    this.isLoading = false;
+                    alert('Internal server error.');
+                }
+            );
     }
 
     capturePhoto(){
        let momentImageView = view.getViewById(this.page, 'moment-image');
         let options = {
-            width: 500,
-            height: 500,
+            width: 800,
+            height: 800,
             keepAspectRatio: false,
             saveToGallery: false
         };
@@ -86,24 +108,10 @@ export class KidMomentComponent implements OnInit {
             let imageBase64Data = imageAsset.toBase64String(enums.ImageFormat.jpeg);
             let imageFilename = 'img_' + new Date().getTime() + enums.ImageFormat.jpeg;
             momentImageView.src = imageAsset;
-
-            this.isLoading = true;
-            this.postService.uploadToS3(imageFilename, imageBase64Data)
-                .subscribe(
-                    (result) => {
-                        let body = result.body;
-                        console.log("Result ---- "+ JSON.stringify(body));
-                        this.s3_key = body.key;
-                        this.isLoading = false;
-                    },
-                    (error) => {
-                        this.isLoading = false;
-                        alert('Internal server error.');
-                    }
-                );
+            // get s3_key with newly upload image
+            this.getS3Key();
         });
     }
-
 
 
     tagKid(kid_klid){
@@ -127,6 +135,9 @@ export class KidMomentComponent implements OnInit {
         this.isLoading = true;
         let createdAt = new Date();
         console.log("Off Set "+ createdAt.getTimezoneOffset());
+        console.log("additionalDetails "+ this.additionalDetails);
+        console.log("taggedKidIds "+ this.taggedKidIds);
+        console.log("s3_key "+ this.s3_key);
         this.postService.createPost(createdAt, this.additionalDetails, this.taggedKidIds, this.s3_key)
             .subscribe(
                 (result) => {

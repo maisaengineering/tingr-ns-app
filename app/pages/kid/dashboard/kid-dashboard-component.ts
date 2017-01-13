@@ -64,40 +64,27 @@ export class KidDashboardComponent implements OnInit {
         //TODO check for android if not working: https://github.com/NativeScript/NativeScript/issues/2353
         //var imageView = view.getViewById(this.page, 'kid-profile-picture');
         let options = {
-            width: 500,
-            height: 500,
+            width: 800,
+            height: 800,
             keepAspectRatio: false,
             saveToGallery: false
         };
         cameraModule.takePicture(options).then((imageAsset) => {
             let imageBase64Data = imageAsset.toBase64String(enums.ImageFormat.jpeg);
-            let imageFilename = 'img_' + new Date().getTime() + enums.ImageFormat.jpeg;
+            let imageFileName = 'img_' + new Date().getTime() + enums.ImageFormat.jpeg;
 
-            this.isLoading = true;
-            this.postService.uploadToS3(imageFilename, imageBase64Data)
-                .subscribe(
-                    (result) => {
-                        let body = result.body;
-                        this.sharedData.momentCaptureDetails = {
-                            imageBase64Data: imageBase64Data,
-                            imageAsset: imageAsset,
-                            imageFileName: imageFilename,
-                            s3_key: body.key
-                        };
-                        this.isLoading = false;
-                        console.log("Result S3 "+ JSON.stringify(body));
+            this.sharedData.momentCaptureDetails = {
+                imageBase64Data: imageBase64Data,
+                imageAsset: imageAsset,
+                imageFileName: imageFileName
+            };
 
-                        this.routerExtensions.navigate(["/kid-moment"], {
-                            transition: {
-                                name: "slideLeft"
-                            }
-                        });
-                    },
-                    (error) => {
-                        this.isLoading = false;
-                        alert('Internal server error.');
-                    }
-                );
+            this.routerExtensions.navigate(["/kid-moment"], {
+                transition: {
+                    name: "slideLeft"
+                }
+            });
+
 
         });
 
@@ -114,6 +101,8 @@ export class KidDashboardComponent implements OnInit {
                 (result) => {
                     var body = result.body;
                     this.posts = body.posts;
+
+                    console.log("POSTS  :" + JSON.stringify(body));
                     this.isLoading = false;
                 },
                 (error) => {
