@@ -1,30 +1,26 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 import {PostService, Post, TaggedTo, Comment} from "../../../shared/post.service";
 import frameModule = require("ui/frame");
-import {Router, NavigationExtras} from "@angular/router";
-import {RouterExtensions, PageRoute} from "nativescript-angular/router";
+import {Router} from "@angular/router";
+import {RouterExtensions} from "nativescript-angular/router";
 import {KidData} from "../../../providers/data/kid_data";
 import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
+import dialogs = require("ui/dialogs");
+
 let view = require("ui/core/view");
 let tnsfx = require('nativescript-effects');
 let app = require("application");
-
 let cameraModule = require("camera");
 let platformModule = require("platform");
 let permissions = require("nativescript-permissions");
-
-import {ImageAsset} from "image-asset";
 let enums = require("ui/enums");
 let imagepicker = require("nativescript-imagepicker");
-import dialogs = require("ui/dialogs");
+let nstoasts = require("nativescript-toasts");
+
 declare var android: any;
 
-export class DataItem {
-    constructor(public itemDesc: string) {
-    }
-}
 
 @Component({
     moduleId: module.id,
@@ -187,6 +183,8 @@ export class KidDashboardComponent implements OnInit {
                     var body = result.body;
                     this.posts = body.posts;
                     this.isLoading = false;
+
+                    console.log("POSTS : "+ JSON.stringify(this.posts));
                 },
                 (error) => {
                     this.isLoading = false;
@@ -234,7 +232,7 @@ export class KidDashboardComponent implements OnInit {
                         activityIndicator.visibility = 'collapsed';
                         heartIconImage.className = 'not-hearted';
 
-                        heartedImage.floatOut('slow', 'left').then(function () {
+                        heartedImage.floatOut('slow', 'left').then(() => {
                             heartedImage.visibility = "collapsed";
                         });
                     } else {
@@ -278,5 +276,59 @@ export class KidDashboardComponent implements OnInit {
 
     }
 
+    // edit , delete post etc..
+    selectPostActions(post){
+        let actions = [];
+        if(post.can_edit){
+            actions.push('Edit')
+        }
+        if(post.can_delete){
+            actions.push('Delete')
+        }
+        dialogs.action({
+            // message: "Your message",
+            cancelButtonText: "Cancel",
+            actions: actions
+        }).then(result => {
+           if(result === 'Delete'){
+              this.deletePost(post);
+           }else if(result === 'Edit'){
+             //TODO
+           }
+
+        });
+    }
+
+
+    deletePost(post){
+        let postGridLayout = view.getViewById(this.page, "post-" + post.kl_id);
+        this.isLoading = true;
+        this.postService.deletePost(post.kl_id).subscribe(
+            (result) => {
+                this.isLoading = false;
+                postGridLayout.fadeOut('slow').then(() => {
+                    // hide deleted post
+                    postGridLayout.visibility = 'collapsed';
+                    // remove current post from list
+                    let currentPost = this.posts.filter(post => post.kl_id === post.kl_id)[0];
+                    console.log("Current Post" + JSON.stringify(currentPost));
+                    let index = this.posts.indexOf(currentPost);
+                    console.log('Index :' + index);
+                    this.posts.splice(index, 1);
+                    console.log("Posts  "+ JSON.stringify(this.posts));
+                    // show toast
+                    nstoasts.show({
+                        text: result.message,
+                        duration : nstoasts.DURATION.SHORT
+                    });
+                });
+
+            },
+            (error) => {
+                this.isLoading = false;
+                alert('Internal server error.');
+            }
+        );
+    }
 
 }

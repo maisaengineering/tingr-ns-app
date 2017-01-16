@@ -104,7 +104,7 @@
             <GridLayout height="15" backgroundColor="#e9e9e9" *ngIf="posts.length"></GridLayout>
 
             <StackLayout class="moment-image-container" *ngIf="posts.length" orientation="vertical">
-                <GridLayout rows="auto,auto,auto,auto, auto, auto, auto" *ngFor="let post of posts">
+                <GridLayout id="post-{{ post.kl_id }}" rows="auto,auto,auto,auto, auto, auto, auto" *ngFor="let post of posts">
                     <GridLayout row="0">
                         <Image stretch="aspectFill" src="{{ post.image || 'https://placehold.it/500x500' }}"
                                class="cover-image"></Image>
@@ -198,7 +198,7 @@
                                          marginLeft="10">
                                 <Label text="Comment"></Label>
                             </StackLayout>
-                            <StackLayout col="3" row="0" horizontalAlignment="right" orientation="horizontal"
+                            <StackLayout (tap)="selectPostActions(post)" col="3" row="0" horizontalAlignment="right" orientation="horizontal"
                                          margin="0 10 0 0">
                                 <Image stretch="none" src="res://more_icon" horizontalAlignment="right"
                                        marginLeft="30"></Image>

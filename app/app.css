@@ -61,7 +61,7 @@ refer to http://docs.nativescript.org/ui/theme.
 
 Page {
     background-color: #ffffff;
-    font-size: 15;
+    font-size: 16;
     font-family: Roboto-Regular;
 }
 
@@ -107,7 +107,7 @@ NavigationButton, ActionItem{
 
 
 .action-label{
-    font-size: 22;
+    font-size: 20;
     font-weight: bold;
     color: #9fc5f8;
 }
