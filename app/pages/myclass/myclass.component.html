@@ -1,6 +1,6 @@
 <ActionBar title="">
-    <NavigationButton *ngIf="isAndroid" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
-    <ActionItem *ngIf="isIos" icon="res://ic_menu" ios.position="left" (tap)="openDrawer()"></ActionItem>
+    <NavigationButton  class="blue2" *ngIf="isAndroid" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
+    <ActionItem class="blue2" *ngIf="isIos" icon="res://ic_menu" ios.position="left" (tap)="openDrawer()"></ActionItem>
 
     <StackLayout orientation="horizontal"
                  ios:horizontalAlignment="center"

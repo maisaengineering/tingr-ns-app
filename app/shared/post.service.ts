@@ -60,17 +60,19 @@ export class PostService {
             .catch(this.handleErrors)
     }
 
-    uploadToS3(imageFilename, imageBase64Data){
+    uploadToS3(imageBase64Data){
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
+        let imageBase64DataWithFormat = "data:image/jpeg;base64,"+imageBase64Data;
+        let imageFileName = new Date().getTime() + '.jpeg';
         let data = JSON.stringify({
             access_token: TokenService.accessToken,
             auth_token: TokenService.authToken,
             command: 'upload_to_s3',
             body: {
-                name: imageFilename,
+                name: imageFileName,
                 content_type: "image/jpeg",
-                content: imageBase64Data
+                content: imageBase64DataWithFormat
             }
         });
 
@@ -85,12 +87,14 @@ export class PostService {
     createPost(createdAt, additionalDetails, taggedKidIds, s3_key){
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
+        let postCreatedAt = this.datePipe.transform(createdAt, 'MM/dd/yyyy');
+        console.log("Created At "+ postCreatedAt);
         let data = JSON.stringify({
             access_token: TokenService.accessToken,
             auth_token: TokenService.authToken,
             command: 'create_post',
             body: {
-                date: this.datePipe.transform(createdAt, 'dd/MM/yyyy'),
+                date: this.datePipe.transform(createdAt, 'MM/dd/yyyy'),
                 additional_text : additionalDetails,
                 tags: taggedKidIds,
                 key: s3_key,

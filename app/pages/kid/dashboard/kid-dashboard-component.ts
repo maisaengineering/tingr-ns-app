@@ -71,21 +71,15 @@ export class KidDashboardComponent implements OnInit {
         };
         cameraModule.takePicture(options).then((imageAsset) => {
             let imageBase64Data = imageAsset.toBase64String(enums.ImageFormat.jpeg);
-            let imageFileName = 'img_' + new Date().getTime() + enums.ImageFormat.jpeg;
-
             this.sharedData.momentCaptureDetails = {
                 imageBase64Data: imageBase64Data,
-                imageAsset: imageAsset,
-                imageFileName: imageFileName
+                imageAsset: imageAsset
             };
-
             this.routerExtensions.navigate(["/kid-moment"], {
                 transition: {
                     name: "slideLeft"
                 }
             });
-
-
         });
 
     }
@@ -101,8 +95,6 @@ export class KidDashboardComponent implements OnInit {
                 (result) => {
                     var body = result.body;
                     this.posts = body.posts;
-
-                    console.log("POSTS  :" + JSON.stringify(body));
                     this.isLoading = false;
                 },
                 (error) => {

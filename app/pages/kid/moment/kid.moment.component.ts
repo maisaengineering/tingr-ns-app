@@ -45,7 +45,6 @@ export class KidMomentComponent implements OnInit {
                 private sharedData: SharedData,
                 private internetService: InternetService) {
         //super(changeDetectorRef);
-        console.log("CBefore dsjhfjhgjkfhgkjfhgf gf g ");
         this.kid = {};
         this.kid = kidData.info;
         this.momentCaptureDetails = sharedData.momentCaptureDetails;
@@ -69,8 +68,6 @@ export class KidMomentComponent implements OnInit {
         momentImageVIew.src = this.momentCaptureDetails.imageAsset;
         momentImageVIew.visibility = 'visible';
         // get s3 in background
-        console.log("S3-Key Before" + this.s3_key);
-
         this.getS3Key();
         let addDetailsTextField = view.getViewById(this.page, "moment-additional-details");
         //addDetailsTextField.focus();
@@ -78,15 +75,12 @@ export class KidMomentComponent implements OnInit {
 
     getS3Key(){
         this.s3_key = ''; // set key to empty to show activity indicator
-        this.postService.uploadToS3(this.momentCaptureDetails.imageFileName, this.momentCaptureDetails.imageBase64Data)
+        this.postService.uploadToS3(this.momentCaptureDetails.imageBase64Data)
             .subscribe(
                 (result) => {
                     let body = result.body;
-                    console.log("Result ---- "+ JSON.stringify(body));
                     this.s3_key = body.key;
                     this.isLoading = false;
-
-                    console.log("S3-Key After" + this.s3_key);
                 },
                 (error) => {
                     console.log("ERRROR :" + JSON.stringify(error));
@@ -105,9 +99,13 @@ export class KidMomentComponent implements OnInit {
             saveToGallery: false
         };
         cameraModule.takePicture(options).then((imageAsset) => {
-            let imageBase64Data = imageAsset.toBase64String(enums.ImageFormat.jpeg);
-            let imageFilename = 'img_' + new Date().getTime() + enums.ImageFormat.jpeg;
+            let imageBase64Data =  imageAsset.toBase64String(enums.ImageFormat.jpeg);
+            let imageFileName =  new Date().getTime() + 'jpeg';
             momentImageView.src = imageAsset;
+            this.sharedData.momentCaptureDetails = {
+                imageBase64Data: imageBase64Data,
+                imageAsset: imageAsset
+            };
             // get s3_key with newly upload image
             this.getS3Key();
         });
@@ -142,7 +140,6 @@ export class KidMomentComponent implements OnInit {
             .subscribe(
                 (result) => {
                     let body = result.body;
-                    console.log("Result ---- "+ JSON.stringify(body));
                     this.isLoading = false;
 
                     let toastOptions = {
