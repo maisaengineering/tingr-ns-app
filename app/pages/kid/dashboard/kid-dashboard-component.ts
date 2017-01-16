@@ -7,14 +7,16 @@ import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../../providers/data/kid_data";
 import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
-var view = require("ui/core/view");
-var tnsfx = require('nativescript-effects');
-var app = require("application");
+let view = require("ui/core/view");
+let tnsfx = require('nativescript-effects');
+let app = require("application");
 
-var cameraModule = require("camera");
+let cameraModule = require("camera");
 
-import { ImageAsset } from "image-asset";
-var enums = require("ui/enums");
+import {ImageAsset} from "image-asset";
+let enums = require("ui/enums");
+let imagepicker = require("nativescript-imagepicker");
+import dialogs = require("ui/dialogs");
 
 
 export class DataItem {
@@ -38,7 +40,7 @@ export class KidDashboardComponent implements OnInit {
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
-    public imageTaken: ImageAsset;
+    public selectedImages = [];
 
     constructor(private postService: PostService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
@@ -57,10 +59,24 @@ export class KidDashboardComponent implements OnInit {
         } else if (app.ios) {
             this.isIos = true;
         }
-
     }
 
-    captureKidMoment(){
+    selectMomentCaptureOption() {
+        dialogs.action({
+            // message: "Your message",
+            cancelButtonText: "Cancel",
+            actions: ["Take photo", "Choose existing"]
+        }).then(result => {
+            if (result === 'Take photo') {
+                this.takePicture();
+            } else {
+                this.selectFromGallery();
+            }
+        });
+    }
+
+
+    takePicture() {
         //TODO check for android if not working: https://github.com/NativeScript/NativeScript/issues/2353
         //var imageView = view.getViewById(this.page, 'kid-profile-picture');
         let options = {
@@ -82,6 +98,53 @@ export class KidDashboardComponent implements OnInit {
             });
         });
 
+    }
+
+    selectFromGallery() {
+        let context = imagepicker.create({
+            mode: "single"
+        });
+        this.startImageSelection(context);
+    }
+
+    startImageSelection(context) {
+        context
+            .authorize()
+            .then(() => {
+                this.selectedImages = [];
+                return context.present();
+            })
+            .then((selection) => {
+                console.log("Selection done:");
+                selection.forEach(function(selected) {
+                     //TODO for multiple seelction follow below coding for each one
+                    // console.log("----------------");
+                    // console.log("uri: " + selected.uri);
+                    // console.log("fileUri: " + selected.fileUri);
+                });
+                this.selectedImages = selection;
+                // this.changeDetectionRef.detectChanges();
+                let selectedImage = this.selectedImages[0];
+                selectedImage
+                    .getImage({maxWidth: 800, maxHeight: 800})
+                    .then((imageSource) => {
+                        this.sharedData.momentCaptureDetails = {
+                            imageBase64Data: imageSource.toBase64String(enums.ImageFormat.jpeg),
+                            imageAsset: imageSource
+                        };
+                        this.routerExtensions.navigate(["/kid-moment"], {
+                            transition: {
+                                name: 'slideUp'
+                            }
+                        });
+
+                    }).catch(function (e) {
+                    console.log("Error: " + e);
+                    console.log(e.stack);
+                });
+            }).catch(function (e) {
+            console.log(e);
+        });
     }
 
     ngOnInit() {
@@ -170,20 +233,20 @@ export class KidDashboardComponent implements OnInit {
     }
 
     openKidProfile(kid) {
-        if(this.isIos){
+        if (this.isIos) {
             this.routerExtensions.navigate(["/kid-profile"], {
                 transition: {
                     name: 'curl',
                     duration: 700
                 }
             });
-        }else{
+        } else {
             this.routerExtensions.navigate(["/kid-profile"], {
                 transition: {
                     name: 'slideUp'
                 }
             });
-        } 
+        }
 
     }
 

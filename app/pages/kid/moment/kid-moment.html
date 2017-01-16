@@ -4,9 +4,9 @@
         <Label *ngIf="s3_key" (tap)="saveMoment()"
                class="blue material-icons md-36 md-chevron-right text-right"
                text="&#xE5CA;"></Label>
-        <ActivityIndicator visibility="{{ s3_key === '' ? 'visible' : 'collapsed'}}"
+        <ActivityIndicator visibility="{{ s3_key ? 'collapsed' : 'visible' }}"
                            class="busy activity-indicator text-right"
-                           busy="{{ s3_key === '' ? true : false }}">
+                           busy="{{ s3_key ? false : true }}">
         </ActivityIndicator>
     </ActionItem>
 </ActionBar>
@@ -21,7 +21,7 @@
                         <Gridlayout rows="auto" columns="auto,*" verticalAlignment="center"
                                     class="settings-item"
                                     orientation="horizontal" class="item">
-                            <Image (tap)="capturePhoto()" row='0' col="0" id="moment-image" height="100" width="100"
+                            <Image (tap)="selectMomentCaptureOption()" row='0' col="0" id="moment-image" height="100" width="100"
                                    stretch="aspectFill" class="" src="~/images/avatar-100.png"></Image>
                             <TextView row='0' col="1" hint="enter additional details" id="moment-additional-details"
                                       text=""

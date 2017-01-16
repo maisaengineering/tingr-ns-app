@@ -17,6 +17,8 @@ var cameraModule = require("camera");
 import { ImageAsset } from "image-asset";
 var enums = require("ui/enums");
 var nstoasts = require("nativescript-toasts");
+let imagepicker = require("nativescript-imagepicker");
+import dialogs = require("ui/dialogs");
 
 @Component({
     moduleId: module.id,
@@ -27,7 +29,6 @@ var nstoasts = require("nativescript-toasts");
 })
 export class KidMomentComponent implements OnInit {
     public kid: any;
-    public momentCaptureDetails: any;
     public managedKids: any;
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
@@ -35,6 +36,7 @@ export class KidMomentComponent implements OnInit {
     public additionalDetails: string;
     public taggedKidIds: Array<any> = [];
     public s3_key: string;
+    public selectedImages = [];
 
     constructor(private kidService: KidService,
                 private postService: PostService,
@@ -46,14 +48,12 @@ export class KidMomentComponent implements OnInit {
                 private internetService: InternetService) {
         //super(changeDetectorRef);
         this.kid = {};
-        this.kid = kidData.info;
-        this.momentCaptureDetails = sharedData.momentCaptureDetails;
-        this.managedKids = sharedData.managedKids;
-        this.kid = kidData.info;
+        this.kid = this.kidData.info;
+        this.managedKids = this.sharedData.managedKids;
+        this.kid = this.kidData.info;
         this.additionalDetails = '';
         this.taggedKidIds = [];
         this.s3_key = '';
-
         if (app.android) {
             this.isAndroid = true;
         } else if (app.ios) {
@@ -65,7 +65,7 @@ export class KidMomentComponent implements OnInit {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
         var momentImageVIew = view.getViewById(this.page, 'moment-image');
-        momentImageVIew.src = this.momentCaptureDetails.imageAsset;
+        momentImageVIew.src = this.sharedData.momentCaptureDetails.imageAsset;
         momentImageVIew.visibility = 'visible';
         // get s3 in background
         this.getS3Key();
@@ -75,22 +75,38 @@ export class KidMomentComponent implements OnInit {
 
     getS3Key(){
         this.s3_key = ''; // set key to empty to show activity indicator
-        this.postService.uploadToS3(this.momentCaptureDetails.imageBase64Data)
+        this.isLoading = true;
+        console.log('Getting S3 key ....');
+        this.postService.uploadToS3(this.sharedData.momentCaptureDetails.imageBase64Data)
             .subscribe(
                 (result) => {
                     let body = result.body;
                     this.s3_key = body.key;
                     this.isLoading = false;
+                    console.log('New S3 key + '+this.s3_key);
                 },
                 (error) => {
-                    console.log("ERRROR :" + JSON.stringify(error));
                     this.isLoading = false;
                     alert('Internal server error.');
                 }
             );
     }
 
-    capturePhoto(){
+    selectMomentCaptureOption() {
+        dialogs.action({
+            // message: "Your message",
+            cancelButtonText: "Cancel",
+            actions: ["Take photo", "Choose existing"]
+        }).then(result => {
+            if(result === 'Take photo'){
+                this.takePicture();
+            }else{
+                this.selectFromGallery();
+            }
+        });
+    }
+
+    takePicture(){
        let momentImageView = view.getViewById(this.page, 'moment-image');
         let options = {
             width: 800,
@@ -100,16 +116,66 @@ export class KidMomentComponent implements OnInit {
         };
         cameraModule.takePicture(options).then((imageAsset) => {
             let imageBase64Data =  imageAsset.toBase64String(enums.ImageFormat.jpeg);
-            let imageFileName =  new Date().getTime() + 'jpeg';
             momentImageView.src = imageAsset;
             this.sharedData.momentCaptureDetails = {
                 imageBase64Data: imageBase64Data,
                 imageAsset: imageAsset
             };
-            // get s3_key with newly upload image
+            // get s3_key for newly upload image
             this.getS3Key();
         });
     }
+
+    selectFromGallery() {
+        let context = imagepicker.create({
+            mode: "single"
+        });
+        this.startImageSelection(context);
+    }
+
+    startImageSelection(context) {
+        let momentImageVIew = view.getViewById(this.page, 'moment-image');
+
+        context
+            .authorize()
+            .then(() => {
+                this.selectedImages = [];
+                return context.present();
+            })
+            .then((selection) => {
+                console.log("Selection done:");
+                selection.forEach(function(selected) {
+                    //TODO for multiple seelction follow below coding for each one
+                    // console.log("----------------");
+                    // console.log("uri: " + selected.uri);
+                    // console.log("fileUri: " + selected.fileUri);
+                });
+                this.selectedImages = selection;
+                // this.changeDetectionRef.detectChanges();
+                let selectedImage = this.selectedImages[0];
+                selectedImage
+                    .getImage({maxWidth: 800, maxHeight: 800})
+                    .then((imageSource) => {
+                        this.sharedData.momentCaptureDetails = {
+                            imageBase64Data: imageSource.toBase64String(enums.ImageFormat.jpeg),
+                            imageAsset: imageSource
+                        };
+
+                        momentImageVIew.src = this.sharedData.momentCaptureDetails.imageAsset;
+                        momentImageVIew.visibility = 'visible';
+                        this.s3_key = '';
+                        this.getS3Key(); // get s3_key for newly upload image
+
+                    }).catch(function (e) {
+                    console.log("Error: " + e);
+                    console.log(e.stack);
+                });
+            }).catch(function (e) {
+            console.log(e);
+        });
+
+    }
+
 
 
     tagKid(kid_klid){
