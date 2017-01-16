@@ -12,12 +12,14 @@ let tnsfx = require('nativescript-effects');
 let app = require("application");
 
 let cameraModule = require("camera");
+let platformModule = require("platform");
+let permissions = require("nativescript-permissions");
 
 import {ImageAsset} from "image-asset";
 let enums = require("ui/enums");
 let imagepicker = require("nativescript-imagepicker");
 import dialogs = require("ui/dialogs");
-
+declare var android: any;
 
 export class DataItem {
     constructor(public itemDesc: string) {
@@ -68,9 +70,35 @@ export class KidDashboardComponent implements OnInit {
             actions: ["Take photo", "Choose existing"]
         }).then(result => {
             if (result === 'Take photo') {
-                this.takePicture();
+                //  Android permissions (mainly for API 23+/Android 6+) check inplace
+                // This wraps up the entire Android 6 permissions system into a nice easy to use promise.
+                // In addition, you can also have multiple permissions pending and each one will resolve properly
+                if (platformModule.device.os === "Android" && platformModule.device.sdkVersion >= 23) {
+                    permissions.requestPermission(android.Manifest.permission.CAMERA, "Allow Tingr to access your camera?")
+                        .then(function () {
+                            console.log("CAMERA Permission: granted!");
+                            this.takePicture();
+                        })
+                        .catch(function () {
+                            console.log("CAMERA Permission: -- refused");
+                        });
+                } else {
+                    this.takePicture();
+                }
+
             } else {
-                this.selectFromGallery();
+                if (platformModule.device.os === "Android" && platformModule.device.sdkVersion >= 23) {
+                    permissions.requestPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE, "Allow Tingr to access your gallery?")
+                        .then(function () {
+                            console.log("READ_EXTERNAL_STORAGE permission: granted!");
+                            this.selectFromGallery();
+                        })
+                        .catch(function () {
+                            console.log("READ_EXTERNAL_STORAGE permission: -- refused");
+                        });
+                } else {
+                    this.selectFromGallery();
+                }
             }
         });
     }
@@ -116,8 +144,8 @@ export class KidDashboardComponent implements OnInit {
             })
             .then((selection) => {
                 console.log("Selection done:");
-                selection.forEach(function(selected) {
-                     //TODO for multiple seelction follow below coding for each one
+                selection.forEach(function (selected) {
+                    //TODO for multiple seelction follow below coding for each one
                     // console.log("----------------");
                     // console.log("uri: " + selected.uri);
                     // console.log("fileUri: " + selected.fileUri);
