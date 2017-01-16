@@ -12,23 +12,25 @@
 </ActionBar>
 
 <GridLayout class="moment-capture-container">
-    <GridLayout>
-        <GridLayout rows="auto,auto">
-            <StackLayout row="0" orientation="horizontal">
-                <CardView margin="0 0 5 0" radius="0" shadowOffsetHeight="1" class="whiteCard">
-                    <Gridlayout rows="auto" columns="auto,*" verticalAlignment="center"
-                                class="settings-item"
-                                orientation="horizontal" class="item">
-                        <Image (tap)="capturePhoto()" row='0' col="0" id="moment-image" height="100" width="100"
-                               stretch="aspectFill" class="" src="~/images/avatar-100.png"></Image>
-                        <TextView row='0' col="1" hint="enter additional details" id="moment-additional-details" text=""
-                                  [(ngModel)]="additionalDetails" editable="true"
-                                  style="border-color:white;"></TextView>
-                    </Gridlayout>
-                </CardView>
-            </StackLayout>
-            <ScrollView row="1">
-                <StackLayout class="kid-list">
+
+    <ScrollView>
+        <GridLayout>
+            <GridLayout rows="auto,auto">
+                <StackLayout row="0" orientation="horizontal">
+                    <CardView margin="0 0 5 0" radius="0" shadowOffsetHeight="1" class="whiteCard">
+                        <Gridlayout rows="auto" columns="auto,*" verticalAlignment="center"
+                                    class="settings-item"
+                                    orientation="horizontal" class="item">
+                            <Image (tap)="capturePhoto()" row='0' col="0" id="moment-image" height="100" width="100"
+                                   stretch="aspectFill" class="" src="~/images/avatar-100.png"></Image>
+                            <TextView row='0' col="1" hint="enter additional details" id="moment-additional-details"
+                                      text=""
+                                      [(ngModel)]="additionalDetails" editable="true"
+                                      style="border-color:white;"></TextView>
+                        </Gridlayout>
+                    </CardView>
+                </StackLayout>
+                <StackLayout class="kid-list" row="1">
                     <StackLayout class="m-10" verticalAlignment="center">
                         <Label text="Tag Kids" class="text-center font-weight-bold"></Label>
                     </StackLayout>
@@ -52,11 +54,10 @@
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
-            </ScrollView>
-
+            </GridLayout>
         </GridLayout>
-    </GridLayout>
 
+    </ScrollView>
 
     <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
     <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
