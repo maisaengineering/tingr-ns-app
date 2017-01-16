@@ -78,7 +78,7 @@ TextField {
     background-color: #2b78e4;
 }
 .blue2{
-    color: #9fc5f8;
+    color: #70a9db;
 }
 .green {
     color: #93c47d;
@@ -98,18 +98,18 @@ TextField {
 
 
 ActionBar {
-   /* background-color: white;*/
-    /*color: #9fc5f8;*/
+    background-color: white;
+    color: #70a9db;
 }
 NavigationButton, ActionItem{
-    color: #9fc5f8;
+    color: #70a9db;
 }
 
 
 .action-label{
     font-size: 20;
     font-weight: bold;
-    color: #9fc5f8;
+    color: #70a9db;
 }
 
 .line-separator  {
@@ -128,14 +128,14 @@ NavigationButton, ActionItem{
 
 
 .rounded-corner-icon{
-    border-color:  #9fc5f8;
+    border-color:  #70a9db;
     border-width: 2;
     border-radius: 38;
 }
 
 /* border for circle images ..*/
 .blue-circle-border {
-    border-color:  #9fc5f8;
+    border-color:  #70a9db;
     border-width: 1;
 }
 
@@ -247,7 +247,7 @@ StackLayout.dimmer{
 ActivityIndicator.busy {
    /* height: 70;
     width: 70;*/
-    color: #2b78e4;
+    color: #70a9db;
 }
 
 .hr-shadow{

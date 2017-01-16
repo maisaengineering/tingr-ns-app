@@ -10,7 +10,7 @@ Image.kid-cover-image {
 }
 
 StackLayout.kid-profile-image-container {
-    border-color:  #9fc5f8;
+    border-color:  #70a9db;
     border-width: 2;
     border-radius: 50;
 
@@ -21,12 +21,12 @@ StackLayout.kid-profile-container {
 }
 
 .kid-profile-container .kid-name {
-    border-color:  #9fc5f8;
+    border-color:  #70a9db;
     vertical-align: middle;
     margin-left: 10;
     margin-right: 20px;
     font-size: 20;
-    color: #9fc5f8;
+    color: #70a9db;
     font-style: italic;
     font-weight: bold;
 }
