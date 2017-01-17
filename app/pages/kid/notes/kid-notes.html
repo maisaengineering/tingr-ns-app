@@ -11,14 +11,14 @@
 
 <GridLayout class="kid-notes-container">
 
-    <StackLayout *ngIf="!notes.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}">
-        <CardView  margin="30 10 10 10" radius="5" elevation="3"  class="grayCard">
-            <Gridlayout rows="auto" columns="auto,*" verticalAlignment="center" class="p-20" orientation="horizontal">
-                <Label row="0" col="0" class="blue2 material-icons md-24 m-r-10 md-info" text="&#xE88E;"></Label>
-                <Label textWrap="true" row="0" col="1" class="text-left blue2" verticalAlignment="center"
-                       [text]="noNotesMessage"></Label>
-            </Gridlayout>
-        </CardView>
+    <StackLayout *ngIf="!notes.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" verticalAlignment="center">
+       <StackLayout  orientation="vertical" horizontalAlignment="center" class="empty-notes">
+           <Label class="message text-center" text="{{ emptyNoteMessage }}" textWrap="true"></Label>
+           <StackLayout (tap)="addNote()">
+               <Label text="&#xE145;" class="text-center blue2 material-icons md-48 md-chevron-add"></Label>
+           </StackLayout>
+
+       </StackLayout>
     </StackLayout>
 
     <ScrollView>

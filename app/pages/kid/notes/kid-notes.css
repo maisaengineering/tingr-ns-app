@@ -16,3 +16,15 @@ StackLayout.notes-item{
 .notes-item .second-line{
    margin-top: 3;
 }
+
+StackLayout.empty-notes {
+    margin: 0 30 40 30;
+}
+
+.empty-notes .message {
+    color: #999999;
+    font-weight: 700;
+    font-size: 17;
+    font-style: italic;
+    margin-bottom: 30;
+}

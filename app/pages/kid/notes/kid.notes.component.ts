@@ -31,7 +31,7 @@ export class KidNotesComponent implements OnInit {
     public isIos: Boolean = false;
     public notes: Array<any>;
     public notesDescription: string;
-    public noNotesMessage: string;
+    public emptyNoteMessage: string;
 
     constructor(private notesService: NotesService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
@@ -44,9 +44,8 @@ export class KidNotesComponent implements OnInit {
         this.notes = [];
         this.kid = {};
         this.kid = this.kidData.info;
-        this.noNotesMessage = "start taking handy student notes today. " +
-            "notes are private to kid/school. never shared with parents. " +
-            "*other teachers can access shared student notes.";
+        this.emptyNoteMessage = "start taking handy student notes today...." +
+            "notes are private to kid/school--never shared with any parent. only your co-teacher can see your notes.";
 
         if (app.android) {
             this.isAndroid = true;
@@ -66,8 +65,7 @@ export class KidNotesComponent implements OnInit {
             // hide back button
             navigationItem.setHidesBackButtonAnimated(true, false);
         }
-
-        //this.loadList();
+        this.loadList();
     }
 
     loadList(){
