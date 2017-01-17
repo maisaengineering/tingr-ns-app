@@ -19,6 +19,8 @@ let permissions = require("nativescript-permissions");
 let enums = require("ui/enums");
 let imagepicker = require("nativescript-imagepicker");
 let nstoasts = require("nativescript-toasts");
+let PhotoViewer = require("nativescript-photoviewer");
+let photoViewer = new PhotoViewer();
 
 declare var android: any;
 
@@ -335,4 +337,12 @@ export class KidDashboardComponent implements OnInit {
         );
     }
 
+
+    openPostImages(post){
+        // Add to array and pass to showViewer
+        // add multiple images if post has
+        let postImages = [];
+        postImages.push(post.large_image);
+        photoViewer.showViewer(postImages);
+    }
 }

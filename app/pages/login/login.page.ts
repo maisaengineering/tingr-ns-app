@@ -105,7 +105,8 @@ export class LoginPage implements OnInit {
                     } else {
                         this.routerExtensions.navigate(["/verify-password"], {
                             transition: {
-                                name: "flip"
+                                name: "flip",
+                                duration: 700
                             },
                         });
                     }

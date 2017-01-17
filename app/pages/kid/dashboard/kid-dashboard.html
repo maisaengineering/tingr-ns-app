@@ -103,7 +103,7 @@
 
             <StackLayout class="moment-image-container" *ngIf="posts.length" orientation="vertical">
                 <GridLayout id="post-{{ post.kl_id }}" rows="auto,auto,auto,auto, auto, auto, auto" *ngFor="let post of posts">
-                    <GridLayout row="0">
+                    <GridLayout row="0" (tap)="openPostImages(post)">
                         <Image stretch="aspectFill" src="{{ post.image || 'https://placehold.it/500x500' }}"
                                class="cover-image"></Image>
                         <!--<StackLayout class="org-container" horizontalAlignment="right">
