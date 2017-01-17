@@ -8,6 +8,8 @@ import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
 import {KidService} from "../../../shared/kid.service";
 import { PostService } from "../../../shared/post.service";
+import {GC} from 'utils/utils';
+
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
 var app = require("application");
@@ -121,6 +123,12 @@ export class KidMomentComponent implements OnInit {
                 imageBase64Data: imageBase64Data,
                 imageAsset: imageAsset
             };
+
+            // The GC() function is called to clean up the mess in the memory let by camera.takePicture().
+            // Without this, the application on Android will constantly crash after some pictures,
+            // leaving us with nothing but OutOfMemory exceptions
+            GC();
+
             // get s3_key for newly upload image
             this.getS3Key();
         });

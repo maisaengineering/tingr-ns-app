@@ -8,6 +8,7 @@ import {KidData} from "../../../providers/data/kid_data";
 import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
 import dialogs = require("ui/dialogs");
+import {GC} from 'utils/utils';
 
 let view = require("ui/core/view");
 let tnsfx = require('nativescript-effects');
@@ -146,6 +147,10 @@ export class KidDashboardComponent implements OnInit {
                 imageBase64Data: imageBase64Data,
                 imageAsset: imageAsset
             };
+            // The GC() function is called to clean up the mess in the memory let by camera.takePicture().
+            // Without this, the application on Android will constantly crash after some pictures,
+            // leaving us with nothing but OutOfMemory exceptions
+            GC();
             this.routerExtensions.navigate(["/kid-moment"], {
                 transition: {
                     name: "slideLeft"
