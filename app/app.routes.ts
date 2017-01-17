@@ -17,7 +17,7 @@ import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
 
 export const APP_ROUTES = [
 
-    { path: "", redirectTo: "/kid-notes-edit", pathMatch: 'full'},
+    { path: "", redirectTo: "/kid-notes", pathMatch: 'full'},
     { path: "calendar", component: CalendarComponent, canActivate: [AuthGuard] },
     { path: "myclass", component: MyClassComponent, canActivate: [AuthGuard] },
     { path: "kid-dashboard", component: KidDashboardComponent, canActivate: [AuthGuard]},

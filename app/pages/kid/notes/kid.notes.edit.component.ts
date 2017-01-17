@@ -41,6 +41,7 @@ export class KidNotesEditComponent implements OnInit {
         //super(changeDetectorRef);
         this.kid = {};
         this.kid = this.kidData.info;
+        this.notesDescription = '';
         if (app.android) {
             this.isAndroid = true;
         } else if (app.ios) {
@@ -55,36 +56,50 @@ export class KidNotesEditComponent implements OnInit {
 
 
     saveNotes(isEdit){
-        this.isLoading = true;
-        if(isEdit){
-
+        let kid_klid= '764217ee-d7ae-4baf-b0de-ab70e6db522c';
+        let description = this.notesDescription.trim();
+        if(description){
+            this.isLoading = true;
+            if(isEdit){
+                this.updateNote(kid_klid, description)
+            }else{
+                this.createNote(kid_klid, description)
+            }
         }else{
-            let kid_klid= '764217ee-d7ae-4baf-b0de-ab70e6db522c';
-
-            this.notesService.createNote(kid_klid, this.notesDescription)
-                .subscribe(
-                    (result) => {
-                        let toastOptions = {
-                            text: result.message,
-                            duration : nstoasts.DURATION.SHORT
-                        };
-                        nstoasts.show(toastOptions);  
-                        this.routerExtensions.navigate(["/kid-notes"], {
-                            transition: {
-                                name: "slideRight"
-                            }
-                        });
-                    },
-                    (error) => {
-                        this.isLoading = false;
-                        alert('Internal server error.');
-                    }
-                );
-
-
-
+            dialogs.alert({
+                title: "",
+                message: "Notes description can't be blank",
+                okButtonText: "Ok"
+            }).then(()=>{});
         }
 
+    }
+
+    createNote(kid_klid, description){
+        this.notesService.createNote(kid_klid, description)
+            .subscribe(
+                (result) => {
+                    this.isLoading = false;
+                    let toastOptions = {
+                        text: result.message,
+                        duration : nstoasts.DURATION.SHORT
+                    };
+                    nstoasts.show(toastOptions);
+                    this.routerExtensions.navigate(["/kid-notes"], {
+                        transition: {
+                            name: "slideRight"
+                        }
+                    });
+                },
+                (error) => {
+                    this.isLoading = false;
+                    alert('Internal server error.');
+                }
+            );
+    }
+
+    updateNote(kid_klid, description){
+        //TODO
     }
 
 }
