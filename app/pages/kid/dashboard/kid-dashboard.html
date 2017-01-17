@@ -1,12 +1,9 @@
-<ActionBar title="">
-    <NavigationButton *ngIf="isAndroid" icon="res://ic_back" (tap)="goBack()"></NavigationButton><!--
-    <ActionItem *ngIf="isIos" icon="res://ic_back" ios.position="left" (tap)="goBack()"></ActionItem>-->
 
-    <StackLayout orientation="horizontal"
-                 ios:horizontalAlignment="center"
-                 android:horizontalAlignment="center">
-        <Label verticalAlignment="center" text="{{ kid.fname }} {{ kid.lname }}" class="action-label"></Label>
-    </StackLayout>
+<ActionBar title="{{ kid.fname }} {{ kid.lname }}">
+    <NavigationButton  class="blue2" *ngIf="isAndroid" icon="res://ic_back" (tap)="goBack()"></NavigationButton>
+    <ActionItem class="blue2" *ngIf="isIos" ios.position="left" (tap)="goBack()">
+        <Label text="&#xE5CB;" class="blue2 material-icons md-36 md-chevron-left"></Label>
+    </ActionItem>
 </ActionBar>
 
 

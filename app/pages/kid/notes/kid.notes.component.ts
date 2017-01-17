@@ -53,6 +53,15 @@ export class KidNotesComponent implements OnInit {
     ngOnInit() {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
+        // Hide 'Default Back button'
+        if(this.isIos){
+            var controller = frameModule.topmost().ios.controller;
+            // get the view controller navigation item
+            var navigationItem = controller.visibleViewController.navigationItem;
+            // hide back button
+            navigationItem.setHidesBackButtonAnimated(true, false);
+        }
+
         this.loadList();
     }
 
@@ -97,6 +106,14 @@ export class KidNotesComponent implements OnInit {
         this.routerExtensions.navigate(["/kid-notes-edit"], {
             transition: {
                 name: "slideLeft"
+            }
+        });
+    }
+
+    goBack(){
+        this.routerExtensions.navigate(["/kid-dashboard"], {
+            transition: {
+                name: "slideRight"
             }
         });
     }
