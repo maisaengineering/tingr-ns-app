@@ -1,15 +1,6 @@
-<ActionBar title="">
-
-    <NavigationButton *ngIf="isAndroid" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
+<ActionBar title="Schedule">
+    <NavigationButton  class="blue2" *ngIf="isAndroid" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
     <ActionItem *ngIf="isIos" icon="res://ic_menu" ios.position="left" (tap)="openDrawer()"></ActionItem>
-
-    <StackLayout orientation="horizontal"
-                 ios:horizontalAlignment="center"
-                 android:horizontalAlignment="center">
-        <!--<Image height="32" width="32" src="~/images/calender-icon-32.png"
-               class="m-r-10 action-image"></Image>-->
-        <Label verticalAlignment="center" text="Schedule"  class="action-label"></Label>
-    </StackLayout>
 </ActionBar>
 
 <RadSideDrawer #drawerComponent tkToggleNavButton>
