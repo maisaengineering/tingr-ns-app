@@ -133,4 +133,32 @@ export class KidNotesEditComponent implements OnInit {
             );
     }
 
+    deleteNote(){
+        dialogs.confirm("Are you sure?").then((result)=> {
+            if(result){
+                let note_kl_id = this.kidNote.kl_id;
+                this.notesService.deleteNote(note_kl_id)
+                    .subscribe(
+                        (result) => {
+                            this.isLoading = false;
+                            let toastOptions = {
+                                text: result.message,
+                                duration : nstoasts.DURATION.SHORT
+                            };
+                            nstoasts.show(toastOptions);
+                            this.routerExtensions.navigate(["/kid-notes"], {
+                                transition: {
+                                    name: "slideRight"
+                                }
+                            });
+                        },
+                        (error) => {
+                            this.isLoading = false;
+                            alert('Internal server error.');
+                        }
+                    );
+            }
+        });
+    }
+
 }

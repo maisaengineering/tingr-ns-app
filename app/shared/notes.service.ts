@@ -77,6 +77,25 @@ export class NotesService {
             .catch(this.handleErrors)
     }
 
+    deleteNote(note_kl_id){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: "delete",
+            body: {}
+        });
+
+        return this.http.post(
+            Config.apiUrl + "notes/"+note_kl_id, data, {
+                headers: headers
+            }
+        ).map((res:Response) => res.json())
+            .catch(this.handleErrors)
+    }
+
+
     handleErrors(error: any)  {
         console.error('An error occurred', error); // for demo purposes only
         return Observable.throw(error.message || error);

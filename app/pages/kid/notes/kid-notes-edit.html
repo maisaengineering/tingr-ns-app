@@ -13,7 +13,7 @@
             <TextView height="500" text="top" dock="top" borderColor="white" hint="enter notes" id="notes-description"
                       returnKeyType="next"
                       text="" [(ngModel)]="notesDescription" editable="true"></TextView>
-            <StackLayout *ngIf="isEdit" dock="bottom" height="80" horizontalAlignment="center" >
+            <StackLayout *ngIf="isEdit" (tap)="deleteNote()" dock="bottom" height="80" horizontalAlignment="center" >
                 <Label class="delete-notes-label" text="Delete" dock="bottom" height="70"></Label>
             </StackLayout>
         </DockLayout>
