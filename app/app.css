@@ -269,3 +269,8 @@ ActivityIndicator.busy {
     background-color: #3489db;
     color: #fff;
 }
+
+.grayCard{
+    background-color: #F8F8F8 ;
+    color: black;
+}
