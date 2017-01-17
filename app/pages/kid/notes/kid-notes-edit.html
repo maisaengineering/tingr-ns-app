@@ -1,0 +1,28 @@
+<ActionBar title="Edit">
+    <NavigationButton text="" icon="res://ic_back" (tap)="goBack()"></NavigationButton>
+    <ActionItem (tap)="saveNotes(false)" ios.position="right" android.position="right">
+        <Label class="material-icons md-36 md-chevron-right"
+               text="&#xE5CA;" ></Label>
+    </ActionItem>
+</ActionBar>
+
+<GridLayout class="kid-notes-container">
+
+    <ScrollView>
+        <DockLayout stretchLastChild="false">
+            <TextView height="500" text="top" dock="top" borderColor="white" hint="enter notes" id="notes-description"
+                      returnKeyType="next"
+                      text="" [(ngModel)]="notesDescription" editable="true"></TextView>
+            <StackLayout dock="bottom" height="80" horizontalAlignment="center" >
+                <Label class="delete-notes-label" text="Delete" dock="bottom" height="70"></Label>
+            </StackLayout>
+
+        </DockLayout>
+    </ScrollView>
+
+    <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+    <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+        <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
+    </GridLayout>
+
+</GridLayout>

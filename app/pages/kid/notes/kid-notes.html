@@ -1,6 +1,6 @@
 <ActionBar title="Notes">
     <NavigationButton text="" icon="res://ic_back" (tap)="goBack()"></NavigationButton>
-    <ActionItem ios.position="right" android.position="right">
+    <ActionItem (tap)="addNote()" ios.position="right" android.position="right">
         <Label  text="&#xE145;" class="blue2 material-icons md-36 md-chevron-add" ></Label>
     </ActionItem>
 </ActionBar>
@@ -12,5 +12,10 @@
             <Label text="Hello world"></Label>
         </GridLayout>
     </ScrollView>
+
+    <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+    <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+        <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
+    </GridLayout>
 
 </GridLayout>

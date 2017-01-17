@@ -21,15 +21,14 @@ import dialogs = require("ui/dialogs");
     moduleId: module.id,
     selector: 'my-app',
     styleUrls: ['./kid-notes.css'],
-    templateUrl: './kid-notes.html',
+    templateUrl: './kid-notes-edit.html',
     providers: [ NotesService]
 })
-export class KidNotesComponent implements OnInit {
+export class KidNotesEditComponent implements OnInit {
     public kid: any;
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
-    public notes: Array<any>;
     public notesDescription: string;
 
     constructor(private notesService: NotesService,
@@ -40,7 +39,6 @@ export class KidNotesComponent implements OnInit {
                 private sharedData: SharedData,
                 private internetService: InternetService) {
         //super(changeDetectorRef);
-        this.notes = [];
         this.kid = {};
         this.kid = this.kidData.info;
         if (app.android) {
@@ -53,33 +51,40 @@ export class KidNotesComponent implements OnInit {
     ngOnInit() {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
-        this.loadList();
     }
 
 
-    loadList(){
+    saveNotes(isEdit){
         this.isLoading = true;
-        this.notesService.getList('764217ee-d7ae-4baf-b0de-ab70e6db522c')
-            .subscribe(
-                (result) => {
-                    var body = result.body;
-                    this.notes = body.notes;
-                    this.isLoading = false;
-                    console.log("Notes :" + JSON.stringify(this.notes))
-                },
-                (error) => {
-                    this.isLoading = false;
-                    alert('Internal server error.');
-                }
-            );
-    }
+        if(isEdit){
 
-    addNote(){
-        this.routerExtensions.navigate(["/kid-notes-edit"], {
-            transition: {
-                name: "slideLeft"
-            }
-        });
+        }else{
+            let kid_klid= '764217ee-d7ae-4baf-b0de-ab70e6db522c';
+
+            this.notesService.createNote(kid_klid, this.notesDescription)
+                .subscribe(
+                    (result) => {
+                        let toastOptions = {
+                            text: result.message,
+                            duration : nstoasts.DURATION.SHORT
+                        };
+                        nstoasts.show(toastOptions);  
+                        this.routerExtensions.navigate(["/kid-notes"], {
+                            transition: {
+                                name: "slideRight"
+                            }
+                        });
+                    },
+                    (error) => {
+                        this.isLoading = false;
+                        alert('Internal server error.');
+                    }
+                );
+
+
+
+        }
+
     }
 
 }

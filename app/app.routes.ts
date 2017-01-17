@@ -10,13 +10,14 @@ import { KidDocumentsComponent } from "./pages/kid/documents/kid.documents.compo
 import { KidProfileComponent } from "./pages/kid/profile/kid.profile.component";
 import { KidMomentComponent } from "./pages/kid/moment/kid.moment.component";
 import { KidNotesComponent } from "./pages/kid/notes/kid.notes.component";
+import { KidNotesEditComponent } from "./pages/kid/notes/kid.notes.edit.component";
 
 import { AuthGuard } from "./auth-guard.service";
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
 
 export const APP_ROUTES = [
 
-    { path: "", redirectTo: "/kid-notes", pathMatch: 'full'},
+    { path: "", redirectTo: "/kid-notes-edit", pathMatch: 'full'},
     { path: "calendar", component: CalendarComponent, canActivate: [AuthGuard] },
     { path: "myclass", component: MyClassComponent, canActivate: [AuthGuard] },
     { path: "kid-dashboard", component: KidDashboardComponent, canActivate: [AuthGuard]},
@@ -24,6 +25,7 @@ export const APP_ROUTES = [
     { path: "kid-documents", component: KidDocumentsComponent, canActivate: [AuthGuard]},
     { path: "kid-moment", component: KidMomentComponent, canActivate: [AuthGuard]},
     { path: "kid-notes", component: KidNotesComponent, canActivate: [AuthGuard]},
+    { path: "kid-notes-edit", component: KidNotesEditComponent, canActivate: [AuthGuard]},
     { path: "settings", component: SettingsPage, canActivate: [AuthGuard]},
     { path: "verify-password", component: VerifyPasswordPage },
     { path: "login", component: LoginPage },
@@ -55,7 +57,8 @@ export const navigatableComponents = [
     ForgotPasswordComponent,
     KidDocumentsComponent,
     KidMomentComponent,
-    KidNotesComponent
+    KidNotesComponent,
+    KidNotesEditComponent
 
 ];
 
