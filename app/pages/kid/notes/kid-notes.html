@@ -7,8 +7,21 @@
 
 <GridLayout class="kid-notes-container">
 
+
+
+    <StackLayout *ngIf="!notes.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}">
+        <CardView  margin="30 10 10 10" radius="5" elevation="5"  class="whiteCard">
+            <Gridlayout rows="auto" columns="auto,auto" verticalAlignment="center" class="p-20" orientation="horizontal">
+                <Label row="0" col="0" class="material-icons md-24 m-r-10 md-info" text="&#xE88E;"  style="color: red;"></Label>
+                <Label row="0" col="1" class="text-left blue2" verticalAlignment="center"
+                       text="Notes not yet added for '{{ kid.fname }} {{ kid.lname}}'"></Label>
+            </Gridlayout>
+        </CardView>
+    </StackLayout>
+
+
     <ScrollView>
-        <StackLayout *ngIf="notes.length">
+        <StackLayout *ngIf="notes.length" class="m-t-5">
             <StackLayout *ngFor="let note of notes">
                 <StackLayout *ngIf="note.description" (tap)="editNote(note)">
                     <StackLayout orientation="vertical" class="notes-item">
@@ -20,7 +33,6 @@
                     </StackLayout>
                     <StackLayout class="hr-light"></StackLayout>
                 </StackLayout>
-
             </StackLayout>
         </StackLayout>
     </ScrollView>

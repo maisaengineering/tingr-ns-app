@@ -58,7 +58,8 @@ export class KidNotesComponent implements OnInit {
 
     loadList(){
         this.isLoading = true;
-        this.notesService.getList('764217ee-d7ae-4baf-b0de-ab70e6db522c')
+        let kid_klid = this.kid.kid_klid;
+        this.notesService.getList(kid_klid)
             .subscribe(
                 (result) => {
                     var body = result.body;

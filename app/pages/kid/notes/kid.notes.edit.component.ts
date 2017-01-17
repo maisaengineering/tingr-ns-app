@@ -86,7 +86,7 @@ export class KidNotesEditComponent implements OnInit {
     }
 
     createNote(description){
-        let kid_klid= '764217ee-d7ae-4baf-b0de-ab70e6db522c';
+        let kid_klid= this.kid.kid_klid;
         this.notesService.createNote(kid_klid, description)
             .subscribe(
                 (result) => {

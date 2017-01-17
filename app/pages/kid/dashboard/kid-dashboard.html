@@ -53,7 +53,8 @@
                            src="~/images/line_icon-50.png"></Image>
                 </StackLayout>
 
-                <StackLayout col="4" row="0" horizontalAlignment="center" orientation="vertical">
+                <StackLayout [nsRouterLink]="['/kid-notes']" pageTransition="slideLeft"
+                             col="4" row="0" horizontalAlignment="center" orientation="vertical">
                     <Image text="top" stretch="none" horizontalAlignment="center" src="res://notes_icon_40"></Image>
                     <Label text="Notes"></Label>
                 </StackLayout>
