@@ -2,13 +2,13 @@
 
 /* Newly added for caledar*/
 
-StackLayout.today-date {
-    font-size: 14px;
-    text-align: center;
+.schedule-date{
+    font-size: 17;
+    font-weight: bold;
 }
 
 StackLayout.today-date.active{
-   background-color: #e6e6e6;
+    background-color: #e6e6e6;
     color: white;
 }
 

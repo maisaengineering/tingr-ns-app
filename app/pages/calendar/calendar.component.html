@@ -13,11 +13,12 @@
         <ScrollView>
             <StackLayout>
 
-                <StackLayout (tap)="createModalDatePickerView()" class="today-date green p-y-15 {{ iscurrentDateSelected ? 'active' : ''}}">
-                        <Gridlayout cols="auto,auto" verticalAlignment="center" orientation="horizontal">
-                            <Label row="0" col="0" verticalAlignment="center" text="{{ currentDate  | date: 'EEEE, MMMM d' }}" class="text-center font-weight-bold"></Label>
-                            <Label row="0" col="1" verticalAlignment="center" horizontalAlignment="right"
-                                   class="material-icons md-24 md-chevron-right m-r-20 text-right" text="&#xE5CC;"></Label>
+                <StackLayout (tap)="createModalDatePickerView()" class="green today-date p-y-10 {{ iscurrentDateSelected ? 'active' : ''}}">
+                        <Gridlayout cols="*,auto" verticalAlignment="center" orientation="horizontal">
+                            <Label row="0" col="0" text="{{ currentDate  | date: 'EEEE, MMMM d' }}"
+                                   class="schedule-date text-center"></Label>
+                            <Label row="0" col="1"
+                                   class="text-right material-icons md-36 md-chevron-right m-r-20" text="&#xE5CC;"></Label>
                         </Gridlayout>
                 </StackLayout>
 
