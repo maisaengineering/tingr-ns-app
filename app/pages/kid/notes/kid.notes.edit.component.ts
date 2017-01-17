@@ -136,6 +136,7 @@ export class KidNotesEditComponent implements OnInit {
     deleteNote(){
         dialogs.confirm("Are you sure?").then((result)=> {
             if(result){
+                this.isLoading = true;
                 let note_kl_id = this.kidNote.kl_id;
                 this.notesService.deleteNote(note_kl_id)
                     .subscribe(
