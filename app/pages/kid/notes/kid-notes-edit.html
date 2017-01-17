@@ -1,6 +1,6 @@
 <ActionBar title="Edit">
     <NavigationButton text="" icon="res://ic_back" (tap)="goBack()"></NavigationButton>
-    <ActionItem (tap)="saveNotes(false)" ios.position="right" android.position="right">
+    <ActionItem (tap)="saveNotes(isEdit)" ios.position="right" android.position="right">
         <Label class="material-icons md-36 md-chevron-right"
                text="&#xE5CA;" ></Label>
     </ActionItem>
@@ -9,14 +9,13 @@
 <GridLayout class="kid-notes-container">
 
     <ScrollView>
-        <DockLayout stretchLastChild="false">
+        <DockLayout stretchLastChild="false" class="m-10">
             <TextView height="500" text="top" dock="top" borderColor="white" hint="enter notes" id="notes-description"
                       returnKeyType="next"
                       text="" [(ngModel)]="notesDescription" editable="true"></TextView>
-            <StackLayout dock="bottom" height="80" horizontalAlignment="center" >
+            <StackLayout *ngIf="isEdit" dock="bottom" height="80" horizontalAlignment="center" >
                 <Label class="delete-notes-label" text="Delete" dock="bottom" height="70"></Label>
             </StackLayout>
-
         </DockLayout>
     </ScrollView>
 

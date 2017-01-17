@@ -56,7 +56,6 @@ export class KidNotesComponent implements OnInit {
         this.loadList();
     }
 
-
     loadList(){
         this.isLoading = true;
         this.notesService.getList('764217ee-d7ae-4baf-b0de-ab70e6db522c')
@@ -75,6 +74,25 @@ export class KidNotesComponent implements OnInit {
     }
 
     addNote(){
+        // save data to access in next page
+        this.sharedData.kidNote = {
+            is_edit: false
+        };
+        this.routerExtensions.navigate(["/kid-notes-edit"], {
+            transition: {
+                name: "slideLeft"
+            }
+        });
+    }
+
+    editNote(note){
+        // save data to access in next page
+        this.sharedData.kidNote = {
+            is_edit: true,
+            kl_id: note.kl_id,
+            description: note.description,
+            created_at: note.created_at
+        };
         this.routerExtensions.navigate(["/kid-notes-edit"], {
             transition: {
                 name: "slideLeft"

@@ -14,6 +14,9 @@ export class SharedData {
     // teacher manageKids data to be use in tagging a kid for mement
     public managedKids: any;
 
+    //
+    public kidNote: any;
+
     public constructor() { }
 
 }

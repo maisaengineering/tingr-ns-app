@@ -26,10 +26,12 @@ import dialogs = require("ui/dialogs");
 })
 export class KidNotesEditComponent implements OnInit {
     public kid: any;
+    public kidNote: any;
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
     public notesDescription: string;
+    public isEdit: Boolean = false;
 
     constructor(private notesService: NotesService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
@@ -41,7 +43,16 @@ export class KidNotesEditComponent implements OnInit {
         //super(changeDetectorRef);
         this.kid = {};
         this.kid = this.kidData.info;
-        this.notesDescription = '';
+        this.kidNote = this.sharedData.kidNote;
+
+        if(this.kidNote.is_edit){
+            this.isEdit = true;
+            this.notesDescription = this.kidNote.description;
+        }else{
+            this.isEdit = false;
+            this.notesDescription = '';
+        }
+
         if (app.android) {
             this.isAndroid = true;
         } else if (app.ios) {
@@ -56,14 +67,13 @@ export class KidNotesEditComponent implements OnInit {
 
 
     saveNotes(isEdit){
-        let kid_klid= '764217ee-d7ae-4baf-b0de-ab70e6db522c';
         let description = this.notesDescription.trim();
         if(description){
             this.isLoading = true;
             if(isEdit){
-                this.updateNote(kid_klid, description)
+                this.updateNote(description)
             }else{
-                this.createNote(kid_klid, description)
+                this.createNote(description)
             }
         }else{
             dialogs.alert({
@@ -75,7 +85,8 @@ export class KidNotesEditComponent implements OnInit {
 
     }
 
-    createNote(kid_klid, description){
+    createNote(description){
+        let kid_klid= '764217ee-d7ae-4baf-b0de-ab70e6db522c';
         this.notesService.createNote(kid_klid, description)
             .subscribe(
                 (result) => {
@@ -98,8 +109,28 @@ export class KidNotesEditComponent implements OnInit {
             );
     }
 
-    updateNote(kid_klid, description){
-        //TODO
+    updateNote(description){
+        let note_kl_id = this.kidNote.kl_id;
+        this.notesService.updateNote(note_kl_id, description)
+            .subscribe(
+                (result) => {
+                    this.isLoading = false;
+                    let toastOptions = {
+                        text: result.message,
+                        duration : nstoasts.DURATION.SHORT
+                    };
+                    nstoasts.show(toastOptions);
+                    this.routerExtensions.navigate(["/kid-notes"], {
+                        transition: {
+                            name: "slideRight"
+                        }
+                    });
+                },
+                (error) => {
+                    this.isLoading = false;
+                    alert('Internal server error.');
+                }
+            );
     }
 
 }

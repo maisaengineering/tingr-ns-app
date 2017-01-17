@@ -10,7 +10,7 @@
     <ScrollView>
         <StackLayout *ngIf="notes.length">
             <StackLayout *ngFor="let note of notes">
-                <StackLayout *ngIf="note.description">
+                <StackLayout *ngIf="note.description" (tap)="editNote(note)">
                     <StackLayout orientation="vertical" class="notes-item">
                         <Label text="{{ note.description.split('\n')[0] }}" class="first-line"></Label>
                         <StackLayout orientation="horizontal" class="text-muted second-line">
