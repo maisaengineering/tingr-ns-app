@@ -59,6 +59,28 @@ export class KidDashboardComponent implements OnInit {
         }
     }
 
+    ngOnInit() {
+        // show alert if no internet connection
+        this.internetService.alertIfOffline();
+        //this.page.actionBarHidden = true;
+        // this.kid = this.kidData.info;
+        this.isLoading = true;
+        this.postService.getPosts(this.kid.kid_klid)
+            .subscribe(
+                (result) => {
+                    var body = result.body;
+                    this.posts = body.posts;
+                    this.isLoading = false;
+
+                    console.log("POSTS : "+ JSON.stringify(this.posts));
+                },
+                (error) => {
+                    this.isLoading = false;
+                    alert('Internal server error.');
+                }
+            );
+    }
+
     selectMomentCaptureOption() {
         dialogs.action({
             // message: "Your message",
@@ -169,28 +191,6 @@ export class KidDashboardComponent implements OnInit {
             }).catch(function (e) {
             console.log(e);
         });
-    }
-
-    ngOnInit() {
-        // show alert if no internet connection
-        this.internetService.alertIfOffline();
-        //this.page.actionBarHidden = true;
-        // this.kid = this.kidData.info;
-        this.isLoading = true;
-        this.postService.getPosts(this.kid.kid_klid)
-            .subscribe(
-                (result) => {
-                    var body = result.body;
-                    this.posts = body.posts;
-                    this.isLoading = false;
-
-                    console.log("POSTS : "+ JSON.stringify(this.posts));
-                },
-                (error) => {
-                    this.isLoading = false;
-                    alert('Internal server error.');
-                }
-            );
     }
 
     goBack() {
