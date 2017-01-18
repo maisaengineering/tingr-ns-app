@@ -30,6 +30,7 @@ export class FormsAndDocumentsComponent implements OnInit {
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
     public formsAndDocs: Array<any>;
+    public showActionBarItems: Boolean = false;
 
     constructor(private formsAndDocsService: FormsAndDocsService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
@@ -60,6 +61,11 @@ export class FormsAndDocumentsComponent implements OnInit {
             // hide back button
             navigationItem.setHidesBackButtonAnimated(true, false);
         }
+
+        // show actionBarItems after some time to fix overlappingg issue
+        setTimeout(() => {
+            this.showActionBarItems = true;
+        }, 500);
 
         this.getList();
 

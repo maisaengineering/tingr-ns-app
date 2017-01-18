@@ -37,6 +37,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
     public assignedRooms: Array<any>;
+    public showActionBarItems: Boolean = false;
 
     /*
      * Gesture examples
@@ -81,14 +82,12 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     ngOnInit() {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
-        // Hide 'Default Back button'
-        if (this.isIos) {
-            var controller = frameModule.topmost().ios.controller;
-            // get the view controller navigation item
-            var navigationItem = controller.visibleViewController.navigationItem;
-            // hide back button
-            navigationItem.setHidesBackButtonAnimated(true, false);
-        }
+
+        // show actionBarItems after some time to fix overlappingg issue
+        setTimeout(() => {
+            this.showActionBarItems = true;
+        }, 500);
+
         //this.room =  this.assignedRooms[0];
         this.getAssignedRooms();
     }

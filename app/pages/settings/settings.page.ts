@@ -20,6 +20,7 @@ var nstoasts = require("nativescript-toasts");
 })
 export class SettingsPage extends Page implements OnInit{
     public isLoading: Boolean = false;
+    public showActionBarItems: Boolean = false;
 
     constructor(private location: Location,
                 private routerExtensions: RouterExtensions,
@@ -31,6 +32,15 @@ export class SettingsPage extends Page implements OnInit{
     ngOnInit(){
         // show alert if no internet connection
         this.internetService.alertIfOffline();
+
+        // show actionBarItems after some time to fix overlappingg issue
+        setTimeout(() => {
+            this.showActionBarItems = true;
+        }, 500);
+    }
+
+    goBack(){
+        this.routerExtensions.backToPreviousPage();
     }
 
 

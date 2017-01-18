@@ -1,6 +1,9 @@
 <ActionBar title="Schedule">
-    <NavigationButton class="blue2" *ngIf="isAndroid" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
-    <ActionItem *ngIf="isIos" icon="res://ic_menu" ios.position="left" (tap)="openDrawer()"></ActionItem>
+    <NavigationButton visibility="collapsed"></NavigationButton>
+    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
+                ios.position="left" android.position="left" (tap)="openDrawer()">
+        <Label class="blue2 material-icons md-24 md-menu" text="&#xE5D2;"></Label>
+    </ActionItem>
 </ActionBar>
 
 <RadSideDrawer #drawerComponent tkToggleNavButton>
@@ -15,7 +18,7 @@
                 <StackLayout>
 
                     <StackLayout (tap)="createModalDatePickerView()"
-                                 class="green today-date p-y-10 {{ iscurrentDateSelected ? 'active' : ''}}">
+                                 class="green today-date {{ iscurrentDateSelected ? 'active' : ''}}">
                         <Gridlayout cols="*,auto" verticalAlignment="center" orientation="horizontal">
                             <Label row="0" col="0" text="{{ currentDate  | date: 'EEEE, MMMM d' }}"
                                    class="schedule-date text-center"></Label>
@@ -35,7 +38,7 @@
                         <StackLayout verticalAlignment="center">
                             <GridLayout rows="auto,*" *ngFor="let item of schedules; let i = index">
                                 <GridLayout row="0" columns="auto, auto" rows="auto,auto"
-                                            class="item {{ isScheduleTimeIsCurrent(item.start_time, item.end_time) ? 'blue' : '' }}">
+                                            class="m-t-5 item {{ isScheduleTimeIsCurrent(item.start_time, item.end_time) ? 'blue' : '' }}">
                                     <Label col="0" row="0"
                                            text="{{item.start_time | date: 'HH:mm' }}-{{ item.end_time | date: 'HH:mm a' }}">
                                     </Label>
@@ -43,7 +46,7 @@
                                            textWrap="true"></Label>
                                 </GridLayout>
                                 <!-- Don't show horizontal line for last element -->
-                                <StackLayout *ngIf="schedules.length > (i+1)" class="hr-light" row="1"></StackLayout>
+                                <StackLayout *ngIf="schedules.length > (i+1)" class="hr-shadow" row="1"></StackLayout>
                             </GridLayout>
                         </StackLayout>
                     </DockLayout>
@@ -61,27 +64,27 @@
 
                             <!-- Birthdays -->
                             <SatckLayout orientation="horizontal" *ngFor="let item of birthdays; let i = index">
-                                <Label col="0" text="{{item.description}}" class="item"></Label>
-                                <StackLayout *ngIf="birthdays.length > (i+1)" class="hr-light" row="1"></StackLayout>
+                                <Label col="0" text="{{item.description}}" class="m-t-5 item"></Label>
+                                <StackLayout *ngIf="birthdays.length > (i+1)" class="hr-shadow" row="1"></StackLayout>
                             </SatckLayout>
 
                             <!-- Event Reminders -->
-                            <StackLayout *ngIf="birthdays.length > 0 && event_reminders.length > 0" class="hr-light"
+                            <StackLayout *ngIf="birthdays.length > 0 && event_reminders.length > 0" class="hr-shadow"
                                          row="1"></StackLayout>
                             <SatckLayout orientation="horizontal" *ngFor="let item of event_reminders; let i = index">
                                 <Label (tap)="openDescription(item.description)" col="0" text="{{ item.description }}"
-                                       class="item" textWrap="true"></Label>
-                                <StackLayout *ngIf="event_reminders.length > (i+1)" class="hr-light"
+                                       class="m-t-5 item" textWrap="true"></Label>
+                                <StackLayout *ngIf="event_reminders.length > (i+1)" class="hr-shadow"
                                              row="1"></StackLayout>
                             </SatckLayout>
 
                             <!-- Holidays -->
                             <StackLayout
                                     *ngIf="event_reminders.length > 0 && birthdays.length > 0 && holidays.length > 0"
-                                    class="hr-light" row="1"></StackLayout>
+                                    class="hr-shadow" row="1"></StackLayout>
                             <SatckLayout orientation="horizontal" *ngFor="let item of holidays; let i = index">
-                                <Label col="0" text="{{ item.description }}" class="item blue" textWrap="true"></Label>
-                                <StackLayout *ngIf="holidays.length > (i+1)" class="hr-light" row="1"></StackLayout>
+                                <Label col="0" text="{{ item.description }}" class="hr-shadow item blue" textWrap="true"></Label>
+                                <StackLayout *ngIf="holidays.length > (i+1)" class="hr-shadow" row="1"></StackLayout>
                             </SatckLayout>
 
                         </StackLayout>
@@ -115,7 +118,7 @@
                                     </StackLayout>
                                 </GridLayout>
                                 <!-- Don't show horizontal line for last element -->
-                                <StackLayout *ngIf="messages.length > (i+1)" class="hr-light" row="1"></StackLayout>
+                                <StackLayout *ngIf="messages.length > (i+1)" class="hr-shadow" row="1"></StackLayout>
                             </GridLayout>
                         </StackLayout>
                     </DockLayout>

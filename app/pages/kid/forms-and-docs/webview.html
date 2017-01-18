@@ -1,11 +1,13 @@
-<ActionBar title="{{ formOrDoc.name }}" visibility="{{ displayActionBar ? 'visible' : 'collapsed' }}">
+<ActionBar title="{{ formOrDoc.name }}">
     <NavigationButton visibility="collapsed"></NavigationButton>
 
-    <ActionItem ios.position="left" android.position="left" (tap)="goBack()">
+    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
+                ios.position="left" android.position="left" (tap)="goBack()">
             <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
     </ActionItem>
 
-    <ActionItem ios.position="right" android.position="right" (tap)="printFormOrDoc()">
+    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
+                ios.position="right" android.position="right" (tap)="printFormOrDoc()">
             <Label class="blue2 material-icons md-36 md-exit-to-app" text="&#xE879;" ></Label>
     </ActionItem>
 </ActionBar>

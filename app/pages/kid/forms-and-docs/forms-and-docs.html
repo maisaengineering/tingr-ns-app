@@ -1,6 +1,6 @@
 <ActionBar title="Forms & Documents">
     <NavigationButton visibility="collapsed"></NavigationButton>
-    <ActionItem ios.position="left" android.position="left" (tap)="goBack()">
+    <ActionItem  visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}" ios.position="left" android.position="left" (tap)="goBack()">
         <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
     </ActionItem>
 </ActionBar>

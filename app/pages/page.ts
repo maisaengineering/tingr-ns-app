@@ -5,7 +5,7 @@ export class Page {
     constructor(private _location: Location) {
     }
 
-    goBack(): void {
+    goBackLocation(): void {
         this._location.back();
     }
 }

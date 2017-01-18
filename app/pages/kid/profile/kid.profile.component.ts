@@ -23,6 +23,7 @@ export class KidProfileComponent implements OnInit {
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
+    public showActionBarItems: Boolean = false;
 
     constructor(private kidService: KidService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
@@ -47,6 +48,11 @@ export class KidProfileComponent implements OnInit {
     ngOnInit() {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
+        // show actionBarItems after some time to fix overlappingg issue
+        setTimeout(() => {
+            this.showActionBarItems = true;
+        }, 500);
+
         this.isLoading = true;
         this.kidService.getProfileDetails(this.kid.kid_klid)
             .subscribe(
@@ -62,6 +68,10 @@ export class KidProfileComponent implements OnInit {
                     alert('Internal server error.');
                 }
             );
+    }
+
+    goBack(){
+        this.routerExtensions.backToPreviousPage();
     }
 
     closeProfile(){

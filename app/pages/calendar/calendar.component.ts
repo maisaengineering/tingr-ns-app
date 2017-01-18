@@ -38,6 +38,7 @@ export class CalendarComponent extends DrawerPage implements OnInit {
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
     public iscurrentDateSelected: Boolean = false;
+    public showActionBarItems: Boolean = false;
 
     constructor(private changeDetectorRef: ChangeDetectorRef,
                 private modal: ModalDialogService, private vcRef: ViewContainerRef,
@@ -93,14 +94,20 @@ export class CalendarComponent extends DrawerPage implements OnInit {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
 
-        // Hide 'Default Back button'
+        // show actionBarItems after some time to fix overlappingg issue
+        setTimeout(() => {
+            this.showActionBarItems = true;
+        }, 500);
+
+        /*// Hide 'Default Back button'
         if (this.isIos) {
             var controller = frameModule.topmost().ios.controller;
             // get the view controller navigation item
             var navigationItem = controller.visibleViewController.navigationItem;
             // hide back button
             navigationItem.setHidesBackButtonAnimated(true, false);
-        }
+        }*/
+
         // load data
         this.loadCalendarDataByDay(this.currentDate);
     }

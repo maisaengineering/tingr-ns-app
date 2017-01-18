@@ -29,7 +29,7 @@ export class FormOrDocWebviewComponent implements OnInit {
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
     public formOrDoc: any;
-    public displayActionBar: Boolean = false;
+    public showActionBarItems: Boolean = false;
 
     constructor(private page: Page, private changeDetectorRef: ChangeDetectorRef,
                 private router: Router,
@@ -53,10 +53,9 @@ export class FormOrDocWebviewComponent implements OnInit {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
         this.isLoading = false;
-        // show actionBar after some time
+        // show actionBarItems after some time to fix overlappingg issue
         setTimeout(() => {
-            this.displayActionBar = true;
-            this.isLoading = false;
+            this.showActionBarItems = true;
         }, 500);
     }
 

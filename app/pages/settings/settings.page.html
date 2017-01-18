@@ -1,12 +1,11 @@
-<ActionBar title="">
-    <NavigationButton text="" icon="res://ic_back" (tap)="goBack()"></NavigationButton>
-    <StackLayout orientation="horizontal"
-                 ios:horizontalAlignment="center"
-                 android:horizontalAlignment="center">
-        <!-- <Image src="res://nativescript_logo" class="action-image"></Image>-->
-        <Label text="Settings"  class="action-label"></Label>
-    </StackLayout>
+<ActionBar title="Settings">
+    <NavigationButton visibility="collapsed"></NavigationButton>
+    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
+                ios.position="left" android.position="left" (tap)="goBack()">
+        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
+    </ActionItem>
 </ActionBar>
+
 
 <GridLayout>
     <StackLayout style="background-color: #f9f9f9" class="p-t-20">

@@ -1,16 +1,21 @@
+
 <ActionBar title="">
-    <NavigationButton class="blue2" *ngIf="isAndroid" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
-    <ActionItem class="blue2" *ngIf="isIos" icon="res://ic_menu" ios.position="left" (tap)="openDrawer()"></ActionItem>
+    <NavigationButton visibility="collapsed"></NavigationButton>
+    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
+                ios.position="left" android.position="left" (tap)="openDrawer()">
+        <Label class="blue2 material-icons md-24 md-menu" text="&#xE5D2;"></Label>
+    </ActionItem>
 
     <StackLayout orientation="horizontal"
                  ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
         <StackLayout *ngIf="roomName" orientation="horizontal" (tap)="openRooms()" verticalAlignment="center">
             <Label [text]="roomName" class="action-label"></Label>
-            <Label class="blue2 material-icons md-36 md-arrow-drop-down m-r-10" text="&#xE5C5;"></Label>
+            <Label class="blue2 material-icons md-24 md-arrow-drop-down m-r-10" text="&#xE5C5;"></Label>
         </StackLayout>
     </StackLayout>
 </ActionBar>
+
 
 
 <RadSideDrawer #drawerComponent tkToggleNavButton>

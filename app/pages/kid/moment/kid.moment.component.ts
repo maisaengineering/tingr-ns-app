@@ -39,6 +39,7 @@ export class KidMomentComponent implements OnInit {
     public taggedKidIds: Array<any> = [];
     public s3_key: string;
     public selectedImages = [];
+    public showActionBarItems: Boolean = false;
 
     constructor(private kidService: KidService,
                 private postService: PostService,
@@ -66,6 +67,11 @@ export class KidMomentComponent implements OnInit {
     ngOnInit() {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
+        // show actionBarItems after some time to fix overlappingg issue
+        setTimeout(() => {
+            this.showActionBarItems = true;
+        }, 500);
+
         var momentImageVIew = view.getViewById(this.page, 'moment-image');
         momentImageVIew.src = this.sharedData.momentCaptureDetails.imageAsset;
         momentImageVIew.visibility = 'visible';
@@ -73,6 +79,10 @@ export class KidMomentComponent implements OnInit {
         this.getS3Key();
         let addDetailsTextField = view.getViewById(this.page, "moment-additional-details");
         //addDetailsTextField.focus();
+    }
+
+    goBack(){
+        this.routerExtensions.backToPreviousPage();
     }
 
     getS3Key(){

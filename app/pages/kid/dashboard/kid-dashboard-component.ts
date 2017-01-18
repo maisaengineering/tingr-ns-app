@@ -42,6 +42,7 @@ export class KidDashboardComponent implements OnInit {
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
     public selectedImages = [];
+    public showActionBarItems: Boolean = false;
 
     constructor(private postService: PostService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
@@ -75,6 +76,11 @@ export class KidDashboardComponent implements OnInit {
             // hide back button
             navigationItem.setHidesBackButtonAnimated(true, false);
         }
+
+        // show actionBarItems after some time to fix overlapping issue
+        setTimeout(() => {
+            this.showActionBarItems = true;
+        }, 500);
 
         this.isLoading = true;
         this.postService.getPosts(this.kid.kid_klid)
@@ -210,11 +216,7 @@ export class KidDashboardComponent implements OnInit {
     }
 
     goBack(){
-        this.routerExtensions.navigate(["/myclass"], {
-            transition: {
-                name: "slideRight"
-            }
-        });
+        this.routerExtensions.backToPreviousPage();
     }
 
     addOrRemoveHeart(post) {

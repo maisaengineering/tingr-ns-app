@@ -1,10 +1,17 @@
 <ActionBar title="Edit">
-    <NavigationButton text="" icon="res://ic_back" (tap)="goBack()"></NavigationButton>
-    <ActionItem (tap)="saveNotes(isEdit)" ios.position="right" android.position="right">
-        <Label class="material-icons md-36 md-chevron-right"
-               text="&#xE5CA;" ></Label>
+    <NavigationButton visibility="collapsed"></NavigationButton>
+
+    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
+                ios.position="left" android.position="left" (tap)="goBack()">
+        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
+    </ActionItem>
+
+    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
+                ios.position="right" android.position="right" (tap)="saveNotes(isEdit)">
+        <Label class="blue2 material-icons md-36 md-chevron-right" text="&#xE5CA;" ></Label>
     </ActionItem>
 </ActionBar>
+
 
 <GridLayout class="kid-notes-container">
 

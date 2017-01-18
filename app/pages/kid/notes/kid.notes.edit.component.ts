@@ -32,6 +32,7 @@ export class KidNotesEditComponent implements OnInit {
     public isIos: Boolean = false;
     public notesDescription: string;
     public isEdit: Boolean = false;
+    public showActionBarItems: Boolean = false;
 
     constructor(private notesService: NotesService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
@@ -63,8 +64,16 @@ export class KidNotesEditComponent implements OnInit {
     ngOnInit() {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
+        // show actionBarItems after some time to fix overlapping issue
+        setTimeout(() => {
+            this.showActionBarItems = true;
+        }, 500);
+
     }
 
+    goBack(){
+        this.routerExtensions.backToPreviousPage();
+    }
 
     saveNotes(isEdit){
         let description = this.notesDescription.trim();

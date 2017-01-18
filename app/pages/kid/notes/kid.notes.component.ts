@@ -32,6 +32,7 @@ export class KidNotesComponent implements OnInit {
     public notes: Array<any>;
     public notesDescription: string;
     public emptyNoteMessage: string;
+    public showActionBarItems: Boolean = false;
 
     constructor(private notesService: NotesService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
@@ -65,6 +66,12 @@ export class KidNotesComponent implements OnInit {
             // hide back button
             navigationItem.setHidesBackButtonAnimated(true, false);
         }
+
+        // show actionBarItems after some time to fix overlapping issue
+        setTimeout(() => {
+            this.showActionBarItems = true;
+        }, 500);
+
         this.loadList();
     }
 
@@ -114,11 +121,7 @@ export class KidNotesComponent implements OnInit {
     }
 
     goBack(){
-        this.routerExtensions.navigate(["/kid-dashboard"], {
-            transition: {
-                name: "slideRight"
-            }
-        });
+        this.routerExtensions.backToPreviousPage();
     }
 
 }

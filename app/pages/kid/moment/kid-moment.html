@@ -1,15 +1,23 @@
-<ActionBar title="">
-    <NavigationButton text="Back" icon="res://ic_back" (tap)="goBack()"></NavigationButton>
-    <ActionItem ios.position="right" android.position="right">
+<ActionBar title="Tag Kids">
+    <NavigationButton visibility="collapsed"></NavigationButton>
+
+    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
+                ios.position="left" android.position="left" (tap)="goBack()">
+        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
+    </ActionItem>
+
+    <ActionItem (tap)="saveMoment()" visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
+                ios.position="right" android.position="right">
         <Label *ngIf="s3_key" (tap)="saveMoment()"
-               class="blue2 material-icons md-36 md-chevron-right text-right"
-               text="&#xE5CA;"></Label>
+               class="blue2 material-icons md-36 md-chevron-right" text="&#xE5CA;"></Label>
         <ActivityIndicator visibility="collapsed"
-                           class="busy activity-indicator text-right"
+                           class="busy activity-indicator"
                            busy="{{ s3_key ? false : true }}">
         </ActivityIndicator>
+
     </ActionItem>
 </ActionBar>
+
 
 <GridLayout class="moment-capture-container">
 

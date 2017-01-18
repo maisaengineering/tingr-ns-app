@@ -1,9 +1,11 @@
 <ActionBar title="{{ kid.fname }} {{ kid.lname }}">
-    <NavigationButton class="blue2" *ngIf="isAndroid" icon="res://ic_back" (tap)="goBack()"></NavigationButton>
-    <ActionItem class="blue2" *ngIf="isIos" ios.position="left" (tap)="goBack()">
-        <Label text="&#xE5CB;" class="blue2 material-icons md-36 md-chevron-left"></Label>
+    <NavigationButton visibility="collapsed"></NavigationButton>
+    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
+                ios.position="left" android.position="left" (tap)="goBack()">
+        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
     </ActionItem>
 </ActionBar>
+
 
 <GridLayout class="kid-profile">
     <ScrollView>
