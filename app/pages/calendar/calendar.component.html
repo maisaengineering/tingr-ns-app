@@ -83,7 +83,7 @@
                                     *ngIf="event_reminders.length > 0 && birthdays.length > 0 && holidays.length > 0"
                                     class="hr-shadow" row="1"></StackLayout>
                             <SatckLayout orientation="horizontal" *ngFor="let item of holidays; let i = index">
-                                <Label col="0" text="{{ item.description }}" class="hr-shadow item blue" textWrap="true"></Label>
+                                <Label col="0" text="{{ item.description }}" class="item blue" textWrap="true"></Label>
                                 <StackLayout *ngIf="holidays.length > (i+1)" class="hr-shadow" row="1"></StackLayout>
                             </SatckLayout>
 
