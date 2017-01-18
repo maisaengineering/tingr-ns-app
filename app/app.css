@@ -247,7 +247,7 @@ StackLayout.dimmer{
 ActivityIndicator.busy {
    /* height: 70;
     width: 70;*/
-    color: #70a9db;
+    color: #2b78e4;
 }
 
 .hr-shadow{
@@ -266,7 +266,7 @@ ActivityIndicator.busy {
 }
 
 .blueCard {
-    background-color: #3489db;
+    background-color: #2b78e4;
     color: #fff;
 }
 
