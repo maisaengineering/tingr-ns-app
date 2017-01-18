@@ -17,9 +17,12 @@ import { InternetService } from "./shared/internet.service"
 import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/modal-dialog";
 
 import { DatePipe } from '@angular/common';
-import {registerElement} from "nativescript-angular/element-registry";
+import { registerElement, ViewClass } from "nativescript-angular/element-registry";
 registerElement("CardView", () => require("nativescript-cardview").CardView);
-
+registerElement("PullToRefresh", () => {
+    var viewClass = require("nativescript-pulltorefresh").PullToRefresh;
+    return viewClass;
+});
 
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
 @NgModule({

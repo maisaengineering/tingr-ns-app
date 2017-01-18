@@ -1,5 +1,5 @@
 <ActionBar title="">
-    <NavigationButton  class="blue2" *ngIf="isAndroid" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
+    <NavigationButton class="blue2" *ngIf="isAndroid" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
     <ActionItem class="blue2" *ngIf="isIos" icon="res://ic_menu" ios.position="left" (tap)="openDrawer()"></ActionItem>
 
     <StackLayout orientation="horizontal"
@@ -20,46 +20,56 @@
         </StackLayout>
     </ScrollView>
     <GridLayout tkMainContent>
-        <ScrollView>
-            <StackLayout>
-                <StackLayout *ngFor="let item of managed_kids" >
-                    <StackLayout class="list-group-item" (longPress)="onLongPressKid($event, item)" (tap)="redirectToKidDashboard(item)">
-                        <GridLayout  rows="*" columns="auto,*,70">
-                            <StackLayout row="0" col="0">
-                                <Image height="75" width="75" class="kid-profile-pic blue-circle-border"
-                                       src="{{ item.photograph_url ? item.photograph_url : '~/images/avatar-100.png' }}"></Image>
-                            </StackLayout>
+        <PullToRefresh (refresh)="refreshList($event)" #pullToRefresh>
+            <ScrollView>
 
-                            <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical" class="p-l-20">
-                                <Label [text]="item.fname+' '+item.lname" class="font-weight-bold"></Label>
-                                <Label [text]="item.age+' old'" class="text-muted"></Label>
-                            </StackLayout>
+                <StackLayout>
+                    <StackLayout *ngFor="let item of managed_kids">
+                        <StackLayout class="list-group-item" (longPress)="onLongPressKid($event, item)"
+                                     (tap)="redirectToKidDashboard(item)">
+                            <GridLayout rows="*" columns="auto,*,70">
+                                <StackLayout row="0" col="0">
+                                    <Image height="75" width="75" class="kid-profile-pic blue-circle-border"
+                                           src="{{ item.photograph_url ? item.photograph_url : '~/images/avatar-100.png' }}"></Image>
+                                </StackLayout>
 
-                            <StackLayout row="0" col="2" class="m-t-5" verticalAlignment="center" orientation="vertical" horizontalAlignment="right">
-                                <Image height="30" width="40" verticalAlignment="center" stretch="aspectFill"
-                                       src="~/images/profile-details-40.png"></Image>
-                                <StackLayout class="m-t-5" orientation="horizontal" verticalAlignment="center"
-                                             horizontalAlignment="center">
-                                    <StackLayout *ngIf="item.reminders_count != 0">
-                                        <Label [text]="item.reminders_count"
-                                               class="number-with-circle reminders-count text-center"></Label>
-                                    </StackLayout>
-                                    <StackLayout *ngIf="item.notifications_count != 0">
-                                        <Label [text]="item.notifications_count"
-                                               class="number-with-circle notifications-count text-center"></Label>
+                                <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical"
+                                             class="p-l-20">
+                                    <Label [text]="item.fname+' '+item.lname" class="font-weight-bold"></Label>
+                                    <Label [text]="item.age+' old'" class="text-muted"></Label>
+                                </StackLayout>
+
+                                <StackLayout row="0" col="2" class="m-t-5" verticalAlignment="center"
+                                             orientation="vertical" horizontalAlignment="right">
+                                    <Image height="30" width="40" verticalAlignment="center" stretch="aspectFill"
+                                           src="~/images/profile-details-40.png"></Image>
+                                    <StackLayout class="m-t-5" orientation="horizontal" verticalAlignment="center"
+                                                 horizontalAlignment="center">
+                                        <StackLayout *ngIf="item.reminders_count != 0">
+                                            <Label [text]="item.reminders_count"
+                                                   class="number-with-circle reminders-count text-center"></Label>
+                                        </StackLayout>
+                                        <StackLayout *ngIf="item.notifications_count != 0">
+                                            <Label [text]="item.notifications_count"
+                                                   class="number-with-circle notifications-count text-center"></Label>
+                                        </StackLayout>
                                     </StackLayout>
                                 </StackLayout>
+                            </GridLayout>
+                            <StackLayout visibility="{{ item.in_or_out_time? 'visible' : 'collapsed' }}"
+                                         verticalAlignment="center" orientation="vertical" horizontalAlignment="center">
+                                <Label id="in-or-out-time-{{ item.kid_klid }}"
+                                       class="bg-primary bg-green-label light-gray font-italic p-x-10 m-t-5"
+                                       text="{{ item.in_or_out_time }}"></Label>
                             </StackLayout>
-                        </GridLayout>
-                        <StackLayout visibility="{{ item.in_or_out_time? 'visible' : 'collapsed' }}" verticalAlignment="center" orientation="vertical" horizontalAlignment="center">
-                            <Label id="in-or-out-time-{{ item.kid_klid }}" class="bg-primary bg-green-label light-gray font-italic p-x-10 m-t-5" text="{{ item.in_or_out_time }}"></Label>
                         </StackLayout>
+                        <StackLayout class="hr-shadow m-t-0"></StackLayout>
                     </StackLayout>
-                    <StackLayout class="hr-shadow m-t-0"></StackLayout>
+
                 </StackLayout>
 
-            </StackLayout>
-        </ScrollView>
+            </ScrollView>
+        </PullToRefresh>
 
         <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
         <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">

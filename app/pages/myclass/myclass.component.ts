@@ -1,18 +1,18 @@
 import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {DrawerPage} from "../drawer.page";
-import { MyClassService, ManagedKid, Room} from "../../shared/myclass.service";
-import { KidSignInOutService } from "../../shared/kid-signinout.service";
-import { MessageService } from "../../shared/message.service";
-import { TeacherService } from "../../shared/teacher/teacher.service";
-import { KidData } from "../../providers/data/kid_data";
-import { SharedData } from "../../providers/data/shared_data";
-import { RouterExtensions } from "nativescript-angular/router";
+import {MyClassService, ManagedKid, Room} from "../../shared/myclass.service";
+import {KidSignInOutService} from "../../shared/kid-signinout.service";
+import {MessageService} from "../../shared/message.service";
+import {TeacherService} from "../../shared/teacher/teacher.service";
+import {KidData} from "../../providers/data/kid_data";
+import {SharedData} from "../../providers/data/shared_data";
+import {RouterExtensions} from "nativescript-angular/router";
 import {Page} from "ui/page";
 
 // >> long-press-code
-import { GestureEventData } from "ui/gestures";
+import {GestureEventData} from "ui/gestures";
 import dialogs = require("ui/dialogs");
-import { DatePipe } from '@angular/common';
+import {DatePipe} from '@angular/common';
 import {InternetService} from "../../shared/internet.service";
 var nstoasts = require("nativescript-toasts");
 var app = require("application");
@@ -27,9 +27,9 @@ var tnsfx = require('nativescript-effects');
     selector: 'my-app',
     styleUrls: ['./myclass.css'],
     templateUrl: './myclass.component.html',
-    providers: [ MyClassService, KidSignInOutService, MessageService, TeacherService ]
+    providers: [MyClassService, KidSignInOutService, MessageService, TeacherService]
 })
-export class MyClassComponent extends DrawerPage implements OnInit{
+export class MyClassComponent extends DrawerPage implements OnInit {
     public managed_kids: Array<ManagedKid>;
     public roomName: String;
     public room;
@@ -39,19 +39,19 @@ export class MyClassComponent extends DrawerPage implements OnInit{
     public assignedRooms: Array<any>;
 
     /*
-    * Gesture examples
-    *
+     * Gesture examples
+     *
      onTap(args: GestureEventData) {
-        console.log("Tap!")
+     console.log("Tap!")
      }
      onDoubleTap(args: GestureEventData) {
-        console.log("DoubleTap!")
+     console.log("DoubleTap!")
 
      }
      onLongPress(args: GestureEventData) {
-         console.log("LongPress!")
+     console.log("LongPress!")
      }
-    * */
+     * */
 
 
     constructor(private myClassService: MyClassService,
@@ -82,7 +82,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
         // show alert if no internet connection
         this.internetService.alertIfOffline();
         // Hide 'Default Back button'
-        if(this.isIos){
+        if (this.isIos) {
             var controller = frameModule.topmost().ios.controller;
             // get the view controller navigation item
             var navigationItem = controller.visibleViewController.navigationItem;
@@ -93,7 +93,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
         this.getAssignedRooms();
     }
 
-    getAssignedRooms(){
+    getAssignedRooms() {
         this.isLoading = true;
         this.teacherService.getAssignedRooms()
             .subscribe(
@@ -109,7 +109,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
             );
     }
 
-    loadManagedKids(room){
+    loadManagedKids(room) {
         this.isLoading = true;
         this.myClassService.getManagedKids(room)
             .subscribe(
@@ -128,10 +128,33 @@ export class MyClassComponent extends DrawerPage implements OnInit{
             );
     }
 
+    // pull to refresh the data
+    refreshList(args) {
+        let pullRefresh = args.object;
+        this.myClassService.getManagedKids(this.room)
+            .subscribe(
+                (result) => {
+                    var body = result.body;
+                    this.managed_kids = body.managed_kids;
+                    // save managed kids in SharedData Provider, so data will be available to all components
+                    this.sharedData.managedKids = this.managed_kids;
+                    setTimeout(function () {
+                        pullRefresh.refreshing = false;
+                        console.log('done refresh');
+                    }, 1000);
+                },
+                (error) => {
+                    this.isLoading = false;
+                    pullRefresh.refreshing = false;
+                    alert('Internal server error.');
+                }
+            );
+    }
 
-    openRooms(){
+
+    openRooms() {
         let rooms = this.assignedRooms;
-        let actions =[];
+        let actions = [];
         for (let room of rooms) {
             actions.push(room.session_name);
         }
@@ -140,14 +163,14 @@ export class MyClassComponent extends DrawerPage implements OnInit{
             cancelButtonText: "Cancel",
             actions: actions
         }).then(result => {
-           this.room = rooms.filter(report => report.session_name === result)[0];
-           this.roomName = this.room.session_name;
-           this.loadManagedKids(this.room);
+            this.room = rooms.filter(report => report.session_name === result)[0];
+            this.roomName = this.room.session_name;
+            this.loadManagedKids(this.room);
         });
     }
 
-    redirectToKidDashboard(kid){
-        this.kidData.info =  kid;
+    redirectToKidDashboard(kid) {
+        this.kidData.info = kid;
 
         this.routerExtensions.navigate(["/kid-dashboard"], {
             transition: {
@@ -160,11 +183,11 @@ export class MyClassComponent extends DrawerPage implements OnInit{
         dialogs.action({
             //message: "Your message",
             cancelButtonText: "Cancel",
-            actions: ["Sign-in/Sign-out","Message a Parent"]
+            actions: ["Sign-in/Sign-out", "Message a Parent"]
         }).then(result => {
-            if(result === 'Sign-in/Sign-out'){
+            if (result === 'Sign-in/Sign-out') {
                 this.signInOrSignOutKid(kid);
-            }else if(result === "Message a Parent") {
+            } else if (result === "Message a Parent") {
                 dialogs.prompt({
                     title: "Message",
                     //message: "Type your message here",
@@ -174,10 +197,10 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     //defaultText: "Type your message here",
                     inputType: dialogs.inputType.text
                 }).then(r => {
-                    if(r.text === '' ){
+                    if (r.text === '') {
                         return;
                     }
-                    if(r.result === true ){
+                    if (r.result === true) {
                         this.sendMessageForKid(r.text, kid);
                     }
                 });
@@ -186,29 +209,29 @@ export class MyClassComponent extends DrawerPage implements OnInit{
 
     }
 
-    signInOrSignOutKid(kid){
+    signInOrSignOutKid(kid) {
         //var time = this.datePipe.transform(new Date(), 'HH:MM a');
         //alert(kidName + " signed in successfully at " + time)
 
-        let inoutTimeLabel = view.getViewById(this.page, "in-or-out-time-"+kid.kid_klid);
+        let inoutTimeLabel = view.getViewById(this.page, "in-or-out-time-" + kid.kid_klid);
         this.isLoading = true;
         this.kidSignInOutService.signInOrSingOut(kid.kid_klid)
             .subscribe(
                 (result) => {
-                    console.log("REsult  "+ JSON.stringify(result));
+                    console.log("REsult  " + JSON.stringify(result));
                     this.isLoading = false;
                     let body = result.body;
                     let options = {
                         text: body.text,
-                        duration : nstoasts.DURATION.SHORT
+                        duration: nstoasts.DURATION.SHORT
                     };
                     nstoasts.show(options);
-                    if(body.in_or_out_time){
-                            inoutTimeLabel.text = body.in_or_out_time; // update label with result
-                            inoutTimeLabel.parent.visibility= 'visible'; // show parent
-                        try{
+                    if (body.in_or_out_time) {
+                        inoutTimeLabel.text = body.in_or_out_time; // update label with result
+                        inoutTimeLabel.parent.visibility = 'visible'; // show parent
+                        try {
                             inoutTimeLabel.shake(); //shake effect
-                        }catch(err) {
+                        } catch (err) {
                             // may be page redirected kid-dashboard
                         }
 
@@ -222,7 +245,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
 
     }
 
-    sendMessageForKid(text, kid){
+    sendMessageForKid(text, kid) {
         this.isLoading = true;
         this.messageService.sendMessage(text, kid.kid_klid)
             .subscribe(
@@ -231,7 +254,7 @@ export class MyClassComponent extends DrawerPage implements OnInit{
                     //var body = result;
                     let options = {
                         text: result.message,
-                        duration : nstoasts.DURATION.SHORT
+                        duration: nstoasts.DURATION.SHORT
                     };
                     nstoasts.show(options);
                 },
