@@ -23,11 +23,11 @@ refer to http://docs.nativescript.org/ui/theme.
 
 /* THEME OVERRIDES*/
 .bg-primary{
-    background-color: #b7d4f9;
+    background-color: #6fa8dc;
 }
 
 .text-primary{
-    color: #2b78e4;
+    color: #6fa8dc;
 }
 .btn-primary{
     background-color: #2b78e4;
@@ -78,7 +78,7 @@ TextField {
     background-color: #2b78e4;
 }
 .blue2{
-    color: #70a9db;
+    color: #6fa8dc;
 }
 .green {
     color: #93c47d;
@@ -99,17 +99,17 @@ TextField {
 
 ActionBar {
     background-color: white;
-    color: #70a9db;
+    color: #6fa8dc;
 }
 NavigationButton, ActionItem{
-    color: #70a9db;
+    color: #6fa8dc;
 }
 
 
 .action-label{
     font-size: 18;
     font-weight: bold;
-    color: #70a9db;
+    color: #6fa8dc;
 }
 
 .line-separator  {
@@ -128,14 +128,14 @@ NavigationButton, ActionItem{
 
 
 .rounded-corner-icon{
-    border-color:  #70a9db;
+    border-color:  #6fa8dc;
     border-width: 2;
     border-radius: 38;
 }
 
 /* border for circle images ..*/
 .blue-circle-border {
-    border-color:  #70a9db;
+    border-color:  #6fa8dc;
     border-width: 1;
 }
 
