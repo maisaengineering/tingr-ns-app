@@ -1,0 +1,68 @@
+<ActionBar title="Messages">
+    <NavigationButton visibility="collapsed"></NavigationButton>
+    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}" ios.position="left"
+                android.position="left" (tap)="goBack()">
+        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
+    </ActionItem>
+</ActionBar>
+
+<GridLayout class="messages-container">
+
+    <StackLayout *ngIf="!messages.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
+                 verticalAlignment="center">
+        <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
+            <Label class="message text-center" text="No messages." textWrap="true"></Label>
+        </StackLayout>
+    </StackLayout>
+
+
+    <GridLayout rows="*, auto">
+        <GridLayout row="0">
+            <ScrollView>
+                <StackLayout verticalAlignment="top">
+                    <StackLayout class="conversation">
+                        <StackLayout orinatation="vertical">
+                            <Label text="01/01/17" class="text-center date m-b-5"></Label>
+                            <StackLayout class="hr-shadow"></StackLayout>
+                        </StackLayout>
+                        <StackLayout class="messages">
+                            <StackLayout *ngFor="let number of sampleTestArray" class="message-item">
+
+                                <GridLayout rows="*" columns="auto,*">
+                                    <StackLayout row="0" col="0" class="profile-pic-container">
+                                        <Image height="75" width="75" class="profile-pic blue-circle-border"
+                                               src="~/images/avatar-100.png"></Image>
+                                    </StackLayout>
+
+                                    <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical">
+                                        <StackLayout orientation="horizontal">
+                                            <Label  text="Kid Name" class="profile-name"></Label>
+                                            <Label  text="jennie's father" class="profile-relationship text-muted"></Label>
+                                        </StackLayout>
+                                        <Label class="message-text" text="We are planning bring it to the class this afternoon.What do you think?" textWrap="true"></Label>
+                                    </StackLayout>
+                                </GridLayout>
+                            </StackLayout>
+                        </StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </GridLayout>
+
+        <StackLayout #messageBox row="1">
+            <StackLayout>
+                <GridLayout columns="*, auto" class="message-form">
+                    <TextView [(ngModel)]="newMessageText" id="newMessageText" col="0"
+                              hint="type here..." borderColor="white" ></TextView>
+                    <Button (tap)="sendMessage()" col="1" text="Send" class="blue2 send-button"></Button>
+                </GridLayout>
+            </StackLayout>
+        </StackLayout>
+    </GridLayout>
+
+    <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+    <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+        <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
+    </GridLayout>
+
+</GridLayout>

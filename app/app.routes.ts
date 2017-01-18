@@ -13,13 +13,14 @@ import { KidNotesEditComponent } from "./pages/kid/notes/kid.notes.edit.componen
 import { FormsAndDocumentsComponent } from "./pages/kid/forms-and-docs/forms.docs.component";
 import { FormOrDocWebviewComponent } from "./pages/kid/forms-and-docs/form.or.doc.webview.component";
 import { KidRemindersComponent } from "./pages/kid/reminders/kid.reminders.component";
+import { MessagesComponent } from "./pages/messages/messages.component";
 
 import { AuthGuard } from "./auth-guard.service";
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
 
 export const APP_ROUTES = [
 
-    { path: "", redirectTo: "/calendar", pathMatch: 'full'},
+    { path: "", redirectTo: "/messages", pathMatch: 'full'},
     { path: "calendar", component: CalendarComponent, canActivate: [AuthGuard] },
     { path: "myclass", component: MyClassComponent, canActivate: [AuthGuard] },
     { path: "kid-dashboard", component: KidDashboardComponent, canActivate: [AuthGuard]},
@@ -30,6 +31,7 @@ export const APP_ROUTES = [
     { path: "kid-forms-and-docs", component: FormsAndDocumentsComponent, canActivate: [AuthGuard]},
     { path: "kid-reminders", component: KidRemindersComponent, canActivate: [AuthGuard]},
     { path: "kid-form-or-doc-webview", component: FormOrDocWebviewComponent, canActivate: [AuthGuard]},
+    { path: "messages", component: MessagesComponent, canActivate: [AuthGuard]},
     { path: "settings", component: SettingsPage, canActivate: [AuthGuard]},
     { path: "verify-password", component: VerifyPasswordPage },
     { path: "login", component: LoginPage },
@@ -64,7 +66,8 @@ export const navigatableComponents = [
     KidNotesEditComponent,
     FormsAndDocumentsComponent,
     FormOrDocWebviewComponent,
-    KidRemindersComponent
+    KidRemindersComponent,
+    MessagesComponent
 
 ];
 

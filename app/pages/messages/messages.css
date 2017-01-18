@@ -1,0 +1,59 @@
+
+.conversation {
+  margin-top: 10;
+}
+
+.conversation .date {
+    color: #cccccc;
+    font-size: 14;
+    font-weight: 700;
+}
+
+.messages .message-item {
+    margin: 10 20 10 10;
+}
+
+.messages .message-item .profile-pic {
+    border-radius: 38;
+}
+
+.messages .message-item .profile-pic-container {
+    margin-right: 10;
+}
+
+.messages .message-item .profile-name {
+    font-weight: bold;
+}
+
+.messages .message-item .profile-relationship {
+    margin-left: 5;
+    color: #999999;
+    font-style: italic;
+    font-size: 15;
+    font-weight: 700;
+}
+
+.messages .message-item .message-text {
+    color: #656469;
+    margin-top: 4;
+    font-size: 17;
+}
+
+
+
+.message-form{
+    border-width: 1;
+    border-color: #999999;
+   /* border-radius: 2;*/
+    padding: 10;
+    background-color: white;
+}
+
+.message-form .send-button{
+    font-weight: bold;
+    margin: 0 5 0 10;
+    font-size: 17;
+}
+
+
+
