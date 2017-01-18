@@ -11,6 +11,8 @@ import { KidProfileComponent } from "./pages/kid/profile/kid.profile.component";
 import { KidMomentComponent } from "./pages/kid/moment/kid.moment.component";
 import { KidNotesComponent } from "./pages/kid/notes/kid.notes.component";
 import { KidNotesEditComponent } from "./pages/kid/notes/kid.notes.edit.component";
+import { FormsAndDocumentsComponent } from "./pages/kid/forms-and-docs/forms.docs.component";
+import { FormOrDocWebviewComponent } from "./pages/kid/forms-and-docs/form.or.doc.webview.component";
 
 import { AuthGuard } from "./auth-guard.service";
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
@@ -26,6 +28,8 @@ export const APP_ROUTES = [
     { path: "kid-moment", component: KidMomentComponent, canActivate: [AuthGuard]},
     { path: "kid-notes", component: KidNotesComponent, canActivate: [AuthGuard]},
     { path: "kid-notes-edit", component: KidNotesEditComponent, canActivate: [AuthGuard]},
+    { path: "kid-forms-and-docs", component: FormsAndDocumentsComponent, canActivate: [AuthGuard]},
+    { path: "kid-form-or-doc-webview", component: FormOrDocWebviewComponent, canActivate: [AuthGuard]},
     { path: "settings", component: SettingsPage, canActivate: [AuthGuard]},
     { path: "verify-password", component: VerifyPasswordPage },
     { path: "login", component: LoginPage },
@@ -58,7 +62,9 @@ export const navigatableComponents = [
     KidDocumentsComponent,
     KidMomentComponent,
     KidNotesComponent,
-    KidNotesEditComponent
+    KidNotesEditComponent,
+    FormsAndDocumentsComponent,
+    FormOrDocWebviewComponent
 
 ];
 

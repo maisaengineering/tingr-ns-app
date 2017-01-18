@@ -1,0 +1,22 @@
+<ActionBar title="{{ formOrDoc.name }}" visibility="{{ displayActionBar ? 'visible' : 'collapsed' }}">
+    <NavigationButton visibility="collapsed"></NavigationButton>
+
+    <ActionItem ios.position="left" android.position="left" (tap)="goBack()">
+            <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
+    </ActionItem>
+
+    <ActionItem ios.position="right" android.position="right" (tap)="printFormOrDoc()">
+            <Label class="blue2 material-icons md-36 md-exit-to-app" text="&#xE879;" ></Label>
+    </ActionItem>
+</ActionBar>
+
+
+<GridLayout class="form-or-doc-container">
+    <ScrollView>
+        <WebView src="{{ formOrDoc.url }}"></WebView>
+    </ScrollView>
+    <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+    <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+        <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
+    </GridLayout>
+</GridLayout>

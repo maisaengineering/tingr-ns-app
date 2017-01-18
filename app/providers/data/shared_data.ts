@@ -17,6 +17,9 @@ export class SharedData {
     //
     public kidNote: any;
 
+    // when user clicks on form/doc hold the data to pass in next screen
+    public formOrDoc: any;
+
     public constructor() { }
 
 }

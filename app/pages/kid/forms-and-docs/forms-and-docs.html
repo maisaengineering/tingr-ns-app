@@ -1,0 +1,39 @@
+<ActionBar title="Forms & Documents">
+    <NavigationButton visibility="collapsed"></NavigationButton>
+    <ActionItem ios.position="left" android.position="left" (tap)="goBack()">
+        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
+    </ActionItem>
+</ActionBar>
+
+
+<GridLayout class="kid-forms-and-docs-container">
+
+    <StackLayout *ngIf="!formsAndDocs.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
+                 verticalAlignment="center">
+        <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-forms-docs">
+            <Label class="message text-center" text="This kid has no forms or documents" textWrap="true"></Label>
+        </StackLayout>
+    </StackLayout>
+    <PullToRefresh (refresh)="refreshList($event)" #pullToRefresh>
+
+        <ScrollView>
+            <StackLayout *ngIf="formsAndDocs.length" margin="10 0 0 0">
+                <StackLayout *ngFor="let formOrDoc of formsAndDocs">
+                    <StackLayout *ngIf="formOrDoc.name" (tap)="openFormOrDoc(formOrDoc)">
+                        <StackLayout orientation="vertical" class="blue2 form-or-doc-item">
+                            <Label text="{{ formOrDoc.name }}"></Label>
+                        </StackLayout>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </PullToRefresh>
+
+    <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+    <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+        <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
+    </GridLayout>
+
+
+</GridLayout>
