@@ -11,13 +11,11 @@ import {Router, NavigationExtras} from "@angular/router";
        <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white;"> 
          <StackLayout class="m-x-20 m-t-15" verticalALignment="center">  
             <Gridlayout cols="auto,auto" verticalAlignment="center">
-            <StackLayout (tap)="cancel()" class="text-primary blue2" row="0" col="0" orientation="horizontal">
-               <!-- <Label class="fa m-r-5" text=""></Label>-->
-                <Label class="text-left font-weight-bold" text="Cancel"></Label>
+            <StackLayout (tap)="cancel()" class="text-primary blue2" row="0" col="0" orientation="horizontal"> 
+               <Label text="&#xE5CD;" class="text-left material-icons md-36 md-chevron-right"></Label>
             </StackLayout>
-             <StackLayout (tap)="submit('Cancel')"  class="text-primary blue2" row="0" col="0"  horizontalAlignment="right" orientation="horizontal">
-                <!--<Label class="fa m-r-5" text=""></Label>-->
-               <Label class="font-weight-bold" text="Submit"></Label> 
+             <StackLayout (tap)="submit('Cancel')"  class="text-primary blue2" row="0" col="0"  horizontalAlignment="right" orientation="horizontal">  
+               <Label text="&#xE5CA;" class="material-icons md-36 md-chevron-right"></Label>
              </StackLayout> 
             </Gridlayout>  
          </StackLayout>
