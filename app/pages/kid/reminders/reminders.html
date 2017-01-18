@@ -1,0 +1,42 @@
+<ActionBar title="Reminders">
+    <NavigationButton visibility="collapsed"></NavigationButton>
+    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}" ios.position="left"
+                android.position="left" (tap)="goBack()">
+        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
+    </ActionItem>
+</ActionBar>
+
+
+<GridLayout class="kid-reminders-container">
+
+    <StackLayout *ngIf="!reminders.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
+                 verticalAlignment="center">
+        <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
+            <Label class="message text-center" text="Reminders are empty for this kid." textWrap="true"></Label>
+        </StackLayout>
+    </StackLayout>
+
+    <PullToRefresh (refresh)="refreshList($event)" #pullToRefresh>
+        <ScrollView>
+            <StackLayout *ngIf="reminders.length" margin="10 0 0 0">
+                <StackLayout *ngFor="let reminder of reminders">
+                    <StackLayout *ngIf="reminder.name" (tap)="openReminder(reminder)">
+                        <StackLayout id="reminder-{{ reminder.kl_id }}" orientation="vertical" class="reminder-item">
+                            <Label id="reminder-name-{{ reminder.kl_id }}" text="{{ reminder.name }}" class="{{ reminder.seen ? 'text-muted' : 'blue2 '}}"></Label>
+                            <Label text="{{  reminder.created_at  | date: 'M/dd/yy' }}" class="text-muted reminder-date"></Label>
+                        </StackLayout>
+                        <StackLayout class="hr-shadow"></StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </PullToRefresh>
+
+
+    <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+    <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+        <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
+    </GridLayout>
+
+
+</GridLayout>

@@ -67,7 +67,8 @@
 
             <GridLayout row="3">
                 <GridLayout columns="*, auto ,*" class="navigation-links-2">
-                    <StackLayout col="0" row="0" verticalAlignment="center" horizontalAlignment="center"
+                    <StackLayout [nsRouterLink]="['/kid-reminders']" pageTransition="slideLeft"
+                                 col="0" row="0" verticalAlignment="center" horizontalAlignment="center"
                                  orientation="horizontal">
                         <Label text="" class="number-with-circle reminders"></Label>
                         <Label text="Reminders"></Label>

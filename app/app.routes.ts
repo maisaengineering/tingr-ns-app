@@ -6,13 +6,13 @@ import { VerifyPasswordPage } from "./pages/verify-password/password.page";
 import { CalendarComponent } from "./pages/calendar/calendar.component";
 import { MyClassComponent } from "./pages/myclass/myclass.component";
 import { KidDashboardComponent } from "./pages/kid/dashboard/kid-dashboard-component";
-import { KidDocumentsComponent } from "./pages/kid/documents/kid.documents.component";
 import { KidProfileComponent } from "./pages/kid/profile/kid.profile.component";
 import { KidMomentComponent } from "./pages/kid/moment/kid.moment.component";
 import { KidNotesComponent } from "./pages/kid/notes/kid.notes.component";
 import { KidNotesEditComponent } from "./pages/kid/notes/kid.notes.edit.component";
 import { FormsAndDocumentsComponent } from "./pages/kid/forms-and-docs/forms.docs.component";
 import { FormOrDocWebviewComponent } from "./pages/kid/forms-and-docs/form.or.doc.webview.component";
+import { KidRemindersComponent } from "./pages/kid/reminders/kid.reminders.component";
 
 import { AuthGuard } from "./auth-guard.service";
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
@@ -24,11 +24,11 @@ export const APP_ROUTES = [
     { path: "myclass", component: MyClassComponent, canActivate: [AuthGuard] },
     { path: "kid-dashboard", component: KidDashboardComponent, canActivate: [AuthGuard]},
     { path: "kid-profile", component: KidProfileComponent, canActivate: [AuthGuard]},
-    { path: "kid-documents", component: KidDocumentsComponent, canActivate: [AuthGuard]},
     { path: "kid-moment", component: KidMomentComponent, canActivate: [AuthGuard]},
     { path: "kid-notes", component: KidNotesComponent, canActivate: [AuthGuard]},
     { path: "kid-notes-edit", component: KidNotesEditComponent, canActivate: [AuthGuard]},
     { path: "kid-forms-and-docs", component: FormsAndDocumentsComponent, canActivate: [AuthGuard]},
+    { path: "kid-reminders", component: KidRemindersComponent, canActivate: [AuthGuard]},
     { path: "kid-form-or-doc-webview", component: FormOrDocWebviewComponent, canActivate: [AuthGuard]},
     { path: "settings", component: SettingsPage, canActivate: [AuthGuard]},
     { path: "verify-password", component: VerifyPasswordPage },
@@ -59,12 +59,12 @@ export const navigatableComponents = [
     KidProfileComponent,
     ModalDatePicker,
     ForgotPasswordComponent,
-    KidDocumentsComponent,
     KidMomentComponent,
     KidNotesComponent,
     KidNotesEditComponent,
     FormsAndDocumentsComponent,
-    FormOrDocWebviewComponent
+    FormOrDocWebviewComponent,
+    KidRemindersComponent
 
 ];
 

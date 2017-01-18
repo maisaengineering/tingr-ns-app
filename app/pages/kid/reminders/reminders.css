@@ -1,0 +1,10 @@
+StackLayout.reminder-item{
+    margin: 10 30 10 30;
+    font-weight: bold;
+    font-size: 17;
+}
+
+.reminder-item .reminder-date{
+    font-size: 14;
+    margin-top: 3;
+}

@@ -14,7 +14,7 @@
 <GridLayout class="kid-notes-container">
 
     <StackLayout *ngIf="!notes.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" verticalAlignment="center">
-       <StackLayout  orientation="vertical" horizontalAlignment="center" class="empty-notes">
+       <StackLayout  orientation="vertical" horizontalAlignment="center" class="empty-page">
            <Label class="message text-center" text="{{ emptyNoteMessage }}" textWrap="true"></Label>
            <StackLayout (tap)="addNote()">
                <Label text="&#xE145;" class="text-center blue2 material-icons md-48 md-chevron-add"></Label>

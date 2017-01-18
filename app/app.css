@@ -33,6 +33,10 @@ refer to http://docs.nativescript.org/ui/theme.
     background-color: #2b78e4;
 }
 
+.text-muted{
+    color: #cccccc;
+}
+
 /* kid last sing in/out label */
 .bg-green-label{
     background-color: #b7d6a9;
@@ -274,4 +278,17 @@ ActivityIndicator.busy {
 .grayCard{
     background-color: #F8F8F8 ;
     color: black;
+}
+
+
+/* styles for empty notes/reminder/forms&docs message */
+StackLayout.empty-page {
+    margin: 0 30 40 30;
+}
+.empty-page .message {
+    color: #999999;
+    font-weight: 700;
+    font-size: 17;
+    font-style: italic;
+    margin-bottom: 30;
 }
