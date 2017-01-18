@@ -7,7 +7,7 @@
     </ActionItem>
 
     <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
-                ios.position="right" android.position="right" (tap)="printFormOrDoc()">
+                ios.position="right" android.position="right" (tap)="openShareOptions(formOrDoc)">
             <Label class="blue2 material-icons md-36 md-exit-to-app" text="&#xE879;" ></Label>
     </ActionItem>
 </ActionBar>

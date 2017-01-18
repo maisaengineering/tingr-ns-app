@@ -6,9 +6,10 @@ import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../../providers/data/kid_data";
 import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
-var view = require("ui/core/view");
-var tnsfx = require('nativescript-effects');
-var app = require("application");
+let view = require("ui/core/view");
+let tnsfx = require('nativescript-effects');
+let app = require("application");
+let utilityModule = require("utils/utils");
 
 
 var enums = require("ui/enums");
@@ -57,6 +58,20 @@ export class FormOrDocWebviewComponent implements OnInit {
         setTimeout(() => {
             this.showActionBarItems = true;
         }, 500);
+    }
+
+    openShareOptions(formOrDoc){
+        dialogs.action({
+            /*message: "Your message",*/
+            cancelButtonText: "Cancel",
+            actions: ["Request", "Print"]
+        }).then(function (result) {
+            if(result === 'Print'){
+                // open url in browser
+                utilityModule.openUrl(formOrDoc.url);
+            }
+        });
+
     }
 
 
