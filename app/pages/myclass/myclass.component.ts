@@ -140,7 +140,6 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                     this.sharedData.managedKids = this.managed_kids;
                     setTimeout(function () {
                         pullRefresh.refreshing = false;
-                        console.log('done refresh');
                     }, 1000);
                 },
                 (error) => {

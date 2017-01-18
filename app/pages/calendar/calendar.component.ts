@@ -106,24 +106,39 @@ export class CalendarComponent extends DrawerPage implements OnInit {
     }
 
 
+    // pull to refresh the data
+    refreshList(args) {
+        let pullRefresh = args.object;
+        this.calendarService.getCalendarData(this.currentDate)
+            .subscribe((result) => {
+                    let body = result.body;
+                    this.schedules = body.events;
+                    this.messages = body.messages;
+                    let reminders = body.reminders;
+                    this.birthdays = reminders.birthdays;
+                    this.event_reminders = reminders.event_reminders;
+                    this.holidays = reminders.holidays;
+                    // stop pull to refresh
+                    setTimeout(function () {
+                        pullRefresh.refreshing = false;
+                    }, 1000);
+                },
+                (error) => {
+                    pullRefresh.refreshing = false;
+                    alert('Internal server error.');
+                }
+            );
+    }
+
     loadCalendarDataByDay(currentDate) {
         this.currentDate = currentDate;
         this.isLoading = true;
         this.calendarService.getCalendarData(currentDate)
             .subscribe((result) => {
-                    var body = result.body;
+                    let body = result.body;
                     this.schedules = body.events;
                     this.messages = body.messages;
-
-                    // TODO load dynaamically once tested and update message property from array to Message class in above declaration
-                    /*this.messages.push(
-                     { read_message: true, text: 'Hello world',sender_name: 'Sender name' , child_name: 'child name',child_relationship: 'relationship' },
-                     { read_message: false, text: 'Hello world',sender_name: 'Sender name' , child_name: 'child name',child_relationship: 'relationship' },
-                     { read_message: true, text: 'Hello world',sender_name: 'Sender name' , child_name: 'child name',child_relationship: 'relationship' }
-                     );
-                     */
-
-                    var reminders = body.reminders;
+                    let reminders = body.reminders;
                     this.birthdays = reminders.birthdays;
                     this.event_reminders = reminders.event_reminders;
                     this.holidays = reminders.holidays;
