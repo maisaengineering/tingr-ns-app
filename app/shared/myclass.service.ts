@@ -14,6 +14,35 @@ export class MyClassService {
 
     }
 
+
+    // Uses Observable.forkJoin() to run multiple concurrent http.get() requests.
+    // The entire operation will result in an error state if any single request fails.
+    getRoomsAndMangedKids(room) {
+        return Observable.forkJoin(
+            this.getAssignedRooms(),
+            this.getManagedKids(room),
+        );
+    }
+
+    getAssignedRooms(){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: "assigned_rooms",
+            body: {
+                teacher_klid: TeacherInfo.parsedDetails.teacher_klid
+            }
+        });
+
+        return this.http.post(
+            Config.apiUrl + "teachers", data, {
+                headers: headers
+            }
+        ).map((res:Response) => res.json())
+    }
+
     getManagedKids(room) {
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
@@ -32,7 +61,6 @@ export class MyClassService {
                 headers: headers
             }
         ).map((res:Response) => res.json())
-            .catch(this.handleErrors);
     }
 
     handleErrors(error: any)  {

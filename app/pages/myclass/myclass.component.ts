@@ -9,6 +9,7 @@ import {SharedData} from "../../providers/data/shared_data";
 import {RouterExtensions} from "nativescript-angular/router";
 import {Page} from "ui/page";
 import {TeacherInfo} from "../../providers/data/teacher_info";
+import {Observable} from "rxjs/Rx";
 
 // >> long-press-code
 import {GestureEventData} from "ui/gestures";
@@ -90,24 +91,32 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             this.showActionBarItems = true;
         }, 500);
 
-        this.loadManagedKids(this.currentRoom);
-        //this.room =  this.assignedRooms[0];
-        this.getAssignedRooms();
+        this.getRoomsAndMangedKids();
     }
 
-    getAssignedRooms() {
+
+    getRoomsAndMangedKids() {
         this.isLoading = true;
-        this.teacherService.getAssignedRooms()
-            .subscribe(
-                (result) => {
-                    let body = result.body;
-                    this.assignedRooms = body.rooms;
-                    this.currentRoom = this.assignedRooms[0];
-                    this.roomName = this.currentRoom.session_name;
-                },
-                (error) => {
-                }
-            );
+        this.myClassService.getRoomsAndMangedKids(this.currentRoom).subscribe(
+            (result) => {
+                console.log("result 1 " + JSON.stringify(result[0]))
+                console.log("result 2 " + JSON.stringify(result[1]))
+
+                this.assignedRooms = result[0].body.rooms;
+                // Set Teacher CurrentRoom and this.currentRoom as first one as default
+                TeacherInfo.currentRoom = JSON.stringify(this.assignedRooms[0]);
+                this.currentRoom = this.assignedRooms[0];
+                this.roomName = this.currentRoom.session_name;
+                this.managed_kids = result[1].body.managed_kids;
+                // save managed kids in SharedData Provider, so data will be available to all components
+                this.sharedData.managedKids = this.managed_kids;
+                this.isLoading = false;
+            },
+            (error) => {
+                this.isLoading = false;
+                console.error(error);
+            }
+        );
     }
 
     loadManagedKids(room) {
@@ -128,6 +137,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 }
             );
     }
+
 
     // pull to refresh the data
     refreshList(args) {
@@ -163,11 +173,14 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             cancelButtonText: "Cancel",
             actions: actions
         }).then(result => {
-            this.currentRoom = rooms.filter(report => report.session_name === result)[0];
-            // save the selected room in application data to access application wide
-            TeacherInfo.currentRoom = this.currentRoom;
-            this.roomName = this.currentRoom.session_name;
-            this.loadManagedKids(this.currentRoom);
+            // don't fetch data if clicks on same room
+            if (this.roomName != result) {
+                this.currentRoom = rooms.filter(report => report.session_name === result)[0];
+                // save the selected room in application data to access application wide
+                TeacherInfo.currentRoom = JSON.stringify(this.currentRoom);
+                this.roomName = this.currentRoom.session_name;
+                this.loadManagedKids(this.currentRoom);
+            }
         });
     }
 

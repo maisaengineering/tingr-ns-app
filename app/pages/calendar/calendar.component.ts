@@ -107,14 +107,6 @@ export class CalendarComponent extends DrawerPage implements OnInit {
             // hide back button
             navigationItem.setHidesBackButtonAnimated(true, false);
         }*/
-
-
-        // save currentRoom details in apllication Data
-        // by defulat assuming first room
-        let room = TeacherInfo.parsedCurrentRoom || TeacherInfo.parsedDetails.rooms[0];
-        TeacherInfo.currentRoom = JSON.stringify(room);
-        // get the currentRoom => TeacherInfo.parsedCurrentRoom
-
         // load data
         this.loadCalendarDataByDay(this.currentDate);
     }
@@ -160,7 +152,8 @@ export class CalendarComponent extends DrawerPage implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    alert('Internal server error.');
+                    console.error("ERRORRR "+ JSON.stringify(error));
+                    //alert('Internal server error.');
 
                 }
             );

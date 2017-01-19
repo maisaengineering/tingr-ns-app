@@ -82,6 +82,12 @@ export class VerifyPasswordPage implements OnInit {
                     this.teacherInfo.storage = body;
                     // save teacher info in app-settings to invoke rest api's using season, room etc...
                     TeacherInfo.details = JSON.stringify(body);
+                    // save currentRoom details in apllication Data
+                    // by default assuming first room
+                    let room = TeacherInfo.parsedDetails.rooms[0];
+                    TeacherInfo.currentRoom = JSON.stringify(room);
+                    // to get the currentRoom => TeacherInfo.parsedCurrentRoom
+
                     this.isLoading = false;
                     this.routerExtensions.navigate(["/calendar"],
                         {
