@@ -99,14 +99,11 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         this.isLoading = true;
         this.myClassService.getRoomsAndMangedKids(this.currentRoom).subscribe(
             (result) => {
-                console.log("result 1 " + JSON.stringify(result[0]))
-                console.log("result 2 " + JSON.stringify(result[1]))
-
                 this.assignedRooms = result[0].body.rooms;
                 // Set Teacher CurrentRoom and this.currentRoom as first one as default
                 TeacherInfo.currentRoom = JSON.stringify(this.assignedRooms[0]);
-                this.currentRoom = this.assignedRooms[0];
-                this.roomName = this.currentRoom.session_name;
+                //this.currentRoom = this.assignedRooms[0];
+                //this.roomName = this.currentRoom.session_name;
                 this.managed_kids = result[1].body.managed_kids;
                 // save managed kids in SharedData Provider, so data will be available to all components
                 this.sharedData.managedKids = this.managed_kids;
