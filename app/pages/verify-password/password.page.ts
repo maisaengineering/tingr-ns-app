@@ -50,7 +50,7 @@ export class VerifyPasswordPage implements OnInit {
 
         // focus on password field
         let passTextField = view.getViewById(this.page, "password");
-        passTextField.focus();
+        //passTextField.focus();
     }
 
 

@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
 
         // focus on email field
         let emailTextField = view.getViewById(this.page, "email");
-        emailTextField.focus();
+        //emailTextField.focus();
 
         // get AccessToken
         if (!!TokenService.accessToken === false) {
