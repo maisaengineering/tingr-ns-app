@@ -108,6 +108,13 @@ export class CalendarComponent extends DrawerPage implements OnInit {
             navigationItem.setHidesBackButtonAnimated(true, false);
         }*/
 
+
+        // save currentRoom details in apllication Data
+        // by defulat assuming first room
+        let room = TeacherInfo.parsedDetails.rooms[0];
+        TeacherInfo.currentRoom = JSON.stringify(room);
+        // get the currentRoom => TeacherInfo.parsedCurrentRoom
+
         // load data
         this.loadCalendarDataByDay(this.currentDate);
     }

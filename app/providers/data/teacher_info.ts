@@ -20,6 +20,20 @@ export class TeacherInfo {
         return JSON.parse(getString("teacherDetails"));
     }
 
+    // Set Current room when teacher selected
+    static get currentRoom(): string {
+        return getString("currentRoom");
+    }
+
+    static set currentRoom(str: string) {
+        setString("currentRoom", str);
+    }
+
+    static get parsedCurrentRoom(): any {
+        return JSON.parse(getString("currentRoom"));
+    }
+
+
 
     /*
     0/p of

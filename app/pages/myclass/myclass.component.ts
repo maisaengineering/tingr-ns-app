@@ -8,6 +8,7 @@ import {KidData} from "../../providers/data/kid_data";
 import {SharedData} from "../../providers/data/shared_data";
 import {RouterExtensions} from "nativescript-angular/router";
 import {Page} from "ui/page";
+import {TeacherInfo} from "../../providers/data/teacher_info";
 
 // >> long-press-code
 import {GestureEventData} from "ui/gestures";
@@ -32,7 +33,7 @@ var tnsfx = require('nativescript-effects');
 export class MyClassComponent extends DrawerPage implements OnInit {
     public managed_kids: Array<ManagedKid>;
     public roomName: String;
-    public room;
+    public currentRoom;
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
@@ -73,7 +74,8 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             this.isIos = true;
         }
         this.managed_kids = [];
-        this.room = {};
+        this.currentRoom = TeacherInfo.parsedCurrentRoom;
+        this.roomName = this.currentRoom.session_name;
         // initialize with when user logged in data and then invoke assignedrooms api to get updated ones
         //this.assignedRooms = TeacherInfo.parsedDetails.rooms;
         this.assignedRooms = [];
@@ -88,6 +90,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             this.showActionBarItems = true;
         }, 500);
 
+        this.loadManagedKids(this.currentRoom);
         //this.room =  this.assignedRooms[0];
         this.getAssignedRooms();
     }
@@ -99,9 +102,8 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 (result) => {
                     let body = result.body;
                     this.assignedRooms = body.rooms;
-                    this.room = this.assignedRooms[0];
-                    this.roomName = this.room.session_name;
-                    this.loadManagedKids(this.room);
+                    this.currentRoom = this.assignedRooms[0];
+                    this.roomName = this.currentRoom.session_name;
                 },
                 (error) => {
                 }
@@ -130,7 +132,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     // pull to refresh the data
     refreshList(args) {
         let pullRefresh = args.object;
-        this.myClassService.getManagedKids(this.room)
+        this.myClassService.getManagedKids(this.currentRoom)
             .subscribe(
                 (result) => {
                     var body = result.body;
@@ -161,9 +163,11 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             cancelButtonText: "Cancel",
             actions: actions
         }).then(result => {
-            this.room = rooms.filter(report => report.session_name === result)[0];
-            this.roomName = this.room.session_name;
-            this.loadManagedKids(this.room);
+            this.currentRoom = rooms.filter(report => report.session_name === result)[0];
+            // save the selected room in application data to access application wide
+            TeacherInfo.currentRoom = this.currentRoom;
+            this.roomName = this.currentRoom.session_name;
+            this.loadManagedKids(this.currentRoom);
         });
     }
 
