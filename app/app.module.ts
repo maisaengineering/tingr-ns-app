@@ -17,6 +17,7 @@ import { InternetService } from "./shared/internet.service"
 import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/modal-dialog";
 
 import { DatePipe } from '@angular/common';
+import { KeysPipe } from './utils/keys.pipe';
 import { registerElement, ViewClass } from "nativescript-angular/element-registry";
 registerElement("CardView", () => require("nativescript-cardview").CardView);
 registerElement("PullToRefresh", () => {
@@ -29,6 +30,7 @@ import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
     declarations: [
         SIDEDRAWER_DIRECTIVES,
         AppComponent,
+        KeysPipe,
         ...navigatableComponents
     ],
     bootstrap: [
