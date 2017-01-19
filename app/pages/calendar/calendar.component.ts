@@ -111,7 +111,7 @@ export class CalendarComponent extends DrawerPage implements OnInit {
 
         // save currentRoom details in apllication Data
         // by defulat assuming first room
-        let room = TeacherInfo.parsedDetails.rooms[0];
+        let room = TeacherInfo.parsedCurrentRoom || TeacherInfo.parsedDetails.rooms[0];
         TeacherInfo.currentRoom = JSON.stringify(room);
         // get the currentRoom => TeacherInfo.parsedCurrentRoom
 

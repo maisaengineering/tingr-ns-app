@@ -13,8 +13,8 @@ export class MessageService {
     }
 
     sendMessage(msg_text, kid_klid) {
-        var room = TeacherInfo.parsedDetails.rooms[0];
-        var techerInfo = TeacherInfo.parsedDetails;
+        let room = TeacherInfo.parsedCurrentRoom;
+        let teacherInfo = TeacherInfo.parsedDetails;
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({
@@ -24,11 +24,11 @@ export class MessageService {
             body: {
                 text: msg_text,
                 kid_klid: kid_klid, // reciver
-                sender_klid: techerInfo.teacher_klid, //sender
+                sender_klid: teacherInfo.teacher_klid, //sender
                 conversation_klid: "",
-                organization_id: techerInfo.organization_id,
-                season_id: techerInfo.season_id,
-                session_id: techerInfo.session_id
+                organization_id: room.organization_id,
+                season_id: room.season_id,
+                session_id: room.session_id
             }
         });
 
@@ -41,19 +41,27 @@ export class MessageService {
     }
 
     // get messages kid associated for
-    getList(kid_klid){
+    getList(kid_klid, conversation_klid = '', last_message_time = ''){
         let headers = new Headers();
+        let room = TeacherInfo.parsedCurrentRoom;
+        let teacherInfo = TeacherInfo.parsedDetails;
+        console.log("ORg ID :" + room.organization_id);
+        console.log("Teacher Info "+ JSON.stringify(room))
+
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({
             access_token: TokenService.accessToken,
             auth_token: TokenService.authToken,
             command: "messages",
             body: {
-                last_message_time: ''
+                 conversation_klid : conversation_klid,
+                 kid_klid: kid_klid,
+                 organization_id: room.organization_id,
+                 last_message_time: last_message_time
             }
         });
         return this.http.post(
-            Config.apiUrl + "conversations/"+kid_klid, data, {
+            Config.apiUrl + "conversations", data, {
                 headers: headers
             }
         ).map((res: Response) => res.json())

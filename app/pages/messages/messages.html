@@ -8,7 +8,7 @@
 
 <GridLayout class="messages-container">
 
-    <StackLayout *ngIf="!messages.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
+    <StackLayout *ngIf="isMessagesEmpty(messages)" visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
                  verticalAlignment="center">
         <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
             <Label class="message text-center" text="No messages." textWrap="true"></Label>
@@ -19,33 +19,33 @@
     <GridLayout rows="*, auto">
         <GridLayout row="0">
             <ScrollView>
-                <StackLayout verticalAlignment="top">
-                    <StackLayout class="conversation">
-                        <StackLayout orinatation="vertical">
-                            <Label text="01/01/17" class="text-center date m-b-5"></Label>
-                            <StackLayout class="hr-shadow"></StackLayout>
-                        </StackLayout>
-                        <StackLayout class="messages">
-                            <StackLayout *ngFor="let number of sampleTestArray" class="message-item">
+                <StackLayout verticalAlignment="top" *ngIf="!isMessagesEmpty(messages)">
+                        <StackLayout class="conversation" *ngFor="let groupedMessages of messages | keys">
+                            <StackLayout orinatation="vertical">
+                                <Label text="{{ groupedMessages.key }}" class="text-center date m-b-5"></Label>
+                                <StackLayout class="hr-shadow"></StackLayout>
+                            </StackLayout>
+                            <StackLayout class="messages">
+                                <StackLayout *ngFor="let message of groupedMessages.value" class="message-item">
 
-                                <GridLayout rows="*" columns="auto,*">
-                                    <StackLayout row="0" col="0" class="profile-pic-container">
-                                        <Image height="75" width="75" class="profile-pic blue-circle-border"
-                                               src="~/images/avatar-100.png"></Image>
-                                    </StackLayout>
-
-                                    <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical">
-                                        <StackLayout orientation="horizontal">
-                                            <Label  text="Kid Name" class="profile-name"></Label>
-                                            <Label  text="jennie's father" class="profile-relationship text-muted"></Label>
+                                    <GridLayout rows="*" columns="auto,*">
+                                        <StackLayout row="0" col="0" class="profile-pic-container">
+                                            <Image height="75" width="75" class="profile-pic blue-circle-border"
+                                                   src="{{ message.photograph || '~/images/avatar-100.png' }}"></Image>
                                         </StackLayout>
-                                        <Label class="message-text" text="We are planning bring it to the class this afternoon.What do you think?" textWrap="true"></Label>
-                                    </StackLayout>
-                                </GridLayout>
+
+                                        <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical">
+                                            <StackLayout orientation="horizontal">
+                                                <Label [text]="message.child_name || message.sender_name" class="profile-name"></Label>
+                                                <Label *ngIf="message.child_relationship" [text]="message.child_relationship" class="profile-relationship text-muted"></Label>
+                                            </StackLayout>
+                                            <Label class="message-text" [text]="message.text" textWrap="true"></Label>
+                                        </StackLayout>
+                                    </GridLayout>
+                                </StackLayout>
                             </StackLayout>
                         </StackLayout>
                     </StackLayout>
-                </StackLayout>
             </ScrollView>
         </GridLayout>
 

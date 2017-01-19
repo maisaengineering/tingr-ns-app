@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit } from "@angular/core";
 import {Page} from "ui/page";
 import frameModule = require("ui/frame");
 import {Router, NavigationExtras} from "@angular/router";
@@ -42,14 +42,9 @@ export class MessagesComponent implements OnInit {
                 private sharedData: SharedData,
                 private internetService: InternetService) {
         //super(changeDetectorRef);
-        this.messages = [];
+        this.messages = {};
         this.kid = {};
         this.kid = this.kidData.info;
-
-        console.log("KID INFO "+ JSON.stringify(this.kidData.info));
-
-        this.sampleTestArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
-
         if (app.android) {
             this.isAndroid = true;
         } else if (app.ios) {
@@ -65,18 +60,19 @@ export class MessagesComponent implements OnInit {
             this.showActionBarItems = true;
         }, 300);
 
-        this.getMessages();
+        console.log("Before  "+ this.messages );
 
+        this.getMessages();
     }
 
     getMessages(){
+        //this.messages = this.messageService.getMessages();
         this.isLoading = true;
-        //let kid_klid = this.kid.kid_klid;
-        let kid_klid = "878f4db8-a533-4a7a-9b11-a956e2b1048d";
+        let kid_klid = this.kid.kid_klid;
         this.messageService.getList(kid_klid)
             .subscribe(
                 (result) => {
-                    var body = result.body;
+                    let body = result.body;
                     this.messages = body.messages;
                     this.isLoading = false;
                     console.log("Messages :" + JSON.stringify(this.messages))
@@ -90,12 +86,25 @@ export class MessagesComponent implements OnInit {
     }
 
     sendMessage(){
-        //TODO call service to sen message
-        console.log("New Message :" + this.newMessageText);
-        // clear newMessageText after message has been sent
-        this.newMessageText = '';
-
-        // remove focs from input
+        this.isLoading = true;
+        let kid_klid = this.kid.kid_klid;
+        this.messageService.sendMessage(this.newMessageText, kid_klid)
+            .subscribe(
+                (result) => {
+                    let body = result.body;
+                    //TODO append the returned data as child view to messages list instead of refreshing
+                    this.isLoading = false;
+                    // clear newMessageText after message has been sent
+                    this.newMessageText = '';
+                    this.getMessages();
+                },
+                (error) => {
+                    this.isLoading = false;
+                    console.log("Error "+ JSON.stringify(error));
+                    //alert('Internal server error.');
+                }
+            );
+        // focus out from field
         let msgTexfield = this.page.getViewById("newMessageText");
         if (msgTexfield.ios) {
             msgTexfield.ios.endEditing(true);
@@ -105,9 +114,12 @@ export class MessagesComponent implements OnInit {
 
     }
 
-
     goBack(){
         this.routerExtensions.backToPreviousPage();
+    }
+
+    isMessagesEmpty(obj) {
+        return (Object.keys(obj).length === 0);
     }
 
 }

@@ -25,9 +25,7 @@ export class CalendarService {
 
     getCalendarData(currentDate) {
         this.currentDateStr = this.datePipe.transform(currentDate, 'dd/MM/yyyy');
-
-
-        var room = TeacherInfo.parsedDetails.rooms[0];
+        var room = TeacherInfo.parsedCurrentRoom;
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({

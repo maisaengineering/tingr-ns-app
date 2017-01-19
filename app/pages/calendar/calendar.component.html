@@ -37,7 +37,7 @@
                                src="res://schedule_icon"></Image>
                         <StackLayout verticalAlignment="center">
                             <GridLayout rows="auto,*" *ngFor="let item of schedules; let i = index">
-                                <GridLayout row="0" columns="auto, auto" rows="auto,auto"
+                                <GridLayout row="0" columns="auto, *" rows="auto,auto"
                                             class="m-t-5 item {{ isScheduleTimeIsCurrent(item.start_time, item.end_time) ? 'blue' : '' }}">
                                     <Label col="0" row="0"
                                            text="{{item.start_time | date: 'HH:mm' }}-{{ item.end_time | date: 'HH:mma'  | lowercase }}">
@@ -64,7 +64,7 @@
 
                             <!-- Birthdays -->
                             <SatckLayout orientation="horizontal" *ngFor="let item of birthdays; let i = index">
-                                <Label col="0" text="{{item.description}}" class="m-t-5 item"></Label>
+                                <Label col="0" text="{{item.description}}" class="m-t-5 item" textWrap="true"></Label>
                                 <StackLayout *ngIf="birthdays.length > (i+1)" class="hr-shadow" row="1"></StackLayout>
                             </SatckLayout>
 
@@ -73,7 +73,7 @@
                                          row="1"></StackLayout>
                             <SatckLayout orientation="horizontal" *ngFor="let item of event_reminders; let i = index">
                                 <Label (tap)="openDescription(item.description)" col="0" text="{{ item.description }}"
-                                       class="m-t-5 item" textWrap="true"></Label>
+                                       class="m-t-5 item"></Label>
                                 <StackLayout *ngIf="event_reminders.length > (i+1)" class="hr-shadow"
                                              row="1"></StackLayout>
                             </SatckLayout>
