@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
     public isIos: Boolean = false;
 
 
-    @ViewChild("formErrors") formErrorsRef: ElementRef;
+    //@ViewChild("formErrors") formErrorsRef: ElementRef;
 
 
     constructor(private authService: AuthService, private router: Router,
@@ -84,12 +84,10 @@ export class LoginPage implements OnInit {
 
 
     submitEmail() {
-        let labelError = <Label>this.formErrorsRef.nativeElement;
+        //let labelError = <Label>this.formErrorsRef.nativeElement;
         if (this.email === '') {
-            labelError.text = "Email can't be blank";
             return;
         } else {
-            labelError.text = "";
         }
 
         this.isLoading = true;

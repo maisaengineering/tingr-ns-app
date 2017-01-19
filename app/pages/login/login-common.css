@@ -1,11 +1,12 @@
-Image {
-    margin-top: 5;
-    margin-bottom: 20;
+Image.logo {
+    margin-bottom: 50;
 }
-Button, TextField, .forgot-password {
-    margin-left: 16;
-    margin-right: 16;
-    margin-bottom: 10;
+Button, .forgot-password {
+    margin: 0 50 0 50;
+}
+
+TextField{
+    font-size: 17;
 }
 
 .forgot-pass-link{
@@ -16,4 +17,45 @@ Button, TextField, .forgot-password {
 
 .submit-button {
     color: white;
+}
+
+/* override of input-border from core UI theme*/
+.input-border{
+   /* border-width:1;
+    border-color:#e0e0e0;
+    border-radius:2;*/
+    padding: 14;
+    color: black;
+}
+
+/* override of input-border from core UI theme*/
+.input {
+    padding:10 8 10 8;
+}
+
+.input-border.primary {
+    border-color: #6fa8dc;
+
+}
+
+.input-border.success {
+    border-color: #b7d6a9;
+}
+
+.input-border.error {
+    border-color: #e89999;
+}
+
+.input-info-box{
+    border-width: 1;
+    border-color:  #6fa8dc;
+    background-color:  #6fa8dc;
+    color: white;
+    height: 42;
+    width: 40;
+    text-align: center;
+}
+
+.btn-submit-email{
+    padding: 20 10 10 20;
 }
