@@ -20,6 +20,9 @@ export class SharedData {
     // when user clicks on form/doc hold the data to pass in next screen
     public formOrDoc: any;
 
+    // to carry posKlId to next screen like hearters ,commenting on post etc..
+    public postKlId: string;
+
     public constructor() { }
 
 }

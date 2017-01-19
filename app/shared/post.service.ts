@@ -129,6 +129,24 @@ export class PostService {
             .catch(this.handleErrors)
     }
 
+    getHearters(post_kl_id){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: 'hearters',
+            body: {
+            }
+        });
+        return this.http.post(
+            Config.apiUrl + "posts/"+post_kl_id, data, {
+                headers: headers
+            }
+        ).map((res:Response) => res.json())
+            .catch(this.handleErrors)
+    }
+
     handleErrors(error: any)  {
         console.error('An error occurred', error); // for demo purposes only
         return Observable.throw(error.message || error);

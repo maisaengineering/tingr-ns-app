@@ -80,7 +80,8 @@
                                src="~/images/line_icon-50.png"></Image>
                     </StackLayout>
 
-                    <StackLayout col="2" row="0" verticalAlignment="center" horizontalAlignment="center"
+                    <StackLayout [nsRouterLink]="['/messages']" pageTransition="slideLeft"
+                                 col="2" row="0" verticalAlignment="center" horizontalAlignment="center"
                                  orientation="horizontal">
                         <Label text="" class="number-with-circle notifications"></Label>
                         <Label text="Messages"></Label>
@@ -131,7 +132,7 @@
                                     <StackLayout orientation="vertical">
                                         <Label text="{{  post.created_at.substring(0,10) |  date: 'MMMM dd, yyyy' }}"
                                                class="tagged-on-date"></Label>
-                                        <Image class="m-t-5" id="post-hearted-image-{{ post.kl_id }}"
+                                        <Image (tap)="showHearters(post)" class="m-t-5" id="post-hearted-image-{{ post.kl_id }}"
                                                visibility="{{ post.hearted ? 'visible' : 'collapsed'}}"
                                                height="25" width="40" stretch="aspectFit"
                                                src="{{ post.hearted ? (post.asset_base_url + post.heart_icon) : '~/images/heart-icon-red-48.png' }}"

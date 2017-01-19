@@ -23,17 +23,37 @@ export class MessageService {
             command: "send_message",
             body: {
                 text: msg_text,
-                profile_klid: techerInfo.teacher_klid, //sender
+                kid_klid: kid_klid, // reciver
+                sender_klid: techerInfo.teacher_klid, //sender
                 conversation_klid: "",
-                kid_klids: [kid_klid], // reciver
-                parent_klids: [],
-                teacher_klids: [],
-                org_admin_klids: []
+                organization_id: techerInfo.organization_id,
+                season_id: techerInfo.season_id,
+                session_id: techerInfo.session_id
             }
         });
 
         return this.http.post(
             Config.apiUrl + "conversations", data, {
+                headers: headers
+            }
+        ).map((res: Response) => res.json())
+            .catch(this.handleErrors);
+    }
+
+    // get messages kid associated for
+    getList(kid_klid){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: "messages",
+            body: {
+                last_message_time: ''
+            }
+        });
+        return this.http.post(
+            Config.apiUrl + "conversations/"+kid_klid, data, {
                 headers: headers
             }
         ).map((res: Response) => res.json())

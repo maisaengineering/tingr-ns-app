@@ -6,7 +6,7 @@ import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../providers/data/kid_data";
 import {SharedData} from "../../providers/data/shared_data";
 import {InternetService} from "../../shared/internet.service";
-import { MessageService } from "../../shared/message.service";
+import { PostService } from "../../shared/post.service";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
 var app = require("application");
@@ -20,21 +20,19 @@ import dialogs = require("ui/dialogs");
 @Component({
     moduleId: module.id,
     selector: 'my-app',
-    styleUrls: ['./messages.css'],
-    templateUrl: './messages.html',
-    providers: [ MessageService ]
+    styleUrls: ['./hearters.css'],
+    templateUrl: './hearters.html',
+    providers: [ PostService]
 })
-export class MessagesComponent implements OnInit {
+export class HeartersComponent implements OnInit {
     public kid: any;
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
-    public messages: any;
     public showActionBarItems: Boolean = false;
-    public sampleTestArray: Array<any>;
-    public newMessageText: string = '';
+    public hearters: Array<any>;
 
-    constructor(private messageService: MessageService,
+    constructor(private postService: PostService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
                 private router: Router,
                 private routerExtensions: RouterExtensions,
@@ -42,13 +40,9 @@ export class MessagesComponent implements OnInit {
                 private sharedData: SharedData,
                 private internetService: InternetService) {
         //super(changeDetectorRef);
-        this.messages = [];
+        this.hearters = [];
         this.kid = {};
         this.kid = this.kidData.info;
-
-        console.log("KID INFO "+ JSON.stringify(this.kidData.info));
-
-        this.sampleTestArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
 
         if (app.android) {
             this.isAndroid = true;
@@ -60,51 +54,58 @@ export class MessagesComponent implements OnInit {
     ngOnInit() {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
-        // show actionBarItems after some time to fix overlappingg issue
+        // Hide 'Default Back button'
+        if(this.isIos){
+            var controller = frameModule.topmost().ios.controller;
+            // get the view controller navigation item
+            var navigationItem = controller.visibleViewController.navigationItem;
+            // hide back button
+            navigationItem.setHidesBackButtonAnimated(true, false);
+        }
+        // show actionBarItems after some time to fix overlapping issue
         setTimeout(() => {
             this.showActionBarItems = true;
         }, 300);
+        this.getList()
+    };
 
-        this.getMessages();
-
-    }
-
-    getMessages(){
+    getList(){
         this.isLoading = true;
-        //let kid_klid = this.kid.kid_klid;
-        let kid_klid = "878f4db8-a533-4a7a-9b11-a956e2b1048d";
-        this.messageService.getList(kid_klid)
+        let postKlId = this.sharedData.postKlId;
+        this.postService.getHearters(postKlId)
             .subscribe(
                 (result) => {
                     var body = result.body;
-                    this.messages = body.messages;
+                    this.hearters = body.hearters;
                     this.isLoading = false;
-                    console.log("Messages :" + JSON.stringify(this.messages))
+                    console.log("Hearters :" + JSON.stringify(this.hearters));
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log("Error "+ JSON.stringify(error));
                     alert('Internal server error.');
                 }
             );
     }
 
-    sendMessage(){
-        //TODO call service to sen message
-        console.log("New Message :" + this.newMessageText);
-        // clear newMessageText after message has been sent
-        this.newMessageText = '';
-
-        // remove focs from input
-        let msgTexfield = this.page.getViewById("newMessageText");
-        if (msgTexfield.ios) {
-            msgTexfield.ios.endEditing(true);
-        } else if (msgTexfield.android) {
-            msgTexfield.android.clearFocus();
-        }
+    // pull to refresh the data
+    refreshList(args) {
+        let pullRefresh = args.object;
+        let postKlId = this.sharedData.postKlId;
+        this.postService.getHearters(postKlId)
+            .subscribe(
+                (result) => {
+                    var body = result.body;
+                    this.hearters = body.hearters;
+                    setTimeout(function () {
+                        pullRefresh.refreshing = false;
+                    }, 1000);
+                },
+                (error) => {
+                    alert('Internal server error.');
+                }
+            );
 
     }
-
 
     goBack(){
         this.routerExtensions.backToPreviousPage();

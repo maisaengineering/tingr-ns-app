@@ -339,6 +339,18 @@ export class KidDashboardComponent implements OnInit {
         );
     }
 
+    showHearters(post){
+        // assign post kl_id to sharedData to available in next screen
+        this.sharedData.postKlId = post.kl_id;
+
+        this.routerExtensions.navigate(["/post-hearters"], {
+            transition: {
+                name: "slideLeft",
+                duration: 300,
+                curve: "easeInOut"
+            }
+        });
+    }
 
     openPostImages(post){
         // Add to array and pass to showViewer

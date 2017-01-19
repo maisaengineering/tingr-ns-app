@@ -1,0 +1,43 @@
+<ActionBar title="Hearters" visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}">
+    <NavigationButton visibility="collapsed"></NavigationButton>
+
+    <ActionItem ios.position="left" android.position="left" (tap)="goBack()">
+        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
+    </ActionItem>
+</ActionBar>
+
+
+<GridLayout class="post-hearters-container">
+
+    <StackLayout *ngIf="!hearters.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
+                 verticalAlignment="center">
+        <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
+            <Label class="message text-center" text="No Data available" textWrap="true"></Label>
+        </StackLayout>
+    </StackLayout>
+    <PullToRefresh (refresh)="refreshList($event)" #pullToRefresh>
+        <ScrollView>
+            <StackLayout *ngIf="hearters.length" margin="10 0 0 0">
+                <StackLayout class="hearters-list">
+                    <StackLayout *ngFor="let hearter of hearters">
+                        <Gridlayout rows="auto" columns="auto,*" verticalAlignment="center" orientation="horizontal"
+                                    class="item">
+                            <Image row='0' col="0" height="40" width="40" class="hearter-profile-pic blue-circle-border"
+                                   src="{{ hearter.photograph_url || '~/images/avatar-100.png' }}"></Image>
+                            <Label row="0" col="1" verticalAlignment="center"
+                                   text="{{ hearter.fname }} {{ hearter.lname }}"
+                                   class="m-l-20 font-weight-bold"></Label>
+                        </Gridlayout>
+                        <StackLayout class="hr-light"></StackLayout>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </PullToRefresh>
+
+    <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+    <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+        <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
+    </GridLayout>
+
+</GridLayout>
