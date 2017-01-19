@@ -19,3 +19,6 @@ StackLayout.notes-item {
     font-weight: 700;
     font-sizez: 15;
 }
+.notes-description{
+    margin: 5;
+}

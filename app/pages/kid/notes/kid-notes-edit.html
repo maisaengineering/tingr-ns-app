@@ -8,24 +8,24 @@
 
     <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
                 ios.position="right" android.position="right" (tap)="saveNotes(isEdit)">
-        <Label class="blue2 material-icons md-36 md-chevron-right" text="&#xE5CA;" ></Label>
+        <Label class="blue2 material-icons md-36 md-chevron-right" text="&#xE5CA;"></Label>
     </ActionItem>
 </ActionBar>
 
 
 <GridLayout class="kid-notes-container">
-
-    <ScrollView>
-        <DockLayout stretchLastChild="false" class="m-10">
-            <TextView style="color: black;" height="500" text="top" dock="top" borderColor="white" hint="enter notes" id="notes-description"
-                      returnKeyType="next"
-                      text="" [(ngModel)]="notesDescription" editable="true"></TextView>
-            <StackLayout *ngIf="isEdit" (tap)="deleteNote()" dock="bottom" height="80" horizontalAlignment="center" >
-                <Label class="delete-notes-label" text="Delete" dock="bottom" height="70"></Label>
+    <GridLayout rows="*,auto">
+        <TextView row="0" style="color: black;" verticalAlignment="stretch" text="top" borderColor="white"
+                  hint="enter notes" id="notes-description"
+                  returnKeyType="next" class="notes-description"
+                  text="" [(ngModel)]="notesDescription" editable="true"></TextView>
+        <StackLayout  row="1">
+            <StackLayout *ngIf="isEdit" (tap)="deleteNote()" height="80" horizontalAlignment="center">
+                <Label class="delete-notes-label" text="Delete" dock="bottom"
+                       height="70"></Label>
             </StackLayout>
-        </DockLayout>
-    </ScrollView>
-
+        </StackLayout>
+    </GridLayout>
     <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
     <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
         <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
