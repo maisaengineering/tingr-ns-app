@@ -17,7 +17,7 @@
 
     <ScrollView>
         <DockLayout stretchLastChild="false" class="m-10">
-            <TextView height="500" text="top" dock="top" borderColor="white" hint="enter notes" id="notes-description"
+            <TextView style="color: black;" height="500" text="top" dock="top" borderColor="white" hint="enter notes" id="notes-description"
                       returnKeyType="next"
                       text="" [(ngModel)]="notesDescription" editable="true"></TextView>
             <StackLayout *ngIf="isEdit" (tap)="deleteNote()" dock="bottom" height="80" horizontalAlignment="center" >

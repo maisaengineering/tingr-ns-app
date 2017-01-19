@@ -2,6 +2,21 @@ Image.kid-profile-pic{
     border-radius: 38;
 }
 
+.kid-name {
+    font-size: 20;
+    font-weight: 700;
+    color: #666666;
+}
+
+.kid-age {
+    font-weight: 700;
+}
+
+.in-or-out-time{
+    font-weight: 700;
+    font-size: 15;
+}
+
 .number-with-circle.reminders-count{
     background-color: orange;
 }
@@ -13,5 +28,5 @@ Image.kid-profile-pic{
 /*Override for list-group-item*/
 
 .list-group-item{
-    padding: 10 20 10 20;
+    padding: 10 20 5 20;
 }

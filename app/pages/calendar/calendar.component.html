@@ -22,9 +22,9 @@
                         <Gridlayout cols="*,auto" verticalAlignment="center" orientation="horizontal">
                             <Label row="0" col="0" text="{{ currentDate  | date: 'EEEE, MMMM d' }}"
                                    class="schedule-date text-center"></Label>
-                            <Label row="0" col="1"
+                            <!--<Label row="0" col="1"
                                    class="text-right material-icons md-36 md-chevron-right m-r-20"
-                                   text="&#xE5CC;"></Label>
+                                   text="&#xE5CC;"></Label>-->
                         </Gridlayout>
                     </StackLayout>
 
@@ -40,7 +40,7 @@
                                 <GridLayout row="0" columns="auto, auto" rows="auto,auto"
                                             class="m-t-5 item {{ isScheduleTimeIsCurrent(item.start_time, item.end_time) ? 'blue' : '' }}">
                                     <Label col="0" row="0"
-                                           text="{{item.start_time | date: 'HH:mm' }}-{{ item.end_time | date: 'HH:mm a' }}">
+                                           text="{{item.start_time | date: 'HH:mm' }}-{{ item.end_time | date: 'HH:mma'  | lowercase }}">
                                     </Label>
                                     <Label col="1" row="0" class="event m-r-5" text="{{ item.name }}"
                                            textWrap="true"></Label>
@@ -107,13 +107,13 @@
                                     </StackLayout>
                                     <StackLayout col="1">
                                         <StackLayout col="1" orientation="horizontal">
-                                            <Label class="kid-name" [text]="item.sender_name" textwrap="true"></Label>
-                                            <Label class="relation-name light-gray"
+                                            <Label class="profile-name" [text]="item.sender_name" textwrap="true"></Label>
+                                            <Label class="profile-relationship"
                                                    text="{{ item.child_name }}'s {{ item.child_relationship }}"
                                                    textwrap="true"></Label>
                                         </StackLayout>
                                         <Label [text]="item.text"
-                                               class="{{ item.read_message ? 'text-muted' : 'blue' }}" col="1"
+                                               class="message-text {{ item.read_message ? 'text-muted' : 'blue' }}" col="1"
                                                textwrap="true"></Label>
                                     </StackLayout>
                                 </GridLayout>

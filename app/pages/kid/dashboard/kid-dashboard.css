@@ -44,6 +44,8 @@ navigation-links-1 -> Profile details, Documents, Notes
 /*Navigational-links-2 -> Reminders , Notifcations*/
 .kid-dashboard .navigation-links-2 {
     margin: 10px 0 10px 0;
+    font-weight: 700;
+    font-size: 17;
 }
 
 .number-with-circle.reminders{
@@ -57,10 +59,10 @@ navigation-links-1 -> Profile details, Documents, Notes
 
 /* capture image section */
 
-.capture-moment-section .text{
+.capture-moment-section .capture-note{
     font-style: italic;
-    font-size: small;
-    margin-top: -2px;
+    color: #cccccc;
+    font-weight: 700;
 }
 
 /* Moment Container with Cover Image and Org Logo */
@@ -85,7 +87,9 @@ GridLayout.moment-tags{
 }
 
 .moment-tags .tagged-on-date{
-    font-size: 10px;
+    font-size: 13;
+    font-weight: bold;
+    color: #abacc2;
 }
 
 /* Moment comments */
@@ -135,6 +139,11 @@ Image.kid-profile-pic{
 
 Image.parent-profile-pic{
     border-radius: 30;
+}
+
+.comment-label{
+    font-size: 17;
+    font-weight: 700;
 }
 
 

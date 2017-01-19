@@ -7,7 +7,7 @@
     font-weight: bold;
 }
 StackLayout.today-date{
-    padding: 5 0 5 0;
+    padding: 10 0 10 0;
 }
 
 StackLayout.today-date.active{
@@ -29,7 +29,6 @@ StackLayout.today-date.active{
 .calendar-reminder .item,
 .calendar-message .item  {
     padding: 6px;
-   /* font-size: 13px*/
 }
 
 .calendar-schedule .item .event{
@@ -45,6 +44,7 @@ StackLayout.today-date.active{
     padding: 8px;
 
 }
+/*
 .calendar-message .item .kid-name{
     font-weight: bold;
     font-size: 13px;
@@ -55,6 +55,7 @@ StackLayout.today-date.active{
     margin-left: 5px;
     margin-top: 1px;
 }
+*/
 
 .calendar-message .kid-profile-pic{
     border-radius: 20;

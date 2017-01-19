@@ -16,6 +16,10 @@ GridLayout.kid-profile {
     font-style: italic;
     font-weight: bold;
 }
+.kid-profile .age {
+    font-weight: 700;
+}
+
 
 .kid-profile .item-details{
     margin: 15;

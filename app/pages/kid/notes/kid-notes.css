@@ -1,18 +1,21 @@
-.delete-notes-label{
+.delete-notes-label {
     color: #de6666;
     font-size: 17;
     font-weight: 700;
 }
 
-StackLayout.notes-item{
+StackLayout.notes-item {
     margin: 10 40 10 40;
 }
 
-.notes-item .first-line{
-    font-size: 18;
+.notes-item .first-line {
+    font-size: 17;
     font-weight: 700;
+    color: black;
 }
 
-.notes-item .second-line{
-   margin-top: 3;
+.notes-item .second-line {
+    margin-top: 3;
+    font-weight: 700;
+    font-sizez: 15;
 }

@@ -40,8 +40,8 @@
 
                                 <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical"
                                              class="p-l-20">
-                                    <Label [text]="item.fname+' '+item.lname" class="font-weight-bold"></Label>
-                                    <Label [text]="item.age+' old'" class="text-muted"></Label>
+                                    <Label [text]="item.fname+' '+item.lname" class="kid-name"></Label>
+                                    <Label [text]="item.age+' old'" class="text-muted kid-age"></Label>
                                 </StackLayout>
 
                                 <StackLayout row="0" col="2" class="m-t-5" verticalAlignment="center"
@@ -64,7 +64,7 @@
                             <StackLayout visibility="{{ item.in_or_out_time? 'visible' : 'collapsed' }}"
                                          verticalAlignment="center" orientation="vertical" horizontalAlignment="center">
                                 <Label id="in-or-out-time-{{ item.kid_klid }}"
-                                       class="bg-primary bg-green-label light-gray font-italic p-x-10 m-t-5"
+                                       class="in-or-out-time bg-primary bg-green-label light-gray font-italic p-x-10 m-t-5"
                                        text="{{ item.in_or_out_time }}"></Label>
                             </StackLayout>
                         </StackLayout>

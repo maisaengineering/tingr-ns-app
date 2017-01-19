@@ -21,23 +21,7 @@
     margin-right: 10;
 }
 
-.messages .message-item .profile-name {
-    font-weight: bold;
-}
 
-.messages .message-item .profile-relationship {
-    margin-left: 5;
-    color: #999999;
-    font-style: italic;
-    font-size: 15;
-    font-weight: 700;
-}
-
-.messages .message-item .message-text {
-    color: #656469;
-    margin-top: 4;
-    font-size: 17;
-}
 
 
 
