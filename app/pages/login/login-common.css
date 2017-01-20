@@ -48,12 +48,22 @@ TextField{
 
 .input-info-box{
     border-width: 1;
-    border-color:  #6fa8dc;
-    background-color:  #6fa8dc;
-    color: white;
+  /*  border-color:  #6fa8dc;
+    background-color:  #6fa8dc;*/
+    color: black;
     height: 42;
     width: 40;
     text-align: center;
+}
+
+.error-box{
+    border-color:  #e89999;
+    background-color:  #e89999;
+}
+
+.success-box{
+    border-color:  #b7d6a9;
+    background-color:  #b7d6a9;
 }
 
 .btn-submit-email{

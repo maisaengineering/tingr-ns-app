@@ -28,7 +28,8 @@ export class LoginPage implements OnInit {
     isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
-
+    public emailError: Boolean = false;
+    /* public emailTextField = view.getViewById(this.page, "email");*/
 
     //@ViewChild("formErrors") formErrorsRef: ElementRef;
 
@@ -85,21 +86,28 @@ export class LoginPage implements OnInit {
 
     submitEmail() {
         //let labelError = <Label>this.formErrorsRef.nativeElement;
+        let emailTextField = view.getViewById(this.page, "email");
         if (this.email === '') {
+            this.emailError = true;
+            emailTextField.borderColor = '#e89999';
             return;
         } else {
+
         }
 
         this.isLoading = true;
         this.teacher.email = this.email;
         this.sharedData.email = this.teacher.email; // use this provider in next page get the value
+
         this.teacherService.evaluteUser(this.teacher)
             .subscribe(
                 (result) => {
                     this.isLoading = false;
                     // save user auth_token and info in appSettings
                     if (result.body.goto === 'signup') {
-                        alert("Email does not exists")
+                        this.emailError = true;
+                        emailTextField.borderColor = '#e89999';
+                        alert(result.body.teacher_error);
                     } else {
                         this.routerExtensions.navigate(["/verify-password"], {
                             transition: {
@@ -108,7 +116,6 @@ export class LoginPage implements OnInit {
                             },
                         });
                     }
-
                 },
                 (error) => {
                     this.isLoading = false;

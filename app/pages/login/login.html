@@ -4,9 +4,11 @@
             <Image class="logo" src="~/images/logo-72@2x.png" stretch="none" horizontalAlignment="center"></Image>
             <StackLayout  orientation="horizontal" horizontalAlignment="center">
 
-                    <TextField width="300" class="input input-border primary " hint="Email Address" keyboardType="email" [(ngModel)]="email"
+                    <TextField width="300" class="input input-border primary" hint="Email Address" keyboardType="email" [(ngModel)]="email"
                                autocorrect="false" autocapitalizationType="none" id="email"></TextField>
-                <Label visibility="visible" class="input-info-box material-icons md-24 md-check" text="&#xE5CA;"></Label>
+               <!-- <Label visibility="visible" class="input-info-box success-box material-icons md-24 md-check" text="&#xE5CA;"></Label>-->
+                <Label *ngIf="emailError"
+                       class="input-info-box error-box material-icons md-24 md-close" text="&#xE5CD;"></Label>
             </StackLayout>
         </StackLayout>
         <Label row="1" text="&#xE5CC;" (tap)="submitEmail()"
