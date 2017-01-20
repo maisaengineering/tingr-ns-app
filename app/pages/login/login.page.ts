@@ -91,8 +91,6 @@ export class LoginPage implements OnInit {
             this.emailError = true;
             emailTextField.borderColor = '#e89999';
             return;
-        } else {
-
         }
 
         this.isLoading = true;
@@ -103,6 +101,7 @@ export class LoginPage implements OnInit {
             .subscribe(
                 (result) => {
                     this.isLoading = false;
+                    emailTextField.borderColor = '#b7d6a9';
                     // save user auth_token and info in appSettings
                     if (result.body.goto === 'signup') {
                         this.emailError = true;
@@ -112,7 +111,7 @@ export class LoginPage implements OnInit {
                         this.routerExtensions.navigate(["/verify-password"], {
                             transition: {
                                 name: "flip",
-                                duration: 700
+                                duration: 500
                             },
                         });
                     }

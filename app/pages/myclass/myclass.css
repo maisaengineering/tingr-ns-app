@@ -3,17 +3,17 @@ Image.kid-profile-pic{
 }
 
 .kid-name {
-    font-size: 20;
+    font-size: 18;
     font-weight: 700;
     color: #666666;
 }
 
 .kid-age {
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .in-or-out-time{
-    font-weight: 700;
+    font-weight: 600;
     font-size: 15;
 }
 

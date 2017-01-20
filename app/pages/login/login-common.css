@@ -15,15 +15,6 @@ TextField{
     font-size: 16;
 }
 
-.submit-button {
-    color: white;
-}
-
-/* override of input-border from core UI theme*/
-/* override of input-border from core UI theme*/
-.input {
-    padding:10 8 10 8;
-}
 .input-border{
     border-width:1;
     border-color:#6fa8dc;
@@ -31,7 +22,6 @@ TextField{
     padding: 10;
     color: black;
 }
-
 
 .input-border-primary {
     border-color: #6fa8dc;

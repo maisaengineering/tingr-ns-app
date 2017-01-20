@@ -27,6 +27,8 @@ export class VerifyPasswordPage implements OnInit {
     isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
+    public emailError: Boolean = false;
+    public emailOrPasswordError: Boolean = false;
 
     constructor(private router: Router, private route: ActivatedRoute,
                 private routerExtensions: RouterExtensions,
@@ -56,19 +58,14 @@ export class VerifyPasswordPage implements OnInit {
 
     signIn() {
         // validate form
-        let errorLabel = view.getViewById(this.page, "form-errors");
         let emailTextField = view.getViewById(this.page, "email");
         let passTextField = view.getViewById(this.page, "password");
-        if (emailTextField.text === "" || passTextField.text === "") {
-            errorLabel.text = "All fields required";
-            // animate error label with fading opacity
-            /*errorLabel.text.animate({
-             opacity: 1,
-             duration: 1000
-             });*/
+        if (emailTextField.text === "" ) {
+            emailTextField.borderColor = '#e89999';
             return;
-        } else {
-            errorLabel.text = "";
+        } else if (passTextField.text === ""){
+            passTextField.borderColor = '#e89999';
+            return;
         }
 
 
@@ -77,6 +74,9 @@ export class VerifyPasswordPage implements OnInit {
         this.teacherService.signIn(this.teacher)
             .subscribe(
                 (result) => {
+                    this.isLoading = false;
+                    emailTextField.borderColor = '#b7d6a9';
+                    passTextField.borderColor = '#b7d6a9';
                     TokenService.authToken = result.body.auth_token;
                     var body = result.body;
                     this.teacherInfo.storage = body;
@@ -87,8 +87,6 @@ export class VerifyPasswordPage implements OnInit {
                     let room = TeacherInfo.parsedDetails.rooms[0];
                     TeacherInfo.currentRoom = JSON.stringify(room);
                     // to get the currentRoom => TeacherInfo.parsedCurrentRoom
-
-                    this.isLoading = false;
                     this.routerExtensions.navigate(["/calendar"],
                         {
                             transition: {name: "slideLeft"},
@@ -96,8 +94,11 @@ export class VerifyPasswordPage implements OnInit {
                         });
                 },
                 (error) => {
+                    this.emailOrPasswordError = true;
                     this.isLoading = false;
-                    alert(error.message)
+                    alert(error.message);
+                    emailTextField.borderColor = '#e89999';
+                    passTextField.borderColor = '#e89999';
                 }
             );
     }

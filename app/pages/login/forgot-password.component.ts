@@ -23,6 +23,8 @@ export class ForgotPasswordComponent implements OnInit {
     isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
+    public showActionBarItems: Boolean = false;
+    public emailError: Boolean = false;
 
 
     constructor(private router: Router, private route: ActivatedRoute,
@@ -43,28 +45,36 @@ export class ForgotPasswordComponent implements OnInit {
         // focus on password field
         let passTextField = view.getViewById(this.page, "email");
         passTextField.focus();
+        // show actionBarItems after some time to fix overlapping issue
+        setTimeout(() => {
+            this.showActionBarItems = true;
+        }, 300);
+
     }
 
-    goBack(): void {
+    /*goBack(): void {
        // this.location.back();
         this.routerExtensions.navigate(["/verify-password"], {
             transition: {
                 name: "slideRight"
             }
         });
+    }*/
+
+    goBack() {
+        this.routerExtensions.backToPreviousPage();
     }
 
+
     sendEmail() {
-        let errorLabel = view.getViewById(this.page, "form-errors");
+        //let errorLabel = view.getViewById(this.page, "form-errors");
         let emailTextField = view.getViewById(this.page, "email");
         if (emailTextField.text === "") {
-            errorLabel.text = "Email can't be blank";
+            this.emailError = true;
+            emailTextField.borderColor = '#e89999';
             return;
-        } else {
-            errorLabel.text = "";
         }
         this.isLoading = true;
-
         this.teacherService.forgotPassword(this.email)
             .subscribe(
                 (result) => {
@@ -76,6 +86,7 @@ export class ForgotPasswordComponent implements OnInit {
                         cancelButtonText: "Login"
                     }).then(result => {
                         if(result === false) {
+                            emailTextField.borderColor = '#b7d6a9';
                             this.routerExtensions.navigate(["/login"], {
                                 transition: {
                                     name: "slideRight"
@@ -86,14 +97,8 @@ export class ForgotPasswordComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    //console.log("Error:  "+JSON.stringify(error));
-                    dialogs.alert({
-                        //title: "Error",
-                        message: error.message,
-                        okButtonText: "Ok"
-                    }).then(function () {
-                        //console.log("Dialog closed!");
-                    });
+                    alert(error.message);
+                    emailTextField.borderColor = '#e89999';
                 }
             );
     }

@@ -29,6 +29,7 @@ refer to http://docs.nativescript.org/ui/theme.
 .text-primary{
     color: #6fa8dc;
 }
+
 .btn-primary{
     background-color: #6fa8dc;
 }
@@ -84,6 +85,9 @@ TextField {
 }
 .blue2{
     color: #6fa8dc;
+}
+.blue2-background{
+    background-color: #6fa8dc;
 }
 .green {
     color: #93c47d;

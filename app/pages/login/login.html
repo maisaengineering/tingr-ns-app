@@ -6,9 +6,8 @@
 
                     <TextField width="300" class="input input-border input-border-primary" hint="Email Address" keyboardType="email" [(ngModel)]="email"
                                autocorrect="false" autocapitalizationType="none" id="email"></TextField>
-               <!-- <Label visibility="visible" class="input-info-box success-box material-icons md-24 md-check" text="&#xE5CA;"></Label>-->
-                <Label *ngIf="emailError"
-                       class="input-info-box error-box material-icons md-24 md-close" text="&#xE5CD;"></Label>
+                <!--<Label *ngIf="emailError"
+                       class="input-info-box error-box material-icons md-24 md-close" text="&#xE5CD;"></Label>-->
             </StackLayout>
         </StackLayout>
         <Label row="1" text="&#xE5CC;" (tap)="submitEmail()"
