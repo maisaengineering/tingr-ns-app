@@ -19,7 +19,7 @@ var view = require("ui/core/view");
     selector: "my-app",
     providers: [TeacherService],
     templateUrl: "./password.html",
-    styleUrls: ["./login-common.css", "./login.css"]
+    styleUrls: ["../login/login-common.css", "../login/login.css"]
 })
 export class VerifyPasswordPage implements OnInit {
     teacher: Teacher;
@@ -49,7 +49,7 @@ export class VerifyPasswordPage implements OnInit {
         //this.page.backgroundImage = "res://bg_login";
 
         // focus on password field
-        let passTextField = view.getViewById(this.page, "password");
+       // let passTextField = view.getViewById(this.page, "password");
         //passTextField.focus();
     }
 
@@ -100,6 +100,10 @@ export class VerifyPasswordPage implements OnInit {
                     alert(error.message)
                 }
             );
+    }
+
+    goBack(){
+        this.routerExtensions.backToPreviousPage();
     }
 
 

@@ -6,13 +6,13 @@ Button, .forgot-password {
 }
 
 TextField{
-    font-size: 17;
+    font-size: 16;
 }
 
 .forgot-pass-link{
     text-decoration: underline;
-    margin: 0 16 10 16;
-    font-size: 17;
+   /* margin: 0  30 10 30;*/
+    font-size: 16;
 }
 
 .submit-button {
@@ -20,51 +20,32 @@ TextField{
 }
 
 /* override of input-border from core UI theme*/
-.input-border{
-   /* border-width:1;
-    border-color:#e0e0e0;
-    border-radius:2;*/
-    padding: 14;
-    color: black;
-}
-
 /* override of input-border from core UI theme*/
 .input {
     padding:10 8 10 8;
 }
+.input-border{
+    border-width:1;
+    border-color:#6fa8dc;
+    border-radius:2;
+    padding: 10;
+    color: black;
+}
 
-.input-border.primary {
+
+.input-border-primary {
     border-color: #6fa8dc;
 
 }
 
-.input-border.success {
+.input-border-success {
     border-color: #b7d6a9;
 }
 
-.input-border.error {
+.input-border-error {
     border-color: #e89999;
 }
 
-.input-info-box{
-    border-width: 1;
-  /*  border-color:  #6fa8dc;
-    background-color:  #6fa8dc;*/
-    color: black;
-    height: 42;
-    width: 40;
-    text-align: center;
-}
-
-.error-box{
-    border-color:  #e89999;
-    background-color:  #e89999;
-}
-
-.success-box{
-    border-color:  #b7d6a9;
-    background-color:  #b7d6a9;
-}
 
 .btn-submit-email{
     padding: 20 10 10 20;
