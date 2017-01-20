@@ -121,26 +121,35 @@
                         </GridLayout>
 
                         <GridLayout row="1" class="moment-tags">
-                            <GridLayout columns="auto, *" *ngIf="post.tagged_to.length">
-                                <StackLayout col="0" row="0" horizontalAlignment="left" orientation="horizontal">
-                                    <StackLayout *ngFor="let item of post.tagged_to" margin="3">
-                                        <Image height="40" width="40" class="kid-profile-pic blue-circle-border"
-                                               src="{{ item.photograph ||  '~/images/avatar-100.png' }}"></Image>
+                            <StackLayout orientation="vertical">
+                                <GridLayout columns="auto, *" *ngIf="post.tagged_to.length">
+                                    <StackLayout col="0" row="0" horizontalAlignment="left" orientation="horizontal">
+                                        <StackLayout *ngFor="let item of post.tagged_to" margin="3">
+                                            <Image height="40" width="40" class="kid-profile-pic blue-circle-border"
+                                                   src="{{ item.photograph ||  '~/images/avatar-100.png' }}"></Image>
+                                        </StackLayout>
                                     </StackLayout>
-                                </StackLayout>
-                                <StackLayout col="1" row="0" horizontalAlignment="right" orientation="horizontal">
-                                    <StackLayout orientation="vertical">
-                                        <Label text="{{  post.created_at.substring(0,10) |  date: 'MMMM dd, yyyy' }}"
-                                               class="tagged-on-date"></Label>
-                                        <Image (tap)="showHearters(post)" class="m-t-5" id="post-hearted-image-{{ post.kl_id }}"
-                                               visibility="{{ post.hearted ? 'visible' : 'collapsed'}}"
-                                               height="25" width="40" stretch="aspectFit"
-                                               src="{{ post.hearted ? (post.asset_base_url + post.heart_icon) : '~/images/heart-icon-red-48.png' }}"
-                                               horizontalAlignment="right">
-                                        </Image>
+                                    <StackLayout col="1" row="0" horizontalAlignment="right" orientation="horizontal">
+                                        <StackLayout orientation="vertical">
+                                            <Label text="{{  post.created_at.substring(0,10) |  date: 'MMMM dd, yyyy' }}"
+                                                   class="tagged-on-date"></Label>
+                                            <Image (tap)="showHearters(post)" class="m-t-5" id="post-hearted-image-{{ post.kl_id }}"
+                                                   visibility="{{ post.hearted ? 'visible' : 'collapsed'}}"
+                                                   height="25" width="40" stretch="aspectFit"
+                                                   src="{{ post.hearted ? (post.asset_base_url + post.heart_icon) : '~/images/heart-icon-red-48.png' }}"
+                                                   horizontalAlignment="right">
+                                            </Image>
+                                        </StackLayout>
                                     </StackLayout>
+                                </GridLayout>
+
+                                <StackLayout *ngIf="post.text" class="m-5">
+                                    <Label textWrap="true" text="{{ post.text }}"></Label>
                                 </StackLayout>
-                            </GridLayout>
+                            </StackLayout>
+
+
+
                         </GridLayout>
                         <GridLayout row="2">
                             <StackLayout class="horizontal-separator" margin="0 10 0 10">
