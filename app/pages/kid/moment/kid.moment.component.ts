@@ -111,7 +111,7 @@ export class KidMomentComponent implements OnInit {
 
     selectMomentCaptureOption() {
         dialogs.action({
-            // message: "Your message",
+            message: "",
             cancelButtonText: "Cancel",
             actions: ["Take photo", "Choose existing"]
         }).then(result => {

@@ -80,7 +80,7 @@ export class ForgotPasswordComponent implements OnInit {
                 (result) => {
                     this.isLoading = false;
                     dialogs.confirm({
-                        title: "Info",
+                        title: "",
                         message: result.message,
                         okButtonText: "Ok",
                         cancelButtonText: "Login"

@@ -166,7 +166,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             actions.push(room.session_name);
         }
         dialogs.action({
-            message: "Select Room",
+            message: "",
             cancelButtonText: "Cancel",
             actions: actions
         }).then(result => {
@@ -193,7 +193,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
     onLongPressKid(event, kid) {
         dialogs.action({
-            //message: "Your message",
+            message: "",
             cancelButtonText: "Cancel",
             actions: ["Sign-in/Sign-out", "Message a Parent"]
         }).then(result => {
