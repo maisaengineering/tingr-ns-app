@@ -85,7 +85,7 @@ export class KidMomentComponent implements OnInit {
        // this.routerExtensions.backToPreviousPage();
         this.routerExtensions.navigate(["/kid-dashboard"], {
             transition: {
-                name: "slideLeft"
+                name: "slideRight"
             }
         });
     }
