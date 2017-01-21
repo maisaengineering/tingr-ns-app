@@ -98,6 +98,27 @@ export class KidDashboardComponent implements OnInit {
         this.getPosts();
     }
 
+
+
+    // pull to refresh the data
+    refreshList(args) {
+        let pullRefresh = args.object;
+        this.postService.getPosts(this.kid.kid_klid)
+            .subscribe(
+                (result) => {
+                    var body = result.body;
+                    this.posts = body.posts;
+                    setTimeout(function () {
+                        pullRefresh.refreshing = false;
+                    }, 1000);
+                },
+                (error) => {
+                    this.isLoading = false;
+                    console.error("Error "+ JSON.stringify(error));
+                }
+            );
+    }
+
     getPosts(commentedOnPost = false){
         this.isLoading = true;
         this.postService.getPosts(this.kid.kid_klid)
@@ -116,7 +137,8 @@ export class KidDashboardComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    alert('Internal server error.');
+                    console.error("Error "+ JSON.stringify(error));
+                    //alert('Internal server error.');
                 }
             );
     }
@@ -399,10 +421,14 @@ export class KidDashboardComponent implements OnInit {
         };
 
         this.modal.showModal(ModalPostComment, options).then((result) => {
-            // to get the data => result.context
-            console.log("Modal Comment Result " + JSON.stringify(result));
-            //TODO add comment details as childView to parent instead refresh
-            this.getPosts(true);
+            if(result === 'close'){
+              // modal closed
+            }else{
+                //TODO add comment details as childView to parent instead refresh
+                //console.log("Modal Comment Result " + JSON.stringify(result));/
+                this.getPosts(true);
+            }
+
         })
     }
 
