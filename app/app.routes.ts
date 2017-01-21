@@ -18,6 +18,7 @@ import { HeartersComponent } from "./pages/posts/hearters.component";
 
 import { AuthGuard } from "./auth-guard.service";
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
+import { ModalPostComment } from "./pages/dialogs/modal-post-comment";
 
 export const APP_ROUTES = [
 
@@ -62,6 +63,7 @@ export const navigatableComponents = [
     KidDashboardComponent,
     KidProfileComponent,
     ModalDatePicker,
+    ModalPostComment,
     ForgotPasswordComponent,
     KidMomentComponent,
     KidNotesComponent,

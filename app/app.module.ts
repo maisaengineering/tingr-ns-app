@@ -15,9 +15,14 @@ import {SharedData} from "./providers/data/shared_data"
 import { InternetService } from "./shared/internet.service"
 
 import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/modal-dialog";
+import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
+import { ModalPostComment } from "./pages/dialogs/modal-post-comment";
 
 import { DatePipe } from '@angular/common';
 import { KeysPipe } from './utils/keys.pipe';
+
+
+
 import { registerElement, ViewClass } from "nativescript-angular/element-registry";
 registerElement("CardView", () => require("nativescript-cardview").CardView);
 registerElement("PullToRefresh", () => {
@@ -25,7 +30,7 @@ registerElement("PullToRefresh", () => {
     return viewClass;
 });
 
-import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
+
 @NgModule({
     declarations: [
         SIDEDRAWER_DIRECTIVES,
@@ -56,7 +61,10 @@ import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
     schemas: [
         NO_ERRORS_SCHEMA
     ],
-    entryComponents: [ModalDatePicker]
+    entryComponents: [
+        ModalDatePicker,
+        ModalPostComment
+    ]
 })
 export class AppModule {
 }

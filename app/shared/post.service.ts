@@ -147,6 +147,28 @@ export class PostService {
             .catch(this.handleErrors)
     }
 
+    addComment(post_slug, text){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: 'create',
+            body: {
+                post_slug: post_slug,
+                text: text,
+                scope: "public"
+            }
+        });
+        return this.http.post(
+            Config.apiUrl + "comments", data, {
+                headers: headers
+            }
+        ).map((res:Response) => res.json())
+            .catch(this.handleErrors)
+    }
+
+
     handleErrors(error: any)  {
         console.error('An error occurred', error); // for demo purposes only
         return Observable.throw(error.message || error);

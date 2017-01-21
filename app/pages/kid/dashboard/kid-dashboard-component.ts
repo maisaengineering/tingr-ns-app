@@ -1,4 +1,4 @@
-import {Component, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewContainerRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 import {PostService, Post, TaggedTo, Comment} from "../../../shared/post.service";
 import frameModule = require("ui/frame");
@@ -9,6 +9,9 @@ import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
 import dialogs = require("ui/dialogs");
 import {GC} from 'utils/utils';
+
+import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/directives/dialogs";
+import {ModalPostComment} from "../../../pages/dialogs/modal-post-comment";
 
 let view = require("ui/core/view");
 let tnsfx = require('nativescript-effects');
@@ -30,7 +33,7 @@ declare var android: any;
     selector: 'my-app',
     styleUrls: ['./kid-dashboard.css'],
     templateUrl: './kid-dashboard.html',
-    providers: [PostService]
+    providers: [PostService, ModalDialogService]
 })
 export class KidDashboardComponent implements OnInit {
     public kid: any;
@@ -45,6 +48,7 @@ export class KidDashboardComponent implements OnInit {
     public showActionBarItems: Boolean = false;
 
     constructor(private postService: PostService,
+                private modal: ModalDialogService,private vcRef: ViewContainerRef,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
                 private router: Router,
                 private routerExtensions: RouterExtensions,
@@ -63,13 +67,22 @@ export class KidDashboardComponent implements OnInit {
         }
     }
 
+    static entries = [
+        ModalPostComment
+    ];
+
+    static exports = [
+        ModalPostComment
+    ];
+
+
     ngOnInit() {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
         //this.page.actionBarHidden = true;
         // this.kid = this.kidData.info;
         // Hide 'Default Back button'
-        if(this.isIos){
+        if (this.isIos) {
             var controller = frameModule.topmost().ios.controller;
             // get the view controller navigation item
             var navigationItem = controller.visibleViewController.navigationItem;
@@ -82,6 +95,10 @@ export class KidDashboardComponent implements OnInit {
             this.showActionBarItems = true;
         }, 500);
 
+        this.getPosts();
+    }
+
+    getPosts(){
         this.isLoading = true;
         this.postService.getPosts(this.kid.kid_klid)
             .subscribe(
@@ -89,8 +106,7 @@ export class KidDashboardComponent implements OnInit {
                     var body = result.body;
                     this.posts = body.posts;
                     this.isLoading = false;
-
-                    console.log("POSTS : "+ JSON.stringify(this.posts));
+                    console.log("POSTS : " + JSON.stringify(this.posts));
                 },
                 (error) => {
                     this.isLoading = false;
@@ -215,7 +231,7 @@ export class KidDashboardComponent implements OnInit {
         });
     }
 
-    goBack(){
+    goBack() {
         this.routerExtensions.backToPreviousPage();
     }
 
@@ -285,12 +301,12 @@ export class KidDashboardComponent implements OnInit {
     }
 
     // edit , delete post etc..
-    selectPostActions(post){
+    selectPostActions(post) {
         let actions = [];
-        if(post.can_edit){
+        if (post.can_edit) {
             actions.push('Edit')
         }
-        if(post.can_delete){
+        if (post.can_delete) {
             actions.push('Delete')
         }
         dialogs.action({
@@ -298,17 +314,17 @@ export class KidDashboardComponent implements OnInit {
             cancelButtonText: "Cancel",
             actions: actions
         }).then(result => {
-           if(result === 'Delete'){
-              this.deletePost(post);
-           }else if(result === 'Edit'){
-             //TODO
-           }
+            if (result === 'Delete') {
+                this.deletePost(post);
+            } else if (result === 'Edit') {
+                //TODO
+            }
 
         });
     }
 
 
-    deletePost(post){
+    deletePost(post) {
         let postGridLayout = view.getViewById(this.page, "post-" + post.kl_id);
         this.isLoading = true;
         this.postService.deletePost(post.kl_id).subscribe(
@@ -323,11 +339,11 @@ export class KidDashboardComponent implements OnInit {
                     let index = this.posts.indexOf(currentPost);
                     console.log('Index :' + index);
                     this.posts.splice(index, 1);
-                    console.log("Posts  "+ JSON.stringify(this.posts));
+                    console.log("Posts  " + JSON.stringify(this.posts));
                     // show toast
                     nstoasts.show({
                         text: result.message,
-                        duration : nstoasts.DURATION.SHORT
+                        duration: nstoasts.DURATION.SHORT
                     });
                 });
 
@@ -339,7 +355,7 @@ export class KidDashboardComponent implements OnInit {
         );
     }
 
-    showHearters(post){
+    showHearters(post) {
         // assign post kl_id to sharedData to available in next screen
         this.sharedData.postKlId = post.kl_id;
 
@@ -352,11 +368,31 @@ export class KidDashboardComponent implements OnInit {
         });
     }
 
-    openPostImages(post){
+    openPostImages(post) {
         // Add to array and pass to showViewer
         // add multiple images if post has
         let postImages = [];
         postImages.push(post.large_image);
         photoViewer.showViewer(postImages);
     }
+
+
+    showModalCommentToPost(post) {
+        var options: ModalDialogOptions = {
+            viewContainerRef: this.vcRef,
+            context: {
+                post_kl_id: post.kl_id,
+                post_slug: post.slug
+            },
+            fullscreen: false
+        };
+
+        this.modal.showModal(ModalPostComment, options).then((result) => {
+            // to get the data => result.context
+            console.log("Modal Comment Result " + JSON.stringify(result));
+            //TODO add comment details as childView to parent instead refresh
+            this.getPosts();
+        })
+    }
+
 }

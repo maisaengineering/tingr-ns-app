@@ -160,7 +160,7 @@
                             <GridLayout rows="auto,auto,auto,auto,auto,auto" *ngIf="post.comments">
                                 <GridLayout row="{{ i }}" *ngFor="let comment of post.comments; let i = index">
                                     <StackLayout orientation="horizontal" verticalAlignment="center"
-                                                 class="moment-comment-item">
+                                                 class="moment-comment-item" id="comment-slug-{{ comment.slug }}">
 
                                         <Image height="60" width="60" class="parent-profile-pic blue-circle-border"
                                                src="{{ comment.commenter_photo || '~/images/avatar-100.png' }}"></Image>
@@ -168,12 +168,12 @@
                                         <StackLayout orientation="vertical" class="comment-details p-l-5">
                                             <StackLayout orientation="horizontal">
                                                 <Label [text]="comment.commented_by"
-                                                       class="kid-name font-weight-bold"></Label>
+                                                       class="profile-name font-weight-bold"></Label>
                                                 <Label *ngIf="comment.child_name"
                                                        text="{{ comment.child_name }}'s {{ comment.child_relationship }}"
-                                                       class="relation-name light-gray font-italic"></Label>
+                                                       class="profile-relationship text-muted"></Label>
                                             </StackLayout>
-                                            <Label [text]="comment.content" textwrap="true"></Label>
+                                            <Label [text]="comment.content" textWrap="true"></Label>
                                         </StackLayout>
                                     </StackLayout>
                                     <GridLayout row="{{ i+1 }}">
@@ -206,7 +206,7 @@
                                              marginLeft="10">
                                     <Image stretch="none" src="res://comment_icon"></Image>
                                 </StackLayout>
-                                <StackLayout col="2" row="0" horizontalAlignment="center" orientation="horizontal"
+                                <StackLayout (tap)="showModalCommentToPost(post)" col="2" row="0" horizontalAlignment="center" orientation="horizontal"
                                              marginLeft="10">
                                     <Label text="Comment" class="comment-label"></Label>
                                 </StackLayout>
