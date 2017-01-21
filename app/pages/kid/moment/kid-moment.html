@@ -46,7 +46,7 @@
 
                     <StackLayout>
                         <StackLayout *ngFor="let kid of managedKids" (tap)="tagKid(kid.kid_klid)"
-                                     id="kid-container-{{ kid.kid_klid }}" class="unchecked">
+                                     id="kid-container-{{ kid.kid_klid }}" class="unchecked selected">
                             <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center"
                                         orientation="horizontal" class="item">
                                 <Image row='0' col="0" height="40" width="40" class="kid-profile-pic blue-circle-border"
@@ -54,7 +54,7 @@
                                 <Label row="0" col="1" verticalAlignment="center" text="{{ kid.fname }} {{ kid.lname }}"
                                        class="m-l-20 font-weight-bold"></Label>
                                 <Image id="checkbox-{{ kid.kid_klid }}" row="0" col="2" class="text-right m-r-10"
-                                       stretch="none" verticalAlignment="center" horizontalAlignment="right"
+                                       stretch="aspectFill" verticalAlignment="center" horizontalAlignment="right"
                                        src="~/images/check-box-unchecked.png"></Image>
 
                             </Gridlayout>

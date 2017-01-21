@@ -82,19 +82,24 @@ export class KidMomentComponent implements OnInit {
     }
 
     goBack(){
-        this.routerExtensions.backToPreviousPage();
+       // this.routerExtensions.backToPreviousPage();
+        this.routerExtensions.navigate(["/kid-dashboard"], {
+            transition: {
+                name: "slideLeft"
+            }
+        });
     }
 
     getS3Key(){
         this.s3_key = ''; // set key to empty to show activity indicator
-        this.isLoading = true;
+        //this.isLoading = true;
         console.log('Getting S3 key ....');
         this.postService.uploadToS3(this.sharedData.momentCaptureDetails.imageBase64Data)
             .subscribe(
                 (result) => {
                     let body = result.body;
                     this.s3_key = body.key;
-                    this.isLoading = false;
+                   // this.isLoading = false;
                     console.log('New S3 key + '+this.s3_key);
                 },
                 (error) => {
@@ -194,19 +199,19 @@ export class KidMomentComponent implements OnInit {
 
     }
 
-
-
     tagKid(kid_klid){
         let kidContainer = view.getViewById(this.page, "kid-container-" + kid_klid);
         let checkBoxImg = view.getViewById(this.page, "checkbox-" + kid_klid);
         let isChecked = kidContainer.className === 'checked' ? true : false;
         if(isChecked){
             //uncheck
+            kidContainer.backgroundColor = "#ffffff";
             kidContainer.className = 'unchecked';
             checkBoxImg.src = '~/images/check-box-unchecked.png';
             this.taggedKidIds.splice(this.taggedKidIds.indexOf(kid_klid), 1);
         }else {
             //check
+            kidContainer.backgroundColor = "#f9f9f9";
             kidContainer.className = 'checked';
             checkBoxImg.src = '~/images/check-box-checked.png';
             this.taggedKidIds.push(kid_klid);
