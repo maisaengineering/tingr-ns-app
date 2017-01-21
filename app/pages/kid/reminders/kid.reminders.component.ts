@@ -71,7 +71,6 @@ export class KidRemindersComponent implements OnInit {
                     var body = result.body;
                     this.reminders = body.reminders;
                     this.isLoading = false;
-                    console.log("Reminders :" + JSON.stringify(this.reminders))
                 },
                 (error) => {
                     this.isLoading = false;
@@ -83,12 +82,13 @@ export class KidRemindersComponent implements OnInit {
     // pull to refresh the data
     refreshList(args) {
         let pullRefresh = args.object;
-        this.reminderService.getList(this.kid.kid_klid)
+        let kid_klid = this.kid.kid_klid;
+        this.reminderService.getList(kid_klid)
             .subscribe(
                 (result) => {
                     var body = result.body;
-                    this.reminders = body.notes;
-                    setTimeout(function () {
+                    this.reminders = body.reminders;
+                    setTimeout(() => {
                         pullRefresh.refreshing = false;
                     }, 1000);
                 },
@@ -102,16 +102,24 @@ export class KidRemindersComponent implements OnInit {
     openReminder(reminder) {
         let reminderNameLabel = view.getViewById(this.page, "reminder-name-" + reminder.kl_id);
         let reminderItemView = view.getViewById(this.page, "reminder-" + reminder.kl_id);
+
+
         dialogs.alert({
-            //title: "Error",
-            message: reminder.name,
+            title: "",
+            message: reminder.text,
             okButtonText: "Ok"
-        }).then(function () {
-            if(reminder.seen){
-                console.log('already seen');
+        }).then(() => {
+            if(reminder.read){
+               // console.log('already seen');
             }else{
                 reminderNameLabel.className = 'text-muted';
                 reminderItemView.shake();
+                // send request to server in background
+                this.reminderService.readOrUnread(true,reminder.kl_id)
+                    .subscribe(
+                        (result) => {}
+                    );
+
             }
         });
     }

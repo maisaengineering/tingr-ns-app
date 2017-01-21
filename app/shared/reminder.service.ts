@@ -36,6 +36,26 @@ export class ReminderService {
     }
 
 
+    readOrUnread(read = false, reminder_klid){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: read ? "read_reminder" : "unread_reminder",
+            body: {
+                reminder_klid: reminder_klid
+            }
+        });
+        return this.http.post(
+            Config.apiUrl + "reminders", data, {
+                headers: headers
+            }
+        )
+            .map(response => response.json())
+            .catch(this.handleErrors);
+    }
+
     handleErrors(error: any)  {
         console.error('An error occurred', error); // for demo purposes only
         return Observable.throw(error.message || error);
