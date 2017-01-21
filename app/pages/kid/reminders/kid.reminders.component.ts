@@ -63,18 +63,40 @@ export class KidRemindersComponent implements OnInit {
     }
 
     getList(){
-        this.reminders = this.reminderService.getList();
-
-        console.log("DATTATTAT " + JSON.stringify(this.reminders))
+        this.isLoading = true;
+        let kid_klid = this.kid.kid_klid;
+        this.reminderService.getList(kid_klid)
+            .subscribe(
+                (result) => {
+                    var body = result.body;
+                    this.reminders = body.reminders;
+                    this.isLoading = false;
+                    console.log("Reminders :" + JSON.stringify(this.reminders))
+                },
+                (error) => {
+                    this.isLoading = false;
+                    console.log("Error "+ JSON.stringify(error));
+                }
+            );
     }
 
     // pull to refresh the data
     refreshList(args) {
         let pullRefresh = args.object;
-        this.reminders = this.reminderService.getList();
-        setTimeout(function () {
-            pullRefresh.refreshing = false;
-        }, 1000);
+        this.reminderService.getList(this.kid.kid_klid)
+            .subscribe(
+                (result) => {
+                    var body = result.body;
+                    this.reminders = body.notes;
+                    setTimeout(function () {
+                        pullRefresh.refreshing = false;
+                    }, 1000);
+                },
+                (error) => {
+                    this.isLoading = false;
+                    console.log("Error "+ JSON.stringify(error));
+                }
+            );
     }
 
     openReminder(reminder) {
