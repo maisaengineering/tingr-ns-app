@@ -43,7 +43,7 @@ export class InternetService {
                 message: "Your credits could not be updated.\n" +
                 "Please make sure you are connected to the internet.",
                 okButtonText: "OK"
-            }).then(function () {
+            }).then(() => {
                 //console.log("Dialog closed!");
             });
         }

@@ -79,7 +79,7 @@ export class FormsAndDocumentsComponent implements OnInit {
     refreshList(args) {
         let pullRefresh = args.object;
         this.formsAndDocs = this.formsAndDocsService.getList();
-        setTimeout(function () {
+        setTimeout(() => {
             pullRefresh.refreshing = false;
         }, 1000);
     }

@@ -96,7 +96,7 @@ export class HeartersComponent implements OnInit {
                 (result) => {
                     var body = result.body;
                     this.hearters = body.hearters;
-                    setTimeout(function () {
+                    setTimeout(() => {
                         pullRefresh.refreshing = false;
                     }, 1000);
                 },

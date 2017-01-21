@@ -167,7 +167,7 @@ export class KidMomentComponent implements OnInit {
             })
             .then((selection) => {
                 console.log("Selection done:");
-                selection.forEach(function(selected) {
+                selection.forEach((selected) => {
                     //TODO for multiple seelction follow below coding for each one
                     // console.log("----------------");
                     // console.log("uri: " + selected.uri);
@@ -189,11 +189,11 @@ export class KidMomentComponent implements OnInit {
                         this.s3_key = '';
                         this.getS3Key(); // get s3_key for newly upload image
 
-                    }).catch(function (e) {
+                    }).catch((e) => {
                     console.log("Error: " + e);
                     console.log(e.stack);
                 });
-            }).catch(function (e) {
+            }).catch((e) => {
             console.log(e);
         });
 

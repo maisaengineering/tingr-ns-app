@@ -65,7 +65,7 @@ export class FormOrDocWebviewComponent implements OnInit {
             /*message: "Your message",*/
             cancelButtonText: "Cancel",
             actions: ["Request", "Print"]
-        }).then(function (result) {
+        }).then((result) => {
             if(result === 'Print'){
                 // open url in browser
                 utilityModule.openUrl(formOrDoc.url);

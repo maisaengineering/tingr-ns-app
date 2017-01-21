@@ -125,7 +125,7 @@ export class CalendarComponent extends DrawerPage implements OnInit {
                     this.event_reminders = reminders.event_reminders;
                     this.holidays = reminders.holidays;
                     // stop pull to refresh
-                    setTimeout(function () {
+                    setTimeout(() => {
                         pullRefresh.refreshing = false;
                     }, 1000);
                 },
@@ -198,7 +198,7 @@ export class CalendarComponent extends DrawerPage implements OnInit {
             //title: "Error",
             message: description,
             okButtonText: "Ok"
-        }).then(function () {
+        }).then(() => {
             //console.log("Dialog closed!");
         });
     }

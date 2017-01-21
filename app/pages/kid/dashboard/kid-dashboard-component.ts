@@ -108,7 +108,7 @@ export class KidDashboardComponent implements OnInit {
                 (result) => {
                     var body = result.body;
                     this.posts = body.posts;
-                    setTimeout(function () {
+                    setTimeout(() => {
                         pullRefresh.refreshing = false;
                     }, 1000);
                 },
@@ -155,11 +155,11 @@ export class KidDashboardComponent implements OnInit {
                 // In addition, you can also have multiple permissions pending and each one will resolve properly
                 if (platformModule.device.os === "Android" && platformModule.device.sdkVersion >= 23) {
                     permissions.requestPermission(android.Manifest.permission.CAMERA, "Allow Tingr to access your camera?")
-                        .then(function () {
+                        .then(() => {
                             console.log("CAMERA Permission: granted!");
                             this.takePicture();
                         })
-                        .catch(function () {
+                        .catch(() => {
                             console.log("CAMERA Permission: -- refused");
                         });
                 } else {
@@ -169,11 +169,11 @@ export class KidDashboardComponent implements OnInit {
             } else {
                 if (platformModule.device.os === "Android" && platformModule.device.sdkVersion >= 23) {
                     permissions.requestPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE, "Allow Tingr to access your gallery?")
-                        .then(function () {
+                        .then(() => {
                             console.log("READ_EXTERNAL_STORAGE permission: granted!");
                             this.selectFromGallery();
                         })
-                        .catch(function () {
+                        .catch(() => {
                             console.log("READ_EXTERNAL_STORAGE permission: -- refused");
                         });
                 } else {
@@ -228,7 +228,7 @@ export class KidDashboardComponent implements OnInit {
             })
             .then((selection) => {
                 console.log("Selection done:");
-                selection.forEach(function (selected) {
+                selection.forEach((selected) => {
                     //TODO for multiple seelction follow below coding for each one
                     // console.log("----------------");
                     // console.log("uri: " + selected.uri);
@@ -250,11 +250,11 @@ export class KidDashboardComponent implements OnInit {
                             }
                         });
 
-                    }).catch(function (e) {
+                    }).catch((e) => {
                     console.log("Error: " + e);
                     console.log(e.stack);
                 });
-            }).catch(function (e) {
+            }).catch((e) => {
             console.log(e);
         });
     }

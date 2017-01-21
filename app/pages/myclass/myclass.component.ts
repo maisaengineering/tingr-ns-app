@@ -146,7 +146,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                     this.managed_kids = body.managed_kids;
                     // save managed kids in SharedData Provider, so data will be available to all components
                     this.sharedData.managedKids = this.managed_kids;
-                    setTimeout(function () {
+                    setTimeout(() => {
                         pullRefresh.refreshing = false;
                     }, 1000);
                 },
