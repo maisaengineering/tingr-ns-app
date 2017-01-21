@@ -145,7 +145,7 @@ export class KidDashboardComponent implements OnInit {
 
     selectMomentCaptureOption() {
         dialogs.action({
-            message: "",
+            //message: "",
             cancelButtonText: "Cancel",
             actions: ["Take photo", "Choose existing"]
         }).then(result => {
@@ -343,7 +343,7 @@ export class KidDashboardComponent implements OnInit {
             actions.push('Delete')
         }
         dialogs.action({
-            message: "",
+            //message: "",
             cancelButtonText: "Cancel",
             actions: actions
         }).then(result => {

@@ -62,7 +62,7 @@ export class FormOrDocWebviewComponent implements OnInit {
 
     openShareOptions(formOrDoc){
         dialogs.action({
-            message: "",
+           // message: "",
             cancelButtonText: "Cancel",
             actions: ["Request", "Print"]
         }).then((result) => {

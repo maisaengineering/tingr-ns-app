@@ -166,10 +166,11 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             actions.push(room.session_name);
         }
         dialogs.action({
-            message: "",
+            //message: "",
             cancelButtonText: "Cancel",
             actions: actions
         }).then(result => {
+            console.log("Result --- "+ result)
             // don't fetch data if clicks on same room
             if (this.roomName != result) {
                 this.currentRoom = rooms.filter(report => report.session_name === result)[0];
@@ -193,7 +194,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
     onLongPressKid(event, kid) {
         dialogs.action({
-            message: "",
+            //message: "",
             cancelButtonText: "Cancel",
             actions: ["Sign-in/Sign-out", "Message a Parent"]
         }).then(result => {
@@ -230,7 +231,6 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         this.kidSignInOutService.signInOrSingOut(kid.kid_klid)
             .subscribe(
                 (result) => {
-                    console.log("REsult  " + JSON.stringify(result));
                     this.isLoading = false;
                     let body = result.body;
                     let options = {
