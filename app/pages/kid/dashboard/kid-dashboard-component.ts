@@ -98,7 +98,7 @@ export class KidDashboardComponent implements OnInit {
         this.getPosts();
     }
 
-    getPosts(){
+    getPosts(commentedOnPost = false){
         this.isLoading = true;
         this.postService.getPosts(this.kid.kid_klid)
             .subscribe(
@@ -106,7 +106,13 @@ export class KidDashboardComponent implements OnInit {
                     var body = result.body;
                     this.posts = body.posts;
                     this.isLoading = false;
-                    console.log("POSTS : " + JSON.stringify(this.posts));
+                    if(commentedOnPost){
+                        // show toast
+                        nstoasts.show({
+                            text: 'Your comment added',
+                            duration: nstoasts.DURATION.SHORT
+                        });
+                    }
                 },
                 (error) => {
                     this.isLoading = false;
@@ -396,7 +402,7 @@ export class KidDashboardComponent implements OnInit {
             // to get the data => result.context
             console.log("Modal Comment Result " + JSON.stringify(result));
             //TODO add comment details as childView to parent instead refresh
-            this.getPosts();
+            this.getPosts(true);
         })
     }
 
