@@ -240,14 +240,14 @@ export class KidDashboardComponent implements OnInit {
         let heartedImage = view.getViewById(this.page, "post-hearted-image-" + post.kl_id);
         let activityIndicator = view.getViewById(this.page, "post-add-remove-heart-indicator-" + post.kl_id);
         let isHearted = heartIconImage.className === 'hearted' ? true : false
-        this.isLoading = true;
+        //this.isLoading = true;
         heartIconImage.visibility = 'collapsed';
         activityIndicator.visibility = 'visible';
 
         this.postService.addOrRemoveHeart(post, isHearted)
             .subscribe(
                 (result) => {
-                    this.isLoading = false;
+                    //this.isLoading = false;
                     let body = result.body;
                     if (isHearted) {
                         // remove heart
@@ -275,7 +275,7 @@ export class KidDashboardComponent implements OnInit {
 
                 },
                 (error) => {
-                    this.isLoading = false;
+                    //this.isLoading = false;
                     //alert('Internal server error.');
                 }
             );
@@ -283,17 +283,22 @@ export class KidDashboardComponent implements OnInit {
     }
 
     openKidProfile(kid) {
+
+
         if (this.isIos) {
             this.routerExtensions.navigate(["/kid-profile"], {
                 transition: {
                     name: 'curl',
-                    duration: 700
+                    duration: 500,
+                    curve: "easeIn"
                 }
             });
         } else {
             this.routerExtensions.navigate(["/kid-profile"], {
                 transition: {
-                    name: 'slideUp'
+                    name: "explode",
+                    duration: 300,
+                    curve: "easeOut"
                 }
             });
         }

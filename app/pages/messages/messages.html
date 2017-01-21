@@ -39,7 +39,7 @@
                                                 <Label [text]="message.child_name || message.sender_name" class="profile-name"></Label>
                                                 <Label *ngIf="message.child_relationship" [text]="message.child_relationship" class="profile-relationship text-muted"></Label>
                                             </StackLayout>
-                                            <TextView class="message-text" [text]="message.text" textWrap="true"></TextView>
+                                            <Label class="message-text" [text]="message.text" textWrap="true"></Label>
                                         </StackLayout>
                                     </GridLayout>
                                 </StackLayout>
