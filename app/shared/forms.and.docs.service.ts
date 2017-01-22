@@ -5,6 +5,7 @@ import "rxjs/add/operator/do";
 import "rxjs/add/operator/map";
 import { Config } from "../shared/config";
 import { TokenService } from "../shared/token.service";
+import { TeacherInfo } from "../providers/data/teacher_info";
 
 @Injectable()
 export class FormsAndDocsService {
@@ -13,17 +14,30 @@ export class FormsAndDocsService {
 
     }
 
-    getList() {
-        let formsAndDocs = [];
-        formsAndDocs.push(
-            { name: 'Student Identification',url: 'http://www.google.com'},
-            { name: 'Permissions for Photographs/Video Recording',url: 'https://www.facebook.com/'},
-            { name: 'Emergency Consent Form',url: 'https://tingr.org/'},
-            { name: 'Multicultural Week',url: 'https://tingr.org/'},
-            { name: 'Homeland Security Emergency Form',url: 'https://tingr.org/'},
-            { name: 'Immunization Record',url: 'https://tingr.org/'},
-        );
-        return formsAndDocs;
+    getList(kid_klid) {
+
+        var room = TeacherInfo.parsedCurrentRoom;
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: "forms_and_documents",
+            body: {
+                session_id: room.session_id,
+                season_id: room.season_id,
+                kid_klid: kid_klid
+            }
+        });
+
+        return this.http.post(
+            Config.apiUrl + "organizations", data, {
+                headers: headers
+            }
+        ).map((res:Response) => res.json())
+            .catch(this.handleErrors);
+
+
     }
 
 

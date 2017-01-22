@@ -29,7 +29,8 @@ export class FormsAndDocumentsComponent implements OnInit {
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
-    public formsAndDocs: Array<any>;
+    public forms: Array<any>;
+    public documents: Array<any>;
     public showActionBarItems: Boolean = false;
 
     constructor(private formsAndDocsService: FormsAndDocsService,
@@ -40,7 +41,8 @@ export class FormsAndDocumentsComponent implements OnInit {
                 private sharedData: SharedData,
                 private internetService: InternetService) {
         //super(changeDetectorRef);
-        this.formsAndDocs = [];
+        this.forms = [];
+        this.documents = [];
         this.kid = {};
         this.kid = this.kidData.info;
         if (app.android) {
@@ -72,16 +74,46 @@ export class FormsAndDocumentsComponent implements OnInit {
     }
 
     getList(){
-        this.formsAndDocs = this.formsAndDocsService.getList();
+        this.isLoading = true;
+        let kid_klid = this.kid.kid_klid;
+        this.formsAndDocsService.getList(kid_klid)
+            .subscribe(
+                (result) => {
+                    let body = result.body;
+                    this.forms = body.forms;
+                    this.documents = body.documents;
+                    this.isLoading = false;
+
+                    console.log("RESULT "+ JSON.stringify(body))
+                },
+                (error) => {
+                    this.isLoading = false;
+                    console.log("Error "+ JSON.stringify(error));
+                }
+            );
     }
 
     // pull to refresh the data
     refreshList(args) {
         let pullRefresh = args.object;
-        this.formsAndDocs = this.formsAndDocsService.getList();
-        setTimeout(() => {
-            pullRefresh.refreshing = false;
-        }, 1000);
+
+        let kid_klid = this.kid.kid_klid;
+        this.formsAndDocsService.getList(kid_klid)
+            .subscribe(
+                (result) => {
+                    var body = result.body;
+                    this.forms = body.forms;
+                    this.documents = body.documents;
+                    setTimeout(() => {
+                        pullRefresh.refreshing = false;
+                    }, 1000);
+                },
+                (error) => {
+                    this.isLoading = false;
+                    console.log("Error "+ JSON.stringify(error));
+                }
+            );
+
     }
 
 
