@@ -24,28 +24,19 @@ export class InternetService {
         }
     }
 
-    isWifi(){
-        this.connectionType === connectivity.connectionType.wifi;
-    }
-
-    isMobileData(){
-        this.connectionType === connectivity.connectionType.mobile;
-    }
-
-    isOffline(){
-        this.connectionType === connectivity.connectionType.none;
-    }
 
     alertIfOffline(){
-        if(this.isOffline()){
-            dialogs.alert({
-                title: "Internet connection required",
-                message: "Your credits could not be updated.\n" +
-                "Please make sure you are connected to the internet.",
-                okButtonText: "OK"
-            }).then(() => {
-                //console.log("Dialog closed!");
-            });
+        switch (this.connectionType) {
+            case connectivity.connectionType.none:
+                dialogs.alert({
+                    title: "Internet connection required",
+                    message: "Your credits could not be updated.\n" +
+                    "Please make sure you are connected to the internet.",
+                    okButtonText: "OK"
+                }).then(() => {
+                    //console.log("Dialog closed!");
+                });
+                break;
         }
     }
 
