@@ -11,7 +11,7 @@ let app = require("application");
 @Component({
     selector: 'modal-content',
     template: ` 
-       <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white;"> 
+       <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white;" orientation="vertical"> 
          <StackLayout class="m-x-20 m-t-15" verticalALignment="center">  
             <Gridlayout cols="auto,auto" verticalAlignment="center"> 
              <StackLayout (tap)="close('close')" class="text-primary blue2" row="0" col="0"  horizontalAlignment="right" orientation="horizontal">  
@@ -23,6 +23,9 @@ let app = require("application");
          <StackLayout orientation="vertical">
           <Image src="~/images/server-error.jpg" stretch="aspectFit"></Image>     
          </StackLayout>
+         
+         <Button width="100" text="Ok"
+                    class="btn btn-primary blue2-background btn-rounded-sm" (tap)="close('close')"></Button>  
           
        </StackLayout>
     `
