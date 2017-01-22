@@ -100,7 +100,7 @@
                                src="res://message_icon"></Image>
                         <StackLayout verticalAlignment="center">
                             <GridLayout rows="auto,auto" *ngFor="let item of messages; let i = index">
-                                <GridLayout row="0" columns="50, *" rows="*" class="item">
+                                <GridLayout row="0" columns="50, *" rows="*" class="item" (tap)="openMessageConversation(item)">
                                     <StackLayout verticalAlignment="center">
                                         <Image height="40" width="40" class="kid-profile-pic blue-circle-border"
                                                src="{{ item.photograph ? item.photograph : '~/images/avatar-100.png' }}"></Image>

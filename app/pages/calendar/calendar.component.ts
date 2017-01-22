@@ -12,7 +12,7 @@ import {ModalDatePicker} from "../../pages/dialogs/modal-date-picker";
 import {InternetService} from "../../shared/internet.service";
 import {DatePicker} from "ui/date-picker";
 import {Page} from "ui/page";
-
+import {Router, NavigationExtras} from "@angular/router";
 var app = require("application");
 var platform = require("platform");
 var frameModule = require("ui/frame");
@@ -43,7 +43,8 @@ export class CalendarComponent extends DrawerPage implements OnInit {
     constructor(private changeDetectorRef: ChangeDetectorRef,
                 private modal: ModalDialogService, private vcRef: ViewContainerRef,
                 private calendarService: CalendarService,
-                private internetService: InternetService) {
+                private internetService: InternetService,
+                private router: Router) {
         super(changeDetectorRef);
 
         if (app.android) {
@@ -100,13 +101,13 @@ export class CalendarComponent extends DrawerPage implements OnInit {
         }, 500);
 
         /*// Hide 'Default Back button'
-        if (this.isIos) {
-            var controller = frameModule.topmost().ios.controller;
-            // get the view controller navigation item
-            var navigationItem = controller.visibleViewController.navigationItem;
-            // hide back button
-            navigationItem.setHidesBackButtonAnimated(true, false);
-        }*/
+         if (this.isIos) {
+         var controller = frameModule.topmost().ios.controller;
+         // get the view controller navigation item
+         var navigationItem = controller.visibleViewController.navigationItem;
+         // hide back button
+         navigationItem.setHidesBackButtonAnimated(true, false);
+         }*/
         // load data
         this.loadCalendarDataByDay(this.currentDate);
     }
@@ -124,6 +125,8 @@ export class CalendarComponent extends DrawerPage implements OnInit {
                     this.birthdays = reminders.birthdays;
                     this.event_reminders = reminders.event_reminders;
                     this.holidays = reminders.holidays;
+
+                    console.log("Messages " + JSON.stringify(this.messages));
                     // stop pull to refresh
                     setTimeout(() => {
                         pullRefresh.refreshing = false;
@@ -149,15 +152,27 @@ export class CalendarComponent extends DrawerPage implements OnInit {
                     this.event_reminders = reminders.event_reminders;
                     this.holidays = reminders.holidays;
                     this.isLoading = false;
+
+                    console.log("Messages " + JSON.stringify(this.messages));
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.error("ERRORRR "+ JSON.stringify(error));
+                    console.error("ERRORRR " + JSON.stringify(error));
                     //alert('Internal server error.');
 
                 }
             );
     }
+
+    openMessageConversation(message) {
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                "conversationKlId": message.conversation_klid
+            }
+        };
+        this.router.navigate(["messages"], navigationExtras);
+    }
+
 
     // check if local current time is b/w schedule start and end times
     isScheduleTimeIsCurrent(scheduleStartTimeStr, scheduleEndTimeStr) {

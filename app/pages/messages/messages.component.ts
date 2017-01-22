@@ -1,7 +1,7 @@
 import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit } from "@angular/core";
 import {Page} from "ui/page";
 import frameModule = require("ui/frame");
-import {Router, NavigationExtras} from "@angular/router";
+import {Router, NavigationExtras, ActivatedRoute} from "@angular/router";
 import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../providers/data/kid_data";
 import {SharedData} from "../../providers/data/shared_data";
@@ -33,10 +33,12 @@ export class MessagesComponent implements OnInit {
     public showActionBarItems: Boolean = false;
     public sampleTestArray: Array<any>;
     public newMessageText: string = '';
+    public conversationKlId: string = '';
 
     constructor(private messageService: MessageService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
                 private router: Router,
+                private route: ActivatedRoute,
                 private routerExtensions: RouterExtensions,
                 private kidData: KidData,
                 private sharedData: SharedData,
@@ -45,6 +47,12 @@ export class MessagesComponent implements OnInit {
         this.messages = {};
         this.kid = {};
         this.kid = this.kidData.info;
+
+        // get the conversationId from navigation params if this page is open from schedule
+        this.route.queryParams.subscribe(params => {
+            this.conversationKlId = params["conversationKlId"];
+        });
+
         if (app.android) {
             this.isAndroid = true;
         } else if (app.ios) {
@@ -68,14 +76,20 @@ export class MessagesComponent implements OnInit {
     getMessages(){
         //this.messages = this.messageService.getMessages();
         this.isLoading = true;
-        let kid_klid = this.kid.kid_klid;
-        this.messageService.getList(kid_klid)
+        // if navigation comes from schedule then its a conversation
+        let kid_klid = this.conversationKlId ? '' : this.kid.kid_klid;
+        this.messageService.getList(kid_klid, this.conversationKlId)
             .subscribe(
                 (result) => {
                     let body = result.body;
                     this.messages = body.messages;
                     this.isLoading = false;
-                    console.log("Messages :" + JSON.stringify(this.messages))
+                    console.log("Messages :" + JSON.stringify(this.messages));
+
+                    let unreadMessages = this.messages.filter(message => message.read_message === false);
+                    console.log("Un Read Messages "+ unreadMessages);
+
+
                 },
                 (error) => {
                     this.isLoading = false;
