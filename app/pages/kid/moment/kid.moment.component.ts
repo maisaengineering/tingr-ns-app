@@ -55,7 +55,8 @@ export class KidMomentComponent implements OnInit {
         this.managedKids = this.sharedData.managedKids;
         this.kid = this.kidData.info;
         this.additionalDetails = '';
-        this.taggedKidIds = [];
+        // by default add this kid to tag
+        this.taggedKidIds = [this.kid.kid_klid];
         this.s3_key = '';
         if (app.android) {
             this.isAndroid = true;
