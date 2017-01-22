@@ -127,9 +127,10 @@ export class KidDashboardComponent implements OnInit {
         this.postService.getPosts(this.kid.kid_klid)
             .subscribe(
                 (result) => {
-                    var body = result.body;
+                    let body = result.body;
                     this.posts = body.posts;
                     this.isLoading = false;
+                    //console.log("POSTS "+ JSON.stringify(this.posts));
                     if(commentedOnPost){
                         // show toast
                         nstoasts.show({
@@ -344,7 +345,8 @@ export class KidDashboardComponent implements OnInit {
     selectPostActions(post) {
         let actions = [];
         if (post.can_edit) {
-            actions.push('Edit')
+            //TODO enable after completing the editPostSection
+            //actions.push('Edit')
         }
         if (post.can_delete) {
             actions.push('Delete')
@@ -370,16 +372,14 @@ export class KidDashboardComponent implements OnInit {
         this.postService.deletePost(post.kl_id).subscribe(
             (result) => {
                 this.isLoading = false;
-                postGridLayout.fadeOut('slow').then(() => {
+
+                postGridLayout.floatOut('slow', 'left').then(() => {
                     // hide deleted post
                     postGridLayout.visibility = 'collapsed';
                     // remove current post from list
                     let currentPost = this.posts.filter(post => post.kl_id === post.kl_id)[0];
-                    console.log("Current Post" + JSON.stringify(currentPost));
                     let index = this.posts.indexOf(currentPost);
-                    console.log('Index :' + index);
                     this.posts.splice(index, 1);
-                    console.log("Posts  " + JSON.stringify(this.posts));
                     // show toast
                     nstoasts.show({
                         text: result.message,
