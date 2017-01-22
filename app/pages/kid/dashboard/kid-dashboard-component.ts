@@ -12,6 +12,7 @@ import {GC} from 'utils/utils';
 
 import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/directives/dialogs";
 import {ModalPostComment} from "../../../pages/dialogs/modal-post-comment";
+import {ServerErrorService} from "../../../shared/server.error.service";
 
 let view = require("ui/core/view");
 let tnsfx = require('nativescript-effects');
@@ -33,7 +34,7 @@ declare var android: any;
     selector: 'my-app',
     styleUrls: ['./kid-dashboard.css'],
     templateUrl: './kid-dashboard.html',
-    providers: [PostService, ModalDialogService]
+    providers: [PostService, ModalDialogService, ServerErrorService]
 })
 export class KidDashboardComponent implements OnInit {
     public kid: any;
@@ -48,13 +49,15 @@ export class KidDashboardComponent implements OnInit {
     public showActionBarItems: Boolean = false;
 
     constructor(private postService: PostService,
-                private modal: ModalDialogService,private vcRef: ViewContainerRef,
+                private modal: ModalDialogService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
                 private router: Router,
                 private routerExtensions: RouterExtensions,
                 private kidData: KidData,
                 private sharedData: SharedData,
-                private internetService: InternetService) {
+                private internetService: InternetService,
+                private vcRef: ViewContainerRef,
+                private serverErrorService: ServerErrorService) {
         //super(changeDetectorRef);
 
         this.kid = {};
@@ -114,7 +117,7 @@ export class KidDashboardComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.error("Error "+ JSON.stringify(error));
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }
@@ -137,8 +140,7 @@ export class KidDashboardComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.error("Error "+ JSON.stringify(error));
-                    //alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }
@@ -388,7 +390,7 @@ export class KidDashboardComponent implements OnInit {
             },
             (error) => {
                 this.isLoading = false;
-                alert('Internal server error.');
+                this.serverErrorService.showErrorModal();
             }
         );
     }

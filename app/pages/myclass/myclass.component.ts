@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {DrawerPage} from "../drawer.page";
 import {MyClassService, ManagedKid, Room} from "../../shared/myclass.service";
 import {KidSignInOutService} from "../../shared/kid-signinout.service";
@@ -10,7 +10,7 @@ import {RouterExtensions} from "nativescript-angular/router";
 import {Page} from "ui/page";
 import {TeacherInfo} from "../../providers/data/teacher_info";
 import {Observable} from "rxjs/Rx";
-
+import {ServerErrorService} from "../../shared/server.error.service";
 // >> long-press-code
 import {GestureEventData} from "ui/gestures";
 import dialogs = require("ui/dialogs");
@@ -29,7 +29,8 @@ var tnsfx = require('nativescript-effects');
     selector: 'my-app',
     styleUrls: ['./myclass.css'],
     templateUrl: './myclass.component.html',
-    providers: [MyClassService, KidSignInOutService, MessageService, TeacherService]
+    providers: [MyClassService, KidSignInOutService,
+        MessageService, TeacherService, ServerErrorService]
 })
 export class MyClassComponent extends DrawerPage implements OnInit {
     public managed_kids: Array<ManagedKid>;
@@ -67,7 +68,9 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 private sharedData: SharedData,
                 private routerExtensions: RouterExtensions,
                 private page: Page,
-                private internetService: InternetService) {
+                private internetService: InternetService,
+                private vcRef: ViewContainerRef,
+                private serverErrorService: ServerErrorService) {
         super(changeDetectorRef);
         if (app.android) {
             this.isAndroid = true;
@@ -111,7 +114,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             },
             (error) => {
                 this.isLoading = false;
-                console.error(error);
+                this.serverErrorService.showErrorModal();
             }
         );
     }
@@ -130,7 +133,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }
@@ -153,7 +156,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 (error) => {
                     this.isLoading = false;
                     pullRefresh.refreshing = false;
-                    alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }
@@ -251,7 +254,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
 
@@ -272,7 +275,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }

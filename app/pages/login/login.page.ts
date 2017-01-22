@@ -1,6 +1,6 @@
+import {Component, ViewContainerRef, OnInit, ViewChild, ElementRef, Injectable} from "@angular/core";
 import {Router, NavigationExtras} from "@angular/router";
 import {RouterExtensions, PageRoute} from "nativescript-angular/router";
-import {Component, OnInit, ViewChild, ElementRef, Injectable} from "@angular/core";
 import {Page} from "ui/page";
 import {Teacher} from "../../shared/teacher/teacher";
 import {TeacherService} from "../../shared/teacher/teacher.service";
@@ -8,6 +8,7 @@ import {TokenService} from "../../shared/token.service";
 import {AuthService} from "../../shared/oauth/auth.service";
 import {SharedData} from "../../providers/data/shared_data"
 import {InternetService} from "../../shared/internet.service";
+import {ServerErrorService} from "../../shared/server.error.service";
 import {Label} from "ui/label";
 var app = require("application");
 var view = require("ui/core/view");
@@ -15,7 +16,7 @@ var view = require("ui/core/view");
 @Component({
     moduleId: module.id,
     selector: "my-app",
-    providers: [TeacherService, AuthService],
+    providers: [TeacherService, AuthService, ServerErrorService],
     templateUrl: "./login.html",
     styleUrls: ["./login-common.css", "./login.css"]
 })
@@ -38,7 +39,9 @@ export class LoginPage implements OnInit {
                 private routerExtensions: RouterExtensions,
                 private teacherService: TeacherService, private page: Page,
                 private sharedData: SharedData,
-                private internetService: InternetService) {
+                private internetService: InternetService,
+                private vcRef: ViewContainerRef,
+                private serverErrorService: ServerErrorService) {
         this.teacher = new Teacher();
         this.teacher.email = this.email;
         this.teacher.email = "";
@@ -77,7 +80,7 @@ export class LoginPage implements OnInit {
                     },
                     (error) => {
                         this.isLoading = false;
-                        alert('Internal server error.');
+                        this.serverErrorService.showErrorModal();
                     }
                 );
         }
@@ -118,8 +121,7 @@ export class LoginPage implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    //alert('Internal server error.');
-                    console.log("Login ERROR: " + JSON.stringify(error));
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }

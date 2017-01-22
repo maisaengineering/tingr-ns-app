@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 import frameModule = require("ui/frame");
 import {Router, NavigationExtras, ActivatedRoute} from "@angular/router";
@@ -6,6 +6,7 @@ import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../providers/data/kid_data";
 import {SharedData} from "../../providers/data/shared_data";
 import {InternetService} from "../../shared/internet.service";
+import {ServerErrorService} from "../../shared/server.error.service";
 import {MessageService} from "../../shared/message.service";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
@@ -22,7 +23,7 @@ import dialogs = require("ui/dialogs");
     selector: 'my-app',
     styleUrls: ['./messages.css'],
     templateUrl: './messages.html',
-    providers: [MessageService]
+    providers: [MessageService, ServerErrorService]
 })
 export class MessagesComponent implements OnInit {
     public kid: any;
@@ -42,7 +43,9 @@ export class MessagesComponent implements OnInit {
                 private routerExtensions: RouterExtensions,
                 private kidData: KidData,
                 private sharedData: SharedData,
-                private internetService: InternetService) {
+                private internetService: InternetService,
+                private vcRef: ViewContainerRef,
+                private serverErrorService: ServerErrorService) {
         //super(changeDetectorRef);
         this.messages = {};
         this.kid = {};
@@ -88,12 +91,11 @@ export class MessagesComponent implements OnInit {
                     // make unread messages as read by calling in background
                     if(this.conversationKlId){
                         this.makeMessagesRead(this.conversationKlId,this.messages);
-                    } 
+                    }
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log("Error " + JSON.stringify(error));
-                    alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }
@@ -141,8 +143,7 @@ export class MessagesComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log("Error " + JSON.stringify(error));
-                    //alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
         // focus out from field

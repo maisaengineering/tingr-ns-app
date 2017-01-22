@@ -1,10 +1,11 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component,ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 import frameModule = require("ui/frame");
 import {Router, NavigationExtras} from "@angular/router";
 import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../../providers/data/kid_data";
 import {InternetService} from "../../../shared/internet.service";
+import {ServerErrorService} from "../../../shared/server.error.service";
 import {KidService} from "../../../shared/kid.service";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
@@ -15,7 +16,7 @@ var app = require("application");
     selector: 'my-app',
     styleUrls: ['./kid-profile.css'],
     templateUrl: './kid-profile.html',
-    providers: [KidService]
+    providers: [KidService, ServerErrorService]
 })
 export class KidProfileComponent implements OnInit {
     public kid: any;
@@ -30,7 +31,9 @@ export class KidProfileComponent implements OnInit {
                 private router: Router,
                 private routerExtensions: RouterExtensions,
                 private kidData: KidData,
-                private internetService: InternetService) {
+                private internetService: InternetService,
+                private vcRef: ViewContainerRef,
+                private serverErrorService: ServerErrorService) {
         //super(changeDetectorRef);
 
         this.kid = {};
@@ -65,7 +68,7 @@ export class KidProfileComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }

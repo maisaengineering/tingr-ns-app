@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 import frameModule = require("ui/frame");
 import {Router, NavigationExtras} from "@angular/router";
@@ -6,6 +6,7 @@ import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../../providers/data/kid_data";
 import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
+import {ServerErrorService} from "../../../shared/server.error.service";
 import { FormsAndDocsService } from "../../../shared/forms.and.docs.service";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
@@ -22,7 +23,7 @@ import dialogs = require("ui/dialogs");
     selector: 'my-app',
     styleUrls: ['./forms-and-docs.css'],
     templateUrl: './forms-and-docs.html',
-    providers: [ FormsAndDocsService ]
+    providers: [ FormsAndDocsService, ServerErrorService]
 })
 export class FormsAndDocumentsComponent implements OnInit {
     public kid: any;
@@ -39,7 +40,9 @@ export class FormsAndDocumentsComponent implements OnInit {
                 private routerExtensions: RouterExtensions,
                 private kidData: KidData,
                 private sharedData: SharedData,
-                private internetService: InternetService) {
+                private internetService: InternetService,
+                private vcRef: ViewContainerRef,
+                private serverErrorService: ServerErrorService) {
         //super(changeDetectorRef);
         this.forms = [];
         this.documents = [];
@@ -83,12 +86,10 @@ export class FormsAndDocumentsComponent implements OnInit {
                     this.forms = body.forms;
                     this.documents = body.documents;
                     this.isLoading = false;
-
-                    console.log("RESULT "+ JSON.stringify(body))
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log("Error "+ JSON.stringify(error));
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }
@@ -110,7 +111,7 @@ export class FormsAndDocumentsComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log("Error "+ JSON.stringify(error));
+                    this.serverErrorService.showErrorModal();
                 }
             );
 

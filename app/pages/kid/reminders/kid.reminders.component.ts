@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 import frameModule = require("ui/frame");
 import {Router, NavigationExtras} from "@angular/router";
@@ -6,6 +6,7 @@ import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../../providers/data/kid_data";
 import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
+import {ServerErrorService} from "../../../shared/server.error.service";
 import { ReminderService } from "../../../shared/reminder.service";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
@@ -22,7 +23,7 @@ import dialogs = require("ui/dialogs");
     selector: 'my-app',
     styleUrls: ['./reminders.css'],
     templateUrl: './reminders.html',
-    providers: [ ReminderService ]
+    providers: [ ReminderService, ServerErrorService ]
 })
 export class KidRemindersComponent implements OnInit {
     public kid: any;
@@ -38,7 +39,9 @@ export class KidRemindersComponent implements OnInit {
                 private routerExtensions: RouterExtensions,
                 private kidData: KidData,
                 private sharedData: SharedData,
-                private internetService: InternetService) {
+                private internetService: InternetService,
+                private vcRef: ViewContainerRef,
+                private serverErrorService: ServerErrorService) {
         //super(changeDetectorRef);
         this.reminders = [];
         this.kid = {};
@@ -74,7 +77,7 @@ export class KidRemindersComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log("Error "+ JSON.stringify(error));
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }
@@ -94,7 +97,7 @@ export class KidRemindersComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log("Error "+ JSON.stringify(error));
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }
@@ -117,7 +120,10 @@ export class KidRemindersComponent implements OnInit {
                 // send request to server in background
                 this.reminderService.readOrUnread(true,reminder.kl_id)
                     .subscribe(
-                        (result) => {}
+                        (result) => {},
+                        (error) => {
+                            this.serverErrorService.showErrorModal();
+                        }
                     );
 
             }

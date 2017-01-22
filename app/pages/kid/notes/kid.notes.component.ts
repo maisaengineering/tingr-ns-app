@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 import frameModule = require("ui/frame");
 import {Router, NavigationExtras} from "@angular/router";
@@ -6,6 +6,7 @@ import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../../providers/data/kid_data";
 import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
+import {ServerErrorService} from "../../../shared/server.error.service";
 import { NotesService } from "../../../shared/notes.service";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
@@ -22,7 +23,7 @@ import dialogs = require("ui/dialogs");
     selector: 'my-app',
     styleUrls: ['./kid-notes.css'],
     templateUrl: './kid-notes.html',
-    providers: [ NotesService]
+    providers: [ NotesService, ServerErrorService]
 })
 export class KidNotesComponent implements OnInit {
     public kid: any;
@@ -40,7 +41,9 @@ export class KidNotesComponent implements OnInit {
                 private routerExtensions: RouterExtensions,
                 private kidData: KidData,
                 private sharedData: SharedData,
-                private internetService: InternetService) {
+                private internetService: InternetService,
+                private vcRef: ViewContainerRef,
+                private serverErrorService: ServerErrorService) {
         //super(changeDetectorRef);
         this.notes = [];
         this.kid = {};
@@ -88,7 +91,7 @@ export class KidNotesComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }

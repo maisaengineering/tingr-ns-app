@@ -1,6 +1,6 @@
+import {Component, ViewContainerRef, OnInit, ViewChild,} from "@angular/core";
 import {View} from "ui/core/view";
 import {Router, ActivatedRoute} from "@angular/router";
-import {Component, OnInit, ViewChild,} from "@angular/core";
 import {RouterExtensions} from 'nativescript-angular/router';
 
 import {Teacher} from "../../shared/teacher/teacher";
@@ -11,13 +11,15 @@ import * as appSettings from "application-settings"
 import {TokenService} from "../../shared/token.service";
 import {TeacherInfo} from "../../providers/data/teacher_info";
 import {SharedData} from "../../providers/data/shared_data"
-var app = require("application");
-var view = require("ui/core/view");
+import {InternetService} from "../../shared/internet.service";
+import {ServerErrorService} from "../../shared/server.error.service";
+let app = require("application");
+let view = require("ui/core/view");
 
 @Component({
     moduleId: module.id,
     selector: "my-app",
-    providers: [TeacherService],
+    providers: [TeacherService, ServerErrorService],
     templateUrl: "./password.html",
     styleUrls: ["../login/login-common.css", "../login/login.css"]
 })
@@ -34,7 +36,10 @@ export class VerifyPasswordPage implements OnInit {
                 private routerExtensions: RouterExtensions,
                 private teacherService: TeacherService, private page: Page,
                 private teacherInfo: TeacherInfo,
-                private sharedData: SharedData) {
+                private sharedData: SharedData,
+                private internetService: InternetService,
+                private vcRef: ViewContainerRef,
+                private serverErrorService: ServerErrorService) {
         this.teacher = new Teacher();
         this.isLoading = false;
         this.teacher.email = sharedData.email; // get the value from previous page through provider
@@ -46,6 +51,8 @@ export class VerifyPasswordPage implements OnInit {
     }
 
     ngOnInit() {
+        // show alert if no internet connection
+        this.internetService.alertIfOffline();
         this.page.actionBarHidden = true;
 
         //this.page.backgroundImage = "res://bg_login";

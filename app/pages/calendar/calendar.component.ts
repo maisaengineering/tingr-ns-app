@@ -9,7 +9,9 @@ import {TeacherInfo} from "../../providers/data/teacher_info";
 import * as dialogs from "ui/dialogs";
 import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/directives/dialogs";
 import {ModalDatePicker} from "../../pages/dialogs/modal-date-picker";
+import {ModalServerError} from "../../pages/dialogs/modal-server-error";
 import {InternetService} from "../../shared/internet.service";
+import {ServerErrorService} from "../../shared/server.error.service";
 import {DatePicker} from "ui/date-picker";
 import {Page} from "ui/page";
 import {Router, NavigationExtras} from "@angular/router";
@@ -23,7 +25,7 @@ var frameModule = require("ui/frame");
     selector: 'my-app',
     styleUrls: ['./calendar.css'],
     templateUrl: './calendar.component.html',
-    providers: [CalendarService, ModalDialogService]
+    providers: [CalendarService, ModalDialogService, ServerErrorService]
 })
 export class CalendarComponent extends DrawerPage implements OnInit {
     public schedules: Array<Schedule>;
@@ -44,7 +46,8 @@ export class CalendarComponent extends DrawerPage implements OnInit {
                 private modal: ModalDialogService, private vcRef: ViewContainerRef,
                 private calendarService: CalendarService,
                 private internetService: InternetService,
-                private router: Router) {
+                private router: Router,
+                private serverErrorService: ServerErrorService) {
         super(changeDetectorRef);
 
         if (app.android) {
@@ -62,15 +65,6 @@ export class CalendarComponent extends DrawerPage implements OnInit {
         var teacherDetails = TeacherInfo.parsedDetails;
         this.teacherName = teacherDetails.fname + ' ' + teacherDetails.lname;
     }
-
-    static entries = [
-        ModalDatePicker
-    ];
-
-    static exports = [
-        ModalDatePicker
-    ];
-
 
     createModalDatePickerView() {
         this.iscurrentDateSelected = true;
@@ -110,6 +104,7 @@ export class CalendarComponent extends DrawerPage implements OnInit {
          }*/
         // load data
         this.loadCalendarDataByDay(this.currentDate);
+
     }
 
 
@@ -134,7 +129,7 @@ export class CalendarComponent extends DrawerPage implements OnInit {
                 },
                 (error) => {
                     pullRefresh.refreshing = false;
-                    alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }
@@ -157,9 +152,7 @@ export class CalendarComponent extends DrawerPage implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.error("ERRORRR " + JSON.stringify(error));
-                    //alert('Internal server error.');
-
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }

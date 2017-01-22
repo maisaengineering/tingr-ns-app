@@ -1,16 +1,17 @@
-import {Component, OnInit, NgModule, Input} from '@angular/core';
+import {Component, ViewContainerRef, OnInit, NgModule, Input} from '@angular/core';
 import {ModalDialogParams} from "nativescript-angular/directives/dialogs";
 import {ModalDialogService, ModalDialogOptions, ModalDialogHost} from "nativescript-angular/modal-dialog";
 import {DatePicker} from "ui/date-picker";
 import {Page} from "ui/page";
 import {Router, NavigationExtras} from "@angular/router";
 import {PostService} from "../../shared/post.service";
+import {ServerErrorService} from "../../shared/server.error.service";
 
 let app = require("application");
 
 @Component({
     selector: 'modal-content',
-    providers: [ PostService ],
+    providers: [ PostService, ServerErrorService ],
     template: ` 
        <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white;"> 
          <StackLayout class="m-x-20 m-t-15" verticalALignment="center">  
@@ -51,7 +52,9 @@ export class ModalPostComment implements OnInit {
     public isIos: Boolean = false;
 
     constructor(private params: ModalDialogParams,
-                private postService: PostService) {
+                private postService: PostService,
+                private vcRef: ViewContainerRef,
+                private serverErrorService: ServerErrorService) {
         if (app.android) {
             this.isAndroid = true;
         } else if (app.ios) {
@@ -80,8 +83,7 @@ export class ModalPostComment implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.error(JSON.stringify(error));
-                    //alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }

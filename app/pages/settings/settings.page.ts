@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, ViewContainerRef, OnInit} from "@angular/core";
 import {Location} from "@angular/common";
 import {Page} from "../page";
 import { RouterExtensions } from 'nativescript-angular/router';
@@ -7,6 +7,7 @@ import { TokenService } from "../../shared/token.service";
 import { TeacherInfo } from "../../providers/data/teacher_info";
 import { TeacherService } from "../../shared/teacher/teacher.service";
 import {InternetService} from "../../shared/internet.service";
+import {ServerErrorService} from "../../shared/server.error.service";
 
 var nstoasts = require("nativescript-toasts");
 
@@ -16,7 +17,7 @@ var nstoasts = require("nativescript-toasts");
     selector: 'settings-page',
     templateUrl: './settings.page.html',
     styleUrls: ["./settings.css"],
-    providers: [ TeacherService ]
+    providers: [ TeacherService, ServerErrorService ]
 })
 export class SettingsPage extends Page implements OnInit{
     public isLoading: Boolean = false;
@@ -25,7 +26,9 @@ export class SettingsPage extends Page implements OnInit{
     constructor(private location: Location,
                 private routerExtensions: RouterExtensions,
                 private teacherService: TeacherService,
-                private internetService: InternetService) {
+                private internetService: InternetService,
+                private vcRef: ViewContainerRef,
+                private serverErrorService: ServerErrorService) {
         super(location);
     }
 
@@ -70,7 +73,7 @@ export class SettingsPage extends Page implements OnInit{
                 },
                 (error) => {
                     this.isLoading = false;
-                    //alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }

@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 import frameModule = require("ui/frame");
 import {Router, NavigationExtras} from "@angular/router";
@@ -6,6 +6,7 @@ import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../../providers/data/kid_data";
 import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
+import {ServerErrorService} from "../../../shared/server.error.service";
 import {KidService} from "../../../shared/kid.service";
 import { PostService } from "../../../shared/post.service";
 import {GC} from 'utils/utils';
@@ -27,7 +28,7 @@ import dialogs = require("ui/dialogs");
     selector: 'my-app',
     styleUrls: ['./kid-moment.css'],
     templateUrl: './kid-moment.html',
-    providers: [KidService, PostService]
+    providers: [KidService, PostService, ServerErrorService]
 })
 export class KidMomentComponent implements OnInit {
     public kid: any;
@@ -48,7 +49,9 @@ export class KidMomentComponent implements OnInit {
                 private routerExtensions: RouterExtensions,
                 private kidData: KidData,
                 private sharedData: SharedData,
-                private internetService: InternetService) {
+                private internetService: InternetService,
+                private vcRef: ViewContainerRef,
+                private serverErrorService: ServerErrorService) {
         //super(changeDetectorRef);
         this.kid = {};
         this.kid = this.kidData.info;
@@ -105,7 +108,7 @@ export class KidMomentComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }
@@ -246,8 +249,7 @@ export class KidMomentComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log("ERRORRRRR "+JSON.stringify(error));
-                    alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }

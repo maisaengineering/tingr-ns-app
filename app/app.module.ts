@@ -13,10 +13,12 @@ import { TokenService } from "./shared/token.service";
 import {KidData} from "./providers/data/kid_data"
 import {SharedData} from "./providers/data/shared_data"
 import { InternetService } from "./shared/internet.service"
+import { ServerErrorService } from "./shared/server.error.service"
 
 import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/modal-dialog";
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
 import { ModalPostComment } from "./pages/dialogs/modal-post-comment";
+import { ModalServerError } from "./pages/dialogs/modal-server-error";
 
 import { DatePipe } from '@angular/common';
 import { KeysPipe } from './utils/keys.pipe';
@@ -56,14 +58,16 @@ registerElement("PullToRefresh", () => {
         ModalDialogService,
         KidData,
         SharedData,
-        InternetService
+        InternetService,
+        ServerErrorService
     ],
     schemas: [
         NO_ERRORS_SCHEMA
     ],
     entryComponents: [
         ModalDatePicker,
-        ModalPostComment
+        ModalPostComment,
+        ModalServerError
     ]
 })
 export class AppModule {

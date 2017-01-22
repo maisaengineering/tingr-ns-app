@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 import frameModule = require("ui/frame");
 import {Router, NavigationExtras} from "@angular/router";
@@ -6,6 +6,7 @@ import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../providers/data/kid_data";
 import {SharedData} from "../../providers/data/shared_data";
 import {InternetService} from "../../shared/internet.service";
+import {ServerErrorService} from "../../shared/server.error.service";
 import { PostService } from "../../shared/post.service";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
@@ -22,7 +23,7 @@ import dialogs = require("ui/dialogs");
     selector: 'my-app',
     styleUrls: ['./hearters.css'],
     templateUrl: './hearters.html',
-    providers: [ PostService]
+    providers: [ PostService, ServerErrorService]
 })
 export class HeartersComponent implements OnInit {
     public kid: any;
@@ -38,7 +39,9 @@ export class HeartersComponent implements OnInit {
                 private routerExtensions: RouterExtensions,
                 private kidData: KidData,
                 private sharedData: SharedData,
-                private internetService: InternetService) {
+                private internetService: InternetService,
+                private vcRef: ViewContainerRef,
+                private serverErrorService: ServerErrorService) {
         //super(changeDetectorRef);
         this.hearters = [];
         this.kid = {};
@@ -78,11 +81,10 @@ export class HeartersComponent implements OnInit {
                     var body = result.body;
                     this.hearters = body.hearters;
                     this.isLoading = false;
-                    console.log("Hearters :" + JSON.stringify(this.hearters));
                 },
                 (error) => {
                     this.isLoading = false;
-                    alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
     }
@@ -101,7 +103,7 @@ export class HeartersComponent implements OnInit {
                     }, 1000);
                 },
                 (error) => {
-                    alert('Internal server error.');
+                    this.serverErrorService.showErrorModal();
                 }
             );
 
