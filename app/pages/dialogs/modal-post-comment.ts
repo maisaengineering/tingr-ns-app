@@ -61,7 +61,7 @@ export class ModalPostComment implements OnInit {
             this.isIos = true;
         }
 
-        console.log("ModalContent.constructor: " + JSON.stringify(params));
+        //console.log("ModalContent.constructor: " + JSON.stringify(params));
         this.post_kl_id = params.context.post_kl_id;
         this.post_slug = params.context.post_slug;
     }
@@ -72,7 +72,7 @@ export class ModalPostComment implements OnInit {
 
     public submit(res: string) {
         this.isLoading = true;
-        console.log("Passing Data :" + this.commentDescription);
+        //console.log("Passing Data :" + this.commentDescription);
 
         //this.params.closeCallback(res);
         this.postService.addComment(this.post_slug, this.commentDescription)
@@ -90,10 +90,10 @@ export class ModalPostComment implements OnInit {
 
 
     ngOnInit() {
-        console.log("ModalContent.ngOnInit");
+        //console.log("ModalContent.ngOnInit");
     }
 
     ngOnDestroy() {
-        console.log("ModalContent.ngOnDestroy");
+        //console.log("ModalContent.ngOnDestroy");
     }
 }

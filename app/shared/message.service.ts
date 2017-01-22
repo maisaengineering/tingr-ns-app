@@ -45,9 +45,6 @@ export class MessageService {
         let headers = new Headers();
         let room = TeacherInfo.parsedCurrentRoom;
         let teacherInfo = TeacherInfo.parsedDetails;
-        console.log("ORg ID :" + room.organization_id);
-        console.log("Teacher Info "+ JSON.stringify(room))
-
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({
             access_token: TokenService.accessToken,
@@ -91,7 +88,6 @@ export class MessageService {
     }
 
     handleErrors(error: any) {
-        console.error('An error occurred', error); // for demo purposes only
         return Observable.throw(error);
     }
 }

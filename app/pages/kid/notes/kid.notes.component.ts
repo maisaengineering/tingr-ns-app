@@ -87,7 +87,7 @@ export class KidNotesComponent implements OnInit {
                     var body = result.body;
                     this.notes = body.notes;
                     this.isLoading = false;
-                    console.log("Notes :" + JSON.stringify(this.notes))
+                    //console.log("Notes :" + JSON.stringify(this.notes))
                 },
                 (error) => {
                     this.isLoading = false;

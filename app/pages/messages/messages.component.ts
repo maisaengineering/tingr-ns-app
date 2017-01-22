@@ -71,8 +71,6 @@ export class MessagesComponent implements OnInit {
             this.showActionBarItems = true;
         }, 300);
 
-        console.log("Before  " + this.messages);
-
         this.getMessages();
     }
 
@@ -122,7 +120,9 @@ export class MessagesComponent implements OnInit {
                     (result) => {
                         //console.log("RESULT UNREAD "+ JSON.stringify(result));
                     },
-                    (error) => { console.error(error.stack) }
+                    (error) => {
+                       // console.error(error.stack)
+                    }
                 );
         }
 

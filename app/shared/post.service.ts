@@ -88,7 +88,6 @@ export class PostService {
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let postCreatedAt = this.datePipe.transform(createdAt, 'MM/dd/yyyy');
-        console.log("Created At "+ postCreatedAt);
         let data = JSON.stringify({
             access_token: TokenService.accessToken,
             auth_token: TokenService.authToken,
@@ -170,7 +169,6 @@ export class PostService {
 
 
     handleErrors(error: any)  {
-        console.error('An error occurred', error); // for demo purposes only
         return Observable.throw(error.message || error);
     }
 

@@ -45,10 +45,10 @@ export class ModalServerError implements OnInit {
     }
 
     ngOnInit() {
-        console.log("ModalContent.ngOnInit");
+        //console.log("ModalContent.ngOnInit");
     }
 
     ngOnDestroy() {
-        console.log("ModalContent.ngOnDestroy");
+        //console.log("ModalContent.ngOnDestroy");
     }
 }

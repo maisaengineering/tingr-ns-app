@@ -121,7 +121,7 @@ export class CalendarComponent extends DrawerPage implements OnInit {
                     this.event_reminders = reminders.event_reminders;
                     this.holidays = reminders.holidays;
 
-                    console.log("Messages " + JSON.stringify(this.messages));
+                    //console.log("Messages " + JSON.stringify(this.messages));
                     // stop pull to refresh
                     setTimeout(() => {
                         pullRefresh.refreshing = false;
@@ -148,7 +148,7 @@ export class CalendarComponent extends DrawerPage implements OnInit {
                     this.holidays = reminders.holidays;
                     this.isLoading = false;
 
-                    console.log("Messages " + JSON.stringify(this.messages));
+                    //console.log("Messages " + JSON.stringify(this.messages));
                 },
                 (error) => {
                     this.isLoading = false;

@@ -173,7 +173,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             cancelButtonText: "Cancel",
             actions: actions
         }).then(result => {
-            console.log("Result --- "+ result)
+            //console.log("Result --- "+ result)
             // don't fetch data if clicks on same room
             if (this.roomName != result) {
                 this.currentRoom = rooms.filter(report => report.session_name === result)[0];

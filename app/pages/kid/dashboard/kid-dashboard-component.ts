@@ -159,11 +159,11 @@ export class KidDashboardComponent implements OnInit {
                 if (platformModule.device.os === "Android" && platformModule.device.sdkVersion >= 23) {
                     permissions.requestPermission(android.Manifest.permission.CAMERA, "Allow Tingr to access your camera?")
                         .then(() => {
-                            console.log("CAMERA Permission: granted!");
+                            //console.log("CAMERA Permission: granted!");
                             this.takePicture();
                         })
                         .catch(() => {
-                            console.log("CAMERA Permission: -- refused");
+                            //console.log("CAMERA Permission: -- refused");
                         });
                 } else {
                     this.takePicture();
@@ -173,11 +173,11 @@ export class KidDashboardComponent implements OnInit {
                 if (platformModule.device.os === "Android" && platformModule.device.sdkVersion >= 23) {
                     permissions.requestPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE, "Allow Tingr to access your gallery?")
                         .then(() => {
-                            console.log("READ_EXTERNAL_STORAGE permission: granted!");
+                            //console.log("READ_EXTERNAL_STORAGE permission: granted!");
                             this.selectFromGallery();
                         })
                         .catch(() => {
-                            console.log("READ_EXTERNAL_STORAGE permission: -- refused");
+                            //console.log("READ_EXTERNAL_STORAGE permission: -- refused");
                         });
                 } else {
                     this.selectFromGallery();
@@ -230,7 +230,7 @@ export class KidDashboardComponent implements OnInit {
                 return context.present();
             })
             .then((selection) => {
-                console.log("Selection done:");
+                //console.log("Selection done:");
                 selection.forEach((selected) => {
                     //TODO for multiple seelction follow below coding for each one
                     // console.log("----------------");
@@ -254,11 +254,11 @@ export class KidDashboardComponent implements OnInit {
                         });
 
                     }).catch((e) => {
-                    console.log("Error: " + e);
-                    console.log(e.stack);
+                    //console.log("Error: " + e);
+                    //console.log(e.stack);
                 });
             }).catch((e) => {
-            console.log(e);
+            //console.log(e);
         });
     }
 

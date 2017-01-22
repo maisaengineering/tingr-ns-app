@@ -38,7 +38,7 @@ export class KidProfileComponent implements OnInit {
 
         this.kid = {};
         this.kid = kidData.info;
-        console.log("Kid Data : "+ JSON.stringify(this.kid));
+        //console.log("Kid Data : "+ JSON.stringify(this.kid));
 
         if (app.android) {
             this.isAndroid = true;

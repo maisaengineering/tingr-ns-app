@@ -97,14 +97,14 @@ export class KidMomentComponent implements OnInit {
     getS3Key(){
         this.s3_key = ''; // set key to empty to show activity indicator
         //this.isLoading = true;
-        console.log('Getting S3 key ....');
+        //console.log('Getting S3 key ....');
         this.postService.uploadToS3(this.sharedData.momentCaptureDetails.imageBase64Data)
             .subscribe(
                 (result) => {
                     let body = result.body;
                     this.s3_key = body.key;
                    // this.isLoading = false;
-                    console.log('New S3 key + '+this.s3_key);
+                    //console.log('New S3 key + '+this.s3_key);
                 },
                 (error) => {
                     this.isLoading = false;
@@ -170,7 +170,7 @@ export class KidMomentComponent implements OnInit {
                 return context.present();
             })
             .then((selection) => {
-                console.log("Selection done:");
+                //console.log("Selection done:");
                 selection.forEach((selected) => {
                     //TODO for multiple seelction follow below coding for each one
                     // console.log("----------------");
@@ -194,8 +194,8 @@ export class KidMomentComponent implements OnInit {
                         this.getS3Key(); // get s3_key for newly upload image
 
                     }).catch((e) => {
-                    console.log("Error: " + e);
-                    console.log(e.stack);
+                    //console.log("Error: " + e);
+                    //console.log(e.stack);
                 });
             }).catch((e) => {
             console.log(e);
@@ -225,10 +225,6 @@ export class KidMomentComponent implements OnInit {
     saveMoment(){
         this.isLoading = true;
         let createdAt = new Date();
-        console.log("Off Set "+ createdAt.getTimezoneOffset());
-        console.log("additionalDetails "+ this.additionalDetails);
-        console.log("taggedKidIds "+ this.taggedKidIds);
-        console.log("s3_key "+ this.s3_key);
         this.postService.createPost(createdAt, this.additionalDetails, this.taggedKidIds, this.s3_key)
             .subscribe(
                 (result) => {
