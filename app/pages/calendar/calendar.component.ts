@@ -104,6 +104,7 @@ export class CalendarComponent extends DrawerPage implements OnInit {
          }*/
         // load data
         this.loadCalendarDataByDay(this.currentDate);
+        //this.serverErrorService.showErrorModal();
 
     }
 

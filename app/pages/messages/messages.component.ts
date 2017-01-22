@@ -130,8 +130,8 @@ export class MessagesComponent implements OnInit {
 
     sendMessage() {
         this.isLoading = true;
-        let kid_klid = this.kid.kid_klid;
-        this.messageService.sendMessage(this.newMessageText, kid_klid)
+        let kid_klid = this.conversationKlId ? '' : this.kid.kid_klid;
+        this.messageService.sendMessage(this.newMessageText, kid_klid, this.conversationKlId)
             .subscribe(
                 (result) => {
                     let body = result.body;

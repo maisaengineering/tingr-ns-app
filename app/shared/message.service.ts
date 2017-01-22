@@ -12,7 +12,7 @@ export class MessageService {
     constructor(private http: Http) {
     }
 
-    sendMessage(msg_text, kid_klid) {
+    sendMessage(msg_text, kid_klid, conversation_klid = '') {
         let room = TeacherInfo.parsedCurrentRoom;
         let teacherInfo = TeacherInfo.parsedDetails;
         let headers = new Headers();
@@ -25,7 +25,7 @@ export class MessageService {
                 text: msg_text,
                 kid_klid: kid_klid, // reciver
                 sender_klid: teacherInfo.teacher_klid, //sender
-                conversation_klid: "",
+                conversation_klid: conversation_klid,
                 organization_id: room.organization_id,
                 season_id: room.season_id,
                 session_id: room.session_id
