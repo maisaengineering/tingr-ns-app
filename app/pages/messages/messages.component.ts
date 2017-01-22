@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit } from "@angular/core";
+import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 import frameModule = require("ui/frame");
 import {Router, NavigationExtras, ActivatedRoute} from "@angular/router";
@@ -6,7 +6,7 @@ import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../providers/data/kid_data";
 import {SharedData} from "../../providers/data/shared_data";
 import {InternetService} from "../../shared/internet.service";
-import { MessageService } from "../../shared/message.service";
+import {MessageService} from "../../shared/message.service";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
 var app = require("application");
@@ -22,7 +22,7 @@ import dialogs = require("ui/dialogs");
     selector: 'my-app',
     styleUrls: ['./messages.css'],
     templateUrl: './messages.html',
-    providers: [ MessageService ]
+    providers: [MessageService]
 })
 export class MessagesComponent implements OnInit {
     public kid: any;
@@ -68,12 +68,12 @@ export class MessagesComponent implements OnInit {
             this.showActionBarItems = true;
         }, 300);
 
-        console.log("Before  "+ this.messages );
+        console.log("Before  " + this.messages);
 
         this.getMessages();
     }
 
-    getMessages(){
+    getMessages() {
         //this.messages = this.messageService.getMessages();
         this.isLoading = true;
         // if navigation comes from schedule then its a conversation
@@ -84,22 +84,49 @@ export class MessagesComponent implements OnInit {
                     let body = result.body;
                     this.messages = body.messages;
                     this.isLoading = false;
-                    console.log("Messages :" + JSON.stringify(this.messages));
-
-                    let unreadMessages = this.messages.filter(message => message.read_message === false);
-                    console.log("Un Read Messages "+ unreadMessages);
-
-
+                    // If conversation opens from Schedule page
+                    // make unread messages as read by calling in background
+                    if(this.conversationKlId){
+                        this.makeMessagesRead(this.conversationKlId,this.messages);
+                    } 
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log("Error "+ JSON.stringify(error));
+                    console.log("Error " + JSON.stringify(error));
                     alert('Internal server error.');
                 }
             );
     }
 
-    sendMessage(){
+    makeMessagesRead(conversationKlId,messages) {
+        //To get the unread messages and make them as read
+        let unreadMessageIds = [];
+        let unreadMessages = [];
+        let groupedMessages = messages;
+        for (let groupedMessage in groupedMessages) {
+            if (groupedMessages.hasOwnProperty(groupedMessage)) {
+                //console.log("Key is " + groupedMessage + ", value is" + JSON.stringify(groupedMessages[groupedMessage]));
+                unreadMessages = groupedMessages[groupedMessage].filter(msg => msg.read_message === false);
+                //console.log("Unread Messages " + JSON.stringify(unreadMessages));
+                unreadMessages.forEach((message) => {
+                    unreadMessageIds.push(message.kl_id)
+                })
+            }
+        }
+        // invoke API
+        if(unreadMessageIds.length){
+            this.messageService.makeMessagesRead(conversationKlId, unreadMessageIds)
+                .subscribe(
+                    (result) => {
+                        //console.log("RESULT UNREAD "+ JSON.stringify(result));
+                    },
+                    (error) => { console.error(error.stack) }
+                );
+        }
+
+    }
+
+    sendMessage() {
         this.isLoading = true;
         let kid_klid = this.kid.kid_klid;
         this.messageService.sendMessage(this.newMessageText, kid_klid)
@@ -114,7 +141,7 @@ export class MessagesComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log("Error "+ JSON.stringify(error));
+                    console.log("Error " + JSON.stringify(error));
                     //alert('Internal server error.');
                 }
             );
@@ -128,7 +155,7 @@ export class MessagesComponent implements OnInit {
 
     }
 
-    goBack(){
+    goBack() {
         this.routerExtensions.backToPreviousPage();
     }
 
