@@ -6,6 +6,7 @@ import "rxjs/add/operator/map";
 import { Config } from "../shared/config";
 import { TokenService } from "../shared/token.service";
 import { DatePipe } from '@angular/common';
+import { TeacherInfo } from "../providers/data/teacher_info";
 
 @Injectable()
 export class NotesService {
@@ -15,6 +16,7 @@ export class NotesService {
     }
 
     getList(kid_klid) {
+        let room = TeacherInfo.parsedCurrentRoom;
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({
@@ -22,7 +24,8 @@ export class NotesService {
             auth_token: TokenService.authToken,
             command: "list",
             body: {
-                kid_klid: kid_klid
+                kid_klid: kid_klid,
+                organization_id: room.organization_id
             }
         });
 
@@ -37,6 +40,7 @@ export class NotesService {
     }
 
     createNote(kid_klid,description){
+        let room = TeacherInfo.parsedCurrentRoom;
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({
@@ -45,7 +49,8 @@ export class NotesService {
             command: "create",
             body: {
                 kid_klid: kid_klid,
-                description: description
+                description: description,
+                organization_id: room.organization_id
             }
         });
 
