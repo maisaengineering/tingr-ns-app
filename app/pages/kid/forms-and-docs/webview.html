@@ -8,7 +8,7 @@
 
     <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
                 ios.position="right" android.position="right" (tap)="openShareOptions(formOrDoc)">
-            <Label class="blue2 material-icons md-36 md-exit-to-app" text="&#xE879;" ></Label>
+        <Image stretch="aspectFill" height="36" width="36" src="~/images/share-36.png"></Image>
     </ActionItem>
 </ActionBar>
 
@@ -20,7 +20,7 @@
         <Label verticalAlignment="center" text="{{ formOrDoc.name }}"  class="action-label"></Label>
     </StackLayout>
     <ActionItem (tap)="openShareOptions(formOrDoc)">
-        <Label class="blue2 material-icons md-36 md-exit-to-app" text="&#xE879;" ></Label>
+        <Image stretch="aspectFill" height="36" width="36" src="~/images/share-36.png"></Image>
     </ActionItem>
 </ActionBar>
 
