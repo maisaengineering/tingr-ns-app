@@ -173,15 +173,18 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             cancelButtonText: "Cancel",
             actions: actions
         }).then(result => {
-            //console.log("Result --- "+ result)
-            // don't fetch data if clicks on same room
-            if (this.roomName != result) {
-                this.currentRoom = rooms.filter(report => report.session_name === result)[0];
-                // save the selected room in application data to access application wide
-                TeacherInfo.currentRoom = JSON.stringify(this.currentRoom);
-                this.roomName = this.currentRoom.session_name;
-                this.loadManagedKids(this.currentRoom);
+            if(result !== 'Cancel'){
+                // don't fetch data if clicks on same room
+                if (this.roomName != result) {
+                    this.currentRoom = rooms.filter(report => report.session_name === result)[0];
+                    // save the selected room in application data to access application wide
+                    TeacherInfo.currentRoom = JSON.stringify(this.currentRoom);
+                    this.roomName = this.currentRoom.session_name;
+                    this.loadManagedKids(this.currentRoom);
+                }
             }
+
+
         });
     }
 
@@ -201,26 +204,29 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             cancelButtonText: "Cancel",
             actions: ["Sign-in/Sign-out", "Message a Parent"]
         }).then(result => {
-            if (result === 'Sign-in/Sign-out') {
-                this.signInOrSignOutKid(kid);
-            } else if (result === "Message a Parent") {
-                dialogs.prompt({
-                    title: "Message",
-                    //message: "Type your message here",
-                    okButtonText: "Send",
-                    cancelButtonText: "Cancel",
-                    //neutralButtonText: "Neutral text",
-                    //defaultText: "Type your message here",
-                    inputType: dialogs.inputType.text
-                }).then(r => {
-                    if (r.text === '') {
-                        return;
-                    }
-                    if (r.result === true) {
-                        this.sendMessageForKid(r.text, kid);
-                    }
-                });
+            if(result !== 'Cancel'){
+                if (result === 'Sign-in/Sign-out') {
+                    this.signInOrSignOutKid(kid);
+                } else if (result === "Message a Parent") {
+                    dialogs.prompt({
+                        title: "Message",
+                        //message: "Type your message here",
+                        okButtonText: "Send",
+                        cancelButtonText: "Cancel",
+                        //neutralButtonText: "Neutral text",
+                        //defaultText: "Type your message here",
+                        inputType: dialogs.inputType.text
+                    }).then(r => {
+                        if (r.text === '') {
+                            return;
+                        }
+                        if (r.result === true) {
+                            this.sendMessageForKid(r.text, kid);
+                        }
+                    });
+                }
             }
+
         });
 
     }
