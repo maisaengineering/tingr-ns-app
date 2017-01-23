@@ -197,6 +197,7 @@ export class KidMomentComponent implements OnInit {
                     //console.log("Error: " + e);
                     //console.log(e.stack);
                 });
+                GC();
             }).catch((e) => {
             console.log(e);
         });

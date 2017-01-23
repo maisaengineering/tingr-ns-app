@@ -9,7 +9,7 @@ import {Router, NavigationExtras} from "@angular/router";
     selector: 'modal-content',
     template: ` 
        <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white;"> 
-         <StackLayout class="m-x-20 m-t-15" verticalALignment="center">  
+         <StackLayout class="m-x-20 m-t-10" verticalALignment="center">  
             <Gridlayout cols="auto,auto" verticalAlignment="center">
             <StackLayout (tap)="cancel()" class="text-primary blue2" row="0" col="0" orientation="horizontal"> 
                <Label text="&#xE5CD;" class="text-left material-icons md-36 md-chevron-right"></Label>

@@ -8,7 +8,7 @@
 
     <ActionItem (tap)="saveMoment()" visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
                 ios.position="right" android.position="right">
-        <Label *ngIf="s3_key" (tap)="saveMoment()"
+        <Label *ngIf="s3_key"
                class="blue2 material-icons md-36 md-chevron-right" text="&#xE5CA;"></Label>
         <ActivityIndicator visibility="collapsed"
                            class="busy activity-indicator"
@@ -26,7 +26,7 @@
         <Label verticalAlignment="center" text="Tag Kids"  class="action-label"></Label>
     </StackLayout>
     <ActionItem (tap)="saveMoment()">
-        <Label *ngIf="s3_key" (tap)="saveMoment()"
+        <Label *ngIf="s3_key"
                class="blue2 material-icons md-36 md-chevron-right" text="&#xE5CA;"></Label>
         <ActivityIndicator visibility="collapsed"
                            class="busy activity-indicator"

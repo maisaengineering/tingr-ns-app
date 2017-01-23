@@ -133,7 +133,7 @@
 
                                 <GridLayout row="1" class="moment-tags">
                                     <StackLayout orientation="vertical">
-                                        <GridLayout columns="auto, *" *ngIf="post.tagged_to.length">
+                                        <GridLayout columns="*, auto" *ngIf="post.tagged_to.length">
                                             <StackLayout col="0" row="0" horizontalAlignment="left"
                                                          orientation="horizontal">
                                                 <StackLayout *ngFor="let item of post.tagged_to; let i = index"
