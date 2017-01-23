@@ -16,13 +16,13 @@ import {GestureEventData} from "ui/gestures";
 import dialogs = require("ui/dialogs");
 import {DatePipe} from '@angular/common';
 import {InternetService} from "../../shared/internet.service";
-var nstoasts = require("nativescript-toasts");
-var app = require("application");
-var platform = require("platform");
-var frameModule = require("ui/frame");
-var view = require("ui/core/view");
-var tnsfx = require('nativescript-effects');
-
+let nstoasts = require("nativescript-toasts");
+let app = require("application");
+let platform = require("platform");
+let frameModule = require("ui/frame");
+let view = require("ui/core/view");
+let tnsfx = require('nativescript-effects');
+let gestures = require("ui/gestures");
 
 @Component({
     moduleId: module.id,
@@ -188,9 +188,23 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         });
     }
 
-    redirectToKidDashboard(kid) {
-        this.kidData.info = kid;
+    kidLoaded(args) {
+        let kidStackLayout = args.object;
+        kidStackLayout.observe(gestures.GestureTypes.tap | gestures.GestureTypes.longPress ,(args) => {
+            //console.log("Event: " + args.eventName + ", sender: " + args.object);
+            let kid = args.object.get("kid");
+            if(args.eventName === 'tap'){
+              // this.onTapKid(kid); // this wonn't work it invoking defulat tap in view
+            } else if(args.eventName === 'longPress'){
+                console.log("Event  longPress");
+                this.onLongPressKid(kid);
+            }
+        });
 
+    }
+
+    onTapKid(kid) {
+        this.kidData.info = kid;
         this.routerExtensions.navigate(["/kid-dashboard"], {
             transition: {
                 name: "slideLeft"
@@ -198,7 +212,8 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         });
     }
 
-    onLongPressKid(event, kid) {
+
+    onLongPressKid(kid) {
         dialogs.action({
             //message: "",
             cancelButtonText: "Cancel",

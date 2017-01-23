@@ -83,21 +83,14 @@ export class KidDashboardComponent implements OnInit {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
         //this.page.actionBarHidden = true;
-        // this.kid = this.kidData.info;
-        // Hide 'Default Back button'
-        if (this.isIos) {
-            var controller = frameModule.topmost().ios.controller;
-            // get the view controller navigation item
-            var navigationItem = controller.visibleViewController.navigationItem;
-            // hide back button
-            navigationItem.setHidesBackButtonAnimated(true, false);
-        }
+         this.kid = this.kidData.info;
 
         // show actionBarItems after some time to fix overlapping issue
         setTimeout(() => {
             this.showActionBarItems = true;
         }, 500);
 
+        console.log("before getPost :" + this.kid.kid_klid);
         this.getPosts();
     }
 
@@ -124,6 +117,7 @@ export class KidDashboardComponent implements OnInit {
 
     getPosts(commentedOnPost = false){
         this.isLoading = true;
+        console.log("getPost :" + this.kid.kid_klid);
         this.postService.getPosts(this.kid.kid_klid)
             .subscribe(
                 (result) => {

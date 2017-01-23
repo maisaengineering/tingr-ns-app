@@ -38,8 +38,8 @@
 
                 <StackLayout>
                     <StackLayout *ngFor="let item of managed_kids">
-                        <StackLayout class="list-group-item" (longPress)="onLongPressKid($event, item)">
-                            <GridLayout rows="*" columns="auto,*,70" (tap)="redirectToKidDashboard(item)">
+                        <StackLayout id="kidList" [kid]="item" (tap)="onTapKid(item)" class="list-group-item" (loaded)="kidLoaded($event)">
+                            <GridLayout rows="*" columns="auto,*,70">
                                 <StackLayout row="0" col="0">
                                     <Image height="75" width="75" class="kid-profile-pic blue-circle-border"
                                            src="{{ item.photograph_url ? item.photograph_url : '~/images/avatar-100.png' }}"></Image>
