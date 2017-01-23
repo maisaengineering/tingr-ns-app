@@ -121,7 +121,7 @@ export class KidMomentComponent implements OnInit {
         }).then(result => {
             if(result === 'Take photo'){
                 this.takePicture();
-            }else{
+            }else if(result === 'Choose existing'){
                 this.selectFromGallery();
             }
         });

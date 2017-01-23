@@ -163,7 +163,7 @@ export class KidDashboardComponent implements OnInit {
                     this.takePicture();
                 }
 
-            } else {
+            } else if(result === 'Choose existing'){
                 if (platformModule.device.os === "Android" && platformModule.device.sdkVersion >= 23) {
                     permissions.requestPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE, "Allow Tingr to access your gallery?")
                         .then(() => {

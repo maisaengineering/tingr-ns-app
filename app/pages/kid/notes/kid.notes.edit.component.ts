@@ -89,7 +89,7 @@ export class KidNotesEditComponent implements OnInit {
                 title: "",
                 message: "Notes description can't be blank",
                 okButtonText: "Ok"
-            }).then(()=>{});
+            }).then((result)=>{});
         }
 
     }
@@ -144,7 +144,7 @@ export class KidNotesEditComponent implements OnInit {
 
     deleteNote(){
         dialogs.confirm("Are you sure?").then((result)=> {
-            if(result){
+            if(result === true){
                 this.isLoading = true;
                 let note_kl_id = this.kidNote.kl_id;
                 this.notesService.deleteNote(note_kl_id)
