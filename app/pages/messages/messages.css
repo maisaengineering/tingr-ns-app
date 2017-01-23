@@ -35,9 +35,12 @@
 
 .message-form .send-button{
     font-weight: bold;
-    margin: 0 5 0 10;
-    font-size: 17;
+    color: white;
 }
 
+.message-form .send-button .disabled{
+    background-color: grey;
+}
+ 
 
 

@@ -14,7 +14,7 @@ let app = require("application");
     providers: [ PostService, ServerErrorService ],
     template: ` 
        <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white;"> 
-         <StackLayout class="m-x-20 m-t-15" verticalALignment="center">  
+         <StackLayout class="m-x-20 m-t-10" verticalALignment="center">  
             <Gridlayout cols="auto,auto" verticalAlignment="center">
             <!--<StackLayout (tap)="close('close')" class="text-primary blue2" row="0" col="0" orientation="horizontal"> 
                <Label text="&#xE5CD;" class="text-left material-icons md-36 md-chevron-right"></Label>
@@ -26,20 +26,22 @@ let app = require("application");
          </StackLayout>
          <StackLayout class="hr-shadow m-5"></StackLayout>
          <StackLayout orientation="vertical">
-         <CardView margin="5 10 5 10" radius="10" elevation="10"  class="whiteCard">
-            <TextView height="200" row="0" style="color: black;" text="top" borderColor="white"
-                    [(ngModel)]="commentDescription" hint="enter your comment" id="comment-description"
-                  returnKeyType="next" class="m-10 comment-description"
-                  text="" editable="true"></TextView>
-                  </CardView>
-            <Button width="200" isEnabled="{{ isLoading ? false : true }}" text="Send"
-                    class="btn btn-primary blue2-background btn-rounded-sm" (tap)="submit('submit')"></Button>  
-                         
-                         
-            <ActivityIndicator visibility="{{ isLoading ? 'visible' : 'collapsed'}}" class="busy activity-indicator"
-                           busy="{{isAndroid ? true : false }}"></ActivityIndicator>             
-         </StackLayout>
-          
+              <GridLayout rows="200,auto, auto">
+                 <CardView row="0" margin="5 10 5 10" radius="10" elevation="10"  class="whiteCard">
+                    <TextView  style="color: black;" verticalAlignment="stretch" text="top" borderColor="white"
+                      hint="enter notes" id="comment-description"
+                      returnKeyType="next" class="input-without-border-bottom comment-description"
+                      text="" [(ngModel)]="commentDescription" editable="true"> 
+                    </TextView>
+                  </CardView> 
+                  <StackLayout row="1" orientation="vertical">
+                     <Button  width="200" isEnabled="{{ isLoading ? false : true }}" text="Send"
+                        class="btn btn-primary blue2-background btn-rounded-sm" (tap)="submit('submit')"></Button>     
+                     <ActivityIndicator visibility="{{ isLoading ? 'visible' : 'collapsed'}}" class="busy activity-indicator"
+                               busy="{{isAndroid ? true : false }}"></ActivityIndicator>             
+                  </StackLayout>     
+              </GridLayout>  
+         </StackLayout> 
        </StackLayout>
     `
 })

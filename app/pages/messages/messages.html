@@ -60,9 +60,10 @@
         <StackLayout #messageBox row="1">
             <StackLayout>
                 <GridLayout columns="*, auto" class="message-form">
-                    <TextView [(ngModel)]="newMessageText" id="newMessageText" col="0"
+                    <TextView class="input-without-border-bottom" [(ngModel)]="newMessageText" id="newMessageText" col="0"
                               hint="type here..." borderColor="white" ></TextView>
-                    <Button (tap)="sendMessage()" col="1" text="Send" class="blue2 send-button"></Button>
+                    <Button  isEnabled="{{ newMessageText ? true : false }}" (tap)="sendMessage()"
+                             col="1" text="Send" class="blue2 send-button  {{ newMessageText ? 'blue2-background' : 'disabled'}}"></Button>
                 </GridLayout>
             </StackLayout>
         </StackLayout>
