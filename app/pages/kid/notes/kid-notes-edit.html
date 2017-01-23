@@ -1,4 +1,4 @@
-<ActionBar title="Edit">
+<ActionBar title="Edit" *ngIf="isIos">
     <NavigationButton visibility="collapsed"></NavigationButton>
 
     <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
@@ -11,6 +11,19 @@
         <Label class="blue2 material-icons md-36 md-chevron-right" text="&#xE5CA;"></Label>
     </ActionItem>
 </ActionBar>
+
+<!-- android actionBar -->
+<ActionBar title="" *ngIf="isAndroid">
+    <NavigationButton icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <StackLayout orientation="horizontal"
+                 android:horizontalAlignment="center">
+        <Label verticalAlignment="center" text="Edit"  class="action-label"></Label>
+    </StackLayout>
+    <ActionItem (tap)="saveNotes(isEdit)">
+        <Label class="blue2 material-icons md-36 md-chevron-right" text="&#xE5CA;"></Label>
+    </ActionItem>
+</ActionBar>
+
 
 
 <GridLayout class="kid-notes-container">

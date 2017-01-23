@@ -1,10 +1,20 @@
-<ActionBar title="Likes" visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}">
+<ActionBar title="Likes" visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}" *ngIf="isIos">
     <NavigationButton visibility="collapsed"></NavigationButton>
 
     <ActionItem ios.position="left" android.position="left" (tap)="goBack()">
         <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
     </ActionItem>
 </ActionBar>
+
+<!--- android ActionBar -->
+<ActionBar title="" *ngIf="isAndroid">
+    <NavigationButton icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <StackLayout orientation="horizontal"
+                 android:horizontalAlignment="center">
+        <Label verticalAlignment="center" text="Likes"  class="action-label"></Label>
+    </StackLayout>
+</ActionBar>
+
 
 
 <GridLayout class="post-hearters-container">

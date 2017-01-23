@@ -9,8 +9,8 @@ import { TeacherService } from "../../shared/teacher/teacher.service";
 import {InternetService} from "../../shared/internet.service";
 import {ServerErrorService} from "../../shared/server.error.service";
 
-var nstoasts = require("nativescript-toasts");
-
+let nstoasts = require("nativescript-toasts");
+let app = require("application");
 
 @Component({
     moduleId: module.id,
@@ -19,8 +19,10 @@ var nstoasts = require("nativescript-toasts");
     styleUrls: ["./settings.css"],
     providers: [ TeacherService, ServerErrorService ]
 })
-export class SettingsPage extends Page implements OnInit{
+export class SettingsPage implements OnInit{
     public isLoading: Boolean = false;
+    public isAndroid: Boolean = false;
+    public isIos: Boolean = false;
     public showActionBarItems: Boolean = false;
 
     constructor(private location: Location,
@@ -29,7 +31,12 @@ export class SettingsPage extends Page implements OnInit{
                 private internetService: InternetService,
                 private vcRef: ViewContainerRef,
                 private serverErrorService: ServerErrorService) {
-        super(location);
+
+        if (app.android) {
+            this.isAndroid = true;
+        } else if (app.ios) {
+            this.isIos = true;
+        }
     }
 
     ngOnInit(){

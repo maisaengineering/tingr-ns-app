@@ -1,4 +1,4 @@
-<ActionBar title="Notes" visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}">
+<ActionBar title="Notes" visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}" *ngIf="isIos">
     <NavigationButton visibility="collapsed"></NavigationButton>
 
     <ActionItem ios.position="left" android.position="left" (tap)="goBack()">
@@ -10,6 +10,17 @@
     </ActionItem>
 </ActionBar>
 
+
+<ActionBar title="" *ngIf="isAndroid">
+    <NavigationButton icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <StackLayout orientation="horizontal"
+                 android:horizontalAlignment="center">
+        <Label verticalAlignment="center" text="Notes"  class="action-label"></Label>
+    </StackLayout>
+    <ActionItem (tap)="addNote(formOrDoc)">
+        <Label class="blue2 material-icons md-36 md-chevron-add" text="&#xE145;" ></Label>
+    </ActionItem>
+</ActionBar>
 
 <GridLayout class="kid-notes-container">
 

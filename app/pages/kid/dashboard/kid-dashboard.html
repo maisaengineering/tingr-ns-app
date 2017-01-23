@@ -1,11 +1,18 @@
-<ActionBar title="{{ kid.fname }} {{ kid.lname }}">
+<ActionBar title="{{ kid.fname }} {{ kid.lname }}" *ngIf="isIos">
     <NavigationButton visibility="collapsed"></NavigationButton>
     <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
                 ios.position="left" android.position="left" (tap)="goBack()">
         <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
     </ActionItem>
 </ActionBar>
-
+<!--- android ActionBar -->
+<ActionBar title="" *ngIf="isAndroid">
+    <NavigationButton icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <StackLayout orientation="horizontal"
+                 android:horizontalAlignment="center">
+        <Label verticalAlignment="center" text="{{ kid.fname }} {{ kid.lname }}"  class="action-label"></Label>
+    </StackLayout>
+</ActionBar>
 
 <GridLayout class="kid-profile">
     <PullToRefresh (refresh)="refreshList($event)" #pullToRefresh>
@@ -32,7 +39,7 @@
                                      (tap)="openKidProfile(kid)">
                             <Image text="top" stretch="none" horizontalAlignment="center"
                                    src="res://profile_details_40"></Image>
-                            <Label text="Profile Details"></Label>
+                            <Label text="Profile details"></Label>
                         </StackLayout>
                         <StackLayout col="1" row="0" horizontalAlignment="center" verticalAlignment="center"
                                      orientation="vertical">

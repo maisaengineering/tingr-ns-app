@@ -1,4 +1,4 @@
-<ActionBar title="Tag Kids">
+<ActionBar title="Tag Kids" *ngIf="isIos">
     <NavigationButton visibility="collapsed"></NavigationButton>
 
     <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
@@ -17,6 +17,24 @@
 
     </ActionItem>
 </ActionBar>
+
+
+<ActionBar title="" *ngIf="isAndroid">
+    <NavigationButton icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <StackLayout orientation="horizontal"
+                 android:horizontalAlignment="center">
+        <Label verticalAlignment="center" text="Tag Kids"  class="action-label"></Label>
+    </StackLayout>
+    <ActionItem (tap)="saveMoment()">
+        <Label *ngIf="s3_key" (tap)="saveMoment()"
+               class="blue2 material-icons md-36 md-chevron-right" text="&#xE5CA;"></Label>
+        <ActivityIndicator visibility="collapsed"
+                           class="busy activity-indicator"
+                           busy="{{ s3_key ? false : true }}">
+        </ActivityIndicator>
+    </ActionItem>
+</ActionBar>
+
 
 
 <GridLayout class="moment-capture-container">

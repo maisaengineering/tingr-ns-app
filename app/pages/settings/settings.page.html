@@ -1,4 +1,4 @@
-<ActionBar title="Settings">
+<ActionBar title="Settings" *ngIf="isIos">
     <NavigationButton visibility="collapsed"></NavigationButton>
     <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
                 ios.position="left" android.position="left" (tap)="goBack()">
@@ -6,6 +6,14 @@
     </ActionItem>
 </ActionBar>
 
+<!--- android ActionBar -->
+<ActionBar title="" *ngIf="isAndroid">
+    <NavigationButton icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <StackLayout orientation="horizontal"
+                 android:horizontalAlignment="center">
+        <Label verticalAlignment="center" text="Settings"  class="action-label"></Label>
+    </StackLayout>
+</ActionBar>
 
 <GridLayout>
     <StackLayout style="background-color: #f9f9f9" class="p-t-20">

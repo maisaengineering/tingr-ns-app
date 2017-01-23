@@ -107,13 +107,13 @@ TextField {
 
 
 ActionBar {
-    background-color: white;
     color: #6fa8dc;
 }
 
 NavigationButton, ActionItem{
     color: #6fa8dc;
 }
+
 
 
 .action-label{

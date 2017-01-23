@@ -332,9 +332,7 @@ export class KidDashboardComponent implements OnInit {
         } else {
             this.routerExtensions.navigate(["/kid-profile"], {
                 transition: {
-                    name: "explode",
-                    duration: 300,
-                    curve: "easeOut"
+                    name: "slideTop"
                 }
             });
         }
