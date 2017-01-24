@@ -131,9 +131,11 @@ NavigationButton, ActionItem{
 .number-with-circle{
     font-size: 12;
     color: white;
-    border-radius: 10;
-    height: 20;
-    width: 20;
+    border-radius: 11;
+    height: 21;
+    width: 21;
+    padding: 2;
+
 }
 
 
