@@ -10,12 +10,15 @@ import {RouterExtensions} from "nativescript-angular/router";
 import {Page} from "ui/page";
 import {TeacherInfo} from "../../providers/data/teacher_info";
 import {Observable} from "rxjs/Rx";
+import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/directives/dialogs";
+import {ModalPostComment} from "../../pages/dialogs/modal-post-comment";
 import {ServerErrorService} from "../../shared/server.error.service";
 // >> long-press-code
 import {GestureEventData} from "ui/gestures";
 import dialogs = require("ui/dialogs");
 import {DatePipe} from '@angular/common';
 import {InternetService} from "../../shared/internet.service";
+import {ModalMessageToParent} from "../dialogs/modal-message-to-parent";
 let nstoasts = require("nativescript-toasts");
 let app = require("application");
 let platform = require("platform");
@@ -30,7 +33,7 @@ let gestures = require("ui/gestures");
     styleUrls: ['./myclass.css'],
     templateUrl: './myclass.component.html',
     providers: [MyClassService, KidSignInOutService,
-        MessageService, TeacherService, ServerErrorService]
+        MessageService, TeacherService, ModalDialogService, ServerErrorService]
 })
 export class MyClassComponent extends DrawerPage implements OnInit {
     public managed_kids: Array<ManagedKid>;
@@ -59,6 +62,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
 
     constructor(private myClassService: MyClassService,
+                private modal: ModalDialogService,
                 private kidSignInOutService: KidSignInOutService,
                 private teacherService: TeacherService,
                 private messageService: MessageService,
@@ -223,23 +227,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 if (result === 'Sign-in/Sign-out') {
                     this.signInOrSignOutKid(kid);
                 } else if (result === "Message a Parent") {
-                    dialogs.prompt({
-                        title: "Message",
-                        //message: "Type your message here",
-                        okButtonText: "Send",
-                        cancelButtonText: "Cancel",
-                        //neutralButtonText: "Neutral text",
-                        //defaultText: "Type your message here",
-                        inputType: dialogs.inputType.text
-                    }).then(r => {
-                        let text = r.text.trim();
-                        if (text === '') {
-                            return;
-                        }
-                        if (r.result === true) {
-                            this.sendMessageForKid(text, kid);
-                        }
-                    });
+                    this.showModalMessageToParent(kid);
                 }
             }
 
@@ -282,23 +270,30 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
     }
 
-    sendMessageForKid(text, kid) {
-        this.isLoading = true;
-        this.messageService.sendMessage(text, kid.kid_klid)
-            .subscribe(
-                (result) => {
-                    this.isLoading = false;
-                    //var body = result;
-                    let options = {
-                        text: result.message,
-                        duration: nstoasts.DURATION.SHORT
-                    };
-                    nstoasts.show(options);
-                },
-                (error) => {
-                    this.isLoading = false;
-                    this.serverErrorService.showErrorModal();
-                }
-            );
+    showModalMessageToParent(kid) {
+        var options: ModalDialogOptions = {
+            viewContainerRef: this.vcRef,
+            context: {
+                kid_kl_id: kid.kid_klid
+            },
+            fullscreen: false
+        };
+
+        this.modal.showModal(ModalMessageToParent, options).then((result) => {
+            if(result === 'close' || typeof(result) == "undefined"){
+                // modal closed
+                // console.log('Modal closed');
+            }else{
+                //TODO add comment details as childView to parent instead refresh
+                //console.log("Modal Comment Result " + JSON.stringify(result));/
+                let options = {
+                    text: result.message,
+                    duration: nstoasts.DURATION.SHORT
+                };
+                nstoasts.show(options);
+            }
+
+        })
     }
+
 }

@@ -18,6 +18,7 @@ import { ServerErrorService } from "./shared/server.error.service"
 import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/modal-dialog";
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
 import { ModalPostComment } from "./pages/dialogs/modal-post-comment";
+import { ModalMessageToParent } from "./pages/dialogs/modal-message-to-parent";
 import { ModalServerError } from "./pages/dialogs/modal-server-error";
 
 import { DatePipe } from '@angular/common';
@@ -67,6 +68,7 @@ registerElement("PullToRefresh", () => {
     entryComponents: [
         ModalDatePicker,
         ModalPostComment,
+        ModalMessageToParent,
         ModalServerError
     ]
 })
