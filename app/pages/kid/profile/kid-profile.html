@@ -1,19 +1,20 @@
-<ActionBar title="{{ kid.fname }} {{ kid.lname }}" *ngIf="isIos">
-    <NavigationButton visibility="collapsed"></NavigationButton>
-    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
-                ios.position="left" android.position="left" (tap)="goBack()">
-        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
-    </ActionItem>
-</ActionBar>
-<!--- android ActionBar -->
-<ActionBar title="" *ngIf="isAndroid">
-    <NavigationButton icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+<ActionBar title="">
+    <!-- left area  -->
+    <NavigationButton *ngIf="isIos" visibility="collapsed"></NavigationButton>
+    <NavigationButton *ngIf="isAndroid" icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <ActionItem *ngIf="isIos" icon="res://ic_left" visibility="visible"
+                ios.position="left" (tap)="goBack()"></ActionItem>
+    <!-- center area  -->
     <StackLayout orientation="horizontal"
+                 ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
-        <Label verticalAlignment="center" text="{{ kid.fname }} {{ kid.lname }}"  class="action-label"></Label>
+        <StackLayout orientation="horizontal" verticalAlignment="center">
+            <Label text="{{ kid.fname }} {{ kid.lname }}" class="action-label"></Label>
+        </StackLayout>
     </StackLayout>
-</ActionBar>
+    <!-- right area  -->
 
+</ActionBar>
 
 
 <GridLayout class="kid-profile">
@@ -131,15 +132,16 @@
                             <Label [text]="parent.relation_ship" class="header text-muted"></Label>
                             <Label class="value blue2" [text]="parent.fname +' '+parent.lname " textWrap="true"></Label>
                             <Label class="value blue2" [text]="parent.email" textWrap="true"></Label>
-                            <StackLayout orientation="horizontal"  *ngFor="let phone of parent.phone_numbers">
-                                <Label *ngIf="phone?.number"class="value blue2" [text]="phone.number" textWrap="true"></Label>
-                                <Label *ngIf="phone?.type" class="p-l-10 text-muted" text="({{ phone.type }})" textWrap="true"></Label>
+                            <StackLayout orientation="horizontal" *ngFor="let phone of parent.phone_numbers">
+                                <Label *ngIf="phone?.number" class="value blue2" [text]="phone.number"
+                                       textWrap="true"></Label>
+                                <Label *ngIf="phone?.type" class="p-l-10 text-muted" text="({{ phone.type }})"
+                                       textWrap="true"></Label>
                             </StackLayout>
 
                         </StackLayout>
                         <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
-
 
 
                 </StackLayout>

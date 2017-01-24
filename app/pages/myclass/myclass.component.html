@@ -1,30 +1,22 @@
-<ActionBar title="" *ngIf="isIos">
-    <NavigationButton visibility="collapsed"></NavigationButton>
-    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
-                ios.position="left" android.position="left" (tap)="openDrawer()">
-        <Label class="blue2 material-icons md-24 md-menu" text="&#xE5D2;"></Label>
-    </ActionItem>
+<ActionBar title="">
+    <!-- left area  -->
+    <NavigationButton *ngIf="isIos" visibility="collapsed"></NavigationButton>
+    <NavigationButton *ngIf="isAndroid" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
+    <ActionItem *ngIf="isIos" icon="res://ic_menu" visibility="visible"
+                ios.position="left" (tap)="openDrawer()"></ActionItem>
 
+    <!-- center area  -->
     <StackLayout orientation="horizontal"
-                 ios:horizontalAlignment="center" (tap)="openRooms()">
-        <StackLayout *ngIf="roomName" orientation="horizontal" verticalAlignment="center">
-            <Label [text]="roomName" class="action-label"></Label>
-            <Label class="blue2 material-icons md-24 md-arrow-drop-down m-r-10" text="&#xE5C5;"></Label>
-        </StackLayout>
-    </StackLayout>
-</ActionBar>
-
-<!--- android ActionBar -->
-<ActionBar title="" *ngIf="isAndroid">
-    <NavigationButton icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
-    <StackLayout orientation="horizontal"
+                 ios:horizontalAlignment="center"
                  android:horizontalAlignment="center" (tap)="openRooms()">
-        <StackLayout *ngIf="roomName" orientation="horizontal"  verticalAlignment="center">
+        <StackLayout *ngIf="assignedRooms.length" orientation="horizontal" verticalAlignment="center">
             <Label [text]="roomName" class="action-label"></Label>
             <Label class="blue2 material-icons md-24 md-arrow-drop-down m-r-10" text="&#xE5C5;"></Label>
         </StackLayout>
     </StackLayout>
+    <!-- right area  -->
 </ActionBar>
+
 
 <RadSideDrawer #drawerComponent tkToggleNavButton>
     <ScrollView tkDrawerContent class="drawer-content">
@@ -38,7 +30,8 @@
 
                 <StackLayout>
                     <StackLayout *ngFor="let item of managed_kids">
-                        <StackLayout id="kidList" [kid]="item" (tap)="onTapKid(item)" class="list-group-item" (loaded)="kidLoaded($event)">
+                        <StackLayout id="kidList" [kid]="item" (tap)="onTapKid(item)" class="list-group-item"
+                                     (loaded)="kidLoaded($event)">
                             <GridLayout rows="*" columns="auto,*,70">
                                 <StackLayout row="0" col="0">
                                     <Image height="75" width="75" class="kid-profile-pic blue-circle-border"

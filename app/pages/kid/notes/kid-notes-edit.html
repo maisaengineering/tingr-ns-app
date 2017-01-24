@@ -1,30 +1,21 @@
-<ActionBar title="Edit" *ngIf="isIos">
-    <NavigationButton visibility="collapsed"></NavigationButton>
-
-    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
-                ios.position="left" android.position="left" (tap)="goBack()">
-        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
-    </ActionItem>
-
-    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
-                ios.position="right" android.position="right" (tap)="saveNotes(isEdit)">
-        <Label class="blue2 material-icons md-36 md-chevron-right" text="&#xE5CA;"></Label>
-    </ActionItem>
-</ActionBar>
-
-<!-- android actionBar -->
-<ActionBar title="" *ngIf="isAndroid">
-    <NavigationButton icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+<ActionBar title="">
+    <!-- left area  -->
+    <NavigationButton *ngIf="isIos" visibility="collapsed"></NavigationButton>
+    <NavigationButton *ngIf="isAndroid" icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <ActionItem *ngIf="isIos" icon="res://ic_left" visibility="visible"
+                ios.position="left" (tap)="goBack()"></ActionItem>
+    <!-- center area  -->
     <StackLayout orientation="horizontal"
+                 ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
-        <Label verticalAlignment="center" text="Edit"  class="action-label"></Label>
+        <StackLayout orientation="horizontal" verticalAlignment="center">
+            <Label text="Notes" class="action-label"></Label>
+        </StackLayout>
     </StackLayout>
-    <ActionItem (tap)="saveNotes(isEdit)">
-        <Label class="blue2 material-icons md-36 md-chevron-right" text="&#xE5CA;"></Label>
+    <!-- right area  -->
+    <ActionItem  ios.position="right" andriod.postion="actionBar" icon="res://ic_check" (tap)="saveNotes(isEdit)">
     </ActionItem>
 </ActionBar>
-
-
 
 <GridLayout class="kid-notes-container">
     <GridLayout rows="*,auto">
@@ -32,7 +23,7 @@
                   hint="enter notes" id="notes-description"
                   returnKeyType="next" class="notes-description"
                   text="" [(ngModel)]="notesDescription" editable="true"></TextView>
-        <StackLayout  row="1">
+        <StackLayout row="1">
             <StackLayout *ngIf="isEdit" (tap)="deleteNote()" height="80" horizontalAlignment="center">
                 <Label class="delete-notes-label" text="Delete" dock="bottom"
                        height="70"></Label>

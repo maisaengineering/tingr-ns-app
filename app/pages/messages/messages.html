@@ -1,17 +1,18 @@
-<ActionBar title="Messages" *ngIf="isIos">
-    <NavigationButton visibility="collapsed"></NavigationButton>
-    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}" ios.position="left"
-                 (tap)="goBack()">
-        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
-    </ActionItem>
-</ActionBar>
-<!-- android actionBar -->
-<ActionBar title="" *ngIf="isAndroid">
-    <NavigationButton icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+<ActionBar title="">
+    <!-- left area  -->
+    <NavigationButton *ngIf="isIos" visibility="collapsed"></NavigationButton>
+    <NavigationButton *ngIf="isAndroid" icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <ActionItem *ngIf="isIos" icon="res://ic_left" visibility="visible"
+                ios.position="left" (tap)="goBack()"></ActionItem>
+    <!-- center area  -->
     <StackLayout orientation="horizontal"
+                 ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
-        <Label verticalAlignment="center" text="Messages"  class="action-label"></Label>
+        <StackLayout orientation="horizontal" verticalAlignment="center">
+            <Label text="Messages" class="action-label"></Label>
+        </StackLayout>
     </StackLayout>
+    <!-- right area  -->
 </ActionBar>
 
 <GridLayout class="messages-container">
@@ -28,42 +29,46 @@
         <GridLayout row="0">
             <ScrollView>
                 <StackLayout verticalAlignment="top" *ngIf="!isMessagesEmpty(messages)">
-                        <StackLayout class="conversation" *ngFor="let groupedMessages of messages | keys">
-                            <StackLayout orinatation="vertical">
-                                <Label text="{{ groupedMessages.key }}" class="text-center date m-b-5"></Label>
-                                <StackLayout class="hr-shadow"></StackLayout>
-                            </StackLayout>
-                            <StackLayout class="messages">
-                                <StackLayout *ngFor="let message of groupedMessages.value" class="message-item">
+                    <StackLayout class="conversation" *ngFor="let groupedMessages of messages | keys">
+                        <StackLayout orinatation="vertical">
+                            <Label text="{{ groupedMessages.key }}" class="text-center date m-b-5"></Label>
+                            <StackLayout class="hr-shadow"></StackLayout>
+                        </StackLayout>
+                        <StackLayout class="messages">
+                            <StackLayout *ngFor="let message of groupedMessages.value" class="message-item">
 
-                                    <GridLayout rows="*" columns="auto,*">
-                                        <StackLayout row="0" col="0" class="profile-pic-container">
-                                            <Image height="75" width="75" class="profile-pic blue-circle-border"
-                                                   src="{{ message.photograph || '~/images/avatar-100.png' }}"></Image>
-                                        </StackLayout>
+                                <GridLayout rows="*" columns="auto,*">
+                                    <StackLayout row="0" col="0" class="profile-pic-container">
+                                        <Image height="75" width="75" class="profile-pic blue-circle-border"
+                                               src="{{ message.photograph || '~/images/avatar-100.png' }}"></Image>
+                                    </StackLayout>
 
-                                        <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical">
-                                            <StackLayout orientation="horizontal">
-                                                <Label [text]="message.child_name || message.sender_name" class="profile-name"></Label>
-                                                <Label *ngIf="message.child_relationship" [text]="message.child_relationship" class="profile-relationship text-muted"></Label>
-                                            </StackLayout>
-                                            <Label class="message-text" [text]="message.text" textWrap="true"></Label>
+                                    <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical">
+                                        <StackLayout orientation="horizontal">
+                                            <Label [text]="message.child_name || message.sender_name"
+                                                   class="profile-name"></Label>
+                                            <Label *ngIf="message.child_relationship"
+                                                   [text]="message.child_relationship"
+                                                   class="profile-relationship text-muted"></Label>
                                         </StackLayout>
-                                    </GridLayout>
-                                </StackLayout>
+                                        <Label class="message-text" [text]="message.text" textWrap="true"></Label>
+                                    </StackLayout>
+                                </GridLayout>
                             </StackLayout>
                         </StackLayout>
                     </StackLayout>
+                </StackLayout>
             </ScrollView>
         </GridLayout>
 
         <StackLayout #messageBox row="1">
             <StackLayout>
                 <GridLayout columns="*, auto" class="message-form">
-                    <TextView class="input-without-border-bottom" [(ngModel)]="newMessageText" id="newMessageText" col="0"
-                              hint="type here..." borderColor="white" ></TextView>
-                    <Button  isEnabled="{{ newMessageText ? true : false }}" (tap)="sendMessage()"
-                             col="1" text="Send" class="blue2 send-button  {{ newMessageText ? 'blue2-background' : 'disabled'}}"></Button>
+                    <TextView class="input-without-border-bottom" [(ngModel)]="newMessageText" id="newMessageText"
+                              col="0"
+                              hint="type here..." borderColor="white"></TextView>
+                    <Button isEnabled="{{ newMessageText ? true : false }}" (tap)="sendMessage()" col="1" text="Send"
+                            class="blue2 send-button {{ isIos ? 'p-x-10' : ''}} {{ newMessageText ? 'blue2-background' : 'disabled'}}"></Button>
                 </GridLayout>
             </StackLayout>
         </StackLayout>

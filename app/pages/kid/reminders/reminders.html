@@ -1,17 +1,18 @@
-<ActionBar title="Reminders" *ngIf="isIos">
-    <NavigationButton visibility="collapsed"></NavigationButton>
-    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}" ios.position="left"
-                android.position="left" (tap)="goBack()">
-        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
-    </ActionItem>
-</ActionBar>
-<!-- android actionBar -->
-<ActionBar title="" *ngIf="isAndroid">
-    <NavigationButton icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+<ActionBar title="">
+    <!-- left area  -->
+    <NavigationButton *ngIf="isIos" visibility="collapsed"></NavigationButton>
+    <NavigationButton *ngIf="isAndroid" icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <ActionItem *ngIf="isIos" icon="res://ic_left" visibility="visible"
+                ios.position="left" (tap)="goBack()"></ActionItem>
+    <!-- center area  -->
     <StackLayout orientation="horizontal"
+                 ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
-        <Label verticalAlignment="center" text="Reminders"  class="action-label"></Label>
+        <StackLayout orientation="horizontal" verticalAlignment="center">
+            <Label text="Reminders" class="action-label"></Label>
+        </StackLayout>
     </StackLayout>
+    <!-- right area  -->
 </ActionBar>
 
 <GridLayout class="kid-reminders-container">
@@ -29,8 +30,10 @@
                 <StackLayout *ngFor="let reminder of reminders">
                     <StackLayout *ngIf="reminder.text" (tap)="openReminder(reminder)">
                         <StackLayout id="reminder-{{ reminder.kl_id }}" orientation="vertical" class="reminder-item">
-                            <Label id="reminder-name-{{ reminder.kl_id }}" text="{{ reminder.text }}" class="{{ reminder.read ? 'text-muted' : 'blue2 '}}"></Label>
-                            <Label text="{{  reminder.created_at  | date: 'M/dd/yy' }}" class="text-muted reminder-date"></Label>
+                            <Label id="reminder-name-{{ reminder.kl_id }}" text="{{ reminder.text }}"
+                                   class="{{ reminder.read ? 'text-muted' : 'blue2 '}}"></Label>
+                            <Label text="{{  reminder.created_at  | date: 'M/dd/yy' }}"
+                                   class="text-muted reminder-date"></Label>
                         </StackLayout>
                         <StackLayout class="hr-shadow"></StackLayout>
                     </StackLayout>

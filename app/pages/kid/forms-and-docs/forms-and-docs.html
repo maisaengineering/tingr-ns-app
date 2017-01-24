@@ -1,19 +1,20 @@
-<ActionBar title="Forms & Documents" *ngIf="isIos">
-    <NavigationButton visibility="collapsed"></NavigationButton>
-    <ActionItem  visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}" ios.position="left" android.position="left" (tap)="goBack()">
-        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
-    </ActionItem>
-</ActionBar>
+ <ActionBar title="">
+    <!-- left area  -->
+    <NavigationButton *ngIf="isIos" visibility="collapsed"></NavigationButton>
+    <NavigationButton *ngIf="isAndroid" icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <ActionItem *ngIf="isIos" icon="res://ic_left" visibility="visible"
+                ios.position="left" (tap)="goBack()"></ActionItem>
 
-<!--- android ActionBar -->
-<ActionBar title="" *ngIf="isAndroid">
-    <NavigationButton icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <!-- center area  -->
     <StackLayout orientation="horizontal"
+                 ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
-        <Label verticalAlignment="center" text="Forms & Documents"  class="action-label"></Label>
+        <StackLayout orientation="horizontal" verticalAlignment="center">
+            <Label text="Forms & Documents" class="action-label"></Label>
+        </StackLayout>
     </StackLayout>
+    <!-- right area  -->
 </ActionBar>
-
 
 
 

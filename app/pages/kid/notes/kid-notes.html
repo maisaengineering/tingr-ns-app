@@ -1,37 +1,33 @@
-<ActionBar title="Notes" visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}" *ngIf="isIos">
-    <NavigationButton visibility="collapsed"></NavigationButton>
-
-    <ActionItem ios.position="left" android.position="left" (tap)="goBack()">
-        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
-    </ActionItem>
-
-    <ActionItem ios.position="right" android.position="right" (tap)="addNote()">
-        <Label class="blue2 material-icons md-36 md-chevron-add" text="&#xE145;" ></Label>
-    </ActionItem>
-</ActionBar>
-
-
-<ActionBar title="" *ngIf="isAndroid">
-    <NavigationButton icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+<ActionBar title="">
+    <!-- left area  -->
+    <NavigationButton *ngIf="isIos" visibility="collapsed"></NavigationButton>
+    <NavigationButton *ngIf="isAndroid" icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <ActionItem *ngIf="isIos" icon="res://ic_left" visibility="visible"
+                ios.position="left" (tap)="goBack()"></ActionItem>
+    <!-- center area  -->
     <StackLayout orientation="horizontal"
+                 ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
-        <Label verticalAlignment="center" text="Notes"  class="action-label"></Label>
+        <StackLayout orientation="horizontal" verticalAlignment="center">
+            <Label text="Notes" class="action-label"></Label>
+        </StackLayout>
     </StackLayout>
-    <ActionItem (tap)="addNote(formOrDoc)">
-        <Label class="blue2 material-icons md-36 md-chevron-add" text="&#xE145;" ></Label>
+    <!-- right area  -->
+    <ActionItem  ios.position="right" andriod.postion="actionBar" icon="res://ic_add" (tap)="addNote(formOrDoc)">
     </ActionItem>
 </ActionBar>
+
 
 <GridLayout class="kid-notes-container">
 
     <StackLayout *ngIf="!notes.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" verticalAlignment="center">
-       <StackLayout  orientation="vertical" horizontalAlignment="center" class="empty-page">
-           <Label class="message text-center" text="{{ emptyNoteMessage }}" textWrap="true"></Label>
-           <StackLayout (tap)="addNote()">
-               <Label text="&#xE145;" class="text-center blue2 material-icons md-48 md-chevron-add"></Label>
-           </StackLayout>
+        <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
+            <Label class="message text-center" text="{{ emptyNoteMessage }}" textWrap="true"></Label>
+            <StackLayout (tap)="addNote()">
+                <Label text="&#xE145;" class="text-center blue2 material-icons md-48 md-chevron-add"></Label>
+            </StackLayout>
 
-       </StackLayout>
+        </StackLayout>
     </StackLayout>
 
     <ScrollView>
@@ -42,7 +38,8 @@
                         <Label text="{{ note.description.split('\n')[0] }}" class="first-line"></Label>
                         <StackLayout orientation="horizontal" class="text-muted second-line">
                             <Label text="{{ note.created_at  | date: 'M/d/yy' }}"></Label>
-                            <Label text="{{ note.description.replace(note.description.split('\n')[0], '').trim() }}" class="m-l-10"></Label>
+                            <Label text="{{ note.description.replace(note.description.split('\n')[0], '').trim() }}"
+                                   class="m-l-10"></Label>
                         </StackLayout>
                     </StackLayout>
                     <StackLayout class="hr-light"></StackLayout>

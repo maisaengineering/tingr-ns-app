@@ -1,25 +1,29 @@
-<ActionBar title="Settings" *ngIf="isIos">
-    <NavigationButton visibility="collapsed"></NavigationButton>
-    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
-                ios.position="left" android.position="left" (tap)="goBack()">
-        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
-    </ActionItem>
+<ActionBar title="">
+    <!-- left area  -->
+    <NavigationButton *ngIf="isIos" visibility="collapsed"></NavigationButton>
+    <NavigationButton *ngIf="isAndroid" icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <ActionItem *ngIf="isIos" icon="res://ic_left" visibility="visible"
+                ios.position="left" (tap)="goBack()"></ActionItem>
+    <!-- center area  -->
+    <StackLayout orientation="horizontal"
+                 ios:horizontalAlignment="center"
+                 android:horizontalAlignment="center">
+        <StackLayout orientation="horizontal" verticalAlignment="center">
+            <Label text="Settings" class="action-label"></Label>
+        </StackLayout>
+    </StackLayout>
+    <!-- right area  --> 
 </ActionBar>
 
-<!--- android ActionBar -->
-<ActionBar title="" *ngIf="isAndroid">
-    <NavigationButton icon="res://ic_left" (tap)="goBack()"></NavigationButton>
-    <StackLayout orientation="horizontal"
-                 android:horizontalAlignment="center">
-        <Label verticalAlignment="center" text="Settings"  class="action-label"></Label>
-    </StackLayout>
-</ActionBar>
+
 
 <GridLayout>
     <StackLayout style="background-color: #f9f9f9" class="p-t-20">
-        <CardView margin="5 10 5 10" radius="10" elevation="10"  class="whiteCard">
-            <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item" orientation="horizontal">
-                <Label row="0" col="0" class="m-r-20 material-icons md-24 m-r-20 md-settings blue2" text="&#xE8B8;"></Label>
+        <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard">
+            <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
+                        orientation="horizontal">
+                <Label row="0" col="0" class="m-r-20 material-icons md-24 m-r-20 md-settings blue2"
+                       text="&#xE8B8;"></Label>
                 <Label row="0" col="1" verticalAlignment="center" text="General"
                        class="text-left font-weight-bold"></Label>
                 <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
@@ -27,8 +31,9 @@
             </Gridlayout>
         </CardView>
 
-        <CardView  margin="5 10 5 10" radius="10" elevation="10"  class="whiteCard">
-            <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item" orientation="horizontal">
+        <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard">
+            <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
+                        orientation="horizontal">
                 <Label row="0" col="0" class="m-r-20 material-icons md-24 m-r-20 md-info blue2" text="&#xE88E;"></Label>
                 <Label row="0" col="1" verticalAlignment="center" text="About"
                        class="text-left font-weight-bold"></Label>
@@ -37,9 +42,11 @@
             </Gridlayout>
         </CardView>
 
-        <CardView margin="5 10 5 10" radius="10" elevation="10"  class="whiteCard" (tap)="logOut()">
-            <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item" orientation="horizontal">
-                <Label row="0" col="0" class="m-r-20 material-icons md-24 m-r-20 md-exit-to-app blue2" text="&#xE879;"></Label>
+        <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard" (tap)="logOut()">
+            <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
+                        orientation="horizontal">
+                <Label row="0" col="0" class="m-r-20 material-icons md-24 m-r-20 md-exit-to-app blue2"
+                       text="&#xE879;"></Label>
                 <Label row="0" col="1" verticalAlignment="center" text="Logout"
                        class="text-left font-weight-bold"></Label>
                 <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"

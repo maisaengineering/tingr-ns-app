@@ -1,38 +1,28 @@
-<ActionBar title="Tag Kids" *ngIf="isIos">
-    <NavigationButton visibility="collapsed"></NavigationButton>
-
-    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
-                ios.position="left" android.position="left" (tap)="goBack()">
-        <Label class="blue2 material-icons md-36 md-chevron-left" text="&#xE5CB;"></Label>
-    </ActionItem>
-
-    <ActionItem (tap)="saveMoment()" visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
-                ios.position="right" android.position="right">
-        <Label *ngIf="s3_key"
-               class="blue2 material-icons md-36 md-chevron-right" text="&#xE5CA;"></Label>
-        <ActivityIndicator visibility="collapsed"
-                           class="busy activity-indicator"
-                           busy="{{ s3_key ? false : true }}">
-        </ActivityIndicator>
-
-    </ActionItem>
-</ActionBar>
-
-
-<ActionBar title="" *ngIf="isAndroid">
-    <NavigationButton icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+<ActionBar title="">
+    <!-- left area  -->
+    <NavigationButton *ngIf="isIos" visibility="collapsed"></NavigationButton>
+    <NavigationButton *ngIf="isAndroid" icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <ActionItem *ngIf="isIos" icon="res://ic_left" visibility="visible"
+                ios.position="left" (tap)="goBack()"></ActionItem>
+    <!-- center area  -->
     <StackLayout orientation="horizontal"
+                 ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
-        <Label verticalAlignment="center" text="Tag Kids"  class="action-label"></Label>
+        <StackLayout orientation="horizontal" verticalAlignment="center">
+            <Label text="Tag Kids" class="action-label"></Label>
+        </StackLayout>
     </StackLayout>
-    <ActionItem (tap)="saveMoment()">
-        <Label *ngIf="s3_key"
-               class="blue2 material-icons md-36 md-chevron-right" text="&#xE5CA;"></Label>
+    <!-- right area  -->
+    <ActionItem *ngIf="s3_key" (tap)="saveMoment()" ios.position="right" andriod.postion="actionBar" icon="res://ic_check">
+    </ActionItem>
+
+    <ActionItem *ngIf="!s3_key" ios.position="right" andriod.postion="actionBar" icon="res://ic_check">
         <ActivityIndicator visibility="collapsed"
                            class="busy activity-indicator"
                            busy="{{ s3_key ? false : true }}">
         </ActivityIndicator>
     </ActionItem>
+
 </ActionBar>
 
 
@@ -47,7 +37,8 @@
                         <Gridlayout rows="auto" columns="auto,*" verticalAlignment="center"
                                     class="settings-item"
                                     orientation="horizontal" class="item">
-                            <Image (tap)="selectMomentCaptureOption()" row='0' col="0" id="moment-image" height="100" width="100"
+                            <Image (tap)="selectMomentCaptureOption()" row='0' col="0" id="moment-image" height="100"
+                                   width="100"
                                    stretch="aspectFill" class="" src="~/images/avatar-100.png"></Image>
                             <TextView class="input-without-border-bottom" row='0' col="1"
                                       hint="enter additional details" id="moment-additional-details"
@@ -71,8 +62,9 @@
                                        src="{{ kid.photograph_url || '~/images/avatar-100.png' }}"></Image>
                                 <Label row="0" col="1" verticalAlignment="center" text="{{ kid.fname }} {{ kid.lname }}"
                                        class="m-l-20 font-weight-bold"></Label>
-                                <Image row="0" col="2"  height="24" width="24" stretch="aspectFit" id="checkbox-{{ kid.kid_klid }}"class="text-right m-r-10"
-                                        horizontalAlignment="right" src="~/images/check-box-unchecked.png"></Image>
+                                <Image row="0" col="2" height="24" width="24" stretch="aspectFit"
+                                       id="checkbox-{{ kid.kid_klid }}" class="text-right m-r-10"
+                                       horizontalAlignment="right" src="~/images/check-box-unchecked.png"></Image>
 
                             </Gridlayout>
                             <StackLayout class="hr-light"></StackLayout>
