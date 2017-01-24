@@ -149,6 +149,10 @@ NavigationButton, ActionItem{
     border-width: 2;
 }
 
+.error-label {
+    color: #e89999;
+    font-style: italic;
+}
 
 
 .drawer-content {
