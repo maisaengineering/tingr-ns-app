@@ -209,6 +209,14 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
     onTapKid(kid) {
         this.kidData.info = kid;
+        let kidStackLayout = view.getViewById(this.page, 'kid-'+kid.kid_klid);
+        kidStackLayout.backgroundColor = '#D5E6F5';
+        kidStackLayout.animate({
+            scale: { x: 2, y: 2},
+            duration: 3000
+        });
+
+
         this.routerExtensions.navigate(["/kid-dashboard"], {
             transition: {
                 name: "slideLeft"
@@ -218,6 +226,13 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
 
     onLongPressKid(kid) {
+        let kidStackLayout = view.getViewById(this.page, 'kid-'+kid.kid_klid);
+
+       // kidStackLayout.backgroundColor = '#D5E6F5';
+        kidStackLayout.animate({
+            backgroundColor: '#D5E6F5',
+            duration: 3000
+        });
         dialogs.action({
             //message: "",
             cancelButtonText: "Cancel",
