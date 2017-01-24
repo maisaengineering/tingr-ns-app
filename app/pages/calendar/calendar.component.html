@@ -1,19 +1,29 @@
-<!--- iOS ActionBar -->
-<ActionBar title="Schedule" *ngIf="isIos">
-    <NavigationButton visibility="collapsed"></NavigationButton>
-    <ActionItem visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
-                ios.position="left" android.position="left" (tap)="openDrawer()">
-        <Label class="blue2 material-icons md-24 md-menu" text="&#xE5D2;"></Label>
-    </ActionItem>
-</ActionBar>
+<ActionBar title="">
 
-<!--- android ActionBar -->
-<ActionBar title="" *ngIf="isAndroid">
-    <NavigationButton icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
+    <!-- left area  -->
+    <NavigationButton *ngIf="isIos" visibility="collapsed"></NavigationButton>
+    <NavigationButton *ngIf="isAndroid" icon="res://ic_menu" (tap)="openDrawer()"></NavigationButton>
+    <ActionItem *ngIf="isIos" icon="res://ic_menu" visibility="{{ showActionBarItems ? 'visible' : 'collapsed' }}"
+                ios.position="left" (tap)="openDrawer()"></ActionItem>
+
+    <!-- center area  -->
     <StackLayout orientation="horizontal"
-                 android:horizontalAlignment="center">
-        <Label verticalAlignment="center" text="Schedule"  class="action-label"></Label>
+                 ios:horizontalAlignment="center"
+                 android:horizontalAlignment="center" (tap)="openRooms()">
+        <StackLayout orientation="horizontal" verticalAlignment="center">
+            <Label text="Schedule" class="action-label"></Label>
+            <Label class="blue2 material-icons md-24 md-arrow-drop-down m-r-10" text="&#xE5C5;"></Label>
+        </StackLayout>
     </StackLayout>
+
+    <!-- right area  -->
+
+    <ActionItem ios.position="right" andriod.postion="actionBar" icon="res://ic_check">
+     <!--   <StackLayout class="{{ isAndroid ? 'p-r-5' : '' }}">
+            <Label class="blue2 material-icons md-24 md-arrow-drop-down m-r-10" text="&#xE5C5;"></Label>
+        </StackLayout>-->
+    </ActionItem>
+
 </ActionBar>
 
 
@@ -111,20 +121,23 @@
                                src="res://message_icon"></Image>
                         <StackLayout verticalAlignment="center">
                             <GridLayout rows="auto,auto" *ngFor="let item of messages; let i = index">
-                                <GridLayout row="0" columns="50, *" rows="*" class="item" (tap)="openMessageConversation(item)">
+                                <GridLayout row="0" columns="50, *" rows="*" class="item"
+                                            (tap)="openMessageConversation(item)">
                                     <StackLayout verticalAlignment="center">
                                         <Image height="40" width="40" class="kid-profile-pic blue-circle-border"
                                                src="{{ item.photograph ? item.photograph : '~/images/avatar-100.png' }}"></Image>
                                     </StackLayout>
                                     <StackLayout col="1">
                                         <StackLayout col="1" orientation="horizontal">
-                                            <Label class="profile-name" [text]="item.sender_name" textwrap="true"></Label>
+                                            <Label class="profile-name" [text]="item.sender_name"
+                                                   textwrap="true"></Label>
                                             <Label class="profile-relationship"
                                                    text="{{ item.child_name }}'s {{ item.child_relationship }}"
                                                    textwrap="true"></Label>
                                         </StackLayout>
                                         <Label [text]="item.text"
-                                               class="message-text {{ item.read_message ? 'text-muted' : 'blue' }}" col="1"
+                                               class="message-text {{ item.read_message ? 'text-muted' : 'blue' }}"
+                                               col="1"
                                                textwrap="true"></Label>
                                     </StackLayout>
                                 </GridLayout>
