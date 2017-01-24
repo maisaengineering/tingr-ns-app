@@ -74,11 +74,11 @@ export class ModalPostComment implements OnInit {
 
     public submit(res: string) {
         //console.log("Passing Data :" + this.commentDescription);
-
         //this.params.closeCallback(res);
-        if(this.commentDescription){
+        let description = this.commentDescription.trim();
+        if(description){
             this.isLoading = true;
-            this.postService.addComment(this.post_slug, this.commentDescription)
+            this.postService.addComment(this.post_slug, description)
                 .subscribe(
                     (result) => {
                         this.isLoading = false;
