@@ -419,7 +419,7 @@ export class KidDashboardComponent implements OnInit {
             fullscreen: false
         };
 
-        this.modal.showModal(ModalPostComment, options).then((result) => { 
+        this.modal.showModal(ModalPostComment, options).then((result) => {
             if(result === 'close' || typeof(result) == "undefined"){
               // modal closed
                // console.log('Modal closed');
