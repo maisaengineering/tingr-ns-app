@@ -146,7 +146,7 @@
                                                 </StackLayout>
                                             </StackLayout>
                                             <StackLayout col="1" row="0" horizontalAlignment="right"
-                                                         orientation="horizontal">
+                                                         orientation="horizontal" height="50">
                                                 <StackLayout orientation="vertical">
                                                     <Label text="{{  post.created_at.substring(0,10) |  date: 'MMMM dd, yyyy' }}"
                                                            class="tagged-on-date"></Label>
@@ -215,7 +215,7 @@
                                                    (tap)="addOrRemoveHeart(post)"
                                                    id="post-add-remove-heart-{{ post.kl_id }}"
                                                    src="res://heart_icon_{{ post.hearted ? 'gray' : 'light' }}"></Image>
-                                            <ActivityIndicator height="30" width="30"
+                                            <ActivityIndicator height="25" width="30"
                                                                id="post-add-remove-heart-indicator-{{ post.kl_id }}"
                                                                visibility="collapsed" class="busy activity-indicator"
                                                                busy="{{isAndroid ? true : false }}"></ActivityIndicator>

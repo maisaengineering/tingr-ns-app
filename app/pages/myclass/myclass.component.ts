@@ -232,11 +232,12 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                         //defaultText: "Type your message here",
                         inputType: dialogs.inputType.text
                     }).then(r => {
-                        if (r.text === '') {
+                        let text = r.text.trim();
+                        if (text === '') {
                             return;
                         }
                         if (r.result === true) {
-                            this.sendMessageForKid(r.text, kid);
+                            this.sendMessageForKid(text, kid);
                         }
                     });
                 }

@@ -20,7 +20,7 @@ let app = require("application");
                <Label text="&#xE5CD;" class="text-left material-icons md-36 md-chevron-right"></Label>
             </StackLayout>-->
              <StackLayout (tap)="close('close')" class="text-primary blue2" row="0" col="0"  horizontalAlignment="right" orientation="horizontal">  
-               <Label text="&#xE5CD;" class="text-left material-icons md-36 md-close"></Label>
+               <Label text="&#xE5CD;" class="text-left material-icons md-24 md-close"></Label>
              </StackLayout> 
             </Gridlayout>  
          </StackLayout>
@@ -29,13 +29,13 @@ let app = require("application");
               <GridLayout rows="200,auto, auto">
                  <CardView row="0" margin="5 10 5 10" radius="10" elevation="10"  class="whiteCard">
                     <TextView  style="color: black;" verticalAlignment="stretch" text="top" borderColor="white"
-                      hint="enter notes" id="comment-description"
+                      hint="enter your comment here..." id="comment-description"
                       returnKeyType="next" class="input-without-border-bottom comment-description"
                       text="" [(ngModel)]="commentDescription" editable="true"> 
                     </TextView>
                   </CardView> 
                   <StackLayout row="1" orientation="vertical">
-                     <Button  width="200" isEnabled="{{ isLoading ? false : true }}" text="Send"
+                     <Button  width="200" isEnabled="{{ commentDescription ? true : false }}" text="Send"
                         class="btn btn-primary blue2-background btn-rounded-sm" (tap)="submit('submit')"></Button>     
                      <ActivityIndicator visibility="{{ isLoading ? 'visible' : 'collapsed'}}" class="busy activity-indicator"
                                busy="{{isAndroid ? true : false }}"></ActivityIndicator>             
@@ -73,21 +73,26 @@ export class ModalPostComment implements OnInit {
     }
 
     public submit(res: string) {
-        this.isLoading = true;
         //console.log("Passing Data :" + this.commentDescription);
-
         //this.params.closeCallback(res);
-        this.postService.addComment(this.post_slug, this.commentDescription)
-            .subscribe(
-                (result) => {
-                    this.isLoading = false;
-                    this.params.closeCallback(result.body);
-                },
-                (error) => {
-                    this.isLoading = false;
-                    this.serverErrorService.showErrorModal();
-                }
-            );
+        let description = this.commentDescription.trim();
+        if(description){
+            this.isLoading = true;
+            this.postService.addComment(this.post_slug, description)
+                .subscribe(
+                    (result) => {
+                        this.isLoading = false;
+                        this.params.closeCallback(result.body);
+                    },
+                    (error) => {
+                        this.isLoading = false;
+                        this.serverErrorService.showErrorModal();
+                    }
+                );
+        }else{
+            this.params.closeCallback('close');
+        }
+
     }
 
 

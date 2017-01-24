@@ -420,8 +420,9 @@ export class KidDashboardComponent implements OnInit {
         };
 
         this.modal.showModal(ModalPostComment, options).then((result) => {
-            if(result === 'close'){
+            if(result === 'close' || typeof(result) == "undefined"){
               // modal closed
+               // console.log('Modal closed');
             }else{
                 //TODO add comment details as childView to parent instead refresh
                 //console.log("Modal Comment Result " + JSON.stringify(result));/
