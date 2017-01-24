@@ -38,6 +38,9 @@
         <item name="theme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat</item>
 
+        <item name="android:actionMenuTextColor">@color/ns_accent</item>
+        <item name="actionMenuTextColor">@color/ns_accent</item>
+
     </style>
 
     <style name="NativeScriptToolbarStyle" parent="NativeScriptToolbarStyleBase">
