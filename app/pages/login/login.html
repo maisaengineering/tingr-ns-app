@@ -1,18 +1,24 @@
-<GridLayout class="login-container">
-    <GridLayout rows="*, 150" >
-        <StackLayout row="0" verticalAlignment="center">
-            <Image class="logo" src="~/images/logo-72@2x.png" stretch="none" horizontalAlignment="center"></Image>
-            <StackLayout  orientation="horizontal" horizontalAlignment="center">
+<GridLayout class="login-cover-image">
 
-                    <TextField width="300" class="input input-border input-border-primary" hint="Email Address" keyboardType="email" [(ngModel)]="email"
+    <GridLayout rows="180,*,100" >
+        <StackLayout row="0"></StackLayout>
+        <StackLayout row="1" orientation="vertical" verticalAlignment="center" class="login-container">
+            <StackLayout orientation="horizontal" horizontalAlignment="center" class="m-20">
+                    <TextField  width="300"  class="input input-border input-border-primary input-field" hint="Email Address"
+                               keyboardType="email" [(ngModel)]="email"
                                autocorrect="false" autocapitalizationType="none" id="email"></TextField>
                 <!--<Label *ngIf="emailError"
                        class="input-info-box error-box material-icons md-24 md-close" text="&#xE5CD;"></Label>-->
             </StackLayout>
+            <StackLayout horizontalAlignment="center" class="m-b-20">
+                <Button  isEnabled="{{ isLoading ? false : true }}" text="Continue"
+                        class="btn btn-primary blue2-background btn-rounded-sm btn-submit" (tap)="submitEmail()"></Button>
+            </StackLayout>
+
         </StackLayout>
-        <Label row="1" text="&#xE5CC;" (tap)="submitEmail()"
+        <!--<Label row="2" text="&#xE5CC;" (tap)="submitEmail()"
                class="blue2 text-right p-r-20 p-b-10 material-icons md-48 md-chevron-right"
-               horizontalAlignment="right" verticalAlignment="bottom"></Label>
+               horizontalAlignment="right" verticalAlignment="bottom"></Label>-->
     </GridLayout>
 
     <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>

@@ -1,12 +1,12 @@
 Image.logo {
     margin-bottom: 50;
 }
-Button, .forgot-password {
+/*Button, .forgot-password {
     margin: 0 50 0 50;
-}
+}*/
 
 TextField{
-    font-size: 16;
+    font-size: 17;
 }
 
 .forgot-pass-link{
@@ -14,18 +14,37 @@ TextField{
    /* margin: 0  30 10 30;*/
     font-size: 16;
 }
+.login-cover-image{
+    background-image: url("~/images/teacher-login-bg-lr.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+StackLayout.login-container{
+    background-color: rgba(255, 255, 255, 0.7);
+    margin: 30;
+    border-radius: 10;
+}
 
 .input-border{
-    border-width:1;
+    border-width:2;
     border-color:#6fa8dc;
     border-radius:2;
-    padding: 10;
+    padding: 12;
     color: black;
 }
 
 .input-border-primary {
     border-color: #6fa8dc;
 
+}
+.input-border-white {
+    border-color: white;
+
+}
+.input-field{
+    text-align: center;
 }
 
 .input-border-success {
@@ -35,8 +54,16 @@ TextField{
 .input-border-error {
     border-color: #e89999;
 }
+.btn-submit{
+    font-weight: bold;
+    font-size: 18;
+}
 
 
 .btn-submit-email{
     padding: 20 10 10 20;
+}
+
+.btn-icon{
+    color: white;
 }
