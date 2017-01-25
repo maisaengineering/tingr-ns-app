@@ -30,7 +30,7 @@
 
                 <StackLayout>
                     <StackLayout *ngFor="let item of managed_kids">
-                        <StackLayout id="kidList" [kid]="item" (tap)="onTapKid(item)" class="list-group-item"
+                        <StackLayout id="kid-{{ item.kid_klid }}" [kid]="item" (tap)="onTapKid(item)" class="list-group-item"
                                      (loaded)="kidLoaded($event)">
                             <GridLayout rows="*" columns="auto,*,70">
                                 <StackLayout row="0" col="0">

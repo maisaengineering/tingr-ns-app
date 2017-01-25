@@ -177,7 +177,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             cancelButtonText: "Cancel",
             actions: actions
         }).then(result => {
-            if(result !== 'Cancel'){
+            if (result !== 'Cancel') {
                 // don't fetch data if clicks on same room
                 if (this.roomName != result) {
                     this.currentRoom = rooms.filter(report => report.session_name === result)[0];
@@ -194,12 +194,12 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
     kidLoaded(args) {
         let kidStackLayout = args.object;
-        kidStackLayout.observe(gestures.GestureTypes.tap | gestures.GestureTypes.longPress ,(args) => {
+        kidStackLayout.observe(gestures.GestureTypes.tap | gestures.GestureTypes.longPress, (args) => {
             //console.log("Event: " + args.eventName + ", sender: " + args.object);
             let kid = args.object.get("kid");
-            if(args.eventName === 'tap'){
-              // this.onTapKid(kid); // this wonn't work it invoking defulat tap in view
-            } else if(args.eventName === 'longPress'){
+            if (args.eventName === 'tap') {
+                // this.onTapKid(kid); // this wonn't work it invoking defulat tap in view
+            } else if (args.eventName === 'longPress') {
                 console.log("Event  longPress");
                 this.onLongPressKid(kid);
             }
@@ -209,28 +209,48 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
     onTapKid(kid) {
         this.kidData.info = kid;
-        this.routerExtensions.navigate(["/kid-dashboard"], {
-            transition: {
-                name: "slideLeft"
-            }
+        let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
+        // below one is usefull when removing element from stack
+        /* kidStackLayout.animate(
+         {backgroundColor: '#EAF2FA', duration: 2000, opacity: 0.25}
+         );*/
+        kidStackLayout.animate(
+            { backgroundColor: '#EAF2FA'}
+        ).then(() => {
+            this.routerExtensions.navigate(["/kid-dashboard"], {
+                transition: {
+                    name: "slideLeft"
+                }
+            });
+        }).catch(()=>{
+            // animation error
         });
     }
 
 
     onLongPressKid(kid) {
-        dialogs.action({
-            //message: "",
-            cancelButtonText: "Cancel",
-            actions: ["Sign-in/Sign-out", "Message to Parent"]
-        }).then(result => {
-            if(result !== 'Cancel'){
-                if (result === 'Sign-in/Sign-out') {
-                    this.signInOrSignOutKid(kid);
-                } else if (result === "Message to Parent") {
-                    this.showModalMessageToParent(kid);
-                }
-            }
+        let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
 
+        kidStackLayout.animate(
+            { backgroundColor: '#EAF2FA'}
+        ).then(() => {
+            dialogs.action({
+                //message: "",
+                cancelButtonText: "Cancel",
+                actions: ["Sign-in/Sign-out", "Message a Parent"]
+            }).then(result => {
+                if(result == 'Cancel' || typeof result == "undefined"){
+                    this.cancelKidSelectionAnimation(kid);
+                } else  {
+                    if (result === 'Sign-in/Sign-out') {
+                        this.signInOrSignOutKid(kid);
+                    } else if (result === "Message a Parent") {
+                        this.showModalMessageToParent(kid);
+                    }
+                }
+            });
+        }).catch(()=>{
+            // animation error
         });
 
     }
@@ -238,7 +258,6 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     signInOrSignOutKid(kid) {
         //var time = this.datePipe.transform(new Date(), 'HH:MM a');
         //alert(kidName + " signed in successfully at " + time)
-
         let inoutTimeLabel = view.getViewById(this.page, "in-or-out-time-" + kid.kid_klid);
         this.isLoading = true;
         this.kidSignInOutService.signInOrSingOut(kid.kid_klid)
@@ -259,10 +278,11 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                         } catch (err) {
                             // may be page redirected kid-dashboard
                         }
-
                     }
+                    this.cancelKidSelectionAnimation(kid);
                 },
                 (error) => {
+                    this.cancelKidSelectionAnimation(kid);
                     this.isLoading = false;
                     this.serverErrorService.showErrorModal();
                 }
@@ -278,12 +298,13 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             },
             fullscreen: false
         };
-
         this.modal.showModal(ModalMessageToParent, options).then((result) => {
-            if(result === 'close' || typeof(result) == "undefined"){
+            console.log("Result "+ result);
+            if (result === 'close' || typeof(result) == "undefined") {
                 // modal closed
                 // console.log('Modal closed');
-            }else{
+                this.cancelKidSelectionAnimation(kid);
+            } else {
                 //TODO add comment details as childView to parent instead refresh
                 //console.log("Modal Comment Result " + JSON.stringify(result));/
                 let options = {
@@ -291,8 +312,21 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                     duration: nstoasts.DURATION.SHORT
                 };
                 nstoasts.show(options);
+                this.cancelKidSelectionAnimation(kid);
             }
 
+        })
+    }
+
+    // clears the selected animation for kid
+    cancelKidSelectionAnimation(kid){
+        let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
+        kidStackLayout.animate(
+            {backgroundColor: 'white', duration: 2000}
+        ).then(()=>{
+            // animationDone
+        }).catch(()=>{
+            // animation error
         })
     }
 
