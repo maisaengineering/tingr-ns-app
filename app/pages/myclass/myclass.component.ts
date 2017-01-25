@@ -222,7 +222,9 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                     name: "slideLeft"
                 }
             });
-        })
+        }).catch(()=>{
+            // animation error
+        });
     }
 
 
@@ -238,16 +240,17 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 actions: ["Sign-in/Sign-out", "Message a Parent"]
             }).then(result => {
                 if(result == 'Cancel' || typeof result == "undefined"){
-                   //dialog closed
-                    kidStackLayout.backgroundColor = 'white';
+                    this.cancelKidSelectionAnimation(kid);
                 } else  {
                     if (result === 'Sign-in/Sign-out') {
                         this.signInOrSignOutKid(kid);
                     } else if (result === "Message a Parent") {
                         this.showModalMessageToParent(kid);
                     }
-                } 
+                }
             });
+        }).catch(()=>{
+            // animation error
         });
 
     }
@@ -256,7 +259,6 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         //var time = this.datePipe.transform(new Date(), 'HH:MM a');
         //alert(kidName + " signed in successfully at " + time)
         let inoutTimeLabel = view.getViewById(this.page, "in-or-out-time-" + kid.kid_klid);
-        let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
         this.isLoading = true;
         this.kidSignInOutService.signInOrSingOut(kid.kid_klid)
             .subscribe(
@@ -276,12 +278,11 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                         } catch (err) {
                             // may be page redirected kid-dashboard
                         }
-
                     }
-                    kidStackLayout.backgroundColor = 'white';
+                    this.cancelKidSelectionAnimation(kid);
                 },
                 (error) => {
-                    kidStackLayout.backgroundColor = 'white';
+                    this.cancelKidSelectionAnimation(kid);
                     this.isLoading = false;
                     this.serverErrorService.showErrorModal();
                 }
@@ -297,13 +298,12 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             },
             fullscreen: false
         };
-        let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
-
         this.modal.showModal(ModalMessageToParent, options).then((result) => {
+            console.log("Result "+ result);
             if (result === 'close' || typeof(result) == "undefined") {
                 // modal closed
                 // console.log('Modal closed');
-                kidStackLayout.backgroundColor = 'white';
+                this.cancelKidSelectionAnimation(kid);
             } else {
                 //TODO add comment details as childView to parent instead refresh
                 //console.log("Modal Comment Result " + JSON.stringify(result));/
@@ -312,9 +312,21 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                     duration: nstoasts.DURATION.SHORT
                 };
                 nstoasts.show(options);
-                kidStackLayout.backgroundColor = 'white';
+                this.cancelKidSelectionAnimation(kid);
             }
 
+        })
+    }
+
+    // clears the selected animation for kid
+    cancelKidSelectionAnimation(kid){
+        let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
+        kidStackLayout.animate(
+            {backgroundColor: 'white', duration: 2000}
+        ).then(()=>{
+            // animationDone
+        }).catch(()=>{
+            // animation error
         })
     }
 
