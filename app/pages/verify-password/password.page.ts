@@ -13,8 +13,10 @@ import {TeacherInfo} from "../../providers/data/teacher_info";
 import {SharedData} from "../../providers/data/shared_data"
 import {InternetService} from "../../shared/internet.service";
 import {ServerErrorService} from "../../shared/server.error.service";
+import dialogs = require("ui/dialogs");
 let app = require("application");
 let view = require("ui/core/view");
+let tnsfx = require('nativescript-effects');
 
 @Component({
     moduleId: module.id,
@@ -67,6 +69,7 @@ export class VerifyPasswordPage implements OnInit {
         // validate form
         let emailTextField = view.getViewById(this.page, "email");
         let passTextField = view.getViewById(this.page, "password");
+        let forgotPassLink = view.getViewById(this.page, "forgotPassLink");
         if (emailTextField.text === "" ) {
             emailTextField.borderColor = '#e89999';
             return;
@@ -101,11 +104,19 @@ export class VerifyPasswordPage implements OnInit {
                         });
                 },
                 (error) => {
-                    this.emailOrPasswordError = true;
                     this.isLoading = false;
-                    alert(error.message);
-                    emailTextField.borderColor = '#e89999';
-                    passTextField.borderColor = '#e89999';
+                    dialogs.alert({
+                        title: "",
+                        message: error.message,
+                        okButtonText: "Ok"
+                    }).then(()=> {
+                        emailTextField.borderColor = '#e89999';
+                        passTextField.borderColor = '#e89999';
+                        this.emailOrPasswordError = true;
+                        forgotPassLink.floatIn('slow', 'top')
+                    });
+
+
                 }
             );
     }

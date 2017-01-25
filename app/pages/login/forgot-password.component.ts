@@ -9,6 +9,7 @@ import {TeacherInfo} from "../../providers/data/teacher_info";
 import dialogs = require("ui/dialogs");
 var view = require("ui/core/view");
 var app = require("application");
+let tnsfx = require('nativescript-effects');
 
 
 @Component({
@@ -41,10 +42,10 @@ export class ForgotPasswordComponent implements OnInit {
     }
 
     ngOnInit() {
-        //this.page.actionBarHidden = true;
+        this.page.actionBarHidden = true;
         // focus on password field
         let passTextField = view.getViewById(this.page, "email");
-        passTextField.focus();
+        //passTextField.focus();
         // show actionBarItems after some time to fix overlapping issue
         setTimeout(() => {
             this.showActionBarItems = true;
@@ -97,8 +98,13 @@ export class ForgotPasswordComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    alert(error.message);
-                    emailTextField.borderColor = '#e89999';
+                    dialogs.alert({
+                        title: "",
+                        message: error.message,
+                        okButtonText: "Ok"
+                    }).then(function () {
+                        emailTextField.borderColor = '#e89999';
+                    });
                 }
             );
     }

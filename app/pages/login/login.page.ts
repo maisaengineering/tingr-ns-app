@@ -58,6 +58,7 @@ export class LoginPage implements OnInit {
         this.internetService.alertIfOffline();
 
         this.page.actionBarHidden = true;
+        //this.page.backgroundImage = '~/images/teacher-login-bg.png';
         /*if (getConnectionType() === connectionType.none) {
          alert("Tingr requires an internet connection to log in.");
          return;

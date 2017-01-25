@@ -1,18 +1,22 @@
-<GridLayout class="login-container">
-    <GridLayout rows="*, 150" >
-        <StackLayout row="0" verticalAlignment="center">
-            <Image class="logo" src="~/images/logo-72@2x.png" stretch="none" horizontalAlignment="center"></Image>
-            <StackLayout  orientation="horizontal" horizontalAlignment="center">
-
-                    <TextField width="300" class="input input-border input-border-primary" hint="Email Address" keyboardType="email" [(ngModel)]="email"
-                               autocorrect="false" autocapitalizationType="none" id="email"></TextField>
-                <!--<Label *ngIf="emailError"
-                       class="input-info-box error-box material-icons md-24 md-close" text="&#xE5CD;"></Label>-->
-            </StackLayout>
+<GridLayout class="login-cover-image">
+    <GridLayout rows="*" >
+        <StackLayout row="0" verticalAlignment="center"  class="login-container">
+            <GridLayout rows="auto,auto" class="p-20">
+                <StackLayout row="0">
+                    <TextField  class="input input-border input-border-primary input-field" hint="Email Address"
+                                keyboardType="email" [(ngModel)]="email"
+                                autocorrect="false" autocapitalizationType="none" id="email"></TextField>
+                </StackLayout>
+                <StackLayout row="1" orientation="horizontal">
+                    <Gridlayout rows="auto" columns="*,*" verticalAlignment="center" orientation="horizontal">
+                        <Label row="0" col="0" verticalAlignment="center" text=""
+                               class="m-l-20"></Label>
+                            <Button row="0" col="1"  isEnabled="{{ isLoading ? false : true }}" text="Continue"
+                                    horizontalAlignment="right"  class="btn btn-primary blue2-background btn-rounded-sm btn-submit" (tap)="submitEmail()"></Button>
+                    </Gridlayout>
+                </StackLayout>
+            </GridLayout>
         </StackLayout>
-        <Label row="1" text="&#xE5CC;" (tap)="submitEmail()"
-               class="blue2 text-right p-r-20 p-b-10 material-icons md-48 md-chevron-right"
-               horizontalAlignment="right" verticalAlignment="bottom"></Label>
     </GridLayout>
 
     <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
@@ -21,4 +25,3 @@
     </GridLayout>
 
 </GridLayout>
-
