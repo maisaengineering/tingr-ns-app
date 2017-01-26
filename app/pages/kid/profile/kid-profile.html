@@ -69,69 +69,69 @@
 
                     <StackLayout orientation="vertical" class="item-details">
                         <Label text="Other Basic Details" class="header text-muted"></Label>
-                        <Label class="value" [text]="kid.other_basic_details || ' '" textWrap="true"></Label>
+                        <Label class="" [text]="kid.other_basic_details || ' '" textWrap="true"></Label>
                     </StackLayout>
                     <StackLayout class="hr-light"></StackLayout>
 
                     <StackLayout orientation="vertical" class="item-details">
                         <Label text="Primary Doctor" class="header text-muted"></Label>
-                        <Label class="value blue2" [text]="kid.doctor?.name || ' '" textWrap="true"></Label>
-                        <Label class="value blue2" [text]="kid.doctor?.email" textWrap="true"></Label>
-                        <Label class="value blue2" [text]="kid.doctor?.phone_no" textWrap="true"></Label>
+                        <Label class="value" [text]="kid.doctor?.name || ' '" textWrap="true"></Label>
+                        <Label class="blue2" [text]="kid.doctor?.email" textWrap="true"></Label>
+                        <Label class="blue2" [text]="kid.doctor?.phone_no" textWrap="true"></Label>
                     </StackLayout>
                     <StackLayout class="hr-light"></StackLayout>
 
 
                     <StackLayout orientation="vertical" class="item-details">
                         <Label text="Dentist" class="header text-muted"></Label>
-                        <Label class="value blue2" [text]="kid.dentist?.name || ' '" textWrap="true"></Label>
-                        <Label class="value blue2" [text]="kid.dentist?.email" textWrap="true"></Label>
-                        <Label class="value blue2" [text]="kid.dentist?.phone_no" textWrap="true"></Label>
+                        <Label class="value" [text]="kid.dentist?.name || ' '" textWrap="true"></Label>
+                        <Label class="blue2" [text]="kid.dentist?.email" textWrap="true"></Label>
+                        <Label class="blue2" [text]="kid.dentist?.phone_no" textWrap="true"></Label>
                     </StackLayout>
                     <StackLayout class="hr-light"></StackLayout>
 
                     <StackLayout orientation="vertical" class="item-details">
                         <Label text="Medicines" class="header text-muted"></Label>
-                        <Label class="value" [text]="kid.medicines || ' '" textWrap="true"></Label>
+                        <Label class="" [text]="kid.medicines || ' '" textWrap="true"></Label>
                     </StackLayout>
                     <StackLayout class="hr-light"></StackLayout>
 
                     <StackLayout orientation="vertical" class="item-details">
                         <Label text="Food Allergies" class="header text-muted"></Label>
-                        <Label class="value" [text]="kid.food_allergies || ' '" textWrap="true"></Label>
+                        <Label class="" [text]="kid.food_allergies || ' '" textWrap="true"></Label>
                     </StackLayout>
                     <StackLayout class="hr-light"></StackLayout>
 
                     <StackLayout orientation="vertical" class="item-details">
                         <Label text="Drug Allergies" class="header text-muted"></Label>
-                        <Label class="value" [text]="kid.drug_allergies || ' '" textWrap="true"></Label>
+                        <Label class="" [text]="kid.drug_allergies || ' '" textWrap="true"></Label>
                     </StackLayout>
                     <StackLayout class="hr-light"></StackLayout>
 
 
                     <StackLayout orientation="vertical" class="item-details">
                         <Label text="Medical Issues" class="header text-muted"></Label>
-                        <Label class="value" [text]="kid.medical_issues || ' '" textWrap="true"></Label>
+                        <Label class="" [text]="kid.medical_issues || ' '" textWrap="true"></Label>
                     </StackLayout>
                     <StackLayout class="hr-light"></StackLayout>
 
                     <StackLayout orientation="vertical" class="item-details">
                         <Label text="Special Needs" class="header text-muted"></Label>
-                        <Label class="value" [text]="kid.special_needs || ' '" textWrap="true"></Label>
+                        <Label class="" [text]="kid.special_needs || ' '" textWrap="true"></Label>
                     </StackLayout>
                     <StackLayout class="hr-light"></StackLayout>
 
                     <StackLayout orientation="vertical" class="item-details">
                         <Label text="Other Health/Wellness" class="header text-muted"></Label>
-                        <Label class="value" [text]="kid.other_concerns || ' '" textWrap="true"></Label>
+                        <Label class="" [text]="kid.other_concerns || ' '" textWrap="true"></Label>
                     </StackLayout>
                     <StackLayout class="hr-light"></StackLayout>
 
                     <StackLayout *ngFor="let parent of kid.parents">
                         <StackLayout orientation="vertical" class="item-details" *ngIf="parent">
                             <Label [text]="parent.relation_ship" class="header text-muted"></Label>
-                            <Label class="value blue2" [text]="parent.fname +' '+parent.lname " textWrap="true"></Label>
-                            <Label class="value blue2" [text]="parent.email" textWrap="true"></Label>
+                            <Label class="value" [text]="parent.fname +' '+parent.lname " textWrap="true"></Label>
+                            <Label class="blue2" [text]="parent.email" textWrap="true"></Label>
                             <StackLayout orientation="horizontal" *ngFor="let phone of parent.phone_numbers">
                                 <Label *ngIf="phone?.number" class="value blue2" [text]="phone.number"
                                        textWrap="true"></Label>

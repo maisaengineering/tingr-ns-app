@@ -28,7 +28,5 @@ GridLayout.kid-profile {
 
 }
 .kid-profile .item-details .value{
-    font-size: 18;
-    font-weight: 600;
-
+    font-weight: bold;
 }
