@@ -62,6 +62,7 @@ navigation-links-1 -> Profile details, Documents, Notes
 
 .capture-moment-section .capture-note{
     font-style: italic;
+    font-size: 12;
     color: #cccccc;
     font-weight: 700;
 }
