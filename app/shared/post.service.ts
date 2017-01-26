@@ -114,18 +114,25 @@ export class PostService {
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let postCreatedAt = this.datePipe.transform(updatedAt, 'MM/dd/yyyy');
+
+        let body =  {
+            date: this.datePipe.transform(updatedAt, 'MM/dd/yyyy'),
+            additional_text : additionalDetails,
+            tags: taggedKidIds,
+            scope: "public",
+            tzone: 'EST'
+        };
+
+        // send key in body if s3_key exists only
+        if(s3_key){
+            body['key'] = s3_key;
+        }
+
         let data = JSON.stringify({
             access_token: TokenService.accessToken,
             auth_token: TokenService.authToken,
             command: 'update_post',
-            body: {
-                date: this.datePipe.transform(updatedAt, 'MM/dd/yyyy'),
-                additional_text : additionalDetails,
-                tags: taggedKidIds,
-                key: s3_key,
-                scope: "public",
-                tzone: 'EST'
-            }
+            body: body
         });
         return this.http.post(
             Config.apiUrl + "posts/"+postKlId, data, {
