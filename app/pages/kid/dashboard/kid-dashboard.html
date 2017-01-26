@@ -152,9 +152,9 @@
                                                            class="tagged-on-date"></Label>
                                                     <Image (tap)="showHearters(post)" class="m-t-5"
                                                            id="post-hearted-image-{{ post.kl_id }}"
-                                                           visibility="{{ post.hearted ? 'visible' : 'collapsed'}}"
+                                                           visibility="{{ post.hearts_count > 0 ? 'visible' : 'collapsed'}}"
                                                            height="25" width="40" stretch="aspectFit"
-                                                           src="{{ post.hearted ? (post.asset_base_url + post.heart_icon) : '~/images/heart-icon-red-48.png' }}"
+                                                           src="{{ post.hearts_count > 0 ? (post.asset_base_url + post.heart_icon) : '~/images/heart-icon-red-48.png' }}"
                                                            horizontalAlignment="right">
                                                     </Image>
                                                 </StackLayout>

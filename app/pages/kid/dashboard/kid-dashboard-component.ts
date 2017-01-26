@@ -286,9 +286,9 @@ export class KidDashboardComponent implements OnInit {
                         activityIndicator.visibility = 'collapsed';
                         heartIconImage.className = 'not-hearted';
 
-                        heartedImage.floatOut('slow', 'left').then(() => {
+                      /*  heartedImage.floatOut('slow', 'left').then(() => {
                             heartedImage.visibility = "collapsed";
-                        });
+                        });*/
                     } else {
                         //add heart
                         heartIconImage.src = 'res://heart_icon_gray';
@@ -300,7 +300,8 @@ export class KidDashboardComponent implements OnInit {
                         heartedImage.visibility = "collapsed";
                         heartedImage.src = body.asset_base_url + body.heart_icon;
                         heartedImage.visibility = "visible";
-                        heartedImage.floatIn('slow', 'left');
+                        heartedImage.shake();
+                        //heartedImage.floatIn('slow', 'left');
                     }
 
                 },
