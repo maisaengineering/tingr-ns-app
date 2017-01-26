@@ -13,24 +13,22 @@
         </StackLayout>
     </StackLayout>
     <!-- right area  -->
-    <ActionItem  ios.position="right" andriod.postion="actionBar" icon="res://ic_add" (tap)="addNote(formOrDoc)">
+    <ActionItem  ios.position="right" andriod.postion="actionBar" icon="res://ic_add" (tap)="addNote()">
     </ActionItem>
 </ActionBar>
 
 
 <GridLayout class="kid-notes-container">
-
-    <StackLayout *ngIf="!notes.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" verticalAlignment="center">
-        <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
-            <Label class="message text-center" text="{{ emptyNoteMessage }}" textWrap="true"></Label>
-            <StackLayout (tap)="addNote()">
-                <Label text="&#xE145;" class="text-center blue2 material-icons md-48 md-chevron-add"></Label>
-            </StackLayout>
-
-        </StackLayout>
-    </StackLayout>
-
     <ScrollView>
+        <StackLayout *ngIf="!notes.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" verticalAlignment="center">
+            <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
+                <Label class="message text-center" text="{{ emptyNoteMessage }}" textWrap="true"></Label>
+                <StackLayout (tap)="addNote()">
+                    <Label text="&#xE145;" class="text-center blue2 material-icons md-48 md-chevron-add"></Label>
+                </StackLayout>
+
+            </StackLayout>
+        </StackLayout>
         <StackLayout *ngIf="notes.length" margin="10 0 0 0">
             <StackLayout *ngFor="let note of notes">
                 <StackLayout *ngIf="note.description" (tap)="editNote(note)">

@@ -96,7 +96,7 @@ export class KidNotesComponent implements OnInit {
             );
     }
 
-    addNote(){
+    addNote(){v
         // save data to access in next page
         this.sharedData.kidNote = {
             is_edit: false
