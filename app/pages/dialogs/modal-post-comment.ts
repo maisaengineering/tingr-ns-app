@@ -17,7 +17,7 @@ let app = require("application");
       <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white;"> 
          <StackLayout class="m-x-20 m-t-10" verticalALignment="center"> 
             <Gridlayout cols="auto,auto" verticalAlignment="center"> 
-              <Label row="0" col="0" text="Comment" class="action-label" horizontalAlignment="center"></Label> 
+              <Label row="0" col="0" text="Add Comment" class="action-label" horizontalAlignment="center"></Label> 
               <StackLayout  row="0" col="1"   (tap)="close('close')" class="text-primary blue2" horizontalAlignment="right" orientation="horizontal">  
                 <Label text="&#xE5CD;" class="text-left material-icons md-36 md-close"></Label>
               </StackLayout> 
