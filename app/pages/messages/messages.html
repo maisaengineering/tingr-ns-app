@@ -27,7 +27,7 @@
 
     <GridLayout rows="*, auto">
         <GridLayout row="0">
-            <ScrollView>
+            <ScrollView #messagesScroll>
                 <StackLayout verticalAlignment="top" *ngIf="!isMessagesEmpty(messages)">
                     <StackLayout class="conversation" *ngFor="let groupedMessages of messages | keys">
                         <StackLayout orinatation="vertical">

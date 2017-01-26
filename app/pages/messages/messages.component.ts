@@ -8,6 +8,9 @@ import {SharedData} from "../../providers/data/shared_data";
 import {InternetService} from "../../shared/internet.service";
 import {ServerErrorService} from "../../shared/server.error.service";
 import {MessageService} from "../../shared/message.service";
+
+import {ScrollView} from "ui/scroll-view";
+
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
 var app = require("application");
@@ -34,6 +37,7 @@ export class MessagesComponent implements OnInit {
     public showActionBarItems: Boolean = false;
     public newMessageText: string = '';
     public conversationKlId: string = '';
+    @ViewChild("messagesScroll") messagesScrollRef: ElementRef;
 
     constructor(private messageService: MessageService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
@@ -66,11 +70,12 @@ export class MessagesComponent implements OnInit {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
         // show actionBarItems after some time to fix overlappingg issue
-        setTimeout(() => {
-            this.showActionBarItems = true;
-        }, 300);
+
 
         this.getMessages();
+
+
+
     }
 
     getMessages() {
@@ -84,6 +89,7 @@ export class MessagesComponent implements OnInit {
                     let body = result.body;
                     this.messages = body.messages;
                     this.isLoading = false;
+                    this.scrollToBottom();
                     // make unread messages as read by calling in background
                     this.makeMessagesRead(body.conversation_id,this.messages);
                 },
@@ -159,6 +165,16 @@ export class MessagesComponent implements OnInit {
 
     isMessagesEmpty(obj) {
         return (Object.keys(obj).length === 0);
+    }
+
+    scrollToBottom(){
+        // https://gitnet.fr/deblan/nativescript-docs/src/v1.0.0/ApiReference/ui/scroll-view/ScrollView.md
+        // scroll to bottom of the message using ScrollView ---
+        setTimeout(() => {
+            let messagesScrollerView = <ScrollView>this.messagesScrollRef.nativeElement;
+            let offset = messagesScrollerView.scrollableHeight; // get the current scroll height
+            messagesScrollerView.scrollToVerticalOffset(offset, true); // scroll to the bottom with animation
+        }, 1000);
     }
 
 }
