@@ -6,3 +6,9 @@
     margin: 10;
     border-bottom: solid 2px grey;
 }
+
+.kid-list .item-selected{
+    background-color: #f9f9f9;
+}
+
+

@@ -338,7 +338,7 @@ export class KidDashboardComponent implements OnInit {
         let actions = [];
         if (post.can_edit) {
             //TODO enable after completing the editPostSection
-            //actions.push('Edit')
+            actions.push('Edit')
         }
         if (post.can_delete) {
             actions.push('Delete')
@@ -351,9 +351,21 @@ export class KidDashboardComponent implements OnInit {
             if (result === 'Delete') {
                 this.deletePost(post);
             } else if (result === 'Edit') {
-                //TODO
+                this.editPost(post);
             }
 
+        });
+    }
+
+    editPost(post){
+        // save the post data in providers to available in next screen
+        this.sharedData.currentPost = post;
+        this.routerExtensions.navigate(["/kid-edit-moment"], {
+            transition: {
+                name: "slideLeft",
+                duration: 300,
+                curve: "easeInOut"
+            }
         });
     }
 
@@ -369,7 +381,7 @@ export class KidDashboardComponent implements OnInit {
                     // hide deleted post
                     postGridLayout.visibility = 'collapsed';
                     // remove current post from list
-                    let currentPost = this.posts.filter(post => post.kl_id === post.kl_id)[0];
+                    let currentPost = this.posts.filter(p => p.kl_id === post.kl_id)[0];
                     let index = this.posts.indexOf(currentPost);
                     this.posts.splice(index, 1);
                     // show toast

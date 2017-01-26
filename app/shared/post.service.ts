@@ -110,6 +110,31 @@ export class PostService {
     }
 
 
+    updatePost(postKlId,updatedAt, additionalDetails, taggedKidIds, s3_key){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let postCreatedAt = this.datePipe.transform(updatedAt, 'MM/dd/yyyy');
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: 'update_post',
+            body: {
+                date: this.datePipe.transform(updatedAt, 'MM/dd/yyyy'),
+                additional_text : additionalDetails,
+                tags: taggedKidIds,
+                key: s3_key,
+                scope: "public",
+                tzone: 'EST'
+            }
+        });
+        return this.http.post(
+            Config.apiUrl + "posts/"+postKlId, data, {
+                headers: headers
+            }
+        ).map((res:Response) => res.json())
+            .catch(this.handleErrors)
+    }
+
     deletePost(post_kl_id){
         let headers = new Headers();
         headers.append("Content-Type", "application/json");

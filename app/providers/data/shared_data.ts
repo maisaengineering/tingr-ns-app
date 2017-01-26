@@ -23,6 +23,9 @@ export class SharedData {
     // to carry posKlId to next screen like hearters ,commenting on post etc..
     public postKlId: string;
 
+    // to edit current post
+    public currentPost: any;
+
     public constructor() { }
 
 }
