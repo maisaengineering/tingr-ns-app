@@ -108,7 +108,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             (result) => {
                 this.assignedRooms = result[0].body.rooms;
                 // Set Teacher CurrentRoom and this.currentRoom as first one as default
-                TeacherInfo.currentRoom = JSON.stringify(this.assignedRooms[0]);
+                //TeacherInfo.currentRoom = JSON.stringify(this.assignedRooms[0]);
                 //this.currentRoom = this.assignedRooms[0];
                 //this.roomName = this.currentRoom.session_name;
                 this.managed_kids = result[1].body.managed_kids;
