@@ -237,14 +237,14 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             dialogs.action({
                 //message: "",
                 cancelButtonText: "Cancel",
-                actions: ["Sign-in/Sign-out", "Message a Parent"]
+                actions: ["Sign-in/Sign-out", "Message to Parent"]
             }).then(result => {
                 if(result == 'Cancel' || typeof result == "undefined"){
                     this.cancelKidSelectionAnimation(kid);
                 } else  {
                     if (result === 'Sign-in/Sign-out') {
                         this.signInOrSignOutKid(kid);
-                    } else if (result === "Message a Parent") {
+                    } else if (result === "Message to Parent") {
                         this.showModalMessageToParent(kid);
                     }
                 }
