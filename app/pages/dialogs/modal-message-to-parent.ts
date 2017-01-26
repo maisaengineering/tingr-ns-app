@@ -36,7 +36,7 @@ let app = require("application");
                   </CardView> 
                   <StackLayout row="1" orientation="vertical"> 
                       <StackLayout id="errorLabel">
-                          <Label *ngIf="inputError" text="can't be blank" margin="5 10 5 12" class="error-label"></Label>
+                          <Label *ngIf="inputError"  visibility="{{ messageText ? 'collapse' : 'visible' }}"text="can't be blank" margin="5 10 5 12" class="error-label"></Label>
                        </StackLayout> 
                      <Button width="200" text="Send"  isEnabled="{{ isLoading ? false : true }}"
                         class="btn btn-primary blue2-background btn-rounded-sm" (tap)="submit('submit')"></Button>     
