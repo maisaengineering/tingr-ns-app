@@ -67,8 +67,8 @@
                     <TextView class="input-without-border-bottom" [(ngModel)]="newMessageText" id="newMessageText"
                               col="0"
                               hint="type your message here..." borderColor="white"></TextView>
-                    <Button isEnabled="{{ newMessageText ? true : false }}" (tap)="sendMessage()" col="1" text="Send"
-                            class="blue2 send-button {{ isIos ? 'p-x-10' : ''}} {{ newMessageText ? 'blue2-background' : 'disabled'}}"></Button>
+                    <Button isEnabled="{{ newMessageText.trim() ? true : false }}" (tap)="sendMessage()" col="1" text="Send"
+                            class="blue2 send-button {{ isIos ? 'p-x-10' : ''}} {{ newMessageText.trim() ? 'blue2-background' : 'disabled'}}"></Button>
                 </GridLayout>
             </StackLayout>
         </StackLayout>

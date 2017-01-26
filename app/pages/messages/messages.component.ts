@@ -32,7 +32,6 @@ export class MessagesComponent implements OnInit {
     public isIos: Boolean = false;
     public messages: any;
     public showActionBarItems: Boolean = false;
-    public sampleTestArray: Array<any>;
     public newMessageText: string = '';
     public conversationKlId: string = '';
 
@@ -143,6 +142,7 @@ export class MessagesComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
+                    console.log("Result "+ JSON.stringify(error));
                     this.serverErrorService.showErrorModal();
                 }
             );
