@@ -18,7 +18,13 @@
 </ActionBar>
 
 <GridLayout class="form-or-doc-container">
-    <ScrollView>
+    <StackLayout *ngIf="!formOrDoc.url" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" verticalAlignment="center">
+        <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
+            <Label class="message text-center" text="No documents available." textWrap="true"></Label>
+        </StackLayout>
+    </StackLayout>
+
+    <ScrollView *ngIf="formOrDoc.url">
         <WebView src="{{ formOrDoc.url }}"></WebView>
     </ScrollView>
     <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
