@@ -215,7 +215,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
          {backgroundColor: '#EAF2FA', duration: 2000, opacity: 0.25}
          );*/
         kidStackLayout.animate(
-            { backgroundColor: '#EAF2FA'}
+            { backgroundColor: '#DCDCDC', duration: 100 }
         ).then(() => {
             this.routerExtensions.navigate(["/kid-dashboard"], {
                 transition: {
@@ -232,7 +232,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
 
         kidStackLayout.animate(
-            { backgroundColor: '#EAF2FA'}
+            { backgroundColor: '#DCDCDC', duration: 100 }
         ).then(() => {
             dialogs.action({
                 //message: "",
@@ -322,7 +322,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     cancelKidSelectionAnimation(kid){
         let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
         kidStackLayout.animate(
-            {backgroundColor: 'white', duration: 2000}
+            {backgroundColor: 'white', duration: 500}
         ).then(()=>{
             // animationDone
         }).catch(()=>{
