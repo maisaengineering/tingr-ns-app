@@ -84,11 +84,8 @@ export class MessagesComponent implements OnInit {
                     let body = result.body;
                     this.messages = body.messages;
                     this.isLoading = false;
-                    // If conversation opens from Schedule page
                     // make unread messages as read by calling in background
-                    if(this.conversationKlId){
-                        this.makeMessagesRead(this.conversationKlId,this.messages);
-                    }
+                    this.makeMessagesRead(body.conversation_id,this.messages);
                 },
                 (error) => {
                     this.isLoading = false;
