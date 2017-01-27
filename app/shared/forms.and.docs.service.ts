@@ -40,6 +40,31 @@ export class FormsAndDocsService {
 
     }
 
+    requestFormOrDoc(formOrDoc, kid_klid){
+        var room = TeacherInfo.parsedCurrentRoom;
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: "request_form_doc",
+            body: {
+                id: formOrDoc.id,
+                type: formOrDoc.type,
+                season_id: room.season_id,
+                organization_id: room.organization_id,
+                kid_klid: kid_klid
+            }
+        });
+
+        return this.http.post(
+            Config.apiUrl + "organizations", data, {
+                headers: headers
+            }
+        ).map((res:Response) => res.json())
+            .catch(this.handleErrors);
+    }
+
 
     handleErrors(error: any)  {
         return Observable.throw(error.message || error);

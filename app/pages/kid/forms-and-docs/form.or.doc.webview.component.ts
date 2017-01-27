@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 import frameModule = require("ui/frame");
 import {Router, NavigationExtras} from "@angular/router";
@@ -6,6 +6,8 @@ import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../../providers/data/kid_data";
 import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
+import {ServerErrorService} from "../../../shared/server.error.service";
+import {FormsAndDocsService} from "../../../shared/forms.and.docs.service";
 let view = require("ui/core/view");
 let tnsfx = require('nativescript-effects');
 let app = require("application");
@@ -22,7 +24,7 @@ import dialogs = require("ui/dialogs");
     selector: 'my-app',
     styleUrls: ['./forms-and-docs.css'],
     templateUrl: './webview.html',
-    providers: [  ]
+    providers: [FormsAndDocsService, ServerErrorService]
 })
 export class FormOrDocWebviewComponent implements OnInit {
     public kid: any;
@@ -33,11 +35,14 @@ export class FormOrDocWebviewComponent implements OnInit {
     public showActionBarItems: Boolean = false;
 
     constructor(private page: Page, private changeDetectorRef: ChangeDetectorRef,
+                private formsAndDocsService: FormsAndDocsService,
                 private router: Router,
                 private routerExtensions: RouterExtensions,
                 private kidData: KidData,
+                private vcRef: ViewContainerRef,
                 private sharedData: SharedData,
-                private internetService: InternetService) {
+                private internetService: InternetService,
+                private serverErrorService: ServerErrorService) {
         //super(changeDetectorRef);
         this.kid = {};
         this.kid = this.kidData.info;
@@ -60,25 +65,48 @@ export class FormOrDocWebviewComponent implements OnInit {
         }, 500);
     }
 
-    openShareOptions(formOrDoc){
+    openShareOptions(formOrDoc) {
         dialogs.action({
-           // message: "",
+            // message: "",
             cancelButtonText: "Cancel",
             actions: ["Request", "Print"]
         }).then((result) => {
-            if(result === 'Print'){
-                // open url in browser
-                utilityModule.openUrl(formOrDoc.url);
+            console.log("Result " + result);
+            if (result === 'Print') {
+                utilityModule.openUrl(formOrDoc.url); // open url in browser
+            } else if (result === 'Request') {
+                this.requestFormOrDoc(formOrDoc);
+            } else {
+                // dialog closed
             }
         });
 
     }
 
-
-    goBack(){
-        this.routerExtensions.backToPreviousPage();
+    requestFormOrDoc(formOrDoc) {
+        this.isLoading = true;
+        let kid_klid = this.kid.kid_klid;
+        this.formsAndDocsService.requestFormOrDoc(formOrDoc, kid_klid)
+            .subscribe(
+                (result) => {
+                    this.isLoading = false;
+                    // show toast
+                    nstoasts.show({
+                        text: result.message,
+                        duration: nstoasts.DURATION.SHORT
+                    });
+                },
+                (error) => {
+                    this.isLoading = false;
+                    this.serverErrorService.showErrorModal();
+                }
+            );
     }
 
+
+    goBack() {
+        this.routerExtensions.backToPreviousPage();
+    }
 
 
 }

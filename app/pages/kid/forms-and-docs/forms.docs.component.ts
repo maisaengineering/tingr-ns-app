@@ -83,6 +83,8 @@ export class FormsAndDocumentsComponent implements OnInit {
             .subscribe(
                 (result) => {
                     let body = result.body;
+                    console.log("Form& DOcs " + JSON.stringify(body))
+
                     this.forms = body.forms;
                     this.documents = body.documents;
                     this.isLoading = false;
