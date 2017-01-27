@@ -51,7 +51,7 @@
                         <ScrollView col="1">
                             <StackLayout verticalAlignment="center">
                                 <Label *ngIf="!schedules.length" class="schedule-empty-data"
-                                       text="No data" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
+                                       text="No events" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
                                 <GridLayout rows="auto,*" *ngFor="let item of schedules; let i = index">
                                     <GridLayout row="0" columns="auto, *" rows="auto,auto"
                                                 class="m-t-5 item {{ isScheduleTimeIsCurrent(item.start_time, item.end_time) ? 'blue' : '' }}">
@@ -82,7 +82,7 @@
                         <ScrollView col="1">
                             <StackLayout verticalAlignment="center">
                                 <Label *ngIf="!birthdays.length && !event_reminders.length && !holidays.length" class="schedule-empty-data"
-                                       text="No data" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
+                                       text="No reminders" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
                                 <!-- Birthdays -->
                                 <SatckLayout orientation="horizontal" *ngFor="let item of birthdays; let i = index">
                                     <Label col="0" text="{{item.description}}" class="m-t-5 item"
@@ -128,7 +128,7 @@
                         <ScrollView col="1">
                             <StackLayout verticalAlignment="center">
                                 <Label *ngIf="!messages.length" class="schedule-empty-data"
-                                       text="No data" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
+                                       text="No messages" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
                                 <GridLayout rows="auto,auto" *ngFor="let item of messages; let i = index">
                                     <GridLayout row="0" columns="50, *" rows="*" class="item"
                                                 (tap)="openMessageConversation(item)">
