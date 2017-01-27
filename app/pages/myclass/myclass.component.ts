@@ -26,6 +26,10 @@ let frameModule = require("ui/frame");
 let view = require("ui/core/view");
 let tnsfx = require('nativescript-effects');
 let gestures = require("ui/gestures");
+import {ListViewEventData, RadListView} from "nativescript-telerik-ui/listview";
+import * as timerModule  from "timer";
+import listViewModule = require("nativescript-telerik-ui/listview/angular");
+import listViewAnularModule = require("nativescript-telerik-ui/listview/angular");
 
 @Component({
     moduleId: module.id,
@@ -44,6 +48,8 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     public isIos: Boolean = false;
     public assignedRooms: Array<any>;
     public showActionBarItems: Boolean = false;
+    private numberOfAddedItems; // pull to refresh
+    private isLongPressed; Boolean =false;
 
     /*
      * Gesture examples
@@ -99,6 +105,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         }, 500);
 
         this.getRoomsAndMangedKids();
+        this.changeDetectorRef.detectChanges();
     }
 
 
@@ -144,25 +151,26 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
 
     // pull to refresh the data
-    refreshList(args) {
-        let pullRefresh = args.object;
-        this.myClassService.getManagedKids(this.currentRoom)
-            .subscribe(
-                (result) => {
-                    var body = result.body;
-                    this.managed_kids = body.managed_kids;
-                    // save managed kids in SharedData Provider, so data will be available to all components
-                    this.sharedData.managedKids = this.managed_kids;
-                    setTimeout(() => {
-                        pullRefresh.refreshing = false;
-                    }, 1000);
-                },
-                (error) => {
-                    this.isLoading = false;
-                    pullRefresh.refreshing = false;
-                    this.serverErrorService.showErrorModal();
-                }
-            );
+    public onPullToRefreshInitiated(args: ListViewEventData) {
+        var that = new WeakRef(this);
+        timerModule.setTimeout(()=> {
+            let initialNumberOfItems = that.get().numberOfAddedItems;
+            let listView = args.object;
+            this.myClassService.getManagedKids(this.currentRoom)
+                .subscribe(
+                    (result) => {
+                        var body = result.body;
+                        this.managed_kids = body.managed_kids;
+                        // save managed kids in SharedData Provider, so data will be available to all components
+                        this.sharedData.managedKids = this.managed_kids;
+                        listView.notifyPullToRefreshFinished();
+                    },
+                    (error) => {
+                        listView.notifyPullToRefreshFinished();
+                        this.serverErrorService.showErrorModal();
+                    }
+                );
+        }, 1000);
     }
 
 
@@ -192,22 +200,26 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         });
     }
 
-    kidLoaded(args) {
+    /*kidLoaded(args) {
         let kidStackLayout = args.object;
         kidStackLayout.observe(gestures.GestureTypes.tap | gestures.GestureTypes.longPress, (args) => {
             //console.log("Event: " + args.eventName + ", sender: " + args.object);
             let kid = args.object.get("kid");
             if (args.eventName === 'tap') {
-                // this.onTapKid(kid); // this wonn't work it invoking defulat tap in view
+               console.log("Tap")
             } else if (args.eventName === 'longPress') {
+                console.log("Long Press")
                 console.log("Event  longPress");
-                this.onLongPressKid(kid);
+                //this.onLongPressKid(kid);
             }
         });
+    }*/
 
-    }
 
     onTapKid(kid) {
+        if(this.isLongPressed === false) {
+            return;
+        }
         this.kidData.info = kid;
         let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
         // below one is usefull when removing element from stack
@@ -229,6 +241,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
 
     onLongPressKid(kid) {
+        this.isLongPressed = true;
         let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
 
         kidStackLayout.animate(
@@ -329,5 +342,8 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             // animation error
         })
     }
+
+
+
 
 }

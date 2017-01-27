@@ -7,6 +7,7 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 import {AppComponent} from "./app.component";
 import {SIDEDRAWER_DIRECTIVES} from "nativescript-telerik-ui/sidedrawer/angular";
+import { LISTVIEW_DIRECTIVES } from 'nativescript-telerik-ui/listview/angular';
 import {APP_ROUTES, authProviders, navigatableComponents} from "./app.routes";
 import { TeacherInfo } from "./providers/data/teacher_info";
 import { TokenService } from "./shared/token.service";
@@ -37,6 +38,7 @@ registerElement("PullToRefresh", () => {
 @NgModule({
     declarations: [
         SIDEDRAWER_DIRECTIVES,
+        LISTVIEW_DIRECTIVES,
         AppComponent,
         KeysPipe,
         ...navigatableComponents
