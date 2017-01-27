@@ -9,7 +9,7 @@
                  ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
         <StackLayout orientation="horizontal" verticalAlignment="center">
-            <Label text="Notes" class="action-label"></Label>
+            <Label text="Edit" class="action-label"></Label>
         </StackLayout>
     </StackLayout>
     <!-- right area  -->
@@ -24,6 +24,11 @@
                   returnKeyType="next" class="input-without-border-bottom notes-description"
                   text="" [(ngModel)]="notesDescription" editable="true"></TextView>
         <StackLayout row="1">
+            <StackLayout *ngIf="!isEdit" height="80" horizontalAlignment="center">
+                <Label class="delete-notes-label" text="" dock="bottom"
+                       height="70"></Label>
+            </StackLayout>
+
             <StackLayout *ngIf="isEdit" (tap)="deleteNote()" height="80" horizontalAlignment="center">
                 <Label class="delete-notes-label" text="Delete" dock="bottom"
                        height="70"></Label>
