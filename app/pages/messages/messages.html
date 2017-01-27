@@ -45,10 +45,10 @@
 
                                     <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical">
                                         <StackLayout orientation="horizontal">
-                                            <Label [text]="message.child_name || message.sender_name"
+                                            <Label [text]="message.sender_name"
                                                    class="profile-name"></Label>
-                                            <Label *ngIf="message.child_relationship"
-                                                   [text]="message.child_relationship"
+                                            <Label *ngIf="message.child_name"
+                                                   text="{{ message.child_name }}'s {{message.child_relationship }}"
                                                    class="profile-relationship text-muted"></Label>
                                         </StackLayout>
                                         <Label class="message-text" [text]="message.text" textWrap="true"></Label>
