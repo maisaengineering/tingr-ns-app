@@ -23,124 +23,143 @@
         </StackLayout>
     </ScrollView>
     <GridLayout tkMainContent>
-        <PullToRefresh (refresh)="refreshList($event)" #pullToRefresh>
-            <ScrollView>
-                <StackLayout>
 
+
+        <StackLayout>
+
+            <GridLayout rows="auto, auto,3*,auto,3*,auto,3*">
+                <!--Row: 0 ##################  DateSelector --------------------------------------------------------------------------->
+                <StackLayout row="0">
                     <StackLayout (tap)="createModalDatePickerView()"
                                  class="green today-date {{ iscurrentDateSelected ? 'active' : ''}}">
                         <Gridlayout cols="*,auto" verticalAlignment="center" orientation="horizontal">
                             <Label row="0" col="0" text="{{ currentDate  | date: 'EEEE, MMMM d' }}"
                                    class="schedule-date text-center"></Label>
-                            <!--<Label row="0" col="1"
-                                   class="text-right material-icons md-36 md-chevron-right m-r-20"
-                                   text="&#xE5CC;"></Label>-->
                         </Gridlayout>
                     </StackLayout>
 
-                    <StackLayout style="height: 1; background-color: #dddddd;margin-bottom: 7;">
-                    </StackLayout>
+                </StackLayout>
+                <StackLayout row="1" class="hr-light">
+                </StackLayout>
 
-                    <!-- ##################  Scheules-------------------------------------------------------------------------------->
-                    <DockLayout *ngIf="schedules.length" stretchLastChild="false" class="calendar-schedule">
-                        <Image dock="left" stretch="none" verticalAlignment="center" class="schedule-icon"
+                <!--Row: 2 ##################  Schedule -------------------------------------------------------------------------------->
+
+                <StackLayout row="2" verticalAlignment="center">
+                    <GridLayout columns="auto,*,auto" class="calendar-schedule">
+                        <Image col="0" stretch="none" verticalAlignment="center" class="schedule-icon"
                                src="res://schedule_icon"></Image>
-                        <StackLayout verticalAlignment="center">
-                            <GridLayout rows="auto,*" *ngFor="let item of schedules; let i = index">
-                                <GridLayout row="0" columns="auto, *" rows="auto,auto"
-                                            class="m-t-5 item {{ isScheduleTimeIsCurrent(item.start_time, item.end_time) ? 'blue' : '' }}">
-                                    <Label col="0" row="0"
-                                           text="{{item.start_time | date: 'HH:mm' }}-{{ item.end_time | date: 'HH:mma'  | lowercase }}">
-                                    </Label>
-                                    <Label col="1" row="0" class="event m-r-5" text="{{ item.name }}"
-                                           textWrap="true"></Label>
+                        <ScrollView col="1">
+                            <StackLayout verticalAlignment="center">
+                                <Label *ngIf="!schedules.length" class="schedule-empty-data"
+                                       text="No data" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
+                                <GridLayout rows="auto,*" *ngFor="let item of schedules; let i = index">
+                                    <GridLayout row="0" columns="auto, *" rows="auto,auto"
+                                                class="m-t-5 item {{ isScheduleTimeIsCurrent(item.start_time, item.end_time) ? 'blue' : '' }}">
+                                        <Label col="0" row="0"
+                                               text="{{item.start_time | date: 'HH:mm' }}-{{ item.end_time | date: 'HH:mma'  | lowercase }}">
+                                        </Label>
+                                        <Label col="1" row="0" class="event m-r-5" text="{{ item.name }}"
+                                               textWrap="true"></Label>
+                                    </GridLayout>
+                                    <!-- Don't show horizontal line for last element -->
+                                    <StackLayout *ngIf="schedules.length > (i+1)" class="hr-shadow"
+                                                 row="1"></StackLayout>
                                 </GridLayout>
-                                <!-- Don't show horizontal line for last element -->
-                                <StackLayout *ngIf="schedules.length > (i+1)" class="hr-shadow" row="1"></StackLayout>
-                            </GridLayout>
-                        </StackLayout>
-                    </DockLayout>
+                            </StackLayout>
+                        </ScrollView>
+                    </GridLayout>
+                </StackLayout>
 
-                    <StackLayout *ngIf="schedules.length" class="line-separator">
-                    </StackLayout>
+                <StackLayout row="3" class="hr-light">
+                </StackLayout>
 
-                    <!-- ##################  Reminders-------------------------------------------------------------------------------->
-
-                    <DockLayout *ngIf="event_reminders.length || birthdays.length || holidays.length"
-                                stretchLastChild="false" class="calendar-reminder font-italic">
-                        <Image dock="left" stretch="none" verticalAlignment="center" class="reminder-icon"
+                <!--Row: 3 ##################  Reminders -------------------------------------------------------------------------------->
+                <StackLayout row="4" verticalAlignment="center">
+                    <GridLayout columns="auto,*" class="calendar-reminder font-italic"
+                                verticalAlignment="center">
+                        <Image col="0" stretch="none" verticalAlignment="center" class="reminder-icon"
                                src="res://reminder_icon"></Image>
-                        <StackLayout verticalAlignment="center">
-
-                            <!-- Birthdays -->
-                            <SatckLayout orientation="horizontal" *ngFor="let item of birthdays; let i = index">
-                                <Label col="0" text="{{item.description}}" class="m-t-5 item" textWrap="true"></Label>
-                                <StackLayout *ngIf="birthdays.length > (i+1)" class="hr-shadow" row="1"></StackLayout>
-                            </SatckLayout>
-
-                            <!-- Event Reminders -->
-                            <StackLayout *ngIf="birthdays.length > 0 && event_reminders.length > 0" class="hr-shadow"
-                                         row="1"></StackLayout>
-                            <SatckLayout orientation="horizontal" *ngFor="let item of event_reminders; let i = index">
-                                <Label (tap)="openDescription(item.description)" col="0" text="{{ item.description }}"
-                                       class="m-t-5 item"></Label>
-                                <StackLayout *ngIf="event_reminders.length > (i+1)" class="hr-shadow"
+                        <ScrollView col="1">
+                            <StackLayout verticalAlignment="center">
+                                <Label *ngIf="!birthdays.length && !event_reminders.length && !holidays.length" class="schedule-empty-data"
+                                       text="No data" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
+                                <!-- Birthdays -->
+                                <SatckLayout orientation="horizontal" *ngFor="let item of birthdays; let i = index">
+                                    <Label col="0" text="{{item.description}}" class="m-t-5 item"
+                                           textWrap="true"></Label>
+                                    <StackLayout *ngIf="birthdays.length > (i+1)" class="hr-shadow"
+                                                 row="1"></StackLayout>
+                                </SatckLayout>
+                                <!-- Event Reminders -->
+                                <StackLayout *ngIf="birthdays.length > 0 && event_reminders.length > 0"
+                                             class="hr-shadow"
                                              row="1"></StackLayout>
-                            </SatckLayout>
+                                <SatckLayout orientation="horizontal"
+                                             *ngFor="let item of event_reminders; let i = index">
+                                    <Label (tap)="openDescription(item.description)" col="0"
+                                           text="{{ item.description }}"
+                                           class="m-t-5 item"></Label>
+                                    <StackLayout *ngIf="event_reminders.length > (i+1)" class="hr-shadow"
+                                                 row="1"></StackLayout>
+                                </SatckLayout>
+                                <!-- Holidays -->
+                                <StackLayout
+                                        *ngIf="event_reminders.length > 0 && birthdays.length > 0 && holidays.length > 0"
+                                        class="hr-shadow" row="1"></StackLayout>
+                                <SatckLayout orientation="horizontal" *ngFor="let item of holidays; let i = index">
+                                    <Label col="0" text="{{ item.description }}" class="item blue"
+                                           textWrap="true"></Label>
+                                    <StackLayout *ngIf="holidays.length > (i+1)" class="hr-shadow"
+                                                 row="1"></StackLayout>
+                                </SatckLayout>
+                            </StackLayout>
+                        </ScrollView>
+                    </GridLayout>
+                </StackLayout>
 
-                            <!-- Holidays -->
-                            <StackLayout
-                                    *ngIf="event_reminders.length > 0 && birthdays.length > 0 && holidays.length > 0"
-                                    class="hr-shadow" row="1"></StackLayout>
-                            <SatckLayout orientation="horizontal" *ngFor="let item of holidays; let i = index">
-                                <Label col="0" text="{{ item.description }}" class="item blue" textWrap="true"></Label>
-                                <StackLayout *ngIf="holidays.length > (i+1)" class="hr-shadow" row="1"></StackLayout>
-                            </SatckLayout>
+                <StackLayout row="5" class="hr-light">
+                </StackLayout>
 
-                        </StackLayout>
-                    </DockLayout>
-
-                    <StackLayout class="line-separator"
-                                 *ngIf="event_reminders.length || birthdays.length || holidays.length">
-                    </StackLayout>
-
-                    <!-- ##################  Messages -------------------------------------------------------------------------------->
-                    <DockLayout *ngIf="messages.length" stretchLastChild="false" class="calendar-message">
-                        <Image dock="left" stretch="none" verticalAlignment="center" class="message-icon"
+                <!--Row: 4 ##################  Messages -------------------------------------------------------------------------------->
+                <StackLayout row="6" verticalAlignment="center">
+                    <GridLayout columns="auto,*" class="calendar-message">
+                        <Image col="0" stretch="none" verticalAlignment="center" class="message-icon"
                                src="res://message_icon"></Image>
-                        <StackLayout verticalAlignment="center">
-                            <GridLayout rows="auto,auto" *ngFor="let item of messages; let i = index">
-                                <GridLayout row="0" columns="50, *" rows="*" class="item"
-                                            (tap)="openMessageConversation(item)">
-                                    <StackLayout verticalAlignment="center">
-                                        <Image height="40" width="40" class="kid-profile-pic blue-circle-border"
-                                               src="{{ item.photograph ? item.photograph : '~/images/avatar-100.png' }}"></Image>
-                                    </StackLayout>
-                                    <StackLayout col="1">
-                                        <StackLayout col="1" orientation="horizontal">
-                                            <Label class="profile-name" [text]="item.sender_name"
-                                                   textwrap="true"></Label>
-                                            <Label class="profile-relationship"
-                                                   text="{{ item.child_name }}'s {{ item.child_relationship }}"
+                        <ScrollView col="1">
+                            <StackLayout verticalAlignment="center">
+                                <Label *ngIf="!messages.length" class="schedule-empty-data"
+                                       text="No data" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
+                                <GridLayout rows="auto,auto" *ngFor="let item of messages; let i = index">
+                                    <GridLayout row="0" columns="50, *" rows="*" class="item"
+                                                (tap)="openMessageConversation(item)">
+                                        <StackLayout verticalAlignment="center">
+                                            <Image height="40" width="40" class="kid-profile-pic blue-circle-border"
+                                                   src="{{ item.photograph ? item.photograph : '~/images/avatar-100.png' }}"></Image>
+                                        </StackLayout>
+                                        <StackLayout col="1">
+                                            <StackLayout col="1" orientation="horizontal">
+                                                <Label class="profile-name" [text]="item.sender_name"
+                                                       textwrap="true"></Label>
+                                                <Label *ngIf="item.child_name" class="profile-relationship"
+                                                       text="{{ item.child_name }}'s {{ item.child_relationship }}"
+                                                       textwrap="true"></Label>
+                                            </StackLayout>
+                                            <Label [text]="item.text"
+                                                   class="message-text {{ item.read_message ? 'text-muted' : 'blue' }}"
+                                                   col="1"
                                                    textwrap="true"></Label>
                                         </StackLayout>
-                                        <Label [text]="item.text"
-                                               class="message-text {{ item.read_message ? 'text-muted' : 'blue' }}"
-                                               col="1"
-                                               textwrap="true"></Label>
-                                    </StackLayout>
+                                    </GridLayout>
+                                    <!-- Don't show horizontal line for last element -->
+                                    <StackLayout *ngIf="messages.length > (i+1)" class="hr-shadow"
+                                                 row="1"></StackLayout>
                                 </GridLayout>
-                                <!-- Don't show horizontal line for last element -->
-                                <StackLayout *ngIf="messages.length > (i+1)" class="hr-shadow" row="1"></StackLayout>
-                            </GridLayout>
-                        </StackLayout>
-                    </DockLayout>
-
-
+                            </StackLayout>
+                        </ScrollView>
+                    </GridLayout>
                 </StackLayout>
-            </ScrollView>
-        </PullToRefresh>
-
+            </GridLayout>
+        </StackLayout>
         <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
         <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
             <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>

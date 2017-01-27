@@ -62,5 +62,12 @@ StackLayout.today-date.active{
 }
 
 
+.schedule-empty-data {
+    color: #999999;
+    font-weight: 700;
+    font-size: 17;
+    font-style: italic;
+}
+
 
 
