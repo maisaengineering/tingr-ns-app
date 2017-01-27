@@ -16,19 +16,15 @@
     <!-- right area  -->
 </ActionBar>
 
-
-
 <GridLayout class="kid-forms-and-docs-container">
-
-    <StackLayout *ngIf="!forms.length && !documents.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
-                 verticalAlignment="center">
-        <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
-            <Label class="message text-center" text="No forms or documents" textWrap="true"></Label>
-        </StackLayout>
-    </StackLayout>
     <PullToRefresh (refresh)="refreshList($event)" #pullToRefresh>
-
         <ScrollView>
+            <StackLayout *ngIf="!forms.length && !documents.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
+                         verticalAlignment="center">
+                <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
+                    <Label class="message text-center" text="No forms or documents" textWrap="true"></Label>
+                </StackLayout>
+            </StackLayout>
             <StackLayout>
                 <StackLayout *ngIf="forms.length" margin="10 0 0 0">
                     <StackLayout *ngFor="let form of forms">

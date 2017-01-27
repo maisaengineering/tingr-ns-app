@@ -294,7 +294,7 @@ ActivityIndicator.busy {
 
 /* styles for empty notes/reminder/forms&docs message */
 StackLayout.empty-page {
-    margin: 0 30 40 30;
+    margin: 0 20 0 20;
 }
 .empty-page .message {
     color: #999999;

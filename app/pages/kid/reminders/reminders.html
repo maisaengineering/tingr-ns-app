@@ -17,15 +17,15 @@
 
 <GridLayout class="kid-reminders-container">
 
-    <StackLayout *ngIf="!reminders.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
-                 verticalAlignment="center">
-        <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
-            <Label class="message text-center" text="No reminders." textWrap="true"></Label>
-        </StackLayout>
-    </StackLayout>
-
     <PullToRefresh (refresh)="refreshList($event)" #pullToRefresh>
         <ScrollView>
+
+            <StackLayout *ngIf="!reminders.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
+                         verticalAlignment="center">
+                <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
+                    <Label class="message text-center" text="No reminders." textWrap="true"></Label>
+                </StackLayout>
+            </StackLayout>
             <StackLayout *ngIf="reminders.length" margin="10 0 0 0">
                 <StackLayout *ngFor="let reminder of reminders">
                     <StackLayout *ngIf="reminder.text" (tap)="openReminder(reminder)">
