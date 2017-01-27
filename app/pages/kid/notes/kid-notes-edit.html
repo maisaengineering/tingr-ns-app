@@ -21,7 +21,7 @@
     <GridLayout rows="*,auto">
         <TextView row="0" style="color: black;" verticalAlignment="stretch" text="top" borderColor="white"
                   hint="type your notes..." id="notes-description"
-                  returnKeyType="next" class="notes-description"
+                  returnKeyType="next" class="input-without-border-bottom notes-description"
                   text="" [(ngModel)]="notesDescription" editable="true"></TextView>
         <StackLayout row="1">
             <StackLayout *ngIf="isEdit" (tap)="deleteNote()" height="80" horizontalAlignment="center">
