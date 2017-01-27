@@ -62,7 +62,7 @@ export class KidEditMomentComponent implements OnInit {
         this.kid = this.kidData.info;
         this.additionalDetails = '';
         // by default add this kid to tag
-        this.taggedKidIds = [this.kid.kid_klid];
+        this.taggedKidIds = [];
         this.s3_key = 'exists'; // editing post
         if (app.android) {
             this.isAndroid = true;

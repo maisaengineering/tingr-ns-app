@@ -53,8 +53,8 @@
                     <StackLayout class="hr-light"></StackLayout>
 
                     <StackLayout>
-                        <StackLayout *ngFor="let kid of managedKids" (tap)="tagKid(kid.kid_klid)"
-                                     id="kid-container-{{ kid.kid_klid }}" class="unchecked selected">
+                        <StackLayout *ngFor="let kid of managedKids;" (tap)="tagKid(kid.kid_klid)"
+                                     id="kid-container-{{ kid.kid_klid }}" class="{{ kid.isTagged ? 'checked item-selected' : 'unchecked' }}">
                             <Gridlayout rows="auto" columns="auto,*,*" verticalAlignment="center"
                                         orientation="horizontal" class="item">
                                 <Image row='0' col="0" height="40" width="40" class="kid-profile-pic blue-circle-border"
@@ -63,7 +63,7 @@
                                        class="m-l-20 font-weight-bold"></Label>
                                 <Image row="0" col="2" height="24" width="24" stretch="aspectFit"
                                        id="checkbox-{{ kid.kid_klid }}" class="text-right m-r-10"
-                                       horizontalAlignment="right" src="~/images/check-box-unchecked.png"></Image>
+                                       horizontalAlignment="right" src="~/images/check-box-{{ kid.isTagged ? 'checked' : 'unchecked' }}.png"></Image>
 
                             </Gridlayout>
                             <StackLayout class="hr-light"></StackLayout>

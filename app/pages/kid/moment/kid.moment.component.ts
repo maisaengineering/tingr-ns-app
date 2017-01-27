@@ -59,7 +59,7 @@ export class KidMomentComponent implements OnInit {
         this.kid = this.kidData.info;
         this.additionalDetails = '';
         // by default add this kid to tag
-        this.taggedKidIds = [this.kid.kid_klid];
+        this.taggedKidIds = [];
         this.s3_key = '';
         if (app.android) {
             this.isAndroid = true;
@@ -76,7 +76,11 @@ export class KidMomentComponent implements OnInit {
             this.showActionBarItems = true;
         }, 500);
 
-        var momentImageVIew = view.getViewById(this.page, 'moment-image');
+        // auto tag currentKid
+        this.taggedKidIds.push(this.kid.kid_klid)
+        let managedKid = this.managedKids.filter(mk => mk.kid_klid === this.kid.kid_klid)[0];
+        managedKid.isTagged = managedKid ? true : false
+        let momentImageVIew = view.getViewById(this.page, 'moment-image');
         momentImageVIew.src = this.sharedData.momentCaptureDetails.imageAsset;
         momentImageVIew.visibility = 'visible';
         // get s3 in background
@@ -207,17 +211,17 @@ export class KidMomentComponent implements OnInit {
     tagKid(kid_klid){
         let kidContainer = view.getViewById(this.page, "kid-container-" + kid_klid);
         let checkBoxImg = view.getViewById(this.page, "checkbox-" + kid_klid);
-        let isChecked = kidContainer.className === 'checked' ? true : false;
-        if(isChecked){
-            //uncheck
-            kidContainer.backgroundColor = "#ffffff";
-            kidContainer.className = 'unchecked';
+        if(kidContainer.classList.contains('checked')){
+            console.log('is checked   uncheck it');
+            kidContainer.classList.remove('item-selected','checked');
+            kidContainer.classList.add('unchecked');
             checkBoxImg.src = '~/images/check-box-unchecked.png';
             this.taggedKidIds.splice(this.taggedKidIds.indexOf(kid_klid), 1);
-        }else {
-            //check
-            kidContainer.backgroundColor = "#f9f9f9";
-            kidContainer.className = 'checked';
+        }else if(kidContainer.classList.contains('unchecked')){
+            console.log('is unchecked  check it');
+            kidContainer.classList.add('item-selected');
+            kidContainer.classList.remove('unchecked');
+            kidContainer.classList.add('checked');
             checkBoxImg.src = '~/images/check-box-checked.png';
             this.taggedKidIds.push(kid_klid);
         }
