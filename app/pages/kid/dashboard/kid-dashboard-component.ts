@@ -285,10 +285,11 @@ export class KidDashboardComponent implements OnInit {
                         heartIconImage.visibility = 'visible';
                         activityIndicator.visibility = 'collapsed';
                         heartIconImage.className = 'not-hearted';
-
-                      /*  heartedImage.floatOut('slow', 'left').then(() => {
-                            heartedImage.visibility = "collapsed";
-                        });*/
+                        if(body.hearts_count === 0){
+                            heartedImage.floatOut('slow', 'left').then(() => {
+                                heartedImage.visibility = "collapsed";
+                            });
+                        }
                     } else {
                         //add heart
                         heartIconImage.src = 'res://heart_icon_gray';
