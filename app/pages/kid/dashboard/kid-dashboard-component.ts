@@ -1,4 +1,4 @@
-import {Component, ViewContainerRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewContainerRef, ChangeDetectorRef, OnInit, ViewChild, ElementRef} from "@angular/core";
 import {Page} from "ui/page";
 import {PostService, Post, TaggedTo, Comment} from "../../../shared/post.service";
 import frameModule = require("ui/frame");
@@ -14,6 +14,10 @@ import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/direc
 import {ModalPostComment} from "../../../pages/dialogs/modal-post-comment";
 import {ServerErrorService} from "../../../shared/server.error.service";
 
+import {ObservableArray} from "data/observable-array";
+
+
+require("nativescript-dom");
 let view = require("ui/core/view");
 let tnsfx = require('nativescript-effects');
 let app = require("application");
@@ -25,7 +29,17 @@ let imagepicker = require("nativescript-imagepicker");
 let nstoasts = require("nativescript-toasts");
 let PhotoViewer = require("nativescript-photoviewer");
 let photoViewer = new PhotoViewer();
+import {
+    ListViewLinearLayout,
+    ListViewEventData,
+    RadListView,
+    ListViewLoadOnDemandMode
+}from "nativescript-telerik-ui/listview";
+import * as timerModule  from "timer";
+import {StackLayout} from "ui/layouts/stack-layout";
 
+import listViewModule = require("nativescript-telerik-ui/listview");
+import listViewAnularModule = require("nativescript-telerik-ui/listview/angular");
 declare var android: any;
 
 
@@ -38,7 +52,8 @@ declare var android: any;
 })
 export class KidDashboardComponent implements OnInit {
     public kid: any;
-    public posts: Array<any>;
+
+
     public comments: Array<Comment>;
     public tagged_to: Array<TaggedTo>;
     public topmost;
@@ -47,6 +62,13 @@ export class KidDashboardComponent implements OnInit {
     public isIos: Boolean = false;
     public selectedImages = [];
     public showActionBarItems: Boolean = false;
+    private numberOfAddedItems; // pull to refresh
+    public lastModified: string = '';
+    public postCount: number = 0;
+
+    private posts: ObservableArray<Post>;
+    private _layout: ListViewLinearLayout;
+
 
     constructor(private postService: PostService,
                 private modal: ModalDialogService,
@@ -62,7 +84,7 @@ export class KidDashboardComponent implements OnInit {
 
         this.kid = {};
         this.kid = kidData.info;
-        this.posts = [];
+
         if (app.android) {
             this.isAndroid = true;
         } else if (app.ios) {
@@ -83,49 +105,71 @@ export class KidDashboardComponent implements OnInit {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
         //this.page.actionBarHidden = true;
-         this.kid = this.kidData.info;
+        this.kid = this.kidData.info;
 
-        // show actionBarItems after some time to fix overlapping issue
-        setTimeout(() => {
-            this.showActionBarItems = true;
-        }, 500);
-
-        console.log("before getPost :" + this.kid.kid_klid);
+        this.layout = new ListViewLinearLayout();
         this.getPosts();
+        this.changeDetectorRef.detectChanges();
     }
 
-
-
-    // pull to refresh the data
-    refreshList(args) {
-        let pullRefresh = args.object;
-        this.postService.getPosts(this.kid.kid_klid)
-            .subscribe(
-                (result) => {
-                    var body = result.body;
-                    this.posts = body.posts;
-                    setTimeout(() => {
-                        pullRefresh.refreshing = false;
-                    }, 1000);
-                },
-                (error) => {
-                    this.isLoading = false;
-                    this.serverErrorService.showErrorModal();
-                }
-            );
+    public get layout(): ListViewLinearLayout {
+        return this._layout;
+    }
+    public set layout(value: ListViewLinearLayout) {
+        this._layout = value;
     }
 
-    getPosts(commentedOnPost = false){
+    public onLoadMoreItemsRequested(args: ListViewEventData) {
+        var that = new WeakRef(this);
+        timerModule.setTimeout(() => {
+            let listView: RadListView = args.object;
+            let initialNumberOfItems = that.get().numberOfAddedItems;
+            this.postService.getPosts(this.postCount, this.lastModified, this.kid.kid_klid)
+                .subscribe(
+                    (result) => {
+                        var body = result.body;
+                        // set postCount and lastModified to get more data on scroll(pagination)
+                        this.postCount = body.post_count;
+                        this.lastModified = body.last_modified;
+
+                        if (body.posts.length) {
+                            body.posts.forEach((post) => {
+                                /* that.get().posts.push(post);
+                                 that.get().numberOfAddedItems++;*/
+                            });
+                        } else {
+                            listView.loadOnDemandMode = ListViewLoadOnDemandMode[ListViewLoadOnDemandMode.None];
+                        }
+
+                    },
+                    (error) => {
+                        this.isLoading = false;
+                        this.serverErrorService.showErrorModal();
+                    }
+                );
+            listView.notifyLoadOnDemandFinished();
+        }, 1000);
+        args.returnValue = true;
+    }
+
+    getPosts(commentedOnPost = false) {
         this.isLoading = true;
-        console.log("getPost :" + this.kid.kid_klid);
-        this.postService.getPosts(this.kid.kid_klid)
+        this.posts = new ObservableArray<Post>();
+        this.postService.getPosts(this.postCount, this.lastModified, this.kid.kid_klid)
             .subscribe(
                 (result) => {
                     let body = result.body;
-                    this.posts = body.posts;
+                    console.log("Posts " + JSON.stringify(body.posts))
+                    // set postCount and lastModified to get more data on scroll(pagination)
+                    this.postCount = body.post_count;
+                    this.lastModified = body.last_modified;
+                    //this.posts = body.posts;
+                    body.posts.forEach((post) => {
+                        this.addNewPostToListView(post);
+                    });
+
                     this.isLoading = false;
-                    //console.log("POSTS "+ JSON.stringify(this.posts));
-                    if(commentedOnPost){
+                    if (commentedOnPost) {
                         // show toast
                         nstoasts.show({
                             text: 'Your comment added',
@@ -138,6 +182,36 @@ export class KidDashboardComponent implements OnInit {
                     this.serverErrorService.showErrorModal();
                 }
             );
+    }
+
+    addNewPostToListView(post) {
+        let newPost = new Post(post.kl_id, post.slug, post.title, post.tzone,
+            post.scope, post.text, post.author_name, post.photograph,
+            post.image, post.large_image, post.created_at, post.deletable,
+            post.can_delete, post.can_edit, post.can_save, post.kid_birthdate,
+            post.hearted, post.heart_icon, post.hearts_count, post.asset_base_url);
+        // tags
+        newPost.tags = post.tags;
+        // add comments
+        if (post.comments.length) {
+            post.comments.forEach((comment) => {
+                newPost.comments.push(new Comment(comment.commented_by, comment.slug, comment.created_at, comment.child_name,
+                    comment.child_relationship, comment.commenter_photo, comment.content, comment.unknown_commenter))
+            })
+        } else {
+            newPost.comments = []
+        }
+        // add tagged_to
+        if (post.tagged_to.length) {
+            post.tagged_to.forEach((tagged) => {
+                newPost.tagged_to.push(new TaggedTo(tagged.kl_id, tagged.short_name, tagged.nickname,
+                    tagged.photograph, tagged.fname, tagged.lname))
+            })
+        } else {
+            newPost.tagged_to = [];
+        }
+
+        this.posts.push(newPost);
     }
 
     selectMomentCaptureOption() {
@@ -163,7 +237,7 @@ export class KidDashboardComponent implements OnInit {
                     this.takePicture();
                 }
 
-            } else if(result === 'Choose existing'){
+            } else if (result === 'Choose existing') {
                 if (platformModule.device.os === "Android" && platformModule.device.sdkVersion >= 23) {
                     permissions.requestPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE, "Allow Tingr to access your gallery?")
                         .then(() => {
@@ -266,57 +340,39 @@ export class KidDashboardComponent implements OnInit {
     }
 
     addOrRemoveHeart(post) {
-        let heartIconImage = view.getViewById(this.page, "post-add-remove-heart-" + post.kl_id);
-        let heartedImage = view.getViewById(this.page, "post-hearted-image-" + post.kl_id);
-        let activityIndicator = view.getViewById(this.page, "post-add-remove-heart-indicator-" + post.kl_id);
-        let isHearted = heartIconImage.className === 'hearted' ? true : false
-        //this.isLoading = true;
-        heartIconImage.visibility = 'collapsed';
-        activityIndicator.visibility = 'visible';
+
+        let currentPost = this.posts.filter(p => p.kl_id === post.kl_id)[0];
+        let index = this.posts.indexOf(currentPost);
+        let currentPostObject = this.posts.getItem(index);
+        let isHearted = currentPostObject.hearted;
+        if(isHearted){
+            //already hearted so unheart it
+            currentPostObject.hearted = false;
+            currentPostObject.hearts_count -=  1
+        }else {
+            currentPostObject.hearted = true; //heart it
+        }
 
         this.postService.addOrRemoveHeart(post, isHearted)
             .subscribe(
                 (result) => {
-                    //this.isLoading = false;
                     let body = result.body;
-                    if (isHearted) {
-                        // remove heart
-                        heartIconImage.src = 'res://heart_icon_light';
-                        heartIconImage.visibility = 'visible';
-                        activityIndicator.visibility = 'collapsed';
-                        heartIconImage.className = 'not-hearted';
-                        if(body.hearts_count === 0){
-                            heartedImage.floatOut('slow', 'left').then(() => {
-                                heartedImage.visibility = "collapsed";
-                            });
-                        }
-                    } else {
-                        //add heart
-                        heartIconImage.src = 'res://heart_icon_gray';
-                        heartIconImage.visibility = 'visible';
-                        heartIconImage.className = 'hearted';
-                        activityIndicator.visibility = 'collapsed';
-
-
-                        heartedImage.visibility = "collapsed";
-                        heartedImage.src = body.asset_base_url + body.heart_icon;
-                        heartedImage.visibility = "visible";
-                        heartedImage.shake();
-                        //heartedImage.floatIn('slow', 'left');
-                    }
-
+                    // update currentPost with new data
+                    currentPostObject.asset_base_url = body.asset_base_url;
+                    currentPostObject.heart_icon = body.heart_icon;
+                    currentPostObject.hearts_count = body.hearts_count;
+                    nstoasts.show({
+                        text: result.message,
+                        duration: nstoasts.DURATION.SHORT
+                    });
                 },
                 (error) => {
-                    //this.isLoading = false;
-                    //alert('Internal server error.');
                 }
             );
 
     }
 
     openKidProfile(kid) {
-
-
         if (this.isIos) {
             this.routerExtensions.navigate(["/kid-profile"], {
                 transition: {
@@ -359,7 +415,7 @@ export class KidDashboardComponent implements OnInit {
         });
     }
 
-    editPost(post){
+    editPost(post) {
         // save the post data in providers to available in next screen
         this.sharedData.currentPost = post;
         this.routerExtensions.navigate(["/kid-edit-moment"], {
@@ -371,34 +427,19 @@ export class KidDashboardComponent implements OnInit {
         });
     }
 
-
     deletePost(post) {
-        let postGridLayout = view.getViewById(this.page, "post-" + post.kl_id);
-        this.isLoading = true;
-        this.postService.deletePost(post.kl_id).subscribe(
-            (result) => {
-                this.isLoading = false;
-
-                postGridLayout.floatOut('slow', 'left').then(() => {
-                    // hide deleted post
-                    postGridLayout.visibility = 'collapsed';
-                    // remove current post from list
-                    let currentPost = this.posts.filter(p => p.kl_id === post.kl_id)[0];
-                    let index = this.posts.indexOf(currentPost);
-                    this.posts.splice(index, 1);
-                    // show toast
-                    nstoasts.show({
-                        text: result.message,
-                        duration: nstoasts.DURATION.SHORT
-                    });
-                });
-
-            },
-            (error) => {
-                this.isLoading = false;
-                this.serverErrorService.showErrorModal();
-            }
-        );
+        let currentPost = this.posts.filter(p => p.kl_id === post.kl_id)[0];
+        let index = this.posts.indexOf(currentPost);
+        // send request in background
+        this.postService.deletePost(currentPost)
+            .subscribe(
+                (result) => { },
+                (error) => {
+                    console.error("Error deleting post "+ JSON.stringify(error));
+                }
+            );
+        // delete item from stack
+        this.posts.splice(index, 1);
     }
 
     showHearters(post) {
@@ -434,12 +475,14 @@ export class KidDashboardComponent implements OnInit {
         };
 
         this.modal.showModal(ModalPostComment, options).then((result) => {
-            if(result === 'close' || typeof(result) == "undefined"){
-              // modal closed
-               // console.log('Modal closed');
-            }else{
+            if (result === 'close' || typeof(result) == "undefined") {
+                // modal closed
+                // console.log('Modal closed');
+            } else {
                 //TODO add comment details as childView to parent instead refresh
                 //console.log("Modal Comment Result " + JSON.stringify(result));/
+                this.postCount = 0;
+                this.lastModified = '';
                 this.getPosts(true);
             }
 
