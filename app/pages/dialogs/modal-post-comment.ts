@@ -91,6 +91,7 @@ export class ModalPostComment implements OnInit {
                     },
                     (error) => {
                         this.isLoading = false;
+                        this.params.closeCallback('close');
                         this.serverErrorService.showErrorModal();
                     }
                 );
@@ -100,7 +101,6 @@ export class ModalPostComment implements OnInit {
             errorLabel.floatIn('fast', 'right');
             //this.params.closeCallback('close');
         }
-
     }
 
 

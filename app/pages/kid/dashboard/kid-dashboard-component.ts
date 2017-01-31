@@ -159,7 +159,7 @@ export class KidDashboardComponent implements OnInit {
             .subscribe(
                 (result) => {
                     let body = result.body;
-                    console.log("Posts " + JSON.stringify(body.posts))
+                    console.log("Posts " + JSON.stringify(body.posts));
                     // set postCount and lastModified to get more data on scroll(pagination)
                     this.postCount = body.post_count;
                     this.lastModified = body.last_modified;
@@ -339,10 +339,8 @@ export class KidDashboardComponent implements OnInit {
         });
     }
 
-    addOrRemoveHeart(post) {
-
-        let currentPost = this.posts.filter(p => p.kl_id === post.kl_id)[0];
-        let index = this.posts.indexOf(currentPost);
+    addOrRemoveHeart(post, index) {
+         console.log("Index "+ index);
         let currentPostObject = this.posts.getItem(index);
         let isHearted = currentPostObject.hearted;
         if(isHearted){
@@ -392,7 +390,7 @@ export class KidDashboardComponent implements OnInit {
     }
 
     // edit , delete post etc..
-    selectPostActions(post) {
+    selectPostActions(post, index) {
         let actions = [];
         if (post.can_edit) {
             //TODO enable after completing the editPostSection
@@ -407,7 +405,7 @@ export class KidDashboardComponent implements OnInit {
             actions: actions
         }).then(result => {
             if (result === 'Delete') {
-                this.deletePost(post);
+                this.deletePost(post, index);
             } else if (result === 'Edit') {
                 this.editPost(post);
             }
@@ -427,19 +425,21 @@ export class KidDashboardComponent implements OnInit {
         });
     }
 
-    deletePost(post) {
-        let currentPost = this.posts.filter(p => p.kl_id === post.kl_id)[0];
-        let index = this.posts.indexOf(currentPost);
+    deletePost(post, index) {
+       // let currentPost = this.posts.filter(p => p.kl_id === post.kl_id)[0];
+        //let index = this.posts.indexOf(currentPost);
+        let currentPostObject = this.posts.getItem(index);
         // send request in background
-        this.postService.deletePost(currentPost)
+        /*this.postService.deletePost(currentPost)
             .subscribe(
                 (result) => { },
                 (error) => {
                     console.error("Error deleting post "+ JSON.stringify(error));
                 }
-            );
+            );*/
+
         // delete item from stack
-        this.posts.splice(index, 1);
+        this.posts.splice(this.posts.indexOf(currentPostObject), 1);
     }
 
     showHearters(post) {
@@ -464,7 +464,7 @@ export class KidDashboardComponent implements OnInit {
     }
 
 
-    showModalCommentToPost(post) {
+    showModalCommentToPost(post, index) {
         var options: ModalDialogOptions = {
             viewContainerRef: this.vcRef,
             context: {
@@ -479,7 +479,7 @@ export class KidDashboardComponent implements OnInit {
                 // modal closed
                 // console.log('Modal closed');
             } else {
-                //TODO add comment details as childView to parent instead refresh
+                //TODO append commet detail to currentPost Object as Observable instead refreshing..
                 //console.log("Modal Comment Result " + JSON.stringify(result));/
                 this.postCount = 0;
                 this.lastModified = '';

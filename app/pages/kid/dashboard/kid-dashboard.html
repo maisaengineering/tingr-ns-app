@@ -25,15 +25,8 @@
                         <GridLayout rows="auto,auto,auto,auto, auto, auto, auto"
                                     class="post-item">
                             <GridLayout row="0" (tap)="openPostImages(post)">
-                                <Image stretch="aspectFill" src="{{ post.image }}"
+                                <Image stretch="aspectFill" height="250" src="{{ post.image || 'https://placehold.it/500x500' }}"
                                        class="cover-image" loadMode="async"></Image>
-                                <!--<StackLayout class="org-container" horizontalAlignment="right">
-                                    <StackLayout orientation="horizontal">
-                                        <StackLayout class="org-image-container">
-                                            <Image [src]="moment.org_logo" stretch="none"> </Image>
-                                        </StackLayout>
-                                    </StackLayout>
-                                </StackLayout>-->
                             </GridLayout>
 
                             <GridLayout row="1" class="moment-tags">
@@ -112,17 +105,17 @@
                                                  marginLeft="10">
                                         <Image visibility="visible" stretch="none"
                                                class="{{ post.hearted ? 'hearted' : 'not-hearted' }}"
-                                               (tap)="addOrRemoveHeart(post)"
+                                               (tap)="addOrRemoveHeart(post, index)"
                                                src="res://heart_icon_{{ post.hearted ? 'gray' : 'light' }}"></Image>
                                     </StackLayout>
 
-                                    <StackLayout (tap)="showModalCommentToPost(post)" col="1" row="0"
+                                    <StackLayout (tap)="showModalCommentToPost(post, index)" col="1" row="0"
                                                  horizontalAlignment="left" orientation="horizontal"
                                                  marginLeft="10" verticalAlignment="center">
                                         <Image stretch="none" src="res://comment_icon" class="m-r-10"></Image>
                                         <Label text="Comment" class="comment-label"></Label>
                                     </StackLayout>
-                                    <StackLayout (tap)="selectPostActions(post)" col="3" row="0"
+                                    <StackLayout (tap)="selectPostActions(post, index)" col="3" row="0"
                                                  horizontalAlignment="right"
                                                  orientation="horizontal"
                                                  margin="0 10 0 0">
