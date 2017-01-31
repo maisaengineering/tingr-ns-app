@@ -18,7 +18,8 @@
 <GridLayout>
     <StackLayout orientation="vertical">
         <GridLayout class="kid-dashboard-container">
-            <RadListView id="listView" [items]="posts" itemDeleteAnimation="Fade" [listViewLayout]="layout">
+            <RadListView id="listView" [items]="posts" loadOnDemandMode="Auto" (loadMoreDataRequested)="onLoadMoreItemsRequested($event)"
+                         itemDeleteAnimation="Fade" [listViewLayout]="layout">
                 <template tkListItemTemplate let-post="item" let-index="index">
                     <StackLayout>
                         <StackLayout height="8" backgroundColor="#c6c6c6" *ngIf="index === 0"></StackLayout>

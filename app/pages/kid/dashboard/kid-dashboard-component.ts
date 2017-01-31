@@ -123,6 +123,8 @@ export class KidDashboardComponent implements OnInit {
         var that = new WeakRef(this);
         timerModule.setTimeout(() => {
             let listView: RadListView = args.object;
+            let initialItemsCount = this.posts.length;
+            console.log("Number "+ initialItemsCount)
             let initialNumberOfItems = that.get().numberOfAddedItems;
             this.postService.getPosts(this.postCount, this.lastModified, this.kid.kid_klid)
                 .subscribe(
@@ -131,23 +133,24 @@ export class KidDashboardComponent implements OnInit {
                         // set postCount and lastModified to get more data on scroll(pagination)
                         this.postCount = body.post_count;
                         this.lastModified = body.last_modified;
-
                         if (body.posts.length) {
                             body.posts.forEach((post) => {
-                                /* that.get().posts.push(post);
-                                 that.get().numberOfAddedItems++;*/
+                                this.addNewPostToListView(post);
+                                that.get().numberOfAddedItems++;
                             });
                         } else {
                             listView.loadOnDemandMode = ListViewLoadOnDemandMode[ListViewLoadOnDemandMode.None];
                         }
-
+                        listView.notifyLoadOnDemandFinished();
+                        //listView.scrollToIndex(initialItemsCount - 1);
                     },
                     (error) => {
                         this.isLoading = false;
+                        listView.notifyLoadOnDemandFinished();
                         this.serverErrorService.showErrorModal();
                     }
                 );
-            listView.notifyLoadOnDemandFinished();
+
         }, 1000);
         args.returnValue = true;
     }
@@ -155,6 +158,7 @@ export class KidDashboardComponent implements OnInit {
     getPosts(commentedOnPost = false) {
         this.isLoading = true;
         this.posts = new ObservableArray<Post>();
+        this.numberOfAddedItems = 0;
         this.postService.getPosts(this.postCount, this.lastModified, this.kid.kid_klid)
             .subscribe(
                 (result) => {
@@ -166,6 +170,7 @@ export class KidDashboardComponent implements OnInit {
                     //this.posts = body.posts;
                     body.posts.forEach((post) => {
                         this.addNewPostToListView(post);
+                        this.numberOfAddedItems++;
                     });
 
                     this.isLoading = false;
