@@ -132,7 +132,12 @@ export class KidRemindersComponent implements OnInit {
 
 
     goBack(){
-        this.routerExtensions.backToPreviousPage();
+        //this.routerExtensions.backToPreviousPage();
+        this.routerExtensions.navigate(["/kid-dashboard"], {
+            transition: {
+                name: "slideRight"
+            }
+        });
     }
 
 }

@@ -14,7 +14,7 @@ let app = require("application");
     selector: 'modal-content',
     providers: [ PostService, ServerErrorService ],
     template: ` 
-      <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white;"> 
+      <StackLayout sdkExampleTitle sdkToggleNavButton style="background-color: white; border-radius: 10;"> 
          <StackLayout class="m-x-20 m-t-10" verticalALignment="center"> 
             <Gridlayout cols="auto,auto" verticalAlignment="center"> 
               <Label row="0" col="0" text="Add Comment" class="action-label" horizontalAlignment="center"></Label> 

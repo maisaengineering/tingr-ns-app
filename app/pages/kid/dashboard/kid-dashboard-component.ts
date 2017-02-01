@@ -92,6 +92,8 @@ export class KidDashboardComponent implements OnInit {
         }
     }
 
+    @ViewChild('myRadListView') listViewComponent: listViewAnularModule.RadListViewComponent;
+
     static entries = [
         ModalPostComment
     ];
@@ -125,8 +127,9 @@ export class KidDashboardComponent implements OnInit {
         timerModule.setTimeout(() => {
             let listView: RadListView = <RadListView>(frameModule.topmost().currentPage.getViewById("listView"));
             let initialItemsCount = this.posts.length;
-            console.log("Number "+ initialItemsCount)
+            console.log("Number "+ initialItemsCount);
             let initialNumberOfItems = that.get().numberOfAddedItems;
+            console.log('initialNumberOfItems '+ initialNumberOfItems);
             this.postService.getPosts(this.postCount, this.lastModified, this.kid.kid_klid)
                 .subscribe(
                     (result) => {
@@ -144,7 +147,7 @@ export class KidDashboardComponent implements OnInit {
                         }
                         listView.notifyLoadOnDemandFinished();
                         args.returnValue = true;
-                        listView.scrollToIndex(initialItemsCount - 1);
+                        this.listViewComponent.listView.scrollToIndex(initialNumberOfItems+1);
                     },
                     (error) => {
                         this.isLoading = false;

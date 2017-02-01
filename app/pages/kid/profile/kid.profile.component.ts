@@ -10,7 +10,7 @@ import {KidService} from "../../../shared/kid.service";
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
 var app = require("application");
-
+import {Location} from "@angular/common";
 @Component({
     moduleId: module.id,
     selector: 'my-app',
@@ -33,7 +33,8 @@ export class KidProfileComponent implements OnInit {
                 private kidData: KidData,
                 private internetService: InternetService,
                 private vcRef: ViewContainerRef,
-                private serverErrorService: ServerErrorService) {
+                private serverErrorService: ServerErrorService,
+                private _location: Location) {
         //super(changeDetectorRef);
 
         this.kid = {};
@@ -74,7 +75,12 @@ export class KidProfileComponent implements OnInit {
     }
 
     goBack(){
-        this.routerExtensions.back();
+        //this.routerExtensions.backToPreviousPage();
+        this.routerExtensions.navigate(["/kid-dashboard"], {
+            transition: {
+                name: "slideTop"
+            }
+        });
     }
 
     closeProfile(){
