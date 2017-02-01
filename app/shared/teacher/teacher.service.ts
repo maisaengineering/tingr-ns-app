@@ -92,6 +92,28 @@ export class TeacherService {
             .catch(this.handleErrors);
     }
 
+    updatePassword(currentPassword,newPassword,confirmPassword){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: "change_password",
+            body: {
+                current_password: currentPassword,
+                password: newPassword,
+                password_confirmation: confirmPassword
+            }
+        });
+        return this.http.post(
+            Config.apiUrl + "users", data, {
+                headers: headers
+            }
+        )
+            .map((res:Response) => res.json())
+            .catch(this.handleErrors);
+    }
+
 
     handleErrors(error: Response) {
         // return Observable.throw(error.json() || {error: 'Server error'})

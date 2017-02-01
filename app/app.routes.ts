@@ -16,6 +16,7 @@ import { FormOrDocWebviewComponent } from "./pages/kid/forms-and-docs/form.or.do
 import { KidRemindersComponent } from "./pages/kid/reminders/kid.reminders.component";
 import { MessagesComponent } from "./pages/messages/messages.component";
 import { HeartersComponent } from "./pages/posts/hearters.component";
+import { ChangePasswordComponent } from "./pages/change-password/change-password.component";
 
 import { AuthGuard } from "./auth-guard.service";
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
@@ -25,7 +26,7 @@ import { ModalServerError } from "./pages/dialogs/modal-server-error";
 
 export const APP_ROUTES = [
 
-    { path: "", redirectTo: "/myclass", pathMatch: 'full'},
+    { path: "", redirectTo: "/calendar", pathMatch: 'full'},
     { path: "calendar", component: CalendarComponent, canActivate: [AuthGuard] },
     { path: "myclass", component: MyClassComponent, canActivate: [AuthGuard] },
     { path: "kid-dashboard", component: KidDashboardComponent, canActivate: [AuthGuard]},
@@ -39,6 +40,7 @@ export const APP_ROUTES = [
     { path: "kid-form-or-doc-webview", component: FormOrDocWebviewComponent, canActivate: [AuthGuard]},
     { path: "messages", component: MessagesComponent, canActivate: [AuthGuard]},
     { path: "settings", component: SettingsPage, canActivate: [AuthGuard]},
+    { path: "change-password", component: ChangePasswordComponent, canActivate: [AuthGuard]},
     { path: "post-hearters", component: HeartersComponent, canActivate: [AuthGuard]},
     { path: "verify-password", component: VerifyPasswordPage },
     { path: "login", component: LoginPage },
@@ -79,7 +81,8 @@ export const navigatableComponents = [
     FormOrDocWebviewComponent,
     KidRemindersComponent,
     MessagesComponent,
-    HeartersComponent
+    HeartersComponent,
+    ChangePasswordComponent
 
 ];
 

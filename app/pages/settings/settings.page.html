@@ -19,23 +19,13 @@
 
 <GridLayout>
     <StackLayout style="background-color: #f9f9f9" class="p-t-20">
-        <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard">
+        <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard"
+                  [nsRouterLink]="['/change-password']"
+                  pageTransition="slideTop">
             <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
                         orientation="horizontal">
-                <Label row="0" col="0" class="m-r-20 material-icons md-24 m-r-20 md-settings blue2"
-                       text="&#xE8B8;"></Label>
-                <Label row="0" col="1" verticalAlignment="center" text="General"
-                       class="text-left font-weight-bold"></Label>
-                <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
-                       class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
-            </Gridlayout>
-        </CardView>
-
-        <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard">
-            <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
-                        orientation="horizontal">
-                <Label row="0" col="0" class="m-r-20 material-icons md-24 m-r-20 md-info blue2" text="&#xE88E;"></Label>
-                <Label row="0" col="1" verticalAlignment="center" text="About"
+                <Label row="0" col="0" text=""></Label>
+                <Label row="0" col="1" verticalAlignment="center" text="Change Password"
                        class="text-left font-weight-bold"></Label>
                 <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
                        class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
@@ -45,9 +35,19 @@
         <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard" (tap)="logOut()">
             <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
                         orientation="horizontal">
-                <Label row="0" col="0" class="m-r-20 material-icons md-24 m-r-20 md-exit-to-app blue2"
-                       text="&#xE879;"></Label>
+                <Label row="0" col="0" text=""></Label>
                 <Label row="0" col="1" verticalAlignment="center" text="Logout"
+                       class="text-left font-weight-bold"></Label>
+                <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
+                       class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
+            </Gridlayout>
+        </CardView>
+
+        <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard" >
+            <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
+                        orientation="horizontal">
+                <Label row="0" col="0" text=""></Label>
+                <Label row="0" col="1" verticalAlignment="center" text="My school"
                        class="text-left font-weight-bold"></Label>
                 <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
                        class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
