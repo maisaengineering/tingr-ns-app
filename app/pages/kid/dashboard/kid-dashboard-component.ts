@@ -15,7 +15,7 @@ import {ModalPostComment} from "../../../pages/dialogs/modal-post-comment";
 import {ServerErrorService} from "../../../shared/server.error.service";
 
 import {ObservableArray} from "data/observable-array";
-
+import observable = require("data/observable");
 
 require("nativescript-dom");
 let view = require("ui/core/view");
@@ -119,10 +119,11 @@ export class KidDashboardComponent implements OnInit {
         this._layout = value;
     }
 
+
     public onLoadMoreItemsRequested(args: ListViewEventData) {
         var that = new WeakRef(this);
         timerModule.setTimeout(() => {
-            let listView: RadListView = args.object;
+            let listView: RadListView = <RadListView>(frameModule.topmost().currentPage.getViewById("listView"));
             let initialItemsCount = this.posts.length;
             console.log("Number "+ initialItemsCount)
             let initialNumberOfItems = that.get().numberOfAddedItems;
@@ -142,7 +143,8 @@ export class KidDashboardComponent implements OnInit {
                             listView.loadOnDemandMode = ListViewLoadOnDemandMode[ListViewLoadOnDemandMode.None];
                         }
                         listView.notifyLoadOnDemandFinished();
-                        //listView.scrollToIndex(initialItemsCount - 1);
+                        args.returnValue = true;
+                        listView.scrollToIndex(initialItemsCount - 1);
                     },
                     (error) => {
                         this.isLoading = false;
@@ -152,7 +154,7 @@ export class KidDashboardComponent implements OnInit {
                 );
 
         }, 1000);
-        args.returnValue = true;
+
     }
 
     getPosts(commentedOnPost = false) {
@@ -336,12 +338,12 @@ export class KidDashboardComponent implements OnInit {
     }
 
     goBack() {
-        //this.routerExtensions.backToPreviousPage();
-        this.routerExtensions.navigate(["/myclass"], {
+        this.routerExtensions.backToPreviousPage();
+        /*this.routerExtensions.navigate(["/myclass"], {
             transition: {
                 name: "slideRight"
             }
-        });
+        });*/
     }
 
     addOrRemoveHeart(post, index) {

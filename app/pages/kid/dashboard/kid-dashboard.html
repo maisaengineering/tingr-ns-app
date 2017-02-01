@@ -18,7 +18,8 @@
 <GridLayout>
     <StackLayout orientation="vertical">
         <GridLayout class="kid-dashboard-container">
-            <RadListView id="listView" [items]="posts" loadOnDemandMode="Auto" (loadMoreDataRequested)="onLoadMoreItemsRequested($event)"
+            <RadListView id="listView" [items]="posts"
+                         loadOnDemandMode="Auto" (loadMoreDataRequested)="onLoadMoreItemsRequested($event)"
                          itemDeleteAnimation="Fade" [listViewLayout]="layout">
                 <template tkListItemTemplate let-post="item" let-index="index">
                     <StackLayout>
@@ -29,7 +30,6 @@
                                 <Image stretch="aspectFill" height="250" src="{{ post.image || 'https://placehold.it/500x500' }}"
                                        class="cover-image" loadMode="async"></Image>
                             </GridLayout>
-
                             <GridLayout row="1" class="moment-tags">
                                 <StackLayout orientation="vertical">
                                     <GridLayout columns="*, auto" *ngIf="post.tagged_to.length">

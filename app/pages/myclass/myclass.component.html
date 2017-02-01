@@ -26,45 +26,50 @@
     </ScrollView>
     <GridLayout tkMainContent>
         <RadListView [items]="managed_kids"
-                     pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated($event)"  >
+                     pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated($event)">
             <template tkListItemTemplate let-item="item">
-                <StackLayout id="kid-{{ item.kid_klid }}" [kid]="item" class="list-group-item" (longPress)="onLongPressKid(item)" (tap)="onTapKid(item)">
-                    <GridLayout rows="*" columns="auto,*,70">
-                        <StackLayout row="0" col="0">
-                            <Image height="75" width="75" class="kid-profile-pic blue-circle-border"
-                                   src="{{ item.photograph_url ? item.photograph_url : '~/images/avatar-100.png' }}"></Image>
-                        </StackLayout>
+                <StackLayout id="kid-{{ item.kid_klid }}" [kid]="item"
+                             (longPress)="onLongPressKid(item)" (tap)="onTapKid(item)">
+                    <StackLayout class="p-10">
+                        <GridLayout rows="*" columns="auto,*,50">
+                            <StackLayout row="0" col="0">
+                                <Image height="75" width="75" class="kid-profile-pic blue-circle-border"
+                                       src="{{ item.photograph_url ? item.photograph_url : '~/images/avatar-100.png' }}"></Image>
+                            </StackLayout>
 
-                        <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical"
-                                     class="p-l-20">
-                            <Label [text]="item.fname+' '+item.lname" class="kid-name"></Label>
-                            <Label [text]="item.age+' old'" class="text-muted kid-age"></Label>
-                        </StackLayout>
+                            <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical"
+                                         class="p-l-20">
+                                <Label [text]="item.fname+' '+item.lname" class="kid-name"></Label>
+                                <Label [text]="item.age+' old'" class="text-muted kid-age"></Label>
+                            </StackLayout>
 
-                        <StackLayout row="0" col="2" class="m-t-5" verticalAlignment="center"
-                                     orientation="vertical" horizontalAlignment="right">
-                            <Image height="30" width="40" verticalAlignment="center" stretch="aspectFill"
-                                   src="~/images/profile-details-40.png"></Image>
-                            <StackLayout class="m-t-5" orientation="horizontal" verticalAlignment="center"
-                                         horizontalAlignment="center">
-                                <StackLayout *ngIf="item.reminders_count != 0">
-                                    <Label text="{{ item.reminders_count > 9 ? item.reminders_count+'+' : item.reminders_count }}"
-                                           class="number-with-circle reminders-count text-center"></Label>
-                                </StackLayout>
-                                <StackLayout *ngIf="item.messages_count != 0">
-                                    <Label text="{{ item.messages_count > 9 ? item.messages_count+'+' : item.messages_count }}"
-                                           class="number-with-circle notifications-count text-center"></Label>
+                            <StackLayout row="0" col="2" class="m-t-5" verticalAlignment="center"
+                                         orientation="vertical" horizontalAlignment="right">
+                                <Image height="30" width="40" verticalAlignment="center" stretch="aspectFill"
+                                       src="~/images/profile-details-40.png"></Image>
+                                <StackLayout class="m-t-5" orientation="horizontal" verticalAlignment="center"
+                                             horizontalAlignment="center">
+                                    <StackLayout *ngIf="item.reminders_count != 0">
+                                        <Label text="{{ item.reminders_count > 9 ? item.reminders_count+'+' : item.reminders_count }}"
+                                               class="number-with-circle reminders-count text-center"></Label>
+                                    </StackLayout>
+                                    <StackLayout *ngIf="item.messages_count != 0">
+                                        <Label text="{{ item.messages_count > 9 ? item.messages_count+'+' : item.messages_count }}"
+                                               class="number-with-circle notifications-count text-center"></Label>
+                                    </StackLayout>
                                 </StackLayout>
                             </StackLayout>
+                        </GridLayout>
+                        <StackLayout class="" visibility="{{ item.in_or_out_time? 'visible' : 'collapsed' }}"
+                                     verticalAlignment="center" orientation="vertical" horizontalAlignment="center">
+                            <Label id="in-or-out-time-{{ item.kid_klid }}"
+                                   class="in-or-out-time bg-primary bg-green-label light-gray font-italic p-x-10 m-t-5"
+                                   text="{{ item.in_or_out_time }}"></Label>
                         </StackLayout>
-                    </GridLayout>
-                    <StackLayout visibility="{{ item.in_or_out_time? 'visible' : 'collapsed' }}"
-                                 verticalAlignment="center" orientation="vertical" horizontalAlignment="center">
-                        <Label id="in-or-out-time-{{ item.kid_klid }}"
-                               class="in-or-out-time bg-primary bg-green-label light-gray font-italic p-x-10 m-t-5"
-                               text="{{ item.in_or_out_time }}"></Label>
+
                     </StackLayout>
-                    <StackLayout class="hr-shadow m-t-10"></StackLayout>
+
+                    <StackLayout class="hr-shadow"></StackLayout>
                 </StackLayout>
 
             </template>

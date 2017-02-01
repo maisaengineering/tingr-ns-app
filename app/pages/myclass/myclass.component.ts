@@ -234,6 +234,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                     name: "slideLeft"
                 }
             });
+            this.cancelKidSelectionAnimation(kid);
         }).catch(()=>{
             // animation error
         });
