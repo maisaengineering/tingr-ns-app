@@ -41,12 +41,10 @@
                                                        src="{{ item.photograph ||  '~/images/avatar-100.png' }}"></Image>
                                             </StackLayout>
                                         </WrapLayout>
-
-
                                         <StackLayout col="1" row="0" horizontalAlignment="right"
                                                      orientation="horizontal" height="50" verticalAlignment="top">
                                             <StackLayout orientation="vertical">
-                                                <Label text="{{  post.created_at.substring(0,10) |  date: 'MMMM dd, yyyy' }}"
+                                                <Label text="{{ post.created_at | timeAgo }}"
                                                        class="tagged-on-date"></Label>
                                                 <Image (tap)="showHearters(post)" class="m-t-5"
                                                        visibility="{{ post.hearts_count > 0 ? 'visible' : 'collapsed'}}"
@@ -66,7 +64,7 @@
                                 <StackLayout class="horizontal-separator" margin="0 10 0 10">
                                 </StackLayout>
                             </GridLayout>
-                            <GridLayout row="3" class="moment-comments"> 
+                            <GridLayout row="3" class="moment-comments">
                                 <StackLayout>
                                     <StackLayout *ngFor="let comment of post.comments; let i = index">
                                         <StackLayout orientation="horizontal" verticalAlignment="center"

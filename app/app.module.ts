@@ -24,6 +24,7 @@ import { ModalServerError } from "./pages/dialogs/modal-server-error";
 
 import { DatePipe } from '@angular/common';
 import { KeysPipe } from './utils/keys.pipe';
+import { TimeAgoPipe } from './utils/timeago.pipe';
 
 
 
@@ -41,6 +42,7 @@ registerElement("PullToRefresh", () => {
         LISTVIEW_DIRECTIVES,
         AppComponent,
         KeysPipe,
+        TimeAgoPipe,
         ...navigatableComponents
     ],
     bootstrap: [

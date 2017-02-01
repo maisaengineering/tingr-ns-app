@@ -25,7 +25,7 @@ import { ModalServerError } from "./pages/dialogs/modal-server-error";
 
 export const APP_ROUTES = [
 
-    { path: "", redirectTo: "/calendar", pathMatch: 'full'},
+    { path: "", redirectTo: "/myclass", pathMatch: 'full'},
     { path: "calendar", component: CalendarComponent, canActivate: [AuthGuard] },
     { path: "myclass", component: MyClassComponent, canActivate: [AuthGuard] },
     { path: "kid-dashboard", component: KidDashboardComponent, canActivate: [AuthGuard]},
