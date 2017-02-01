@@ -228,13 +228,19 @@
                         </GridLayout>
                     </GridLayout>
                 </template>
+
+                <template tkListViewFooter>
+                    <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+                        <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
+                    </GridLayout>
+                </template>
             </RadListView>
         </GridLayout>
     </StackLayout>
 
 
-    <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+ <!--   <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
     <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
         <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
-    </GridLayout>
+    </GridLayout>-->
 </GridLayout>
