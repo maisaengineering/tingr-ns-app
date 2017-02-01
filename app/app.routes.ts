@@ -17,6 +17,7 @@ import { KidRemindersComponent } from "./pages/kid/reminders/kid.reminders.compo
 import { MessagesComponent } from "./pages/messages/messages.component";
 import { HeartersComponent } from "./pages/posts/hearters.component";
 import { ChangePasswordComponent } from "./pages/change-password/change-password.component";
+import { MySchoolComponent } from "./pages/settings/myschool.component";
 
 import { AuthGuard } from "./auth-guard.service";
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
@@ -41,6 +42,7 @@ export const APP_ROUTES = [
     { path: "messages", component: MessagesComponent, canActivate: [AuthGuard]},
     { path: "settings", component: SettingsPage, canActivate: [AuthGuard]},
     { path: "change-password", component: ChangePasswordComponent, canActivate: [AuthGuard]},
+    { path: "myschool", component: MySchoolComponent, canActivate: [AuthGuard]},
     { path: "post-hearters", component: HeartersComponent, canActivate: [AuthGuard]},
     { path: "verify-password", component: VerifyPasswordPage },
     { path: "login", component: LoginPage },
@@ -82,7 +84,8 @@ export const navigatableComponents = [
     KidRemindersComponent,
     MessagesComponent,
     HeartersComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    MySchoolComponent
 
 ];
 
