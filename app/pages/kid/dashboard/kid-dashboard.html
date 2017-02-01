@@ -27,7 +27,8 @@
                         <GridLayout rows="auto,auto,auto,auto, auto, auto, auto"
                                     class="post-item">
                             <GridLayout row="0" (tap)="openPostImages(post)">
-                                <Image stretch="aspectFill" height="250" src="{{ post.image || 'https://placehold.it/500x500' }}"
+                                <Image stretch="aspectFill" height="250"
+                                       src="{{ post.image || 'https://placehold.it/500x500' }}"
                                        class="cover-image" loadMode="async"></Image>
                             </GridLayout>
                             <GridLayout row="1" class="moment-tags">
@@ -65,10 +66,9 @@
                                 <StackLayout class="horizontal-separator" margin="0 10 0 10">
                                 </StackLayout>
                             </GridLayout>
-                            <GridLayout row="3" class="moment-comments">
-
-                                <GridLayout rows="auto,auto,auto,auto,auto,auto" *ngIf="post.comments">
-                                    <GridLayout row="{{ i }}" *ngFor="let comment of post.comments; let i = index">
+                            <GridLayout row="3" class="moment-comments"> 
+                                <StackLayout>
+                                    <StackLayout *ngFor="let comment of post.comments; let i = index">
                                         <StackLayout orientation="horizontal" verticalAlignment="center"
                                                      class="moment-comment-item"
                                                      id="comment-slug-{{ comment.slug }}">
@@ -88,12 +88,12 @@
                                                 <Label [text]="comment.content" textWrap="true"></Label>
                                             </StackLayout>
                                         </StackLayout>
-                                        <GridLayout row="{{ i+1 }}">
+                                        <GridLayout>
                                             <StackLayout class="comment-hr-separator">
                                             </StackLayout>
                                         </GridLayout>
-                                    </GridLayout>
-                                </GridLayout>
+                                    </StackLayout>
+                                </StackLayout>
                             </GridLayout>
 
                             <GridLayout row="4">
@@ -130,7 +130,8 @@
                     </StackLayout>
                 </template>
                 <template tkListViewHeader>
-                    <GridLayout rows="auto,auto,auto,auto,auto,auto" height="370" backgroundColor="white" class="kid-dashboard">
+                    <GridLayout rows="auto,auto,auto,auto,auto,auto" height="370" backgroundColor="white"
+                                class="kid-dashboard">
                         <!--- Profile section -->
                         <GridLayout row="0" class="section1 p-y-10 p-x-20" backgroundColor="#e9e9e9">
                             <GridLayout row="0" cols="auto,auto" class="kid-profile-container" orientation="vertical">
