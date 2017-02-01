@@ -1,4 +1,4 @@
- <ActionBar title="">
+<ActionBar title="">
     <!-- left area  -->
     <NavigationButton *ngIf="isIos" visibility="collapsed"></NavigationButton>
     <NavigationButton *ngIf="isAndroid" icon="res://ic_left" (tap)="goBack()"></NavigationButton>
@@ -17,39 +17,39 @@
 </ActionBar>
 
 <GridLayout class="kid-forms-and-docs-container">
+    <StackLayout *ngIf="!forms.length && !documents.length"
+                 visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
+                 verticalAlignment="center">
+        <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
+            <Label class="message text-center" text="No forms or documents" textWrap="true"></Label>
+        </StackLayout>
+    </StackLayout>
     <PullToRefresh (refresh)="refreshList($event)" #pullToRefresh>
         <ScrollView>
-            <StackLayout *ngIf="!forms.length && !documents.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
-                         verticalAlignment="center">
-                <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
-                    <Label class="message text-center" text="No forms or documents" textWrap="true"></Label>
-                </StackLayout>
-            </StackLayout>
             <StackLayout>
-                <StackLayout *ngIf="forms.length" margin="10 0 0 0">
-                    <StackLayout *ngFor="let form of forms">
-                        <StackLayout *ngIf="form.name" (tap)="openFormOrDoc(form)">
-                            <StackLayout orientation="vertical" class="blue2 form-or-doc-item">
-                                <Label text="{{ form.name }}"></Label>
+                <StackLayout>
+                    <StackLayout *ngIf="forms.length" margin="10 0 0 0">
+                        <StackLayout *ngFor="let form of forms">
+                            <StackLayout *ngIf="form.name" (tap)="openFormOrDoc(form)">
+                                <StackLayout orientation="vertical" class="blue2 form-or-doc-item">
+                                    <Label text="{{ form.name }}"></Label>
+                                </StackLayout>
+                                <StackLayout class="hr-shadow"></StackLayout>
                             </StackLayout>
-                            <StackLayout class="hr-shadow"></StackLayout>
                         </StackLayout>
                     </StackLayout>
-                </StackLayout>
-
-
-                <StackLayout *ngIf="documents.length">
-                    <StackLayout *ngFor="let doc of documents">
-                        <StackLayout *ngIf="doc.name" (tap)="openFormOrDoc(doc)">
-                            <StackLayout orientation="vertical" class="blue2 form-or-doc-item">
-                                <Label text="{{ doc.name }}"></Label>
+                    <StackLayout *ngIf="documents.length">
+                        <StackLayout *ngFor="let doc of documents">
+                            <StackLayout *ngIf="doc.name" (tap)="openFormOrDoc(doc)">
+                                <StackLayout orientation="vertical" class="blue2 form-or-doc-item">
+                                    <Label text="{{ doc.name }}"></Label>
+                                </StackLayout>
+                                <StackLayout class="hr-shadow"></StackLayout>
                             </StackLayout>
-                            <StackLayout class="hr-shadow"></StackLayout>
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
-
         </ScrollView>
     </PullToRefresh>
 

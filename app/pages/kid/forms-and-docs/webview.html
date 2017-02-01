@@ -13,12 +13,15 @@
         </StackLayout>
     </StackLayout>
     <!-- right area  -->
-    <ActionItem  ios.position="right" andriod.postion="actionBar" icon="res://ic_exit" (tap)="openShareOptions(formOrDoc)">
+    <ActionItem ios.position="right" andriod.postion="actionBar" icon="res://ic_exit"
+                (tap)="openShareOptions(formOrDoc)">
     </ActionItem>
 </ActionBar>
 
 <GridLayout class="form-or-doc-container">
-    <StackLayout *ngIf="!formOrDoc.url" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" verticalAlignment="center">
+
+    <StackLayout *ngIf="!formOrDoc.url" visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
+                 verticalAlignment="center">
         <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
             <Label class="message text-center" text="No documents available." textWrap="true"></Label>
         </StackLayout>
@@ -27,6 +30,7 @@
     <ScrollView *ngIf="formOrDoc.url">
         <WebView src="{{ formOrDoc.url }}"></WebView>
     </ScrollView>
+
     <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
     <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
         <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>

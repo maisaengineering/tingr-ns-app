@@ -6,8 +6,9 @@
                     <TextField  class="input input-border input-border-primary input-field" hint="Email Address"
                                 keyboardType="email" [(ngModel)]="email"
                                 autocorrect="false" autocapitalizationType="none" id="email"></TextField>
+                    <Label *ngIf="emailError" visibility="{{ email ? 'collapse' : 'visible' }}" text="email can't be blank" class="error-label"></Label>
                 </StackLayout>
-                <StackLayout row="1" orientation="horizontal">
+                <StackLayout row="1" orientation="horizontal" class="p-t-10">
                     <Gridlayout rows="auto" columns="*,*" verticalAlignment="center" orientation="horizontal">
                         <Label row="0" col="0" verticalAlignment="center" text=""
                                class="m-l-20"></Label>

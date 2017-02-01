@@ -32,6 +32,7 @@ export class VerifyPasswordPage implements OnInit {
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
     public emailError: Boolean = false;
+    public passwordError: Boolean = false;
     public emailOrPasswordError: Boolean = false;
 
     constructor(private router: Router, private route: ActivatedRoute,
@@ -72,11 +73,16 @@ export class VerifyPasswordPage implements OnInit {
         let forgotPassLink = view.getViewById(this.page, "forgotPassLink");
         if (emailTextField.text === "" ) {
             emailTextField.borderColor = '#e89999';
+            this.emailError = true;
             return;
         } else if (passTextField.text === ""){
             passTextField.borderColor = '#e89999';
+            this.passwordError = true;
             return;
         }
+
+        emailTextField.borderColor = '#b7d6a9';
+        passTextField.borderColor = '#b7d6a9';
 
 
         this.isLoading = true;
@@ -110,13 +116,11 @@ export class VerifyPasswordPage implements OnInit {
                         message: error.message,
                         okButtonText: "Ok"
                     }).then(()=> {
-                        emailTextField.borderColor = '#e89999';
+                       // emailTextField.borderColor = '#e89999';
                         passTextField.borderColor = '#e89999';
                         this.emailOrPasswordError = true;
                         forgotPassLink.floatIn('slow', 'top')
                     });
-
-
                 }
             );
     }

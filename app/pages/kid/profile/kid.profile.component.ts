@@ -74,7 +74,7 @@ export class KidProfileComponent implements OnInit {
     }
 
     goBack(){
-        this.routerExtensions.backToPreviousPage();
+        this.routerExtensions.back();
     }
 
     closeProfile(){

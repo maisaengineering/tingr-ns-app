@@ -13,34 +13,37 @@
         </StackLayout>
     </StackLayout>
     <!-- right area  -->
-    <ActionItem  ios.position="right" andriod.postion="actionBar" icon="res://ic_add" (tap)="addNote()">
+    <ActionItem ios.position="right" andriod.postion="actionBar" icon="res://ic_add" (tap)="addNote()">
     </ActionItem>
 </ActionBar>
 
 
 <GridLayout class="kid-notes-container">
-    <ScrollView>
-        <StackLayout *ngIf="!notes.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" verticalAlignment="center">
-            <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
-                <Label class="message text-center" text="{{ emptyNoteMessage }}" textWrap="true"></Label>
-                <StackLayout (tap)="addNote()">
-                    <Label text="&#xE145;" class="text-center blue2 material-icons md-48 md-chevron-add"></Label>
-                </StackLayout>
-
+    <StackLayout *ngIf="!notes.length" visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
+                 verticalAlignment="center">
+        <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
+            <Label class="message text-center" text="{{ emptyNoteMessage }}" textWrap="true"></Label>
+            <StackLayout (tap)="addNote()">
+                <Label text="&#xE145;" class="text-center blue2 material-icons md-48 md-chevron-add"></Label>
             </StackLayout>
+
         </StackLayout>
-        <StackLayout *ngIf="notes.length" margin="10 0 0 0">
-            <StackLayout *ngFor="let note of notes">
-                <StackLayout *ngIf="note.description" (tap)="editNote(note)">
-                    <StackLayout orientation="vertical" class="notes-item">
-                        <Label text="{{ note.description.split('\n')[0] }}" class="first-line"></Label>
-                        <StackLayout orientation="horizontal" class="text-muted second-line">
-                            <Label text="{{ note.created_at  | date: 'M/d/yy' }}"></Label>
-                            <Label text="{{ note.description.replace(note.description.split('\n')[0], '').trim() }}"
-                                   class="m-l-10"></Label>
+    </StackLayout>
+    <ScrollView>
+        <StackLayout>
+            <StackLayout *ngIf="notes.length" margin="10 0 0 0">
+                <StackLayout *ngFor="let note of notes">
+                    <StackLayout *ngIf="note.description" (tap)="editNote(note)">
+                        <StackLayout orientation="vertical" class="notes-item">
+                            <Label text="{{ note.description.split('\n')[0] }}" class="first-line"></Label>
+                            <StackLayout orientation="horizontal" class="text-muted second-line">
+                                <Label text="{{ note.created_at  | date: 'M/d/yy' }}"></Label>
+                                <Label text="{{ note.description.replace(note.description.split('\n')[0], '').trim() }}"
+                                       class="m-l-10"></Label>
+                            </StackLayout>
                         </StackLayout>
+                        <StackLayout class="hr-light"></StackLayout>
                     </StackLayout>
-                    <StackLayout class="hr-light"></StackLayout>
                 </StackLayout>
             </StackLayout>
         </StackLayout>
