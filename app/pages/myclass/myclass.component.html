@@ -26,10 +26,10 @@
     </ScrollView>
     <GridLayout tkMainContent>
         <RadListView [items]="managed_kids"
-                     pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated($event)">
+                     pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated($event)"
+                      (itemTap)="onTapKid($event)" selectionBehavior="LongPress" (itemSelected)="onLongPressKid($event)">
             <template tkListItemTemplate let-item="item">
-                <StackLayout id="kid-{{ item.kid_klid }}" [kid]="item"
-                             (longPress)="onLongPressKid(item)" (tap)="onTapKid(item)">
+                <StackLayout id="kid-{{ item.kid_klid }}" [kid]="item">
                     <StackLayout class="p-10">
                         <GridLayout rows="*" columns="auto,*,50">
                             <StackLayout row="0" col="0">

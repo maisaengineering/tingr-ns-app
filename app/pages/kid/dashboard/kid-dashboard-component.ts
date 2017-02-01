@@ -338,12 +338,12 @@ export class KidDashboardComponent implements OnInit {
     }
 
     goBack() {
-        this.routerExtensions.backToPreviousPage();
-        /*this.routerExtensions.navigate(["/myclass"], {
+        //this.routerExtensions.backToPreviousPage();
+        this.routerExtensions.navigate(["/myclass"], {
             transition: {
                 name: "slideRight"
             }
-        });*/
+        });
     }
 
     addOrRemoveHeart(post, index) {

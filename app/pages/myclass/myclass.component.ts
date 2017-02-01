@@ -30,6 +30,7 @@ import {ListViewEventData, RadListView} from "nativescript-telerik-ui/listview";
 import * as timerModule  from "timer";
 import listViewModule = require("nativescript-telerik-ui/listview/angular");
 import listViewAnularModule = require("nativescript-telerik-ui/listview/angular");
+import {ObservableArray} from "data/observable-array";
 
 @Component({
     moduleId: module.id,
@@ -40,7 +41,7 @@ import listViewAnularModule = require("nativescript-telerik-ui/listview/angular"
         MessageService, TeacherService, ModalDialogService, ServerErrorService]
 })
 export class MyClassComponent extends DrawerPage implements OnInit {
-    public managed_kids: Array<ManagedKid>;
+    private managed_kids: ObservableArray<ManagedKid>;
     public roomName: String;
     public currentRoom;
     public isLoading: Boolean = false;
@@ -49,7 +50,8 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     public assignedRooms: Array<any>;
     public showActionBarItems: Boolean = false;
     private numberOfAddedItems; // pull to refresh
-    private isLongPressed; Boolean =false;
+    private isLongPressed;
+    Boolean = false;
 
     /*
      * Gesture examples
@@ -87,7 +89,6 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         } else if (app.ios) {
             this.isIos = true;
         }
-        this.managed_kids = [];
         this.currentRoom = TeacherInfo.parsedCurrentRoom;
         this.roomName = this.currentRoom.session_name;
         // initialize with when user logged in data and then invoke assignedrooms api to get updated ones
@@ -113,14 +114,17 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         this.isLoading = true;
         this.myClassService.getRoomsAndMangedKids(this.currentRoom).subscribe(
             (result) => {
+                this.managed_kids = new ObservableArray<ManagedKid>();
                 this.assignedRooms = result[0].body.rooms;
                 // Set Teacher CurrentRoom and this.currentRoom as first one as default
                 //TeacherInfo.currentRoom = JSON.stringify(this.assignedRooms[0]);
                 //this.currentRoom = this.assignedRooms[0];
                 //this.roomName = this.currentRoom.session_name;
-                this.managed_kids = result[1].body.managed_kids;
+                result[1].body.managed_kids.forEach((managedKid) => {
+                   this.addNewManagedKid(managedKid);
+                });
                 // save managed kids in SharedData Provider, so data will be available to all components
-                this.sharedData.managedKids = this.managed_kids;
+                this.sharedData.managedKids = result[1].body.managed_kids;
                 this.isLoading = false;
             },
             (error) => {
@@ -135,11 +139,15 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         this.myClassService.getManagedKids(room)
             .subscribe(
                 (result) => {
+                    this.managed_kids = new ObservableArray<ManagedKid>();
                     var body = result.body;
-                    this.managed_kids = body.managed_kids;
+                    body.managed_kids.forEach((managedKid) => {
+                        this.addNewManagedKid(managedKid);
+                    });
+
                     this.isLoading = false;
                     // save managed kids in SharedData Provider, so data will be available to all components
-                    this.sharedData.managedKids = this.managed_kids;
+                    this.sharedData.managedKids = body.managed_kids;
 
                 },
                 (error) => {
@@ -147,6 +155,13 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                     this.serverErrorService.showErrorModal();
                 }
             );
+    }
+
+    addNewManagedKid(managedKid){
+        let kid = new ManagedKid(managedKid.fname, managedKid.lname, managedKid.nickname,
+            managedKid.age, managedKid.reminders_count, managedKid.messages_count,
+            managedKid.kid_klid, managedKid.photograph_url, managedKid.in_or_out_time);
+        this.managed_kids.push(kid);
     }
 
 
@@ -159,10 +174,13 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             this.myClassService.getManagedKids(this.currentRoom)
                 .subscribe(
                     (result) => {
+                        this.managed_kids = new ObservableArray<ManagedKid>();
                         var body = result.body;
-                        this.managed_kids = body.managed_kids;
+                        body.managed_kids.forEach((managedKid) => {
+                            this.addNewManagedKid(managedKid);
+                        });
                         // save managed kids in SharedData Provider, so data will be available to all components
-                        this.sharedData.managedKids = this.managed_kids;
+                        this.sharedData.managedKids = body.managed_kids;
                         listView.notifyPullToRefreshFinished();
                     },
                     (error) => {
@@ -201,71 +219,68 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     }
 
     /*kidLoaded(args) {
-        let kidStackLayout = args.object;
-        kidStackLayout.observe(gestures.GestureTypes.tap | gestures.GestureTypes.longPress, (args) => {
-            //console.log("Event: " + args.eventName + ", sender: " + args.object);
-            let kid = args.object.get("kid");
-            if (args.eventName === 'tap') {
-               console.log("Tap")
-            } else if (args.eventName === 'longPress') {
-                console.log("Long Press")
-                console.log("Event  longPress");
-                //this.onLongPressKid(kid);
-            }
-        });
-    }*/
+     let kidStackLayout = args.object;
+     kidStackLayout.observe(gestures.GestureTypes.tap | gestures.GestureTypes.longPress, (args) => {
+     //console.log("Event: " + args.eventName + ", sender: " + args.object);
+     let kid = args.object.get("kid");
+     if (args.eventName === 'tap') {
+     console.log("Tap")
+     } else if (args.eventName === 'longPress') {
+     console.log("Long Press")
+     console.log("Event  longPress");
+     //this.onLongPressKid(kid);
+     }
+     });
+     }*/
 
 
-    onTapKid(kid) {
-        if(this.isLongPressed === false) {
-            return;
-        }
+    onTapKid(args: ListViewEventData) {
+        let kid = this.managed_kids.getItem(args.itemIndex);
         this.kidData.info = kid;
+
         let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
-        // below one is usefull when removing element from stack
-        /* kidStackLayout.animate(
-         {backgroundColor: '#EAF2FA', duration: 2000, opacity: 0.25}
-         );*/
         kidStackLayout.animate(
             { backgroundColor: '#DCDCDC', duration: 100 }
         ).then(() => {
-            this.routerExtensions.navigate(["/kid-dashboard"], {
-                transition: {
-                    name: "slideLeft"
-                }
-            });
             this.cancelKidSelectionAnimation(kid);
         }).catch(()=>{
             // animation error
         });
+
+        this.routerExtensions.navigate(["/kid-dashboard"], {
+            transition: {
+                name: "slideLeft"
+            }
+        })
     }
 
+    onLongPressKid(args: ListViewEventData) {
+        let kid = this.managed_kids.getItem(args.itemIndex);
 
-    onLongPressKid(kid) {
-        this.isLongPressed = true;
         let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
-
         kidStackLayout.animate(
-            { backgroundColor: '#DCDCDC', duration: 100 }
-        ).then(() => {
-            dialogs.action({
-                //message: "",
-                cancelButtonText: "Cancel",
-                actions: ["Sign-in/Sign-out", "Message to Parent"]
-            }).then(result => {
-                if(result == 'Cancel' || typeof result == "undefined"){
-                    this.cancelKidSelectionAnimation(kid);
-                } else  {
-                    if (result === 'Sign-in/Sign-out') {
-                        this.signInOrSignOutKid(kid);
-                    } else if (result === "Message to Parent") {
-                        this.showModalMessageToParent(kid);
-                    }
-                }
-            });
-        }).catch(()=>{
+            {backgroundColor: '#DCDCDC', duration: 100}
+        ).then(()=> {
+            // animationDone
+        }).catch(()=> {
             // animation error
-        });
+        })
+
+        dialogs.action({
+            //message: "",
+            cancelButtonText: "Cancel",
+            actions: ["Sign-in/Sign-out", "Message to Parent"]
+        }).then(result => {
+            if (result == 'Cancel' || typeof result == "undefined") {
+                this.cancelKidSelectionAnimation(kid);
+            } else {
+                if (result === 'Sign-in/Sign-out') {
+                    this.signInOrSignOutKid(kid);
+                } else if (result === "Message to Parent") {
+                    this.showModalMessageToParent(kid);
+                }
+            }
+        })
 
     }
 
@@ -313,7 +328,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             fullscreen: false
         };
         this.modal.showModal(ModalMessageToParent, options).then((result) => {
-            console.log("Result "+ result);
+            console.log("Result " + result);
             if (result === 'close' || typeof(result) == "undefined") {
                 // modal closed
                 // console.log('Modal closed');
@@ -333,18 +348,16 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     }
 
     // clears the selected animation for kid
-    cancelKidSelectionAnimation(kid){
+    cancelKidSelectionAnimation(kid) {
         let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
         kidStackLayout.animate(
             {backgroundColor: 'white', duration: 500}
-        ).then(()=>{
+        ).then(()=> {
             // animationDone
-        }).catch(()=>{
+        }).catch(()=> {
             // animation error
         })
     }
-
-
 
 
 }

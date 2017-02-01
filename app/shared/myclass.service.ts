@@ -72,14 +72,27 @@ export interface Room {
     name: string
 }
 
-export interface ManagedKid {
-    fname: string,
-    lname: string,
-    mname: string,
-    age: number,
-    reminders_count: number,
-    notifications_count: number,
-    kid_klid: string,
-    photograph_url: string,
-    in_or_out_time: string
+
+export class ManagedKid {
+    public fname: string;
+    public lname: string;
+    public nickname: string;
+    public age: string;
+    public reminders_count: number;
+    public messages_count: number;
+    public kid_klid: string;
+    public photograph_url: string;
+    public in_or_out_time: string;
+    constructor(fname, lname, nickname, age, reminders_count, messages_count,
+                kid_klid, photograph_url, in_or_out_time) {
+        this.fname = fname;
+        this.lname = lname;
+        this.nickname = nickname;
+        this.age = age;
+        this.reminders_count = reminders_count;
+        this.messages_count = messages_count;
+        this.kid_klid = kid_klid;
+        this.photograph_url = photograph_url;
+        this.in_or_out_time = in_or_out_time;
+    }
 }
