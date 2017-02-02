@@ -17,7 +17,7 @@
 
 <GridLayout>
     <StackLayout orientation="vertical">
-        <GridLayout class="kid-dashboard-container">
+        <GridLayout rows="*" cols="*" class="kid-dashboard-container">
             <RadListView #myRadListView [items]="posts"
                          loadOnDemandMode="Auto" (loadMoreDataRequested)="onLoadMoreItemsRequested($event)"
                          itemDeleteAnimation="Fade" [listViewLayout]="layout">
@@ -114,7 +114,7 @@
                                         <Image stretch="none" src="res://comment_icon" class="m-r-10"></Image>
                                         <Label text="Comment" class="comment-label"></Label>
                                     </StackLayout>
-                                    <StackLayout (tap)="selectPostActions(post, index)" col="3" row="0"
+                                    <StackLayout (tap)="selectPostActions($event,post, index)" col="3" row="0"
                                                  horizontalAlignment="right"
                                                  orientation="horizontal"
                                                  margin="0 10 0 0">

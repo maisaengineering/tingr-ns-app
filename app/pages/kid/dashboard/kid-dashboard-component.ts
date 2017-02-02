@@ -16,7 +16,7 @@ import {ServerErrorService} from "../../../shared/server.error.service";
 
 import {ObservableArray} from "data/observable-array";
 import observable = require("data/observable");
-
+import {Location} from "@angular/common";
 require("nativescript-dom");
 let view = require("ui/core/view");
 let tnsfx = require('nativescript-effects');
@@ -41,7 +41,7 @@ import {StackLayout} from "ui/layouts/stack-layout";
 import listViewModule = require("nativescript-telerik-ui/listview");
 import listViewAnularModule = require("nativescript-telerik-ui/listview/angular");
 declare var android: any;
-
+import {Observable} from "rxjs/Rx";
 
 @Component({
     moduleId: module.id,
@@ -66,8 +66,10 @@ export class KidDashboardComponent implements OnInit {
     public lastModified: string = '';
     public postCount: number = 0;
 
-    private posts: ObservableArray<Post>;
+    //private posts: ObservableArray<Post>;
     private _layout: ListViewLinearLayout;
+
+    public posts: ObservableArray<Post>;
 
 
     constructor(private postService: PostService,
@@ -79,7 +81,8 @@ export class KidDashboardComponent implements OnInit {
                 private sharedData: SharedData,
                 private internetService: InternetService,
                 private vcRef: ViewContainerRef,
-                private serverErrorService: ServerErrorService) {
+                private serverErrorService: ServerErrorService,
+                private location: Location) {
         //super(changeDetectorRef);
 
         this.kid = {};
@@ -108,91 +111,89 @@ export class KidDashboardComponent implements OnInit {
         this.internetService.alertIfOffline();
         //this.page.actionBarHidden = true;
         this.kid = this.kidData.info;
-
         this.layout = new ListViewLinearLayout();
-        this.getPosts();
+        this.isLoading = true;
+        this.posts = new ObservableArray<Post>();
+        this.postService.getPosts(this.postCount, this.lastModified, this.kid.kid_klid)
+            .map((response1) => {
+                let result: Array<any> = [];
+                let res = response1.json();
+                // console.log("response " + JSON.stringify(response1.json()));
+                res.body.posts.forEach(post => {
+                    this.posts.push(this.addNewPostToListView(post));
+                });
+                this.postCount = res.body.post_count;
+                this.lastModified = res.body.last_modified;
+                return result;
+            })
+            .subscribe(
+                data => {
+                    console.log("postCount " + this.postCount);
+                    console.log("lastModified " + this.lastModified);
+                    this.isLoading = false;
+                },
+                error => {
+                    this.isLoading = false;
+                }
+            );
         this.changeDetectorRef.detectChanges();
     }
 
-    public get layout(): ListViewLinearLayout {
-        return this._layout;
-    }
-    public set layout(value: ListViewLinearLayout) {
-        this._layout = value;
-    }
-
-
     public onLoadMoreItemsRequested(args: ListViewEventData) {
+        console.log("--------------------- Load on Demand");
         var that = new WeakRef(this);
         timerModule.setTimeout(() => {
-            let listView: RadListView = <RadListView>(frameModule.topmost().currentPage.getViewById("listView"));
-            let initialItemsCount = this.posts.length;
-            console.log("Number "+ initialItemsCount);
+            //  let listView: RadListView = <RadListView>(frameModule.topmost().currentPage.getViewById("myRadListView"));
+            let listView: RadListView = args.object;
             let initialNumberOfItems = that.get().numberOfAddedItems;
-            console.log('initialNumberOfItems '+ initialNumberOfItems);
-            this.postService.getPosts(this.postCount, this.lastModified, this.kid.kid_klid)
+            //let oldItems = that.get().posts;
+            that.get().postService.getPosts(that.get().postCount, that.get().lastModified, that.get().kid.kid_klid)
+                .map((response1) => {
+                    let result: Array<any> = [];
+                    let res = response1.json();
+                    let newlyAdded = 0;
+                    // console.log("response " + JSON.stringify(response1.json()));
+                    res.body.posts.forEach(post => {
+                        that.get().posts.push(that.get().addNewPostToListView(post));
+                        newlyAdded++
+                    });
+
+                    return res;
+                })
                 .subscribe(
-                    (result) => {
-                        var body = result.body;
-                        // set postCount and lastModified to get more data on scroll(pagination)
-                        this.postCount = body.post_count;
-                        this.lastModified = body.last_modified;
-                        if (body.posts.length) {
-                            body.posts.forEach((post) => {
-                                this.addNewPostToListView(post);
-                                that.get().numberOfAddedItems++;
-                            });
+                    res => {
+                        console.log('----------------------------------------');
+                        that.get().postCount = res.body.post_count;
+                        that.get().lastModified = res.body.last_modified;
+
+                        //console.log("result  " + JSON.stringify(result));
+                        if (res.body.posts.length > 0) {
+                            listView.notifyLoadOnDemandFinished();
+                            return args.returnValue = true;
                         } else {
                             listView.loadOnDemandMode = ListViewLoadOnDemandMode[ListViewLoadOnDemandMode.None];
                         }
-                        listView.notifyLoadOnDemandFinished();
-                        args.returnValue = true;
-                        this.listViewComponent.listView.scrollToIndex(initialNumberOfItems+1);
+
                     },
-                    (error) => {
+                    error => {
                         this.isLoading = false;
-                        listView.notifyLoadOnDemandFinished();
-                        this.serverErrorService.showErrorModal();
                     }
                 );
 
         }, 1000);
+        return args.returnValue = true;
 
     }
 
-    getPosts(commentedOnPost = false) {
-        this.isLoading = true;
-        this.posts = new ObservableArray<Post>();
-        this.numberOfAddedItems = 0;
-        this.postService.getPosts(this.postCount, this.lastModified, this.kid.kid_klid)
-            .subscribe(
-                (result) => {
-                    let body = result.body;
-                    console.log("Posts " + JSON.stringify(body.posts));
-                    // set postCount and lastModified to get more data on scroll(pagination)
-                    this.postCount = body.post_count;
-                    this.lastModified = body.last_modified;
-                    //this.posts = body.posts;
-                    body.posts.forEach((post) => {
-                        this.addNewPostToListView(post);
-                        this.numberOfAddedItems++;
-                    });
 
-                    this.isLoading = false;
-                    if (commentedOnPost) {
-                        // show toast
-                        nstoasts.show({
-                            text: 'Your comment added',
-                            duration: nstoasts.DURATION.SHORT
-                        });
-                    }
-                },
-                (error) => {
-                    this.isLoading = false;
-                    this.serverErrorService.showErrorModal();
-                }
-            );
+    public get layout(): ListViewLinearLayout {
+        return this._layout;
     }
+
+    public set layout(value: ListViewLinearLayout) {
+        this._layout = value;
+    }
+
 
     addNewPostToListView(post) {
         let newPost = new Post(post.kl_id, post.slug, post.title, post.tzone,
@@ -221,7 +222,7 @@ export class KidDashboardComponent implements OnInit {
             newPost.tagged_to = [];
         }
 
-        this.posts.push(newPost);
+        return newPost;
     }
 
     selectMomentCaptureOption() {
@@ -269,10 +270,7 @@ export class KidDashboardComponent implements OnInit {
         //TODO check for android if not working: https://github.com/NativeScript/NativeScript/issues/2353
         //var imageView = view.getViewById(this.page, 'kid-profile-picture');
         let options = {
-            width: 800,
-            height: 800,
-            keepAspectRatio: false,
-            saveToGallery: false
+            saveToGallery: true
         };
         cameraModule.takePicture(options).then((imageAsset) => {
             let imageBase64Data = imageAsset.toBase64String(enums.ImageFormat.jpeg);
@@ -319,7 +317,7 @@ export class KidDashboardComponent implements OnInit {
                 // this.changeDetectionRef.detectChanges();
                 let selectedImage = this.selectedImages[0];
                 selectedImage
-                    .getImage({maxWidth: 800, maxHeight: 800})
+                    .getImage()
                     .then((imageSource) => {
                         this.sharedData.momentCaptureDetails = {
                             imageBase64Data: imageSource.toBase64String(enums.ImageFormat.jpeg),
@@ -350,14 +348,14 @@ export class KidDashboardComponent implements OnInit {
     }
 
     addOrRemoveHeart(post, index) {
-         console.log("Index "+ index);
+        console.log("Index " + index);
         let currentPostObject = this.posts.getItem(index);
         let isHearted = currentPostObject.hearted;
-        if(isHearted){
+        if (isHearted) {
             //already hearted so unheart it
             currentPostObject.hearted = false;
-            currentPostObject.hearts_count -=  1
-        }else {
+            currentPostObject.hearts_count -= 1
+        } else {
             currentPostObject.hearted = true; //heart it
         }
 
@@ -400,7 +398,7 @@ export class KidDashboardComponent implements OnInit {
     }
 
     // edit , delete post etc..
-    selectPostActions(post, index) {
+    selectPostActions(args, post, index) {
         let actions = [];
         if (post.can_edit) {
             //TODO enable after completing the editPostSection
@@ -415,11 +413,10 @@ export class KidDashboardComponent implements OnInit {
             actions: actions
         }).then(result => {
             if (result === 'Delete') {
-                this.deletePost(post, index);
+                this.deletePost(args, post, index);
             } else if (result === 'Edit') {
                 this.editPost(post);
             }
-
         });
     }
 
@@ -435,21 +432,32 @@ export class KidDashboardComponent implements OnInit {
         });
     }
 
-    deletePost(post, index) {
-       // let currentPost = this.posts.filter(p => p.kl_id === post.kl_id)[0];
-        //let index = this.posts.indexOf(currentPost);
+    deletePost(args: ListViewEventData, post, index) {
+        var listView: RadListView = args.object;
+
+        //listView.getItemAtIndex(index)
+        //console.log("Index "+ this.posts.indexOf(args.object.bindingContext));
+        let currentPost = this.posts.filter(p => p.kl_id === post.kl_id)[0];
+        let index2 = this.posts.indexOf(currentPost);
+
         let currentPostObject = this.posts.getItem(index);
+
+        console.log("Index " + index2);
+        //this.posts.splice(this.posts.indexOf(currentPostObject), 1);
+
+
+        //let currentPostObject = this.posts.getItem(index);
         // send request in background
         /*this.postService.deletePost(currentPost)
-            .subscribe(
-                (result) => { },
-                (error) => {
-                    console.error("Error deleting post "+ JSON.stringify(error));
-                }
-            );*/
+         .subscribe(
+         (result) => { },
+         (error) => {
+         console.error("Error deleting post "+ JSON.stringify(error));
+         }
+         );*/
 
         // delete item from stack
-        this.posts.splice(this.posts.indexOf(currentPostObject), 1);
+        // this.posts.splice(this.posts.indexOf(currentPostObject), 1);
     }
 
     showHearters(post) {
@@ -491,12 +499,11 @@ export class KidDashboardComponent implements OnInit {
             } else {
                 //TODO append commet detail to currentPost Object as Observable instead refreshing..
                 //console.log("Modal Comment Result " + JSON.stringify(result));/
-                this.postCount = 0;
-                this.lastModified = '';
-                this.getPosts(true);
+                let currentPost = this.posts.getItem(index);
+                currentPost.comments.push(new Comment(result.commented_by, result.slug, result.created_at, '',
+                    '', result.commenter_photo, result.content, false))
             }
 
         })
     }
-
 }

@@ -147,10 +147,7 @@ export class KidEditMomentComponent implements OnInit {
     takePicture(){
         let momentImageView = view.getViewById(this.page, 'moment-image');
         let options = {
-            width: 800,
-            height: 800,
-            keepAspectRatio: false,
-            saveToGallery: false
+            saveToGallery: true
         };
         cameraModule.takePicture(options).then((imageAsset) => {
             let imageBase64Data =  imageAsset.toBase64String(enums.ImageFormat.jpeg);
@@ -198,7 +195,7 @@ export class KidEditMomentComponent implements OnInit {
                 // this.changeDetectionRef.detectChanges();
                 let selectedImage = this.selectedImages[0];
                 selectedImage
-                    .getImage({maxWidth: 800, maxHeight: 800})
+                    .getImage()
                     .then((imageSource) => {
                         this.sharedData.momentCaptureDetails = {
                             imageBase64Data: imageSource.toBase64String(enums.ImageFormat.jpeg),

@@ -35,8 +35,7 @@ export class PostService {
             Config.apiUrl + "posts", data, {
                 headers: headers
             }
-        ).map((res: Response) => res.json())
-            .catch(this.handleErrors)
+        )
 
 
     }
