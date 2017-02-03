@@ -147,7 +147,7 @@ export class KidEditMomentComponent implements OnInit {
     takePicture(){
         let momentImageView = view.getViewById(this.page, 'moment-image');
         let options = {
-            saveToGallery: true
+            saveToGallery: this.isAndroid ? false : true
         };
         cameraModule.takePicture(options).then((imageAsset) => {
             let imageBase64Data =  imageAsset.toBase64String(enums.ImageFormat.jpeg);
