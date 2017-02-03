@@ -65,6 +65,7 @@ export class KidDashboardComponent implements OnInit {
     private numberOfAddedItems; // pull to refresh
     public lastModified: string = '';
     public postCount: number = 0;
+    public loadOnDemandFired: Boolean = false;
 
     //private posts: ObservableArray<Post>;
     private _layout: ListViewLinearLayout;
@@ -140,11 +141,11 @@ export class KidDashboardComponent implements OnInit {
     }
 
     public onLoadMoreItemsRequested(args: ListViewEventData) {
-        console.log("--------------------- Load on Demand");
         var that = new WeakRef(this);
         timerModule.setTimeout(() => {
             //  let listView: RadListView = <RadListView>(frameModule.topmost().currentPage.getViewById("myRadListView"));
-            let listView: RadListView = args.object;
+            //let listView: RadListView = args.object;
+            let listView: listViewModule.RadListView = args.object;
             let initialNumberOfItems = that.get().numberOfAddedItems;
             //let oldItems = that.get().posts;
             that.get().postService.getPosts(that.get().postCount, that.get().lastModified, that.get().kid.kid_klid)
@@ -157,30 +158,27 @@ export class KidDashboardComponent implements OnInit {
                         that.get().posts.push(that.get().addNewPostToListView(post));
                         newlyAdded++
                     });
+                    if (res.body.posts.length > 0) {
 
+                    } else {
+                        listView.loadOnDemandMode = ListViewLoadOnDemandMode[ListViewLoadOnDemandMode.None];
+                    }
                     return res;
+
                 })
                 .subscribe(
                     res => {
-                        console.log('----------------------------------------');
+                        that.get().loadOnDemandFired = true;
                         that.get().postCount = res.body.post_count;
                         that.get().lastModified = res.body.last_modified;
-
-                        //console.log("result  " + JSON.stringify(result));
-                        if (res.body.posts.length > 0) {
-                            listView.notifyLoadOnDemandFinished();
-                            return args.returnValue = true;
-                        } else {
-                            listView.loadOnDemandMode = ListViewLoadOnDemandMode[ListViewLoadOnDemandMode.None];
-                        }
-
                     },
                     error => {
                         this.isLoading = false;
                     }
                 );
-
+            listView.notifyLoadOnDemandFinished();
         }, 1000);
+
         return args.returnValue = true;
 
     }
@@ -348,7 +346,6 @@ export class KidDashboardComponent implements OnInit {
     }
 
     addOrRemoveHeart(post, index) {
-        console.log("Index " + index);
         let currentPostObject = this.posts.getItem(index);
         let isHearted = currentPostObject.hearted;
         if (isHearted) {
@@ -358,7 +355,6 @@ export class KidDashboardComponent implements OnInit {
         } else {
             currentPostObject.hearted = true; //heart it
         }
-
         this.postService.addOrRemoveHeart(post, isHearted)
             .subscribe(
                 (result) => {
@@ -375,7 +371,6 @@ export class KidDashboardComponent implements OnInit {
                 (error) => {
                 }
             );
-
     }
 
     openKidProfile(kid) {
@@ -433,31 +428,26 @@ export class KidDashboardComponent implements OnInit {
     }
 
     deletePost(args: ListViewEventData, post, index) {
+        // check for fix: https://github.com/telerik/nativescript-ui-samples-angular/issues/35
         var listView: RadListView = args.object;
-
-        //listView.getItemAtIndex(index)
-        //console.log("Index "+ this.posts.indexOf(args.object.bindingContext));
-        let currentPost = this.posts.filter(p => p.kl_id === post.kl_id)[0];
-        let index2 = this.posts.indexOf(currentPost);
-
+        console.log("args.object.bindingContext "+ index);
+        //let currentPost = this.posts.filter(p => p.kl_id === post.kl_id)[0];
         let currentPostObject = this.posts.getItem(index);
-
-        console.log("Index " + index2);
-        //this.posts.splice(this.posts.indexOf(currentPostObject), 1);
-
-
-        //let currentPostObject = this.posts.getItem(index);
-        // send request in background
-        /*this.postService.deletePost(currentPost)
-         .subscribe(
-         (result) => { },
-         (error) => {
-         console.error("Error deleting post "+ JSON.stringify(error));
-         }
-         );*/
-
-        // delete item from stack
-        // this.posts.splice(this.posts.indexOf(currentPostObject), 1);
+        try {
+            if(this.isAndroid){
+                this.posts.splice(this.posts.indexOf(currentPostObject), 1);
+            }
+        }
+        catch(err) {
+           console.log("unable to delete item")
+        }
+        this.postService.deletePost(post)
+            .subscribe(
+                (result) => {
+                },
+                (error) => {
+                }
+            );
     }
 
     showHearters(post) {
@@ -491,19 +481,23 @@ export class KidDashboardComponent implements OnInit {
             },
             fullscreen: false
         };
+        let currentPost = this.posts.getItem(index);
+        if(currentPost){
+            this.modal.showModal(ModalPostComment, options).then((result) => {
+                if (result === 'close' || typeof(result) == "undefined") {
+                    // modal closed
+                    // console.log('Modal closed');
+                } else {
+                    //TODO append commet detail to currentPost Object as Observable instead refreshing..
+                    //console.log("Modal Comment Result " + JSON.stringify(result));/
 
-        this.modal.showModal(ModalPostComment, options).then((result) => {
-            if (result === 'close' || typeof(result) == "undefined") {
-                // modal closed
-                // console.log('Modal closed');
-            } else {
-                //TODO append commet detail to currentPost Object as Observable instead refreshing..
-                //console.log("Modal Comment Result " + JSON.stringify(result));/
-                let currentPost = this.posts.getItem(index);
-                currentPost.comments.push(new Comment(result.commented_by, result.slug, result.created_at, '',
-                    '', result.commenter_photo, result.content, false))
-            }
+                    currentPost.comments.push(new Comment(result.commented_by, result.slug, result.created_at, '',
+                        '', result.commenter_photo, result.content, false))
+                }
 
-        })
+            })
+        }
+
+
     }
 }
