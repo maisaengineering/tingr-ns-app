@@ -430,12 +430,12 @@ export class KidDashboardComponent implements OnInit {
     deletePost(args: ListViewEventData, post, index) {
         // check for fix: https://github.com/telerik/nativescript-ui-samples-angular/issues/35
         var listView: RadListView = args.object;
-        console.log("args.object.bindingContext "+ index);
+       // console.log("args.object.bindingContext "+ index);
         //let currentPost = this.posts.filter(p => p.kl_id === post.kl_id)[0];
         let currentPostObject = this.posts.getItem(index);
         try {
             if(this.isAndroid){
-                this.posts.splice(this.posts.indexOf(currentPostObject), 1);
+              //  this.posts.splice(this.posts.indexOf(currentPostObject), 1);
             }
         }
         catch(err) {
