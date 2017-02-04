@@ -91,6 +91,14 @@ export class LoginPage implements OnInit {
     submitEmail() {
         //let labelError = <Label>this.formErrorsRef.nativeElement;
         let emailTextField = view.getViewById(this.page, "email");
+
+        //dismiss input
+        if (emailTextField.ios) {
+            emailTextField.ios.endEditing(true);
+        } else if (emailTextField.android) {
+            emailTextField.android.clearFocus();
+        }
+
         if (this.email === '') {
             this.emailError = true;
             emailTextField.borderColor = '#e89999';
