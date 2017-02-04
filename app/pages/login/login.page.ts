@@ -24,8 +24,8 @@ var view = require("ui/core/view");
 export class LoginPage implements OnInit {
     teacher: Teacher;
     isLoggingIn = false;
-    email = 'teacher1@org1.com';
-    //email = '';
+    //email = 'teacher1@org1.com';
+    email = '';
     isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
