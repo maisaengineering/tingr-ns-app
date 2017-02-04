@@ -353,9 +353,10 @@ export class KidDashboardComponent implements OnInit {
         if (isHearted) {
             //already hearted so unheart it
             currentPostObject.hearted = false;
-            currentPostObject.hearts_count -= 1
+            currentPostObject.hearts_count--;
         } else {
             currentPostObject.hearted = true; //heart it
+
         }
         this.postService.addOrRemoveHeart(post, isHearted)
             .subscribe(
