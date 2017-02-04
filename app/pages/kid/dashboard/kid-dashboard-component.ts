@@ -106,7 +106,6 @@ export class KidDashboardComponent implements OnInit {
         ModalPostComment
     ];
 
-
     ngOnInit() {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
@@ -428,19 +427,24 @@ export class KidDashboardComponent implements OnInit {
     }
 
     deletePost(args: ListViewEventData, post, index) {
-        // check for fix: https://github.com/telerik/nativescript-ui-samples-angular/issues/35
-        var listView: RadListView = args.object;
-       // console.log("args.object.bindingContext "+ index);
+        // check for fix:
+        // https://github.com/telerik/nativescript-ui-samples/issues/163
+        // https://github.com/telerik/nativescript-ui-samples-angular/issues/35
+        //var listView: RadListView = args.object;
+        //let listView: RadListView = <RadListView>(frameModule.topmost().currentPage.getViewById("listView"));
+        // console.log("args.object.bindingContext "+ index);
         //let currentPost = this.posts.filter(p => p.kl_id === post.kl_id)[0];
-        let currentPostObject = this.posts.getItem(index);
-        try {
-            if(this.isAndroid){
-              //  this.posts.splice(this.posts.indexOf(currentPostObject), 1);
-            }
-        }
-        catch(err) {
-           console.log("unable to delete item")
-        }
+
+        let temp = this.posts.slice();
+        temp.splice(index, 1);
+        // this.posts = new ObservableArray(temp);
+        this.posts = new ObservableArray<Post>(temp);
+        this.changeDetectorRef.detectChanges();
+        nstoasts.show({
+            text: 'Post successfully deleted.',
+            duration: nstoasts.DURATION.SHORT
+        });
+
         this.postService.deletePost(post)
             .subscribe(
                 (result) => {
@@ -480,9 +484,9 @@ export class KidDashboardComponent implements OnInit {
                 post_slug: post.slug
             },
             fullscreen: false
-        };
+        }; 
         let currentPost = this.posts.getItem(index);
-        if(currentPost){
+        if (currentPost) {
             this.modal.showModal(ModalPostComment, options).then((result) => {
                 if (result === 'close' || typeof(result) == "undefined") {
                     // modal closed
@@ -490,11 +494,16 @@ export class KidDashboardComponent implements OnInit {
                 } else {
                     //TODO append commet detail to currentPost Object as Observable instead refreshing..
                     //console.log("Modal Comment Result " + JSON.stringify(result));/
-
                     currentPost.comments.push(new Comment(result.commented_by, result.slug, result.created_at, '',
-                        '', result.commenter_photo, result.content, false))
+                        '', result.commenter_photo, result.content, false));
+                    let temp = this.posts.slice();
+                    this.posts = new ObservableArray<Post>(temp);
+                    this.changeDetectorRef.detectChanges();
+                    nstoasts.show({
+                        text: 'Your comment added.',
+                        duration: nstoasts.DURATION.SHORT
+                    });
                 }
-
             })
         }
 

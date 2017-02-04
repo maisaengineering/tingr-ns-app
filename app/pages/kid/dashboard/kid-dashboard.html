@@ -18,8 +18,7 @@
 <GridLayout>
     <StackLayout orientation="vertical">
         <GridLayout rows="*" cols="*" class="kid-dashboard-container">
-            <RadListView row="0" #myRadListView [items]="posts" scrollDirection="Vertical"
-                         loadOnDemandMode="Auto"  (loadMoreDataRequested)="onLoadMoreItemsRequested($event)"
+            <RadListView row="0" #myRadListView id="listView" [items]="posts"
                          itemDeleteAnimation="Fade" [listViewLayout]="layout">
                 <template tkListItemTemplate let-post="item" let-index="index">
                     <StackLayout>
