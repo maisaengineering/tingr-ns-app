@@ -116,7 +116,7 @@ export class VerifyPasswordPage implements OnInit {
                         message: error.message,
                         okButtonText: "Ok"
                     }).then(()=> {
-                       // emailTextField.borderColor = '#e89999';
+                        emailTextField.borderColor = '#e89999';
                         passTextField.borderColor = '#e89999';
                         this.emailOrPasswordError = true;
                         forgotPassLink.floatIn('slow', 'top')

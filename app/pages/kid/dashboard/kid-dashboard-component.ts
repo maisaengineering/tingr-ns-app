@@ -195,11 +195,14 @@ export class KidDashboardComponent implements OnInit {
     addNewPostToListView(post) {
         let newPost = new Post(post.kl_id, post.slug, post.title, post.tzone,
             post.scope, post.text, post.author_name, post.photograph,
-            post.image, post.large_image, post.created_at, post.deletable,
+            post.created_at, post.deletable,
             post.can_delete, post.can_edit, post.can_save, post.kid_birthdate,
             post.hearted, post.heart_icon, post.hearts_count, post.asset_base_url);
         // tags
         newPost.tags = post.tags;
+        newPost.images = post.images;
+        newPost.large_images = post.large_images;
+        newPost.img_keys = post.img_keys;
         // add comments
         if (post.comments.length) {
             post.comments.forEach((comment) => {
@@ -470,8 +473,8 @@ export class KidDashboardComponent implements OnInit {
     openPostImages(post) {
         // Add to array and pass to showViewer
         // add multiple images if post has
-        let postImages = [];
-        postImages.push(post.large_image);
+        let postImages = post.large_images;
+        //postImages.push(post.large_images);
         photoViewer.showViewer(postImages);
     }
 
@@ -484,7 +487,7 @@ export class KidDashboardComponent implements OnInit {
                 post_slug: post.slug
             },
             fullscreen: false
-        }; 
+        };
         let currentPost = this.posts.getItem(index);
         if (currentPost) {
             this.modal.showModal(ModalPostComment, options).then((result) => {

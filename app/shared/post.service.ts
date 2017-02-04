@@ -95,7 +95,7 @@ export class PostService {
                 date: this.datePipe.transform(createdAt, 'MM/dd/yyyy'),
                 additional_text: additionalDetails,
                 tags: taggedKidIds,
-                key: s3_key,
+                img_keys: [s3_key],
                 scope: "public",
                 tzone: 'EST'
             }
@@ -118,6 +118,7 @@ export class PostService {
             date: this.datePipe.transform(updatedAt, 'MM/dd/yyyy'),
             additional_text: additionalDetails,
             tags: taggedKidIds,
+            img_keys: [s3_key],
             scope: "public",
             tzone: 'EST'
         };
@@ -214,8 +215,9 @@ export class Post {
     public text;
     public author_name;
     public photograph;
-    public image;
-    public large_image;
+    public images: any[];
+    public large_images: any[];
+    public img_keys: any[];
     public created_at;
     public deletable;
     public can_delete;
@@ -233,7 +235,7 @@ export class Post {
 
     constructor(kl_id: string, slug: string, title: string, tzone: string,
                 scope: string, text: string, author_name: string, photograph: string,
-                image: string, large_image: string, created_at: string, deletable: boolean,
+                created_at: string, deletable: boolean,
                 can_delete: boolean, can_edit: boolean, can_save: boolean, kid_birthdate: string,
                 hearted: boolean, heart_icon: string, hearts_count: number, asset_base_url: string) {
         this.kl_id = kl_id;
@@ -245,8 +247,6 @@ export class Post {
         this.text = text;
         this.author_name = author_name;
         this.photograph = photograph;
-        this.image = image;
-        this.large_image = large_image;
         this.created_at = created_at;
         this.deletable = deletable;
         this.can_delete = can_delete;

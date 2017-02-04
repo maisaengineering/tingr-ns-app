@@ -27,7 +27,7 @@
                                     class="post-item">
                             <GridLayout row="0" (tap)="openPostImages(post)">
                                 <Image stretch="aspectFill" height="250"
-                                       src="{{ post.image || 'https://placehold.it/500x500' }}"
+                                       src="{{ post.images[0] || 'https://placehold.it/500x500' }}"
                                        class="cover-image" loadMode="async"></Image>
                             </GridLayout>
                             <GridLayout row="1" class="moment-tags">

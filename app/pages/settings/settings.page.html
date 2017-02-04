@@ -32,16 +32,6 @@
             </Gridlayout>
         </CardView>
 
-        <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard" (tap)="logOut()">
-            <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
-                        orientation="horizontal">
-                <Label row="0" col="0" text=""></Label>
-                <Label row="0" col="1" verticalAlignment="center" text="Logout"
-                       class="text-left font-weight-bold"></Label>
-                <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
-                       class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
-            </Gridlayout>
-        </CardView>
 
         <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard"
                   [nsRouterLink]="['/myschool']"
@@ -55,6 +45,18 @@
                        class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
             </Gridlayout>
         </CardView>
+
+        <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard" (tap)="logOut()">
+            <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
+                        orientation="horizontal">
+                <Label row="0" col="0" text=""></Label>
+                <Label row="0" col="1" verticalAlignment="center" text="Logout"
+                       class="text-left font-weight-bold"></Label>
+                <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
+                       class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
+            </Gridlayout>
+        </CardView>
+
     </StackLayout>
 
 

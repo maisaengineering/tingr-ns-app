@@ -57,18 +57,6 @@ export class HeartersComponent implements OnInit {
     ngOnInit() {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
-        // Hide 'Default Back button'
-        if(this.isIos){
-            var controller = frameModule.topmost().ios.controller;
-            // get the view controller navigation item
-            var navigationItem = controller.visibleViewController.navigationItem;
-            // hide back button
-            navigationItem.setHidesBackButtonAnimated(true, false);
-        }
-        // show actionBarItems after some time to fix overlapping issue
-        setTimeout(() => {
-            this.showActionBarItems = true;
-        }, 300);
         this.getList()
     };
 

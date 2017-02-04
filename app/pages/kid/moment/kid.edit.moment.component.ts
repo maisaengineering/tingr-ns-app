@@ -63,7 +63,7 @@ export class KidEditMomentComponent implements OnInit {
         this.additionalDetails = '';
         // by default add this kid to tag
         this.taggedKidIds = [];
-        this.s3_key = 'exists'; // editing post
+        this.s3_key = this.currentPost.img_keys[0]; // editing post
         if (app.android) {
             this.isAndroid = true;
         } else if (app.ios) {
@@ -81,8 +81,8 @@ export class KidEditMomentComponent implements OnInit {
 
         //set image and additional details with existing data
         let momentImageVIew = view.getViewById(this.page, 'moment-image');
-        if(this.currentPost.image){
-            momentImageVIew.src = this.currentPost.image;
+        if(this.currentPost.images.length){
+            momentImageVIew.src = this.currentPost.images[0];
         }
         momentImageVIew.visibility = 'visible';
         this.additionalDetails = this.currentPost.text;
