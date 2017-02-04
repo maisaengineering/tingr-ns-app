@@ -88,11 +88,13 @@ export class ChangePasswordComponent implements OnInit {
                         nstoasts.show(options);
                         this.isLoading = false;
                         // redirect to settings page
-                        this.routerExtensions.navigate(["/settings"], {
+                        /*this.routerExtensions.navigate(["/settings"], {
                             transition: {
                                 name: "slideBottom"
                             }
-                        });
+                        });*/
+
+                        this.routerExtensions.backToPreviousPage();
                     },
                     (error) => {
                         this.isLoading = false;
