@@ -2,6 +2,7 @@ import {Component, ViewContainerRef, OnInit} from "@angular/core";
 import {Location} from "@angular/common";
 import {Page} from "../page";
 import { RouterExtensions } from 'nativescript-angular/router';
+import {Router, NavigationExtras} from "@angular/router";
 import * as appSettings from "application-settings"
 import { TokenService } from "../../shared/token.service";
 import { TeacherInfo } from "../../providers/data/teacher_info";
@@ -30,7 +31,8 @@ export class SettingsPage implements OnInit{
                 private teacherService: TeacherService,
                 private internetService: InternetService,
                 private vcRef: ViewContainerRef,
-                private serverErrorService: ServerErrorService) {
+                private serverErrorService: ServerErrorService,
+                private router: Router) {
 
         if (app.android) {
             this.isAndroid = true;
@@ -51,6 +53,17 @@ export class SettingsPage implements OnInit{
 
     goBack(){
         this.routerExtensions.backToPreviousPage();
+    }
+
+    getTour(){
+
+        let navigationExtras: NavigationExtras = {
+            queryParams: {
+                "fromSettingsPage": true
+            }
+        };
+        this.router.navigate(["tour"], navigationExtras);
+
     }
 
 

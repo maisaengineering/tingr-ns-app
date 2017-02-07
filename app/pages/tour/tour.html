@@ -22,12 +22,11 @@
                 <CarouselItem id="slide5">
                     <Image src="~/images/tour/5.jpg"></Image>
                 </CarouselItem>
-
             </Carousel>
         </StackLayout>
 
         <StackLayout row="1" horizontalAlignment="right">
-                <Button  text="Skip >" horizontalAlignment="right" class="btn  btn-rounded-sm" (tap)="skip()"></Button>
+                <Button  text="{{ fromSettingsPage ? 'exit' : 'skip >' }}" horizontalAlignment="right" class="btn  btn-rounded-sm" (tap)="skip()"></Button>
         </StackLayout>
     </GridLayout>
 </StackLayout>

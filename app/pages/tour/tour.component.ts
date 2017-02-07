@@ -1,7 +1,8 @@
 import {Component, ViewContainerRef, OnInit} from "@angular/core";
 import {Location} from "@angular/common";
 import {Page} from "ui/page";
-import { RouterExtensions } from 'nativescript-angular/router';
+import {Router, NavigationExtras, ActivatedRoute} from "@angular/router";
+import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import * as appSettings from "application-settings"
 import { TokenService } from "../../shared/token.service";
 import { TeacherInfo } from "../../providers/data/teacher_info";
@@ -24,14 +25,21 @@ export class TourComponent implements OnInit{
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
     public showActionBarItems: Boolean = false;
+    public fromSettingsPage: Boolean = false;
 
     constructor(private location: Location,
                 private routerExtensions: RouterExtensions,
+                private route: ActivatedRoute,
+                private router: Router,
                 private internetService: InternetService,
                 private vcRef: ViewContainerRef,
                 private page: Page,
                 private serverErrorService: ServerErrorService) {
 
+        // get the conversationId from navigation params if this page is open from schedule
+        this.route.queryParams.subscribe(params => {
+            this.fromSettingsPage = params["fromSettingsPage"];
+        });
         if (app.android) {
             this.isAndroid = true;
         } else if (app.ios) {
@@ -48,11 +56,21 @@ export class TourComponent implements OnInit{
     }
 
     skip(){
-        this.routerExtensions.navigate(["/calendar"],
-            {
-                transition: {name: "slideLeft"},
-                clearHistory: true
-            });
+        if(this.fromSettingsPage){
+            this.routerExtensions.navigate(["/settings"],
+                {
+                    transition: {name: "slideTop"},
+                    clearHistory: true
+                });
+        }else{
+            this.routerExtensions.navigate(["/calendar"],
+                {
+                    transition: {name: "slideLeft"},
+                    clearHistory: true
+                });
+        }
+
+
     }
 
 
