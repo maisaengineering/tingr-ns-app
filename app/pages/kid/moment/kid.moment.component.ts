@@ -225,8 +225,18 @@ export class KidMomentComponent implements OnInit {
     }
 
     saveMoment(){
-        this.isLoading = true;
+        if(this.taggedKidIds.length < 1){
+            dialogs.alert({
+                title: "",
+                message: 'Please tag at least one kid',
+                okButtonText: "Ok"
+            }).then(function () {
+                //console.log("Dialog closed!");
+            });
+            return;
+        }
         let createdAt = new Date();
+        this.isLoading = true;
         this.postService.createPost(createdAt, this.additionalDetails.trim(), this.taggedKidIds, this.s3_key)
             .subscribe(
                 (result) => {

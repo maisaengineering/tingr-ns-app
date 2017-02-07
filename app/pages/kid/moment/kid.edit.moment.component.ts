@@ -238,6 +238,16 @@ export class KidEditMomentComponent implements OnInit {
     }
 
     updateMoment(){
+        if(this.taggedKidIds.length < 1){
+            dialogs.alert({
+                title: "",
+                message: 'Please tag at least one kid',
+                okButtonText: "Ok"
+            }).then(function () {
+                //console.log("Dialog closed!");
+            });
+            return;
+        }
         this.isLoading = true;
         let updatedAt = new Date();
         let new_s3_key =  this.s3_key == 'exists' ? '' : this.s3_key;
