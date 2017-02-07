@@ -52,19 +52,21 @@ export class SettingsPage implements OnInit{
     }
 
     goBack(){
-        this.routerExtensions.backToPreviousPage();
+       // this.routerExtensions.backToPreviousPage();
+        this.routerExtensions.navigate(["/calendar"], {
+            transition: {
+                name: "slideTop"
+            }
+        });
     }
 
     getTour(){
-
         let navigationExtras: NavigationExtras = {
             queryParams: {
                 "fromSettingsPage": true
             }
         };
-        this.router.navigate(["messages"], navigationExtras);
-
-
+        this.router.navigate(["tour"], navigationExtras);
     }
 
 

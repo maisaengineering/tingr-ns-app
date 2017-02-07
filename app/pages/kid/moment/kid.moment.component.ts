@@ -10,7 +10,7 @@ import {InternetService} from "../../../shared/internet.service";
 import {ServerErrorService} from "../../../shared/server.error.service";
 import {KidService} from "../../../shared/kid.service";
 import { PostService } from "../../../shared/post.service";
-import {GC} from 'utils/utils'; 
+import {GC} from 'utils/utils';
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
 var app = require("application");

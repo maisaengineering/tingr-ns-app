@@ -59,8 +59,7 @@ export class TourComponent implements OnInit{
         if(this.fromSettingsPage){
             this.routerExtensions.navigate(["/settings"],
                 {
-                    transition: {name: "slideTop"},
-                    clearHistory: true
+                    transition: {name: "slideTop"}
                 });
         }else{
             this.routerExtensions.navigate(["/calendar"],
