@@ -26,6 +26,11 @@ import { DatePipe } from '@angular/common';
 import { KeysPipe } from './utils/keys.pipe';
 import { TimeAgoPipe } from './utils/timeago.pipe';
 
+import { TNSFrescoModule } from "nativescript-fresco/angular";
+import * as frescoModule from "nativescript-fresco";
+import * as applicationModule from "application";
+
+
 
 
 import { registerElement, ViewClass } from "nativescript-angular/element-registry";
@@ -37,6 +42,14 @@ registerElement("PullToRefresh", () => {
 
 registerElement("Carousel", () => require("nativescript-carousel").Carousel);
 registerElement("CarouselItem", () => require("nativescript-carousel").CarouselItem);
+//registerElement("FrescoDrawee", () => frescoModule.FrescoDrawee);
+
+if (applicationModule.android) {
+    applicationModule.on("launch", () => {
+        frescoModule.initialize();
+    });
+}
+
 
 
 @NgModule({
@@ -56,6 +69,7 @@ registerElement("CarouselItem", () => require("nativescript-carousel").CarouselI
         NativeScriptFormsModule,
         NativeScriptHttpModule,
         NativeScriptRouterModule,
+        TNSFrescoModule,
         NativeScriptRouterModule.forRoot(APP_ROUTES)
     ],
     providers: [

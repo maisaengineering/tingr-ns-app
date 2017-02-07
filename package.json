@@ -28,6 +28,7 @@
     "nativescript-carousel": "^2.2.0",
     "nativescript-dom": "^1.0.8",
     "nativescript-effects": "^0.3.0",
+    "nativescript-fresco": "^1.0.16",
     "nativescript-imagepicker": "^2.4.1",
     "nativescript-iqkeyboardmanager": "^1.0.1",
     "nativescript-pdf-view": "latest",

@@ -17,8 +17,8 @@
 
 <GridLayout>
     <StackLayout orientation="vertical">
-        <GridLayout rows="*" cols="*" class="kid-dashboard-container">
-            <RadListView row="0" #myRadListView  [items]="posts"
+        <GridLayout class="kid-dashboard-container">
+            <RadListView row="0" #myRadListView [items]="posts"
                          itemDeleteAnimation="Fade">
                 <template tkListItemTemplate let-post="item" let-index="index">
                     <StackLayout>
@@ -26,9 +26,12 @@
                         <GridLayout rows="auto,auto,auto,auto, auto, auto, auto"
                                     class="post-item">
                             <GridLayout row="0" (tap)="openPostImages(post)">
-                                <Image stretch="aspectFill" height="250"
-                                       src="{{ post.images[0] || 'https://placehold.it/500x500' }}"
+
+                                <Image *ngIf="isIos" stretch="aspectFill" height="250"
+                                       src="{{ post.images[0] || '~/images/post-placeholder.png' }}"
                                        class="cover-image" loadMode="async"></Image>
+                                <FrescoDrawee *ngIf="isAndroid" imageUri="{{ post.images[0] }}"
+                                              placeholderImageUri="~/images/post-placeholder.png"></FrescoDrawee>
                             </GridLayout>
                             <GridLayout row="1" class="moment-tags">
                                 <StackLayout orientation="vertical">
@@ -238,8 +241,8 @@
     </StackLayout>
 
 
- <!--   <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
-    <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
-        <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
-    </GridLayout>-->
+    <!--   <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+       <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+           <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
+       </GridLayout>-->
 </GridLayout>
