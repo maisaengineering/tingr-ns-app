@@ -16,7 +16,7 @@ export class InternetService {
                 break;
             case connectivity.connectionType.wifi:
                 break;
-            case connectivity.connectionType.mobile: 
+            case connectivity.connectionType.mobile:
                 break;
         }
     }
