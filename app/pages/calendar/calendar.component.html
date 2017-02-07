@@ -50,8 +50,8 @@
                                src="res://schedule_icon"></Image>
                         <ScrollView col="1">
                             <StackLayout verticalAlignment="center">
-                                <Label horizontalAlignment="center" *ngIf="!schedules.length" class="schedule-empty-data"
-                                       text="No events" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
+                                <Label horizontalAlignment="left" *ngIf="!schedules.length" class="schedule-empty-data"
+                                       text="your school has no schedule for you today" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
                                 <GridLayout rows="auto,*" *ngFor="let item of schedules; let i = index">
                                     <GridLayout row="0" columns="auto, *" rows="auto,auto"
                                                 class="m-t-5 item {{ isScheduleTimeIsCurrent(item.start_time, item.end_time) ? 'blue' : '' }}">
@@ -81,8 +81,8 @@
                                src="res://reminder_icon"></Image>
                         <ScrollView col="1">
                             <StackLayout verticalAlignment="center">
-                                <Label horizontalAlignment="center" *ngIf="!birthdays.length && !event_reminders.length && !holidays.length" class="schedule-empty-data"
-                                       text="No reminders" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
+                                <Label horizontalAlignment="left" *ngIf="!birthdays.length && !event_reminders.length && !holidays.length" class="schedule-empty-data"
+                                       text="nothing to remind you for the day" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
                                 <!-- Birthdays -->
                                 <SatckLayout orientation="horizontal" *ngFor="let item of birthdays; let i = index">
                                     <Label col="0" text="{{item.description}}" class="m-t-5 item"
@@ -127,8 +127,8 @@
                                src="res://message_icon"></Image>
                         <ScrollView col="1">
                             <StackLayout verticalAlignment="center">
-                                <Label horizontalAlignment="center" *ngIf="!messages.length" class="schedule-empty-data"
-                                       text="No messages" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
+                                <Label horizontalAlignment="left" *ngIf="!messages.length" class="schedule-empty-data"
+                                       text="no messages to show" visibility="{{ isLoading ? 'collapsed' : 'visible'}}" textWrap="true"></Label>
                                 <GridLayout rows="auto,auto" *ngFor="let item of messages; let i = index">
                                     <GridLayout row="0" columns="50, *" rows="*" class="item"
                                                 (tap)="openMessageConversation(item)">
