@@ -97,7 +97,6 @@ export class KidEditMomentComponent implements OnInit {
             }
         });
 
-        console.log("currentPOSt " + JSON.stringify(this.currentPost));
         let addDetailsTextField = view.getViewById(this.page, "moment-additional-details");
         //addDetailsTextField.focus();
     }
@@ -222,13 +221,11 @@ export class KidEditMomentComponent implements OnInit {
         let kidContainer = view.getViewById(this.page, "kid-container-" + kid_klid);
         let checkBoxImg = view.getViewById(this.page, "checkbox-" + kid_klid);
         if(kidContainer.classList.contains('checked')){
-            console.log('is checked   uncheck it');
             kidContainer.classList.remove('item-selected','checked');
             kidContainer.classList.add('unchecked');
             checkBoxImg.src = '~/images/check-box-unchecked.png';
             this.taggedKidIds.splice(this.taggedKidIds.indexOf(kid_klid), 1);
         }else if(kidContainer.classList.contains('unchecked')){
-            console.log('is unchecked  check it');
             kidContainer.classList.add('item-selected');
             kidContainer.classList.remove('unchecked');
             kidContainer.classList.add('checked');
@@ -272,7 +269,6 @@ export class KidEditMomentComponent implements OnInit {
                 (error) => {
                     this.isLoading = false;
                     console.error(error.stack);
-                    console.log("Error "+ error);
                     this.serverErrorService.showErrorModal();
                 }
             );

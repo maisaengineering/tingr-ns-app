@@ -13,13 +13,10 @@ export class InternetService {
     checkConnectionType() {
         switch (this.connectionType) {
             case connectivity.connectionType.none:
-                console.log("No connection");
                 break;
             case connectivity.connectionType.wifi:
-                console.log("WiFi connection");
                 break;
-            case connectivity.connectionType.mobile:
-                console.log("Mobile connection");
+            case connectivity.connectionType.mobile: 
                 break;
         }
     }

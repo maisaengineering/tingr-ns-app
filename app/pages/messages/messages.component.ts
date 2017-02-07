@@ -168,7 +168,6 @@ export class MessagesComponent implements OnInit {
                 },
                 (error) => {
                     this.isLoading = false;
-                    console.log("Result "+ JSON.stringify(error));
                     this.serverErrorService.showErrorModal();
                 }
             );

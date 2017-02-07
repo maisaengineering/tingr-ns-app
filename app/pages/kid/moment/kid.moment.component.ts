@@ -209,13 +209,11 @@ export class KidMomentComponent implements OnInit {
         let kidContainer = view.getViewById(this.page, "kid-container-" + kid_klid);
         let checkBoxImg = view.getViewById(this.page, "checkbox-" + kid_klid);
         if(kidContainer.classList.contains('checked')){
-            console.log('is checked   uncheck it');
             kidContainer.classList.remove('item-selected','checked');
             kidContainer.classList.add('unchecked');
             checkBoxImg.src = '~/images/check-box-unchecked.png';
             this.taggedKidIds.splice(this.taggedKidIds.indexOf(kid_klid), 1);
         }else if(kidContainer.classList.contains('unchecked')){
-            console.log('is unchecked  check it');
             kidContainer.classList.add('item-selected');
             kidContainer.classList.remove('unchecked');
             kidContainer.classList.add('checked');

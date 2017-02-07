@@ -328,7 +328,6 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             fullscreen: false
         };
         this.modal.showModal(ModalMessageToParent, options).then((result) => {
-            console.log("Result " + result);
             if (result === 'close' || typeof(result) == "undefined") {
                 // modal closed
                 // console.log('Modal closed');
