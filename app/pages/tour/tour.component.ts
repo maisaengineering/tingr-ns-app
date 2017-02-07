@@ -7,7 +7,7 @@ import { TokenService } from "../../shared/token.service";
 import { TeacherInfo } from "../../providers/data/teacher_info";
 import { TeacherService } from "../../shared/teacher/teacher.service";
 import {InternetService} from "../../shared/internet.service";
-import {ServerErrorService} from "../../shared/server.error.service"; 
+import {ServerErrorService} from "../../shared/server.error.service";
 
 let nstoasts = require("nativescript-toasts");
 let app = require("application");
@@ -41,6 +41,7 @@ export class TourComponent implements OnInit{
     ngOnInit(){
         // show alert if no internet connection
         this.internetService.alertIfOffline();
+        this.page.actionBarHidden = true;
 
 
     }

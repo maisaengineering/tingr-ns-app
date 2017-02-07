@@ -37,7 +37,7 @@ export class MessagesComponent implements OnInit {
     public showActionBarItems: Boolean = false;
     public newMessageText: string = '';
     public conversationKlId: string = '';
-    //@ViewChild("messagesScroll") messagesScrollRef: ElementRef;
+    @ViewChild("messagesScroll") messagesScrollRef: ElementRef;
 
     constructor(private messageService: MessageService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
@@ -82,15 +82,14 @@ export class MessagesComponent implements OnInit {
         //this.messages = this.messageService.getMessages();
         this.isLoading = true;
         // if navigation comes from schedule then its a conversation
-       // let kid_klid = this.conversationKlId ? '' : this.kid.kid_klid;
-        let kid_klid = '878f4db8-a533-4a7a-9b11-a956e2b1048d';
+        let kid_klid = this.conversationKlId ? '' : this.kid.kid_klid;
         this.messageService.getList(kid_klid, this.conversationKlId)
             .subscribe(
                 (result) => {
                     let body = result.body;
                     this.messages = body.messages;
                     this.isLoading = false;
-                    //this.scrollToBottom();
+                    this.scrollToBottom();
                     // make unread messages as read by calling in background
                     this.makeMessagesRead(body.conversation_id,this.messages);
                 },
@@ -154,8 +153,7 @@ export class MessagesComponent implements OnInit {
 
     sendMessage() {
         this.isLoading = true;
-       // let kid_klid = this.conversationKlId ? '' : this.kid.kid_klid;
-        let kid_klid = '878f4db8-a533-4a7a-9b11-a956e2b1048d';
+        let kid_klid = this.conversationKlId ? '' : this.kid.kid_klid;
         this.messageService.sendMessage(this.newMessageText.trim(), kid_klid, this.conversationKlId)
             .subscribe(
                 (result) => {
@@ -194,7 +192,7 @@ export class MessagesComponent implements OnInit {
         return (Object.keys(obj).length === 0);
     }
 
-    /*scrollToBottom(){
+    scrollToBottom(){
         // https://gitnet.fr/deblan/nativescript-docs/src/v1.0.0/ApiReference/ui/scroll-view/ScrollView.md
         // scroll to bottom of the message using ScrollView ---
         setTimeout(() => {
@@ -202,6 +200,6 @@ export class MessagesComponent implements OnInit {
             let offset = messagesScrollerView.scrollableHeight; // get the current scroll height
             messagesScrollerView.scrollToVerticalOffset(offset, true); // scroll to the bottom with animation
         }, 1000);
-    }*/
+    }
 
 }
