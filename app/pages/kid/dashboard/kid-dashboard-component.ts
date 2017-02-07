@@ -70,7 +70,8 @@ export class KidDashboardComponent implements OnInit {
     //private posts: ObservableArray<Post>;
     private _layout: ListViewLinearLayout;
 
-    public posts: ObservableArray<Post>;
+    //public posts: ObservableArray<Post>;
+    public posts: any;
 
 
     constructor(private postService: PostService,
@@ -113,7 +114,7 @@ export class KidDashboardComponent implements OnInit {
         this.kid = this.kidData.info;
         this.layout = new ListViewLinearLayout();
         this.isLoading = true;
-        this.posts = new ObservableArray<Post>();
+        this.posts = [];
         this.postService.getPosts(this.postCount, this.lastModified, this.kid.kid_klid)
             .map((response1) => {
                 let result: Array<any> = [];
@@ -122,6 +123,7 @@ export class KidDashboardComponent implements OnInit {
                 res.body.posts.forEach(post => {
                     this.posts.push(this.addNewPostToListView(post));
                 });
+               // this.posts = res.body.posts;
                 this.postCount = res.body.post_count;
                 this.lastModified = res.body.last_modified;
                 return result;
@@ -134,10 +136,10 @@ export class KidDashboardComponent implements OnInit {
                     this.isLoading = false;
                 }
             );
-        this.changeDetectorRef.detectChanges();
+       // this.changeDetectorRef.detectChanges();
     }
 
-    public onLoadMoreItemsRequested(args: ListViewEventData) {
+   /* public onLoadMoreItemsRequested(args: ListViewEventData) {
         var that = new WeakRef(this);
         timerModule.setTimeout(() => {
             //  let listView: RadListView = <RadListView>(frameModule.topmost().currentPage.getViewById("myRadListView"));
@@ -178,7 +180,7 @@ export class KidDashboardComponent implements OnInit {
 
         return args.returnValue = true;
 
-    }
+    }*/
 
 
     public get layout(): ListViewLinearLayout {
@@ -346,7 +348,7 @@ export class KidDashboardComponent implements OnInit {
     }
 
     addOrRemoveHeart(post, index) {
-        let currentPostObject = this.posts.getItem(index);
+        let currentPostObject = post;
         let isHearted = currentPostObject.hearted;
         if (isHearted) {
             //already hearted so unheart it
@@ -444,8 +446,9 @@ export class KidDashboardComponent implements OnInit {
         let temp = this.posts.slice();
         temp.splice(index, 1);
         // this.posts = new ObservableArray(temp);
-        this.posts = new ObservableArray<Post>(temp);
-        this.changeDetectorRef.detectChanges();
+        //this.posts = new ObservableArray<Post>(temp);
+        this.posts = temp;
+       // this.changeDetectorRef.detectChanges();
         nstoasts.show({
             text: 'Post successfully deleted.',
             duration: nstoasts.DURATION.SHORT
@@ -491,20 +494,21 @@ export class KidDashboardComponent implements OnInit {
             },
             fullscreen: false
         };
-        let currentPost = this.posts.getItem(index);
+       // let currentPost = this.posts.getItem(index);
+        let currentPost = post;
         if (currentPost) {
             this.modal.showModal(ModalPostComment, options).then((result) => {
                 if (result === 'close' || typeof(result) == "undefined") {
                     // modal closed
-                    // console.log('Modal closed');
                 } else {
                     //TODO append commet detail to currentPost Object as Observable instead refreshing..
                     //console.log("Modal Comment Result " + JSON.stringify(result));/
                     currentPost.comments.push(new Comment(result.commented_by, result.slug, result.created_at, '',
                         '', result.commenter_photo, result.content, false));
                     let temp = this.posts.slice();
-                    this.posts = new ObservableArray<Post>(temp);
-                    this.changeDetectorRef.detectChanges();
+                    // this.posts = new ObservableArray<Post>(temp);
+                     this.posts = temp;
+                   // this.changeDetectorRef.detectChanges();
                     nstoasts.show({
                         text: 'Your comment added.',
                         duration: nstoasts.DURATION.SHORT

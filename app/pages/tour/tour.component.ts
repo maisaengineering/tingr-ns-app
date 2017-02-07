@@ -1,6 +1,6 @@
 import {Component, ViewContainerRef, OnInit} from "@angular/core";
 import {Location} from "@angular/common";
-import {Page} from "../page";
+import {Page} from "ui/page";
 import { RouterExtensions } from 'nativescript-angular/router';
 import * as appSettings from "application-settings"
 import { TokenService } from "../../shared/token.service";
