@@ -398,6 +398,8 @@ export class KidDashboardComponent implements OnInit {
     // edit , delete post etc..
     selectPostActions(args, post, index) {
         let actions = [];
+        console.log("POSt "+ JSON.stringify(post))
+
         if (post.can_edit) {
             //TODO enable after completing the editPostSection
             actions.push('Edit')
@@ -405,17 +407,20 @@ export class KidDashboardComponent implements OnInit {
         if (post.can_delete) {
             actions.push('Delete')
         }
-        dialogs.action({
-            //message: "",
-            cancelButtonText: "Cancel",
-            actions: actions
-        }).then(result => {
-            if (result === 'Delete') {
-                this.deletePost(args, post, index);
-            } else if (result === 'Edit') {
-                this.editPost(post);
-            }
-        });
+        if(actions.length){
+            dialogs.action({
+                //message: "",
+                cancelButtonText: "Cancel",
+                actions: actions
+            }).then(result => {
+                if (result === 'Delete') {
+                    this.deletePost(args, post, index);
+                } else if (result === 'Edit') {
+                    this.editPost(post);
+                }
+            });
+        }
+
     }
 
     editPost(post) {
