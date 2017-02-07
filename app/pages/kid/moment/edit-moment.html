@@ -39,7 +39,7 @@
                                    width="100"
                                    stretch="aspectFill" class="" src="https://placehold.it/100x100"></Image>
                             <TextView class="input-without-border-bottom" row='0' col="1"
-                                      hint="enter additional details" id="moment-additional-details"
+                                      hint="what is this post about? enter here..." id="moment-additional-details"
                                       text="" [(ngModel)]="additionalDetails" editable="true"
                                       borderColor="white"></TextView>
                         </Gridlayout>
@@ -47,7 +47,10 @@
                 </StackLayout>
                 <StackLayout class="kid-list" row="1">
                     <StackLayout class="m-10" verticalAlignment="center">
-                        <Label text="Tag Kids" class="text-center font-weight-bold"></Label>
+                        <Label text="choose kids to tag in this post"
+                               textWrap="true" class="text-center font-weight-bold"></Label>
+                        <Label text="only tagged kid's parent(s) can see this post"
+                               textWrap="true" class="text-center text-muted font-italic"></Label>
                     </StackLayout>
                     <StackLayout class="hr-light"></StackLayout>
 
