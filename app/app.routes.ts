@@ -18,6 +18,7 @@ import { MessagesComponent } from "./pages/messages/messages.component";
 import { HeartersComponent } from "./pages/posts/hearters.component";
 import { ChangePasswordComponent } from "./pages/change-password/change-password.component";
 import { MySchoolComponent } from "./pages/settings/myschool.component";
+import { TourComponent } from "./pages/tour/tour.component";
 
 import { AuthGuard } from "./auth-guard.service";
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
@@ -27,7 +28,7 @@ import { ModalServerError } from "./pages/dialogs/modal-server-error";
 
 export const APP_ROUTES = [
 
-    { path: "", redirectTo: "/myclass", pathMatch: 'full'},
+    { path: "", redirectTo: "/calendar", pathMatch: 'full'},
     { path: "calendar", component: CalendarComponent, canActivate: [AuthGuard] },
     { path: "myclass", component: MyClassComponent, canActivate: [AuthGuard] },
     { path: "kid-dashboard", component: KidDashboardComponent, canActivate: [AuthGuard]},
@@ -47,7 +48,7 @@ export const APP_ROUTES = [
     { path: "verify-password", component: VerifyPasswordPage },
     { path: "login", component: LoginPage },
     { path: "forgot-password", component: ForgotPasswordComponent  },
-
+    { path: "tour", component: TourComponent , canActivate: [AuthGuard] }
     /* incase path="" redirectTo: "/home" then uncomment{
         path: "home",
         component: HomeComponent,
@@ -85,7 +86,8 @@ export const navigatableComponents = [
     MessagesComponent,
     HeartersComponent,
     ChangePasswordComponent,
-    MySchoolComponent
+    MySchoolComponent,
+    TourComponent
 
 ];
 

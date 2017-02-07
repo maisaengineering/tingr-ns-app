@@ -35,6 +35,9 @@ registerElement("PullToRefresh", () => {
     return viewClass;
 });
 
+registerElement("Carousel", () => require("nativescript-carousel").Carousel);
+registerElement("CarouselItem", () => require("nativescript-carousel").CarouselItem);
+
 
 @NgModule({
     declarations: [

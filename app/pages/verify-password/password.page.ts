@@ -61,7 +61,7 @@ export class VerifyPasswordPage implements OnInit {
         //this.page.backgroundImage = "res://bg_login";
 
         // focus on password field
-       // let passTextField = view.getViewById(this.page, "password");
+        // let passTextField = view.getViewById(this.page, "password");
         //passTextField.focus();
     }
 
@@ -87,11 +87,11 @@ export class VerifyPasswordPage implements OnInit {
         }
 
 
-        if (emailTextField.text === "" ) {
+        if (emailTextField.text === "") {
             emailTextField.borderColor = '#e89999';
             this.emailError = true;
             return;
-        } else if (passTextField.text === ""){
+        } else if (passTextField.text === "") {
             passTextField.borderColor = '#e89999';
             this.passwordError = true;
             return;
@@ -119,11 +119,14 @@ export class VerifyPasswordPage implements OnInit {
                     let room = TeacherInfo.parsedDetails.rooms[0];
                     TeacherInfo.currentRoom = JSON.stringify(room);
                     // to get the currentRoom => TeacherInfo.parsedCurrentRoom
-                    this.routerExtensions.navigate(["/calendar"],
+                    let navigateTo = body.onboarding ? 'tour' : 'calendar';
+
+                    this.routerExtensions.navigate(["/"+navigateTo],
                         {
                             transition: {name: "slideLeft"},
                             clearHistory: true
                         });
+
                 },
                 (error) => {
                     this.isLoading = false;
@@ -141,7 +144,7 @@ export class VerifyPasswordPage implements OnInit {
             );
     }
 
-    goBack(){
+    goBack() {
         this.routerExtensions.backToPreviousPage();
     }
 

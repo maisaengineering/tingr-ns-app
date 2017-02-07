@@ -239,13 +239,13 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         this.kidData.info = kid;
 
         let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
-        kidStackLayout.animate(
+        /*kidStackLayout.animate(
             { backgroundColor: '#DCDCDC', duration: 100 }
         ).then(() => {
             this.cancelKidSelectionAnimation(kid);
         }).catch(()=>{
             // animation error
-        });
+        });*/
 
         this.routerExtensions.navigate(["/kid-dashboard"], {
             transition: {
@@ -258,13 +258,13 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         let kid = this.managed_kids.getItem(args.itemIndex);
 
         let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
-        kidStackLayout.animate(
+       /* kidStackLayout.animate(
             {backgroundColor: '#DCDCDC', duration: 100}
         ).then(()=> {
             // animationDone
         }).catch(()=> {
             // animation error
-        })
+        })*/
 
         dialogs.action({
             //message: "",

@@ -27,38 +27,39 @@
 
     <GridLayout rows="*, auto">
         <GridLayout row="0">
-            <ScrollView #messagesScroll>
-                <StackLayout verticalAlignment="top" *ngIf="!isMessagesEmpty(messages)">
-                    <StackLayout class="conversation" *ngFor="let groupedMessages of messages | keys">
-                        <StackLayout orinatation="vertical">
-                            <Label text="{{ groupedMessages.key }}" class="text-center date m-b-5"></Label>
-                            <StackLayout class="hr-shadow"></StackLayout>
-                        </StackLayout>
-                        <StackLayout class="messages">
-                            <StackLayout *ngFor="let message of groupedMessages.value" class="message-item">
+                <ListView [items]="messages | keys" id="listviewid">
+                    <template let-groupedMessages="item">
+                        <StackLayout>
+                            <StackLayout orinatation="vertical">
+                                <Label text="{{ groupedMessages.key }}" class="text-center date m-b-5"></Label>
+                                <StackLayout class="hr-shadow"></StackLayout>
+                            </StackLayout>
+                            <StackLayout class="messages">
+                                <StackLayout *ngFor="let message of groupedMessages.value" class="message-item">
 
-                                <GridLayout rows="*" columns="auto,*">
-                                    <StackLayout row="0" col="0" class="profile-pic-container">
-                                        <Image height="75" width="75" class="profile-pic blue-circle-border"
-                                               src="{{ message.photograph || '~/images/avatar-100.png' }}"></Image>
-                                    </StackLayout>
-
-                                    <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical">
-                                        <StackLayout orientation="horizontal">
-                                            <Label [text]="message.sender_name"
-                                                   class="profile-name"></Label>
-                                            <Label *ngIf="message.child_name"
-                                                   text="{{ message.child_name }}'s {{message.child_relationship }}"
-                                                   class="profile-relationship text-muted"></Label>
+                                    <GridLayout rows="*" columns="auto,*">
+                                        <StackLayout row="0" col="0" class="profile-pic-container">
+                                            <Image height="75" width="75" class="profile-pic blue-circle-border"
+                                                   src="{{ message.photograph || '~/images/avatar-100.png' }}"></Image>
                                         </StackLayout>
-                                        <Label class="message-text" [text]="message.text" textWrap="true"></Label>
-                                    </StackLayout>
-                                </GridLayout>
+
+                                        <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical">
+                                            <StackLayout orientation="horizontal">
+                                                <Label [text]="message.sender_name"
+                                                       class="profile-name"></Label>
+                                                <Label *ngIf="message.child_name"
+                                                       text="{{ message.child_name }}'s {{message.child_relationship }}"
+                                                       class="profile-relationship text-muted"></Label>
+                                            </StackLayout>
+                                            <Label class="message-text" [text]="message.text" textWrap="true"></Label>
+                                        </StackLayout>
+                                    </GridLayout>
+                                </StackLayout>
                             </StackLayout>
                         </StackLayout>
-                    </StackLayout>
-                </StackLayout>
-            </ScrollView>
+
+                    </template>
+                </ListView>
         </GridLayout>
 
         <StackLayout #messageBox row="1">
@@ -67,7 +68,8 @@
                     <TextView class="input-without-border-bottom" [(ngModel)]="newMessageText" id="newMessageText"
                               col="0"
                               hint="type your message here..." borderColor="white"></TextView>
-                    <Button isEnabled="{{ newMessageText.trim() ? true : false }}" (tap)="sendMessage()" col="1" text="Send"
+                    <Button  (tap)="loadMore()" col="1"
+                            text="Send"
                             class="blue2 send-button {{ isIos ? 'p-x-10' : ''}} {{ newMessageText.trim() ? 'blue2-background' : 'disabled'}}"></Button>
                 </GridLayout>
             </StackLayout>
