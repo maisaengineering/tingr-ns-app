@@ -62,7 +62,8 @@ export class SettingsPage implements OnInit{
                 "fromSettingsPage": true
             }
         };
-        this.router.navigate(["tour"], navigationExtras);
+        this.router.navigate(["messages"], navigationExtras);
+
 
     }
 

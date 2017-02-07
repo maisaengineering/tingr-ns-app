@@ -6,7 +6,8 @@ import {MessageService} from "../../shared/message.service";
 import {TeacherService} from "../../shared/teacher/teacher.service";
 import {KidData} from "../../providers/data/kid_data";
 import {SharedData} from "../../providers/data/shared_data";
-import {RouterExtensions} from "nativescript-angular/router";
+import { RouterExtensions } from 'nativescript-angular/router';
+import {Router, NavigationExtras} from "@angular/router";
 import {Page} from "ui/page";
 import {TeacherInfo} from "../../providers/data/teacher_info";
 import {Observable} from "rxjs/Rx";
@@ -19,6 +20,22 @@ import dialogs = require("ui/dialogs");
 import {DatePipe} from '@angular/common';
 import {InternetService} from "../../shared/internet.service";
 import {ModalMessageToParent} from "../dialogs/modal-message-to-parent";
+import {GC} from 'utils/utils';
+
+import {ListViewEventData, RadListView} from "nativescript-telerik-ui/listview";
+import * as timerModule  from "timer";
+import listViewModule = require("nativescript-telerik-ui/listview/angular");
+import listViewAnularModule = require("nativescript-telerik-ui/listview/angular");
+import {ObservableArray} from "data/observable-array";
+
+let cameraModule = require("camera");
+let platformModule = require("platform");
+let permissions = require("nativescript-permissions");
+let enums = require("ui/enums");
+let imagepicker = require("nativescript-imagepicker");
+declare let android: any;
+
+
 let nstoasts = require("nativescript-toasts");
 let app = require("application");
 let platform = require("platform");
@@ -26,11 +43,7 @@ let frameModule = require("ui/frame");
 let view = require("ui/core/view");
 let tnsfx = require('nativescript-effects');
 let gestures = require("ui/gestures");
-import {ListViewEventData, RadListView} from "nativescript-telerik-ui/listview";
-import * as timerModule  from "timer";
-import listViewModule = require("nativescript-telerik-ui/listview/angular");
-import listViewAnularModule = require("nativescript-telerik-ui/listview/angular");
-import {ObservableArray} from "data/observable-array";
+
 
 @Component({
     moduleId: module.id,
@@ -50,8 +63,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     public assignedRooms: Array<any>;
     public showActionBarItems: Boolean = false;
     private numberOfAddedItems; // pull to refresh
-    private isLongPressed;
-    Boolean = false;
+    public selectedImages = [];
 
     /*
      * Gesture examples
@@ -79,6 +91,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 private kidData: KidData,
                 private sharedData: SharedData,
                 private routerExtensions: RouterExtensions,
+                private router: Router,
                 private page: Page,
                 private internetService: InternetService,
                 private vcRef: ViewContainerRef,
@@ -356,6 +369,125 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         }).catch(()=> {
             // animation error
         })
+    }
+
+
+    selectMomentCaptureOption() {
+        dialogs.action({
+            //message: "",
+            cancelButtonText: "Cancel",
+            actions: ["Take photo", "Choose existing"]
+        }).then(result => {
+            if (result === 'Take photo') {
+                //  Android permissions (mainly for API 23+/Android 6+) check inplace
+                // This wraps up the entire Android 6 permissions system into a nice easy to use promise.
+                // In addition, you can also have multiple permissions pending and each one will resolve properly
+                if (platformModule.device.os === "Android" && platformModule.device.sdkVersion >= 23) {
+                    permissions.requestPermission(android.Manifest.permission.CAMERA, "Allow Tingr to access your camera?")
+                        .then(() => {
+                            //console.log("CAMERA Permission: granted!");
+                            this.takePicture();
+                        })
+                        .catch(() => {
+                            //console.log("CAMERA Permission: -- refused");
+                        });
+                } else {
+                    this.takePicture();
+                }
+
+            } else if (result === 'Choose existing') {
+                if (platformModule.device.os === "Android" && platformModule.device.sdkVersion >= 23) {
+                    permissions.requestPermission(android.Manifest.permission.READ_EXTERNAL_STORAGE, "Allow Tingr to access your gallery?")
+                        .then(() => {
+                            //console.log("READ_EXTERNAL_STORAGE permission: granted!");
+                            this.selectFromGallery();
+                        })
+                        .catch(() => {
+                            //console.log("READ_EXTERNAL_STORAGE permission: -- refused");
+                        });
+                } else {
+                    this.selectFromGallery();
+                }
+            }
+        });
+    }
+
+
+    takePicture() {
+        //TODO check for android if not working: https://github.com/NativeScript/NativeScript/issues/2353
+        //var imageView = view.getViewById(this.page, 'kid-profile-picture');
+        let options = {
+            saveToGallery: this.isAndroid ? false : true
+        };
+        cameraModule.takePicture(options).then((imageAsset) => {
+            let imageBase64Data = imageAsset.toBase64String(enums.ImageFormat.jpeg);
+            this.sharedData.momentCaptureDetails = {
+                imageBase64Data: imageBase64Data,
+                imageAsset: imageAsset
+            };
+            // The GC() function is called to clean up the mess in the memory let by camera.takePicture().
+            // Without this, the application on Android will constantly crash after some pictures,
+            // leaving us with nothing but OutOfMemory exceptions
+            GC();
+
+            let navigationExtras: NavigationExtras = {
+                queryParams: {
+                    "fromClassRoomPage": true
+                }
+            };
+            this.router.navigate(["kid-moment"], navigationExtras);
+
+
+        });
+
+    }
+
+    selectFromGallery() {
+        let context = imagepicker.create({
+            mode: "single"
+        });
+        this.startImageSelection(context);
+    }
+
+    startImageSelection(context) {
+        context
+            .authorize()
+            .then(() => {
+                this.selectedImages = [];
+                return context.present();
+            })
+            .then((selection) => {
+                //console.log("Selection done:");
+                selection.forEach((selected) => {
+                    //TODO for multiple seelction follow below coding for each one
+                    // console.log("----------------");
+                    // console.log("uri: " + selected.uri);
+                    // console.log("fileUri: " + selected.fileUri);
+                });
+                this.selectedImages = selection;
+                // this.changeDetectionRef.detectChanges();
+                let selectedImage = this.selectedImages[0];
+                selectedImage
+                    .getImage()
+                    .then((imageSource) => {
+                        this.sharedData.momentCaptureDetails = {
+                            imageBase64Data: imageSource.toBase64String(enums.ImageFormat.jpeg),
+                            imageAsset: imageSource
+                        };
+                        let navigationExtras: NavigationExtras = {
+                            queryParams: {
+                                "fromClassRoomPage": true
+                            }
+                        };
+                        this.router.navigate(["kid-moment"], navigationExtras);
+
+                    }).catch((e) => {
+                    //console.log("Error: " + e);
+                    //console.log(e.stack);
+                });
+            }).catch((e) => {
+            //console.log(e);
+        });
     }
 
 

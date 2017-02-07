@@ -1,22 +1,20 @@
 import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 import frameModule = require("ui/frame");
-import {Router, NavigationExtras} from "@angular/router";
+import {Router, NavigationExtras, ActivatedRoute} from "@angular/router";
 import {RouterExtensions, PageRoute} from "nativescript-angular/router";
+
 import {KidData} from "../../../providers/data/kid_data";
 import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
 import {ServerErrorService} from "../../../shared/server.error.service";
 import {KidService} from "../../../shared/kid.service";
 import { PostService } from "../../../shared/post.service";
-import {GC} from 'utils/utils';
-
+import {GC} from 'utils/utils'; 
 var view = require("ui/core/view");
 var tnsfx = require('nativescript-effects');
 var app = require("application");
-
 var cameraModule = require("camera");
-
 import { ImageAsset } from "image-asset";
 var enums = require("ui/enums");
 var nstoasts = require("nativescript-toasts");
@@ -41,12 +39,14 @@ export class KidMomentComponent implements OnInit {
     public s3_key: string;
     public selectedImages = [];
     public showActionBarItems: Boolean = false;
+    public fromClassRoomPage: Boolean = false;
 
     constructor(private kidService: KidService,
                 private postService: PostService,
                 private page: Page, private changeDetectorRef: ChangeDetectorRef,
-                private router: Router,
                 private routerExtensions: RouterExtensions,
+                private route: ActivatedRoute,
+                private router: Router,
                 private kidData: KidData,
                 private sharedData: SharedData,
                 private internetService: InternetService,
@@ -61,6 +61,12 @@ export class KidMomentComponent implements OnInit {
         // by default add this kid to tag
         this.taggedKidIds = [];
         this.s3_key = '';
+
+        // get the conversationId from navigation params if this page is open from schedule
+        this.route.queryParams.subscribe(params => {
+            this.fromClassRoomPage = params["fromClassRoomPage"];
+        });
+
         if (app.android) {
             this.isAndroid = true;
         } else if (app.ios) {
@@ -77,9 +83,12 @@ export class KidMomentComponent implements OnInit {
         }, 500);
 
         // auto tag currentKid
-        this.taggedKidIds.push(this.kid.kid_klid)
-        let managedKid = this.managedKids.filter(mk => mk.kid_klid === this.kid.kid_klid)[0];
-        managedKid.isTagged = managedKid ? true : false
+        if(!this.fromClassRoomPage){
+            this.taggedKidIds.push(this.kid.kid_klid);
+            let managedKid = this.managedKids.filter(mk => mk.kid_klid === this.kid.kid_klid)[0];
+            managedKid.isTagged = managedKid ? true : false;
+        }
+
         let momentImageVIew = view.getViewById(this.page, 'moment-image');
         momentImageVIew.src = this.sharedData.momentCaptureDetails.imageAsset;
         momentImageVIew.visibility = 'visible';
@@ -91,7 +100,8 @@ export class KidMomentComponent implements OnInit {
 
     goBack(){
        // this.routerExtensions.backToPreviousPage();
-        this.routerExtensions.navigate(["/kid-dashboard"], {
+        let navigateTo = this.fromClassRoomPage ? '/myclass' : "/kid-dashboard"
+        this.routerExtensions.navigate([navigateTo], {
             transition: {
                 name: "slideRight"
             }
@@ -247,11 +257,13 @@ export class KidMomentComponent implements OnInit {
                     };
                     nstoasts.show(toastOptions);
 
-                    this.routerExtensions.navigate(["/kid-dashboard"], {
+                    let navigateTo = this.fromClassRoomPage ? '/myclass' : "/kid-dashboard";
+                    this.routerExtensions.navigate([navigateTo], {
                         transition: {
                             name: "slideRight"
                         }
                     });
+
                 },
                 (error) => {
                     this.isLoading = false;
