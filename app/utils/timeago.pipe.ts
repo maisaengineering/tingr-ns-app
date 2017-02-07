@@ -7,6 +7,9 @@ import * as moment from 'moment';
 export class TimeAgoPipe implements PipeTransform {
 
     transform(date: Date, args: any[]) {
-        return moment(date).fromNow();
+
+        return moment(date, 'MM/DD/YYYY HH:mma Z').fromNow();
+
+      //  return moment(date).fromNow();
     }
 }
