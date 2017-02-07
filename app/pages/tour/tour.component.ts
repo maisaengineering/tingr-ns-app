@@ -29,6 +29,7 @@ export class TourComponent implements OnInit{
                 private routerExtensions: RouterExtensions,
                 private internetService: InternetService,
                 private vcRef: ViewContainerRef,
+                private page: Page,
                 private serverErrorService: ServerErrorService) {
 
         if (app.android) {
