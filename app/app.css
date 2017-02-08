@@ -162,8 +162,8 @@ NavigationButton, ActionItem{
 
 
 .drawer-content {
-    background-color: #eeeeee;
-    color: black;
+    background-color: rgba(255, 255, 255);
+    color: #6fa8dc;
 }
 
 .drawer-content .drawer-header {
@@ -180,8 +180,8 @@ NavigationButton, ActionItem{
 
 
 .drawer-content .drawer-links .drawer-link {
-    font-size: 15;
-    padding: 15;
+    font-size: 17;
+    padding: 12;
 }
 
 .drawer-content .drawer-links .drawer-link .fa {

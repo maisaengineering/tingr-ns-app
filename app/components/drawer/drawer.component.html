@@ -6,10 +6,13 @@
 
         </StackLayout>
         <StackLayout class="m-t-10 m-b-10" horizontalAlignment="center"  verticalAlignment="center">
-            <Label text="{{ teacherFullname }}"  class="teacher-name"></Label>
+            <Label text="{{ teacherFullname }}"  class="teacher-name font-weight-bold"></Label>
         </StackLayout>
     </StackLayout>
 </GridLayout>
+
+<StackLayout class="drawer-separator">
+</StackLayout>
 
 <StackLayout class="drawer-links" orientation="vertical">
     <StackLayout class="drawer-link"
@@ -30,9 +33,6 @@
     </StackLayout>
 
 
-
-    <StackLayout class="drawer-separator">
-    </StackLayout>
     <StackLayout class="drawer-link"
                  orientation="horizontal"
                  [nsRouterLink]="['/settings']"
@@ -40,10 +40,6 @@
                  pageTransition="slideLeft">
         <Label class="material-icons md-24 md-settings" text="&#xE8B8;"></Label>
         <Label class="text" text="Settings"></Label>
-    </StackLayout>
-
-
-    <StackLayout class="drawer-separator">
     </StackLayout>
 
 </StackLayout>
