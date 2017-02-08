@@ -149,6 +149,7 @@ NavigationButton, ActionItem{
     border-radius: 38;
 }
 
+
 /* border for circle images ..*/
 .blue-circle-border {
     border-color:  #6fa8dc;
@@ -162,7 +163,7 @@ NavigationButton, ActionItem{
 
 
 .drawer-content {
-    background-color: rgba(255, 255, 255);
+    background-color: #ECEFF1;
     color: #6fa8dc;
 }
 
@@ -191,6 +192,7 @@ NavigationButton, ActionItem{
 
 .drawer-content .drawer-links .drawer-link .text {
     margin-left: 30;
+    font-weight: bold;
 }
 
 .drawer-content .drawer-links .current {
@@ -366,3 +368,29 @@ StackLayout.empty-page {
 .btn-icon{
     color: white;
 }
+
+StackLayout.small-avatar-with-name{
+    border-radius: 20;
+    height: 40;
+    width: 40;
+    font-size: 16;
+    font-weight: bold;
+}
+
+StackLayout.medium-avatar-with-name{
+    border-radius: 30;
+    height: 60;
+    width: 60;
+    font-size: 18;
+    font-weight: bold;
+}
+
+StackLayout.large-avatar-with-name{
+    border-radius: 38;
+    height: 75;
+    width: 75;
+    font-size: 21;
+    font-weight: bold;
+}
+
+
