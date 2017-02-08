@@ -9,7 +9,7 @@
     <StackLayout orientation="horizontal"
                  ios:horizontalAlignment="center"
                  android:horizontalAlignment="center" (tap)="openRooms()">
-        <StackLayout *ngIf="assignedRooms.length" orientation="horizontal" verticalAlignment="center">
+        <StackLayout orientation="horizontal" verticalAlignment="center">
             <Label [text]="roomName" class="action-label"></Label>
             <Label class="blue2 material-icons md-24 md-arrow-drop-down m-r-10" text="&#xE5C5;"></Label>
         </StackLayout>

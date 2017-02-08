@@ -118,26 +118,18 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             this.showActionBarItems = true;
         }, 500);
 
-        this.getRoomsAndMangedKids();
+        //this.getRoomsAndMangedKids();
+        this.loadManagedKids(this.currentRoom);
+        this.getAssignedRooms();
         this.changeDetectorRef.detectChanges();
     }
 
 
-    getRoomsAndMangedKids() {
+    getAssignedRooms() {
         this.isLoading = true;
-        this.myClassService.getRoomsAndMangedKids(this.currentRoom).subscribe(
+        this.myClassService.getAssignedRooms().subscribe(
             (result) => {
-                this.managed_kids = new ObservableArray<ManagedKid>();
-                this.assignedRooms = result[0].body.rooms;
-                // Set Teacher CurrentRoom and this.currentRoom as first one as default
-                //TeacherInfo.currentRoom = JSON.stringify(this.assignedRooms[0]);
-                //this.currentRoom = this.assignedRooms[0];
-                //this.roomName = this.currentRoom.session_name;
-                result[1].body.managed_kids.forEach((managedKid) => {
-                   this.addNewManagedKid(managedKid);
-                });
-                // save managed kids in SharedData Provider, so data will be available to all components
-                this.sharedData.managedKids = result[1].body.managed_kids;
+                this.assignedRooms = result.body.rooms; 
                 this.isLoading = false;
             },
             (error) => {
@@ -161,7 +153,6 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                     this.isLoading = false;
                     // save managed kids in SharedData Provider, so data will be available to all components
                     this.sharedData.managedKids = body.managed_kids;
-
                 },
                 (error) => {
                     this.isLoading = false;

@@ -75,12 +75,12 @@ export class KidProfileComponent implements OnInit {
     }
 
     goBack(){
-        //this.routerExtensions.backToPreviousPage();
-        this.routerExtensions.navigate(["/kid-dashboard"], {
+        this.routerExtensions.backToPreviousPage();
+       /* this.routerExtensions.navigate(["/kid-dashboard"], {
             transition: {
                 name: "slideTop"
             }
-        });
+        });*/
     }
 
     closeProfile(){

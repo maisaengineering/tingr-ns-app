@@ -2,12 +2,12 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "LaunchScreen-Center.jpg",
+      "filename" : "LaunchScreen-Center.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "LaunchScreen-Center@2x.jpg",
+      "filename" : "LaunchScreen-Center@2x.png",
       "scale" : "2x"
     },
     {
