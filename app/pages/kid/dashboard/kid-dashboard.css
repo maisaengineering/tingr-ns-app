@@ -1,10 +1,16 @@
 /* kid cover phot and profile and name section*/
 
-Image.kid-profile-image {
+.kid-profile-image {
     height: 100;
     width: 100;
     border-radius: 50;
 }
+
+.kid-profile-image.with-name{
+    font-size: 24;
+    font-weight: bold;
+}
+
 
 Image.kid-cover-image {
     height: 100;
@@ -20,6 +26,7 @@ StackLayout.kid-profile-image-container {
 StackLayout.kid-profile-container {
     height: 100;
 }
+
 
 .kid-profile-container .kid-name {
     border-color:  #6fa8dc;
@@ -142,6 +149,7 @@ Image.kid-profile-pic{
 Image.parent-profile-pic{
     border-radius: 30;
 }
+
 
 .comment-label{
     font-size: 18;

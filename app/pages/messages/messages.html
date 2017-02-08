@@ -39,8 +39,13 @@
 
                                 <GridLayout rows="*" columns="auto,*">
                                     <StackLayout row="0" col="0" class="profile-pic-container">
-                                        <Image height="75" width="75" class="profile-pic blue-circle-border"
-                                               src="{{ message.photograph || '~/images/avatar-100.png' }}"></Image>
+                                        <Image *ngIf="message.photograph" height="75" width="75" class="profile-pic blue-circle-border"
+                                               src="{{ message.photograph }}"></Image>
+
+                                        <StackLayout *ngIf="!message.photograph" class="blue-circle-border large-avatar-with-name text-center" verticalAlignment="center" >
+                                            <Label text="{{ message.sender_name.split(' ')[0][0]+''+message.sender_name.split(' ')[1][0] | uppercase }}"></Label>
+                                        </StackLayout>
+
                                     </StackLayout>
 
                                     <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical">

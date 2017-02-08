@@ -133,8 +133,13 @@
                                     <GridLayout row="0" columns="50, *" rows="*" class="item"
                                                 (tap)="openMessageConversation(item)">
                                         <StackLayout verticalAlignment="center">
-                                            <Image height="40" width="40" class="kid-profile-pic blue-circle-border"
-                                                   src="{{ item.photograph ? item.photograph : '~/images/avatar-100.png' }}"></Image>
+                                            <Image *ngIf="item.photograph"  height="40" width="40" class="kid-profile-pic blue-circle-border"
+                                                   src="{{ item.photograph }}"></Image>
+
+                                            <StackLayout *ngIf="!item.photograph" class="blue-circle-border small-avatar-with-name text-center" verticalAlignment="center" >
+                                                <Label text="{{ item.sender_name[0]+''+item.sender_name[1] | uppercase }}"></Label>
+                                            </StackLayout>
+
                                         </StackLayout>
                                         <StackLayout col="1">
                                             <StackLayout col="1" orientation="horizontal">

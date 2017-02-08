@@ -35,8 +35,13 @@
                     <StackLayout class="p-10">
                         <GridLayout rows="*" columns="auto,*,50">
                             <StackLayout row="0" col="0">
-                                <Image height="75" width="75" class="kid-profile-pic blue-circle-border"
-                                       src="{{ item.photograph_url ? item.photograph_url : '~/images/avatar-100.png' }}"></Image>
+                                <Image *ngIf="item.photograph_url" height="75" width="75" class="kid-profile-pic blue-circle-border"
+                                       src="{{ item.photograph_url }}"></Image>
+
+                                <StackLayout *ngIf="!item.photograph_url" class="blue-circle-border large-avatar-with-name text-center" verticalAlignment="center" >
+                                    <Label text="{{ item.fname[0]+''+item.lname[0] | uppercase }}"></Label>
+                                </StackLayout>
+
                             </StackLayout>
 
                             <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical"
