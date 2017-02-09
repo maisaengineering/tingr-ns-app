@@ -46,8 +46,6 @@ declare var android: any;
 })
 export class KidDashboardComponent implements OnInit {
     public kid: any;
-
-
     public comments: Array<Comment>;
     public tagged_to: Array<TaggedTo>;
     public topmost;
@@ -82,7 +80,7 @@ export class KidDashboardComponent implements OnInit {
         //super(changeDetectorRef);
 
         this.kid = {};
-        this.kid = kidData.info;
+        this.kid = this.kidData.info;
 
         if (app.android) {
             this.isAndroid = true;

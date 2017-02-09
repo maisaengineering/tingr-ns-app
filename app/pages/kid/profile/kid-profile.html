@@ -23,8 +23,12 @@
             <StackLayout row="0">
                 <GridLayout rows="auto" columns="auto, *" class="kid-profile-header">
                     <StackLayout row="0" col="0">
-                        <Image height="100" width="100" class="kid-profile-pic blue-circle-border"
-                               src="{{ kid.photograph_url || '~/images/avatar-100.png' }}"></Image>
+                        <Image *ngIf="kid.photograph_url" height="100" width="100" class="kid-profile-pic blue-circle-border"
+                               src="{{ kid.photograph_url }}"></Image>
+
+                        <StackLayout *ngIf="!kid.photograph_url" class="blue-circle-border extra-large-avatar-with-name text-center" verticalAlignment="center" >
+                            <Label [text]="kid | shortName | uppercase"></Label>
+                        </StackLayout>
                     </StackLayout>
 
                     <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical" class="p-l-20">

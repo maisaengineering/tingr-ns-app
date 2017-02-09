@@ -31,8 +31,13 @@
                     <StackLayout *ngFor="let hearter of hearters">
                         <Gridlayout rows="auto" columns="auto,*" verticalAlignment="center" orientation="horizontal"
                                     class="item">
-                            <Image row='0' col="0" height="40" width="40" class="hearter-profile-pic blue-circle-border"
-                                   src="{{ hearter.photograph_url || '~/images/avatar-100.png' }}"></Image>
+                            <Image *ngIf="hearter.photograph_url" row='0' col="0" height="40" width="40" class="hearter-profile-pic blue-circle-border"
+                                   src="{{ hearter.photograph_url }}"></Image>
+
+                            <StackLayout *ngIf="!hearter.photograph_url" class="blue-circle-border small-avatar-with-name text-center" verticalAlignment="center" >
+                                <Label [text]="hearter | shortName | uppercase"></Label>
+                            </StackLayout>
+
                             <Label row="0" col="1" verticalAlignment="center"
                                    text="{{ hearter.fname }} {{ hearter.lname }}"
                                    class="m-l-20 font-weight-bold"></Label>
