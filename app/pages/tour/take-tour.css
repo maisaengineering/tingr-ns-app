@@ -1,0 +1,7 @@
+.take-a-tour, .skip-tour{
+    font-weight: bold;
+    font-size: 21;
+}
+.skip-tour{
+    color: #9c9998;
+}

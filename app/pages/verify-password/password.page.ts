@@ -98,7 +98,7 @@ export class VerifyPasswordPage implements OnInit {
                     let room = TeacherInfo.parsedDetails.rooms[0];
                     TeacherInfo.currentRoom = JSON.stringify(room);
                     // to get the currentRoom => TeacherInfo.parsedCurrentRoom
-                    let navigateTo = body.onboarding ? 'tour' : 'calendar';
+                    let navigateTo = body.onboarding ? 'take-tour' : 'calendar';
 
                     this.routerExtensions.navigate(["/"+navigateTo],
                         {
