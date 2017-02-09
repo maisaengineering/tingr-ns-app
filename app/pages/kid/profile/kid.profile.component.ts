@@ -52,18 +52,10 @@ export class KidProfileComponent implements OnInit {
     ngOnInit() {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
-        // show actionBarItems after some time to fix overlappingg issue
-        setTimeout(() => {
-            this.showActionBarItems = true;
-        }, 500);
-
-        this.isLoading = true;
         this.kidService.getProfileDetails(this.kid.kid_klid)
             .subscribe(
                 (result) => {
-                    this.kid =  result.body; // update kid info
-                    this.isLoading = false;
-
+                    this.kid =  result.body; // update kid info//
                     // save details in provider
                     this.kidData.info = this.kid;
                 },

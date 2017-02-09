@@ -137,7 +137,7 @@
                                                    src="{{ item.photograph }}"></Image>
 
                                             <StackLayout *ngIf="!item.photograph" class="blue-circle-border small-avatar-with-name text-center" verticalAlignment="center" >
-                                                <Label text="{{ item.sender_name[0]+''+item.sender_name[1] | uppercase }}"></Label>
+                                                <Label [text]="item | shortName | uppercase"></Label>
                                             </StackLayout>
 
                                         </StackLayout>
@@ -145,7 +145,7 @@
                                             <StackLayout col="1" orientation="horizontal">
                                                 <Label class="profile-name" [text]="item.sender_name"
                                                        textwrap="true"></Label>
-                                                <Label *ngIf="item.child_name" class="profile-relationship" style="font-size: 12;"
+                                                <Label *ngIf="item.child_name" class="profile-relationship" style="font-size: 12"
                                                        text="{{ item.child_name }}'s {{ item.child_relationship }}"
                                                        textwrap="true"></Label>
                                             </StackLayout>

@@ -9,7 +9,7 @@
                  ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
         <StackLayout orientation="horizontal" verticalAlignment="center">
-            <Label text="{{ kid.fname }} {{ kid.lname }}" class="action-label"></Label>
+            <Label [text]="kid.fname ? (kid.fname+' '+kid.lname) : kid.nickname" class="action-label"></Label>
         </StackLayout>
     </StackLayout>
     <!-- right area  -->
@@ -45,7 +45,7 @@
                                                 <StackLayout *ngIf="!item.photograph"
                                                              class="blue-circle-border small-avatar-with-name text-center"
                                                              verticalAlignment="center">
-                                                    <Label text="{{ item.fname[0]+''+item.lname[0] | uppercase }}"></Label>
+                                                    <Label [text]="item | shortName | uppercase"></Label>
                                                 </StackLayout>
 
                                             </StackLayout>
@@ -87,7 +87,7 @@
                                             <StackLayout *ngIf="!comment.commenter_photo"
                                                          class="blue-circle-border medium-avatar-with-name text-center"
                                                          verticalAlignment="center">
-                                                <Label text="{{ comment.commented_by.split(' ')[0][0]+''+comment.commented_by.split(' ')[1][0] | uppercase }}"></Label>
+                                                <Label [text]="comment | shortName | uppercase"></Label>
                                             </StackLayout>
 
 
@@ -147,17 +147,14 @@
                     <GridLayout rows="auto,auto,auto,auto,auto,auto" height="370" backgroundColor="white"
                                 class="kid-dashboard">
                         <!--- Profile section -->
-                        <GridLayout row="0" class="section1 p-y-10 p-x-20" backgroundColor="#e9e9e9">
-                            <GridLayout class="kid-profile-container" orientation="vertical">
-                                <StackLayout row="0" orientation="horizontal" horizontalAlignment="right" class="">
-                                    <StackLayout width="auto" class="kid-profile-image-container text-left">
-                                        <Image src="{{ kid.photograph_url || '~/images/avatar-100.png' }}" class="kid-profile-image"></Image>
-                                        <!--<Label text="{{ kid.fname[0]+''+kid.lname[0] | uppercase }}"
-                                               class="kid-profile-image with-name text-center"></Label>-->
-                                    </StackLayout>
-                                </StackLayout>
-                            </GridLayout>
-
+                        <GridLayout row="0"  backgroundColor="#e9e9e9" class="p-y-10 p-x-20">
+                            <StackLayout height="100" horizontalAlignment="right">
+                                <Image height="100" width="100" class="kid-profile-pic-big blue-circle-border"
+                                       src="{{  kid.photograph_url || '~/images/avatar-100.png' }}"></Image>
+                                <!--<StackLayout visibility="{{ kid && kid.photograph_url ? 'collapsed' : 'visible'  }}" class="blue-circle-border extra-large-avatar-with-name text-center" verticalAlignment="center" >
+                                    <Label text="{{ kid.fname[0]+''+kid.lname[0] | uppercase }}"></Label>
+                                </StackLayout>-->
+                            </StackLayout>
                         </GridLayout>
 
                         <GridLayout row="1">

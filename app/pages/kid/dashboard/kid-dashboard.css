@@ -1,42 +1,11 @@
 /* kid cover phot and profile and name section*/
 
-.kid-profile-image {
-    height: 100;
-    width: 100;
+Image.kid-profile-pic-big{
     border-radius: 50;
 }
 
-.kid-profile-image.with-name{
-    font-size: 24;
-    font-weight: bold;
-}
-
-
-Image.kid-cover-image {
-    height: 100;
-}
-
-StackLayout.kid-profile-image-container {
-    border-color:  #6fa8dc;
-    border-width: 2;
-    border-radius: 50;
-
-}
-
-StackLayout.kid-profile-container {
-    height: 100;
-}
-
-
-.kid-profile-container .kid-name {
-    border-color:  #6fa8dc;
-    vertical-align: middle;
-    margin-left: 10;
-    margin-right: 20;
-    font-size: 20;
-    color: #6fa8dc;
-    font-style: italic;
-    font-weight: bold;
+Image.kid-profile-pic{
+    border-radius: 20;
 }
 
 
@@ -142,9 +111,6 @@ GridLayout.moment-bottom-section{
 }
 
 
-Image.kid-profile-pic{
-    border-radius: 20;
-}
 
 Image.parent-profile-pic{
     border-radius: 30;

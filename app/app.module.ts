@@ -25,6 +25,7 @@ import { ModalServerError } from "./pages/dialogs/modal-server-error";
 import { DatePipe } from '@angular/common';
 import { KeysPipe } from './utils/keys.pipe';
 import { TimeAgoPipe } from './utils/timeago.pipe';
+import { ShortNamePipe } from './utils/short-name.pipe';
 
 import { TNSFrescoModule } from "nativescript-fresco/angular";
 import * as frescoModule from "nativescript-fresco";
@@ -59,6 +60,7 @@ if (applicationModule.android) {
         AppComponent,
         KeysPipe,
         TimeAgoPipe,
+        ShortNamePipe,
         ...navigatableComponents
     ],
     bootstrap: [

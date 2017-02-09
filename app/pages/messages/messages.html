@@ -43,7 +43,7 @@
                                                src="{{ message.photograph }}"></Image>
 
                                         <StackLayout *ngIf="!message.photograph" class="blue-circle-border large-avatar-with-name text-center" verticalAlignment="center" >
-                                            <Label text="{{ message.sender_name.split(' ')[0][0]+''+message.sender_name.split(' ')[1][0] | uppercase }}"></Label>
+                                            <Label [text]="message | shortName | uppercase"></Label>
                                         </StackLayout>
 
                                     </StackLayout>

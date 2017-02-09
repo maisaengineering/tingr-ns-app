@@ -59,9 +59,20 @@
                                      id="kid-container-{{ kid.kid_klid }}" class="{{ kid.isTagged ? 'checked item-selected' : 'unchecked' }}">
                             <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center"
                                         orientation="horizontal" class="item">
-                                <Image row='0' col="0" height="40" width="40" class="kid-profile-pic blue-circle-border"
-                                       src="{{ kid.photograph_url || '~/images/avatar-100.png' }}"></Image>
-                                <Label row="0" col="1" verticalAlignment="center" text="{{ kid.fname }} {{ kid.lname }}"
+
+
+                                <Image row='0' col="0" *ngIf="kid.photograph_url" height="40" width="40"
+                                       class="kid-profile-pic blue-circle-border"
+                                       src="{{ kid.photograph_url }}"></Image>
+
+                                <StackLayout row='0' col="0" *ngIf="!kid.photograph_url"
+                                             class="blue-circle-border small-avatar-with-name text-center"
+                                             verticalAlignment="center">
+                                    <Label [text]="kid | shortName | uppercase"></Label>
+                                </StackLayout>
+
+                                <Label row="0" col="1" verticalAlignment="center"
+                                       [text]="kid.fname ? (kid.fname+' '+kid.lname) : kid.nickname"
                                        class="m-l-20 font-weight-bold" textWrap="true"></Label>
                                 <Image row="0" col="2" height="24" width="24" stretch="aspectFit"
                                        id="checkbox-{{ kid.kid_klid }}" class="text-right m-r-10"

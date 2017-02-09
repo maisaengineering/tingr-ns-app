@@ -39,14 +39,14 @@
                                        src="{{ item.photograph_url }}"></Image>
 
                                 <StackLayout *ngIf="!item.photograph_url" class="blue-circle-border large-avatar-with-name text-center" verticalAlignment="center" >
-                                    <Label text="{{ item.fname[0]+''+item.lname[0] | uppercase }}"></Label>
+                                    <Label [text]="item | shortName | uppercase"></Label>
                                 </StackLayout>
 
                             </StackLayout>
 
                             <StackLayout row="0" col="1" verticalAlignment="center" orientation="vertical"
                                          class="p-l-20">
-                                <Label [text]="item.fname+' '+item.lname" class="kid-name"></Label>
+                                <Label [text]="item.fname ? (item.fname+' '+item.lname) : item.nickname" class="kid-name"></Label>
                                 <Label [text]="item.age+' old'" class="text-muted kid-age"></Label>
                             </StackLayout>
 
