@@ -90,7 +90,8 @@ export class SettingsPage implements OnInit{
                     this.routerExtensions.navigate(["/login"], {
                         transition: {
                             name: "slideTop"
-                        }
+                        },
+                        clearHistory: true
                     });
 
                 },

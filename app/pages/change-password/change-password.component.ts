@@ -60,6 +60,14 @@ export class ChangePasswordComponent implements OnInit {
 
     updatePassword() {
         // validate form
+        let currentPassTextfield = view.getViewById(this.page, "currentPassword");
+        let newPassTextfield = view.getViewById(this.page, "newPassword");
+        let confirmPassTextfield = view.getViewById(this.page, "confirmPassword");
+        currentPassTextfield.dismissSoftInput();
+        newPassTextfield.dismissSoftInput();
+        confirmPassTextfield.dismissSoftInput();
+
+
         let hasErrors = false;
         if(this.currentPassword === ''){
             this.currentPasswordError = true;

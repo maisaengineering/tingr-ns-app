@@ -152,6 +152,10 @@ export class MessagesComponent implements OnInit {
     }
 
     sendMessage() {
+        // focus out from field
+        let msgTexfield = view.getViewById(this.page, "newMessageText");
+        msgTexfield.dismissSoftInput();
+
         this.isLoading = true;
         let kid_klid = this.conversationKlId ? '' : this.kid.kid_klid;
         this.messageService.sendMessage(this.newMessageText.trim(), kid_klid, this.conversationKlId)
@@ -169,13 +173,7 @@ export class MessagesComponent implements OnInit {
                     this.serverErrorService.showErrorModal();
                 }
             );
-        // focus out from field
-        let msgTexfield = this.page.getViewById("newMessageText");
-        if (msgTexfield.ios) {
-            msgTexfield.ios.endEditing(true);
-        } else if (msgTexfield.android) {
-            msgTexfield.android.clearFocus();
-        }
+
 
     }
 

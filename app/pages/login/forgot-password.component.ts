@@ -70,13 +70,8 @@ export class ForgotPasswordComponent implements OnInit {
     sendEmail() {
         //let errorLabel = view.getViewById(this.page, "form-errors");
         let emailTextField = view.getViewById(this.page, "email");
-
-        if (emailTextField.ios) {
-            emailTextField.ios.endEditing(true);
-        } else if (emailTextField.android) {
-            emailTextField.android.clearFocus();
-        }
-
+        //dismiss skeyboard
+        emailTextField.dismissSoftInput();
         if (emailTextField.text === "") {
             this.emailError = true;
             emailTextField.borderColor = '#e89999';

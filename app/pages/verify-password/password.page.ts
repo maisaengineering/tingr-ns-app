@@ -71,22 +71,9 @@ export class VerifyPasswordPage implements OnInit {
         let emailTextField = view.getViewById(this.page, "email");
         let passTextField = view.getViewById(this.page, "password");
         let forgotPassLink = view.getViewById(this.page, "forgotPassLink");
-
-
         //dismiss input
-        if (emailTextField.ios) {
-            emailTextField.ios.endEditing(true);
-        } else if (emailTextField.android) {
-            emailTextField.android.clearFocus();
-        }
-        //dismiss input
-        if (passTextField.ios) {
-            passTextField.ios.endEditing(true);
-        } else if (passTextField.android) {
-            passTextField.android.clearFocus();
-        }
-
-
+        emailTextField.dismissSoftInput();
+        passTextField.dismissSoftInput();
         if (emailTextField.text === "") {
             emailTextField.borderColor = '#e89999';
             this.emailError = true;

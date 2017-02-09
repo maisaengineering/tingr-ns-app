@@ -92,12 +92,13 @@ export class LoginPage implements OnInit {
         //let labelError = <Label>this.formErrorsRef.nativeElement;
         let emailTextField = view.getViewById(this.page, "email");
 
+        emailTextField.dismissSoftInput();
         //dismiss input
-        if (emailTextField.ios) {
+        /*if (emailTextField.ios) {
             emailTextField.ios.endEditing(true);
         } else if (emailTextField.android) {
             emailTextField.android.clearFocus();
-        }
+        }*/
 
         if (this.email === '') {
             this.emailError = true;
