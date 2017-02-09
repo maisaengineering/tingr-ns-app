@@ -7,9 +7,6 @@
     "id": "org.tingr.teacher.prod",
     "tns-android": {
       "version": "2.4.1"
-    },
-    "tns-ios": {
-      "version": "2.4.0"
     }
   },
   "dependencies": {
