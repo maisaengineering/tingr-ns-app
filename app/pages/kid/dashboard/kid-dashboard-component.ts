@@ -145,7 +145,7 @@ export class KidDashboardComponent implements OnInit {
     addNewPostToListView(post) {
         let newPost = new Post(post.kl_id, post.slug, post.title, post.tzone,
             post.scope, post.text, post.author_name, post.photograph,
-            post.created_at, post.deletable,
+            post.new_created_at, post.deletable,
             post.can_delete, post.can_edit, post.can_save, post.kid_birthdate,
             post.hearted, post.heart_icon, post.hearts_count, post.asset_base_url);
         // tags

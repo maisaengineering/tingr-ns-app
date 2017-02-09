@@ -5,7 +5,7 @@ import * as moment from 'moment';
 })
 export class TimeAgoPipe implements PipeTransform {
     transform(date: Date, args: any[]) {
-        //12/25/2016 06:57am UTC
-        return moment.utc(date, 'MM/DD/YYYY HH:mma').fromNow();
+        //moment.utc(date, 'MM/DD/YYYY HH:mma Z').fromNow();
+       return moment(date).fromNow();
     }
 }
