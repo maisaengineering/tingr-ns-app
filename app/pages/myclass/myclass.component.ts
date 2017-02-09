@@ -1,4 +1,4 @@
-import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewContainerRef , ChangeDetectorRef, OnInit} from "@angular/core";
 import {DrawerPage} from "../drawer.page";
 import {MyClassService, ManagedKid, Room} from "../../shared/myclass.service";
 import {KidSignInOutService} from "../../shared/kid-signinout.service";
@@ -10,19 +10,15 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import {Router, NavigationExtras} from "@angular/router";
 import {Page} from "ui/page";
 import {TeacherInfo} from "../../providers/data/teacher_info";
-import {Observable} from "rxjs/Rx";
 import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/directives/dialogs";
-import {ModalPostComment} from "../../pages/dialogs/modal-post-comment";
 import {ServerErrorService} from "../../shared/server.error.service";
-// >> long-press-code
-import {GestureEventData} from "ui/gestures";
 import dialogs = require("ui/dialogs");
 import {DatePipe} from '@angular/common';
 import {InternetService} from "../../shared/internet.service";
 import {ModalMessageToParent} from "../dialogs/modal-message-to-parent";
 import {GC} from 'utils/utils';
 
-import {ListViewEventData, RadListView} from "nativescript-telerik-ui/listview";
+import {ListViewEventData} from "nativescript-telerik-ui/listview";
 import * as timerModule  from "timer";
 import listViewModule = require("nativescript-telerik-ui/listview/angular");
 import listViewAnularModule = require("nativescript-telerik-ui/listview/angular");
@@ -65,20 +61,6 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     private numberOfAddedItems; // pull to refresh
     public selectedImages = [];
 
-    /*
-     * Gesture examples
-     *
-     onTap(args: GestureEventData) {
-     console.log("Tap!")
-     }
-     onDoubleTap(args: GestureEventData) {
-     console.log("DoubleTap!")
-
-     }
-     onLongPress(args: GestureEventData) {
-     console.log("LongPress!")
-     }
-     * */
 
 
     constructor(private myClassService: MyClassService,
@@ -113,11 +95,6 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
 
-        // show actionBarItems after some time to fix overlappingg issue
-        setTimeout(() => {
-            this.showActionBarItems = true;
-        }, 500);
-
         //this.getRoomsAndMangedKids();
         this.loadManagedKids(this.currentRoom);
         this.getAssignedRooms();
@@ -126,11 +103,9 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
 
     getAssignedRooms() {
-        this.isLoading = true;
         this.myClassService.getAssignedRooms().subscribe(
             (result) => {
-                this.assignedRooms = result.body.rooms; 
-                this.isLoading = false;
+                this.assignedRooms = result.body.rooms;
             },
             (error) => {
                 this.isLoading = false;
@@ -144,15 +119,15 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         this.myClassService.getManagedKids(room)
             .subscribe(
                 (result) => {
+
                     this.managed_kids = new ObservableArray<ManagedKid>();
                     var body = result.body;
                     body.managed_kids.forEach((managedKid) => {
                         this.addNewManagedKid(managedKid);
                     });
-
-                    this.isLoading = false;
                     // save managed kids in SharedData Provider, so data will be available to all components
                     this.sharedData.managedKids = body.managed_kids;
+                    this.isLoading = false;
                 },
                 (error) => {
                     this.isLoading = false;
@@ -222,35 +197,10 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         });
     }
 
-    /*kidLoaded(args) {
-     let kidStackLayout = args.object;
-     kidStackLayout.observe(gestures.GestureTypes.tap | gestures.GestureTypes.longPress, (args) => {
-     //console.log("Event: " + args.eventName + ", sender: " + args.object);
-     let kid = args.object.get("kid");
-     if (args.eventName === 'tap') {
-     console.log("Tap")
-     } else if (args.eventName === 'longPress') {
-     console.log("Long Press")
-     console.log("Event  longPress");
-     //this.onLongPressKid(kid);
-     }
-     });
-     }*/
-
-
     onTapKid(args: ListViewEventData) {
         let kid = this.managed_kids.getItem(args.itemIndex);
         this.kidData.info = kid;
-
         let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
-        /*kidStackLayout.animate(
-            { backgroundColor: '#DCDCDC', duration: 100 }
-        ).then(() => {
-            this.cancelKidSelectionAnimation(kid);
-        }).catch(()=>{
-            // animation error
-        });*/
-
         this.routerExtensions.navigate(["/kid-dashboard"], {
             transition: {
                 name: "slideLeft"
@@ -262,13 +212,6 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         let kid = this.managed_kids.getItem(args.itemIndex);
 
         let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
-       /* kidStackLayout.animate(
-            {backgroundColor: '#DCDCDC', duration: 100}
-        ).then(()=> {
-            // animationDone
-        }).catch(()=> {
-            // animation error
-        })*/
 
         dialogs.action({
             //message: "",

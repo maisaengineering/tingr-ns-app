@@ -1,5 +1,4 @@
-import {Component, ViewContainerRef, OnInit, ViewChild,} from "@angular/core";
-import {View} from "ui/core/view";
+import {Component, ViewContainerRef, OnInit} from "@angular/core";
 import {Router, ActivatedRoute} from "@angular/router";
 import {RouterExtensions} from 'nativescript-angular/router';
 
@@ -7,7 +6,6 @@ import {Teacher} from "../../shared/teacher/teacher";
 import {TeacherService} from "../../shared/teacher/teacher.service";
 import {Page} from "ui/page";
 
-import * as appSettings from "application-settings"
 import {TokenService} from "../../shared/token.service";
 import {TeacherInfo} from "../../providers/data/teacher_info";
 import {SharedData} from "../../providers/data/shared_data"
@@ -57,12 +55,6 @@ export class VerifyPasswordPage implements OnInit {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
         this.page.actionBarHidden = true;
-
-        //this.page.backgroundImage = "res://bg_login";
-
-        // focus on password field
-        // let passTextField = view.getViewById(this.page, "password");
-        //passTextField.focus();
     }
 
 

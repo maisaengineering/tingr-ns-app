@@ -1,9 +1,8 @@
 import {Component, OnInit, NgModule, Input} from '@angular/core';
 import {ModalDialogParams} from "nativescript-angular/directives/dialogs";
-import {ModalDialogService, ModalDialogOptions, ModalDialogHost} from "nativescript-angular/modal-dialog";
 import {DatePicker} from "ui/date-picker";
 import {Page} from "ui/page";
-import {Router, NavigationExtras} from "@angular/router";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'modal-content',
@@ -44,35 +43,14 @@ export class ModalDatePicker implements OnInit {
     }
 
     public submit(res: string) {
-
         //TODO get the result in Calendar Component
         let datePicker: DatePicker = <DatePicker>this.page.getViewById<DatePicker>("datePicker");
-
-        // this.params.closeCallback(res);
-
-
-        /*let navigationExtras: NavigationExtras = {
-         queryParams: {
-         "date": '28/12/2016'
-         }
-         };*/
-
-
-        // this.params.closeCallback(new Date(datePicker.year, datePicker.month, datePicker.day));
-        // this.router.navigate(["/calendar"], navigationExtras);
-
         this.params.closeCallback(datePicker.date);
-
-
-        //let datePicker:DatePicker =<DatePicker> this.page.getViewById<DatePicker>("datePicker");
-        //this.params.closeCallback();
     }
 
     public cancel() {
         this.params.closeCallback('');
-
     }
-
 
     ngOnDestroy() {
     }

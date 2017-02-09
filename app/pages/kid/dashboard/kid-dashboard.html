@@ -28,10 +28,10 @@
                             <GridLayout row="0" (tap)="openPostImages(post)">
 
                                 <Image *ngIf="isIos" stretch="aspectFill" height="250"
-                                       src="{{ post.images[0] || '~/images/post-placeholder.png' }}"
+                                       src="{{ post.images[0] || '~/images/post-placeholder.jpg' }}"
                                        class="cover-image" loadMode="async"></Image>
                                 <FrescoDrawee *ngIf="isAndroid" imageUri="{{ post.images[0] }}"
-                                              placeholderImageUri="~/images/post-placeholder.png"></FrescoDrawee>
+                                              placeholderImageUri="~/images/post-placeholder.jpg"></FrescoDrawee>
                             </GridLayout>
                             <GridLayout row="1" class="moment-tags">
                                 <StackLayout orientation="vertical">

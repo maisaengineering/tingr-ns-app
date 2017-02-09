@@ -1,23 +1,15 @@
-import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewContainerRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {DrawerPage} from "../drawer.page";
 import {CalendarService, Schedule, Birthday, EventReminder, Holiday, Message} from "../../shared/calendar.service";
-
-import {ListView} from 'ui/list-view';
-import {TextView} from 'ui/text-view';
-
 import {TeacherInfo} from "../../providers/data/teacher_info";
 import * as dialogs from "ui/dialogs";
 import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/directives/dialogs";
 import {ModalDatePicker} from "../../pages/dialogs/modal-date-picker";
-import {ModalServerError} from "../../pages/dialogs/modal-server-error";
 import {InternetService} from "../../shared/internet.service";
 import {ServerErrorService} from "../../shared/server.error.service";
-import {DatePicker} from "ui/date-picker";
-import {Page} from "ui/page";
 import {Router, NavigationExtras} from "@angular/router";
-var app = require("application");
-var platform = require("platform");
-var frameModule = require("ui/frame");
+let app = require("application");
+let platform = require("platform");
 
 
 @Component({
@@ -88,24 +80,7 @@ export class CalendarComponent extends DrawerPage implements OnInit {
     ngOnInit() {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
-
-        // show actionBarItems after some time to fix overlappingg issue
-        setTimeout(() => {
-            this.showActionBarItems = true;
-        }, 500);
-
-        /*// Hide 'Default Back button'
-         if (this.isIos) {
-         var controller = frameModule.topmost().ios.controller;
-         // get the view controller navigation item
-         var navigationItem = controller.visibleViewController.navigationItem;
-         // hide back button
-         navigationItem.setHidesBackButtonAnimated(true, false);
-         }*/
-        // load data
         this.loadCalendarDataByDay(this.currentDate);
-        //this.serverErrorService.showErrorModal();
-
     }
 
 
@@ -148,8 +123,6 @@ export class CalendarComponent extends DrawerPage implements OnInit {
                     this.event_reminders = reminders.event_reminders;
                     this.holidays = reminders.holidays;
                     this.isLoading = false;
-
-                    //console.log("Messages " + JSON.stringify(this.messages));
                 },
                 (error) => {
                     this.isLoading = false;
@@ -170,8 +143,6 @@ export class CalendarComponent extends DrawerPage implements OnInit {
 
     // check if local current time is b/w schedule start and end times
     isScheduleTimeIsCurrent(scheduleStartTimeStr, scheduleEndTimeStr) {
-        //console.log(" scheduleStartTimeStr "+ scheduleStartTimeStr);
-        //console.log(" scheduleEndTimeStr "+ scheduleEndTimeStr);
         // convert api time to localtime
         let scheduleStartTime = new Date(scheduleStartTimeStr);
         let scheduleEndTime = new Date(scheduleEndTimeStr);
@@ -211,6 +182,4 @@ export class CalendarComponent extends DrawerPage implements OnInit {
             //console.log("Dialog closed!");
         });
     }
-
-
 }

@@ -1,9 +1,6 @@
 import {Component, ViewContainerRef, OnInit, NgModule, Input} from '@angular/core';
 import {ModalDialogParams} from "nativescript-angular/directives/dialogs";
-import {ModalDialogService, ModalDialogOptions, ModalDialogHost} from "nativescript-angular/modal-dialog";
-import {DatePicker} from "ui/date-picker";
 import {Page} from "ui/page";
-import {Router, NavigationExtras} from "@angular/router";
 import {PostService} from "../../shared/post.service";
 import {ServerErrorService} from "../../shared/server.error.service";
 let tnsfx = require('nativescript-effects');

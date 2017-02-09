@@ -1,6 +1,6 @@
-import {Component, ViewContainerRef, OnInit, ViewChild, ElementRef, Injectable} from "@angular/core";
-import {Router, NavigationExtras} from "@angular/router";
-import {RouterExtensions, PageRoute} from "nativescript-angular/router";
+import {Component, ViewContainerRef, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
+import {RouterExtensions} from "nativescript-angular/router";
 import {Page} from "ui/page";
 import {Teacher} from "../../shared/teacher/teacher";
 import {TeacherService} from "../../shared/teacher/teacher.service";
@@ -9,7 +9,6 @@ import {AuthService} from "../../shared/oauth/auth.service";
 import {SharedData} from "../../providers/data/shared_data"
 import {InternetService} from "../../shared/internet.service";
 import {ServerErrorService} from "../../shared/server.error.service";
-import {Label} from "ui/label";
 var app = require("application");
 var view = require("ui/core/view");
 
@@ -58,11 +57,6 @@ export class LoginPage implements OnInit {
         this.internetService.alertIfOffline();
 
         this.page.actionBarHidden = true;
-        //this.page.backgroundImage = '~/images/teacher-login-bg.png';
-        /*if (getConnectionType() === connectionType.none) {
-         alert("Tingr requires an internet connection to log in.");
-         return;
-         }*/
 
         // focus on email field
         let emailTextField = view.getViewById(this.page, "email");
@@ -93,13 +87,6 @@ export class LoginPage implements OnInit {
         let emailTextField = view.getViewById(this.page, "email");
 
         emailTextField.dismissSoftInput();
-        //dismiss input
-        /*if (emailTextField.ios) {
-            emailTextField.ios.endEditing(true);
-        } else if (emailTextField.android) {
-            emailTextField.android.clearFocus();
-        }*/
-
         if (this.email === '') {
             this.emailError = true;
             emailTextField.borderColor = '#e89999';

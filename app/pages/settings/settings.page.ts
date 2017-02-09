@@ -1,6 +1,5 @@
 import {Component, ViewContainerRef, OnInit} from "@angular/core";
 import {Location} from "@angular/common";
-import {Page} from "../page";
 import { RouterExtensions } from 'nativescript-angular/router';
 import {Router, NavigationExtras} from "@angular/router";
 import * as appSettings from "application-settings"

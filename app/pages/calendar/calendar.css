@@ -1,7 +1,4 @@
-
-
 /* Newly added for caledar*/
-
 .schedule-date{
     font-size: 18;
     font-weight: bold;
@@ -14,11 +11,6 @@ StackLayout.today-date.active{
     background-color: #e6e6e6;
     color: white;
 }
-
-.calendar-schedule {
-}
-
-
 .calendar-schedule .schedule-icon,
 .calendar-reminder .reminder-icon,
 .calendar-message .message-icon {
@@ -30,44 +22,21 @@ StackLayout.today-date.active{
 .calendar-message .item  {
     padding: 6px;
 }
-
 .calendar-schedule .item .event{
     margin-left: 20px;
 }
-
 .calendar-reminder .item {
     font-style: italic;
 }
-
-
 .rounded-corner-icon.avatar-icon{
     padding: 8px;
-
 }
-/*
-.calendar-message .item .kid-name{
-    font-weight: bold;
-    font-size: 13px;
-}
-.calendar-message .item .relation-name{
-    font-size: 12px;
-    font-style: italic;
-    margin-left: 5px;
-    margin-top: 1px;
-}
-*/
-
 .calendar-message .kid-profile-pic{
     border-radius: 20;
 }
-
-
 .schedule-empty-data {
     color: #999999;
     font-weight: 700;
     font-size: 17;
     font-style: italic;
 }
-
-
-

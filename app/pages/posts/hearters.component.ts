@@ -1,7 +1,7 @@
-import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewContainerRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 import frameModule = require("ui/frame");
-import {Router, NavigationExtras} from "@angular/router";
+import {Router} from "@angular/router";
 import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../providers/data/kid_data";
 import {SharedData} from "../../providers/data/shared_data";

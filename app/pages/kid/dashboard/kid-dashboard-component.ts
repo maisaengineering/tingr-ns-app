@@ -1,4 +1,4 @@
-import {Component, ViewContainerRef, ChangeDetectorRef, OnInit, ViewChild, ElementRef} from "@angular/core";
+import {Component, ViewContainerRef, ChangeDetectorRef, OnInit, ViewChild} from "@angular/core";
 import {Page} from "ui/page";
 import {PostService, Post, TaggedTo, Comment} from "../../../shared/post.service";
 import frameModule = require("ui/frame");
@@ -14,7 +14,6 @@ import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/direc
 import {ModalPostComment} from "../../../pages/dialogs/modal-post-comment";
 import {ServerErrorService} from "../../../shared/server.error.service";
 
-import {ObservableArray} from "data/observable-array";
 import observable = require("data/observable");
 import {Location} from "@angular/common";
 require("nativescript-dom");
@@ -31,17 +30,12 @@ let PhotoViewer = require("nativescript-photoviewer");
 let photoViewer = new PhotoViewer();
 import {
     ListViewLinearLayout,
-    ListViewEventData,
-    RadListView,
-    ListViewLoadOnDemandMode
+    ListViewEventData
 }from "nativescript-telerik-ui/listview";
-import * as timerModule  from "timer";
-import {StackLayout} from "ui/layouts/stack-layout";
 
 import listViewModule = require("nativescript-telerik-ui/listview");
 import listViewAnularModule = require("nativescript-telerik-ui/listview/angular");
 declare var android: any;
-import {Observable} from "rxjs/Rx";
 
 @Component({
     moduleId: module.id,
@@ -140,48 +134,6 @@ export class KidDashboardComponent implements OnInit {
        // this.changeDetectorRef.detectChanges();
     }
 
-   /* public onLoadMoreItemsRequested(args: ListViewEventData) {
-        var that = new WeakRef(this);
-        timerModule.setTimeout(() => {
-            //  let listView: RadListView = <RadListView>(frameModule.topmost().currentPage.getViewById("myRadListView"));
-            //let listView: RadListView = args.object;
-            let listView: listViewModule.RadListView = args.object;
-            let initialNumberOfItems = that.get().numberOfAddedItems;
-            //let oldItems = that.get().posts;
-            that.get().postService.getPosts(that.get().postCount, that.get().lastModified, that.get().kid.kid_klid)
-                .map((response1) => {
-                    let result: Array<any> = [];
-                    let res = response1.json();
-                    let newlyAdded = 0;
-                    // console.log("response " + JSON.stringify(response1.json()));
-                    res.body.posts.forEach(post => {
-                        that.get().posts.push(that.get().addNewPostToListView(post));
-                        newlyAdded++
-                    });
-                    if (res.body.posts.length > 0) {
-
-                    } else {
-                        listView.loadOnDemandMode = ListViewLoadOnDemandMode[ListViewLoadOnDemandMode.None];
-                    }
-                    return res;
-
-                })
-                .subscribe(
-                    res => {
-                        that.get().loadOnDemandFired = true;
-                        that.get().postCount = res.body.post_count;
-                        that.get().lastModified = res.body.last_modified;
-                    },
-                    error => {
-                        this.isLoading = false;
-                    }
-                );
-            listView.notifyLoadOnDemandFinished();
-        }, 1000);
-
-        return args.returnValue = true;
-
-    }*/
 
 
     public get layout(): ListViewLinearLayout {
@@ -310,9 +262,6 @@ export class KidDashboardComponent implements OnInit {
                 //console.log("Selection done:");
                 selection.forEach((selected) => {
                     //TODO for multiple seelction follow below coding for each one
-                    // console.log("----------------");
-                    // console.log("uri: " + selected.uri);
-                    // console.log("fileUri: " + selected.fileUri);
                 });
                 this.selectedImages = selection;
                 // this.changeDetectionRef.detectChanges();
@@ -331,10 +280,12 @@ export class KidDashboardComponent implements OnInit {
                         });
 
                     }).catch((e) => {
+                    this.serverErrorService.showErrorModal();
                     //console.log("Error: " + e);
                     //console.log(e.stack);
                 });
             }).catch((e) => {
+            this.serverErrorService.showErrorModal();
             //console.log(e);
         });
     }
@@ -436,25 +387,13 @@ export class KidDashboardComponent implements OnInit {
     }
 
     deletePost(args: ListViewEventData, post, index) {
-        // check for fix:
-        // https://github.com/telerik/nativescript-ui-samples/issues/163
-        // https://github.com/telerik/nativescript-ui-samples-angular/issues/35
-        //var listView: RadListView = args.object;
-        //let listView: RadListView = <RadListView>(frameModule.topmost().currentPage.getViewById("listView"));
-        // console.log("args.object.bindingContext "+ index);
-        //let currentPost = this.posts.filter(p => p.kl_id === post.kl_id)[0];
-
         let temp = this.posts.slice();
         temp.splice(index, 1);
-        // this.posts = new ObservableArray(temp);
-        //this.posts = new ObservableArray<Post>(temp);
         this.posts = temp;
-       // this.changeDetectorRef.detectChanges();
         nstoasts.show({
             text: 'Post successfully deleted.',
             duration: nstoasts.DURATION.SHORT
         });
-
         this.postService.deletePost(post)
             .subscribe(
                 (result) => {

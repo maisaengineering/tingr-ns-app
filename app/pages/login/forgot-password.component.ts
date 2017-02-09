@@ -1,10 +1,9 @@
 import {Router, ActivatedRoute} from "@angular/router";
-import {RouterExtensions, PageRoute} from "nativescript-angular/router";
+import {RouterExtensions} from "nativescript-angular/router";
 import {Component, OnInit } from "@angular/core";
 import {TeacherService} from "../../shared/teacher/teacher.service";
 import {Page} from "ui/page";
 import {Location} from "@angular/common";
-import {TokenService} from "../../shared/token.service";
 import {TeacherInfo} from "../../providers/data/teacher_info";
 import dialogs = require("ui/dialogs");
 var view = require("ui/core/view");
@@ -46,21 +45,10 @@ export class ForgotPasswordComponent implements OnInit {
         // focus on password field
         let passTextField = view.getViewById(this.page, "email");
         //passTextField.focus();
-        // show actionBarItems after some time to fix overlapping issue
-        setTimeout(() => {
-            this.showActionBarItems = true;
-        }, 300);
+
 
     }
 
-    /*goBack(): void {
-       // this.location.back();
-        this.routerExtensions.navigate(["/verify-password"], {
-            transition: {
-                name: "slideRight"
-            }
-        });
-    }*/
 
     goBack() {
         this.routerExtensions.backToPreviousPage();

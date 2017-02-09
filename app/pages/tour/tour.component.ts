@@ -1,12 +1,8 @@
 import {Component, ViewContainerRef, OnInit} from "@angular/core";
 import {Location} from "@angular/common";
 import {Page} from "ui/page";
-import {Router, NavigationExtras, ActivatedRoute} from "@angular/router";
+import {Router,  ActivatedRoute} from "@angular/router";
 import {RouterExtensions, PageRoute} from "nativescript-angular/router";
-import * as appSettings from "application-settings"
-import { TokenService } from "../../shared/token.service";
-import { TeacherInfo } from "../../providers/data/teacher_info";
-import { TeacherService } from "../../shared/teacher/teacher.service";
 import {InternetService} from "../../shared/internet.service";
 import {ServerErrorService} from "../../shared/server.error.service";
 

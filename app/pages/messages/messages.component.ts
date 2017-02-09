@@ -1,7 +1,7 @@
 import {Component, ViewContainerRef, ViewChild, ElementRef, ChangeDetectorRef, OnInit} from "@angular/core";
 import {Page} from "ui/page";
 import frameModule = require("ui/frame");
-import {Router, NavigationExtras, ActivatedRoute} from "@angular/router";
+import {Router,  ActivatedRoute} from "@angular/router";
 import {RouterExtensions, PageRoute} from "nativescript-angular/router";
 import {KidData} from "../../providers/data/kid_data";
 import {SharedData} from "../../providers/data/shared_data";
@@ -69,13 +69,7 @@ export class MessagesComponent implements OnInit {
     ngOnInit() {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
-        // show actionBarItems after some time to fix overlappingg issue
-
-
         this.getMessages();
-
-
-
     }
 
     getMessages() {
@@ -179,11 +173,6 @@ export class MessagesComponent implements OnInit {
 
     goBack() {
      this.routerExtensions.backToPreviousPage();
-      /*  this.routerExtensions.navigate(["/kid-dashboard"], {
-            transition: {
-                name: "slideRight"
-            }
-        });*/
     }
 
     isMessagesEmpty(obj) {

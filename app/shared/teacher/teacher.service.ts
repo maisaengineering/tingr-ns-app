@@ -6,7 +6,6 @@ import "rxjs/add/operator/map";
 
 import { Teacher } from "./teacher";
 import { Config } from "../config";
-//import * as appSettings from "application-settings"
 import { TokenService } from "../token.service";
 import { TeacherInfo } from "../../providers/data/teacher_info";
 
