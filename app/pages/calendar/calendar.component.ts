@@ -54,8 +54,6 @@ export class CalendarComponent extends DrawerPage implements OnInit {
         this.event_reminders = [];
         this.holidays = [];
         this.messages = [];
-        var teacherDetails = TeacherInfo.parsedDetails;
-        this.teacherName = teacherDetails.fname + ' ' + teacherDetails.lname;
     }
 
     createModalDatePickerView() {
