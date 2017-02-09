@@ -13,16 +13,8 @@
         </StackLayout>
     </StackLayout>
     <!-- right area  -->
-    <ActionItem *ngIf="s3_key" (tap)="updateMoment()" ios.position="right" andriod.postion="actionBar" icon="res://ic_check">
+    <ActionItem  (tap)="updateMoment()" ios.position="right" andriod.postion="actionBar" icon="res://ic_check">
     </ActionItem>
-
-    <ActionItem *ngIf="!s3_key" ios.position="right" andriod.postion="actionBar">
-        <ActivityIndicator height="30" width="30" visibility="collapsed"
-                           class="busy activity-indicator p-r-10"
-                           busy="{{ s3_key ? false : true }}">
-        </ActivityIndicator>
-    </ActionItem>
-
 </ActionBar>
 
 <GridLayout class="moment-capture-container">

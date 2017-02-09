@@ -73,10 +73,6 @@ export class KidEditMomentComponent implements OnInit {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
         // show actionBarItems after some time to fix overlappingg issue
-        setTimeout(() => {
-            this.showActionBarItems = true;
-        }, 500);
-
         //set image and additional details with existing data
         let momentImageVIew = view.getViewById(this.page, 'moment-image');
         if(this.currentPost.images.length){
@@ -160,6 +156,7 @@ export class KidEditMomentComponent implements OnInit {
             GC();
 
             // get s3_key for newly upload image
+            this.s3_key = '';
             this.getS3Key();
         });
     }
@@ -233,6 +230,8 @@ export class KidEditMomentComponent implements OnInit {
     }
 
     updateMoment(){
+        let momentAdditionalDetailsField = view.getViewById(this.page, "moment-additional-details");
+        momentAdditionalDetailsField.dismissSoftInput();
         if(this.taggedKidIds.length < 1){
             dialogs.alert({
                 title: "",
@@ -244,9 +243,28 @@ export class KidEditMomentComponent implements OnInit {
             return;
         }
         this.isLoading = true;
+        if(this.s3_key){
+            this.updatePost();
+        }else{
+            this.postService.uploadToS3(this.sharedData.momentCaptureDetails.imageBase64Data)
+                .subscribe(
+                    (result) => {
+                        let body = result.body;
+                        this.s3_key = body.key;
+                        this.updatePost();
+                    },
+                    (error) => {
+                        this.isLoading = false;
+                        this.serverErrorService.showErrorModal();
+                    }
+                );
+        }
+
+    }
+
+    updatePost(){
         let updatedAt = new Date();
-        let new_s3_key =  this.s3_key == 'exists' ? '' : this.s3_key;
-        this.postService.updatePost(this.currentPost.kl_id,updatedAt, this.additionalDetails.trim(), this.taggedKidIds, new_s3_key)
+        this.postService.updatePost(this.currentPost.kl_id,updatedAt, this.additionalDetails.trim(), this.taggedKidIds, this.s3_key)
             .subscribe(
                 (result) => {
                     let body = result.body;

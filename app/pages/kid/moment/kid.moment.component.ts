@@ -233,6 +233,8 @@ export class KidMomentComponent implements OnInit {
     }
 
     saveMoment(){
+        let momentAdditionalDetailsField = view.getViewById(this.page, "moment-additional-details");
+        momentAdditionalDetailsField.dismissSoftInput();
         if(this.taggedKidIds.length < 1){
             dialogs.alert({
                 title: "",
@@ -243,8 +245,27 @@ export class KidMomentComponent implements OnInit {
             });
             return;
         }
-        let createdAt = new Date();
         this.isLoading = true;
+        if(this.s3_key){
+            this.createPost();
+        }else{
+            this.postService.uploadToS3(this.sharedData.momentCaptureDetails.imageBase64Data)
+                .subscribe(
+                    (result) => {
+                        let body = result.body;
+                        this.s3_key = body.key;
+                        this.createPost();
+                    },
+                    (error) => {
+                        this.isLoading = false;
+                        this.serverErrorService.showErrorModal();
+                    }
+                );
+        }
+    }
+
+    createPost(){
+        let createdAt = new Date();
         this.postService.createPost(createdAt, this.additionalDetails.trim(), this.taggedKidIds, this.s3_key)
             .subscribe(
                 (result) => {
