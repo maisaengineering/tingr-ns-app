@@ -73,7 +73,6 @@ export class ModalMessageToParent implements OnInit {
     }
 
     public submit(res: string) {
-        //console.log("Passing Data :" + this.commentDescription);
         //this.params.closeCallback(res);
         let description = this.messageText.trim();
         if(description){

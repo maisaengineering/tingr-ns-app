@@ -97,7 +97,6 @@ export class CalendarComponent extends DrawerPage implements OnInit {
                     this.event_reminders = reminders.event_reminders;
                     this.holidays = reminders.holidays;
 
-                    //console.log("Messages " + JSON.stringify(this.messages));
                     // stop pull to refresh
                     setTimeout(() => {
                         pullRefresh.refreshing = false;

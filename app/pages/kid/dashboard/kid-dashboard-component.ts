@@ -106,7 +106,6 @@ export class KidDashboardComponent implements OnInit {
         this.internetService.alertIfOffline();
         //this.page.actionBarHidden = true;
         this.kid = this.kidData.info;
-        console.log("KID "+ JSON.stringify(this.kid));
         this.layout = new ListViewLinearLayout();
         this.isLoading = true;
         this.posts = [];

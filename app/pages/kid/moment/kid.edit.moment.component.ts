@@ -210,7 +210,7 @@ export class KidEditMomentComponent implements OnInit {
                 });
                 GC();
             }).catch((e) => {
-            console.log(e);
+            //console.log(e);
         });
 
     }
