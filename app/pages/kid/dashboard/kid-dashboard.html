@@ -30,8 +30,12 @@
                                 <Image *ngIf="isIos" stretch="aspectFill" height="250"
                                        src="{{ post.images[0] || '~/images/post-placeholder.jpg' }}"
                                        class="cover-image" loadMode="async"></Image>
-                                <FrescoDrawee *ngIf="isAndroid" imageUri="{{ post.images[0] }}"
-                                              placeholderImageUri="~/images/post-placeholder.jpg"></FrescoDrawee>
+
+                                <FrescoDrawee *ngIf="isAndroid" height="250" imageUri="{{ post.images[0] }}"
+                                              aspectRatio="1.33" verticalAlignment="top" showProgressBar="false"
+                                              placeholderImageUri="~/images/post-placeholder.jpg"
+                                              fadeDuration="1000"
+                                              failureImageUri="~/images/post-placeholder.jpg"></FrescoDrawee>
                             </GridLayout>
                             <GridLayout row="1" class="moment-tags">
                                 <StackLayout orientation="vertical">
