@@ -1,8 +1,8 @@
 <StackLayout verticalAlignment="center" horizontalAlignment="center">
     <StackLayout class="text-center">
-            <Image src="~/images/logo-100.png" stretch="none"></Image>
+            <Image src="~/images/logo-100.png" stretch="aspectFill" height="100" width="100"></Image>
             <Image src="~/images/tour-plus.png" class="m-20" height="25" width="25"></Image>
-            <Image [src]="orgLogo" stretch="none"></Image>
+            <Image [src]="orgLogo" stretch="aspectFill" height="100" width="100"></Image>
             <Label text="take a tour" class="take-a-tour blue2 m-t-30 m-b-10" (tap)="takeTour()"></Label>
             <Label text="skip" class="skip-tour text-muted" (tap)="skipTour()"></Label>
     </StackLayout>
