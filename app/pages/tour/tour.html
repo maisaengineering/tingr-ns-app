@@ -1,32 +1,31 @@
-<StackLayout #container>
-    <GridLayout rows="*,auto">
-        <StackLayout row="0">
-            <Carousel pageChanged="myChangeEvent" pageTapped="mySelectedEvent" indicatorColor="#6fa8dc"
-                      ios:autoPagingInterval="4" android:indicatorAnimation="fill">
-                <CarouselItem id="slide1">
-                    <Image src="~/images/tour/1.jpg"></Image>
-                </CarouselItem>
+<GridLayout #container>
+    <GridLayout rows="*">
+        <Carousel pageChanged="myChangeEvent" pageTapped="mySelectedEvent" indicatorColor="#6fa8dc"
+                  ios:autoPagingInterval="4" android:indicatorAnimation="fill">
+            <CarouselItem id="slide1">
+                <Image src="~/images/tour/1.jpg"></Image>
+            </CarouselItem>
 
-                <CarouselItem id="slide2">
-                    <Image src="~/images/tour/2.jpg"></Image>
-                </CarouselItem>
+            <CarouselItem id="slide2">
+                <Image src="~/images/tour/2.jpg"></Image>
+            </CarouselItem>
 
-                <CarouselItem id="slide3">
-                    <Image src="~/images/tour/3.jpg"></Image>
-                </CarouselItem>
+            <CarouselItem id="slide3">
+                <Image src="~/images/tour/3.jpg"></Image>
+            </CarouselItem>
 
-                <CarouselItem id="slide4">
-                    <Image src="~/images/tour/4.jpg"></Image>
-                </CarouselItem>
+            <CarouselItem id="slide4">
+                <Image src="~/images/tour/4.jpg"></Image>
+            </CarouselItem>
 
-                <CarouselItem id="slide5">
-                    <Image src="~/images/tour/5.jpg"></Image>
-                </CarouselItem>
-            </Carousel>
-        </StackLayout>
-
-        <StackLayout row="1" horizontalAlignment="right">
-                <Button  text="{{ fromSettingsPage ? 'exit' : 'skip >' }}" horizontalAlignment="right" class="btn  btn-rounded-sm" (tap)="skip()"></Button>
-        </StackLayout>
+            <CarouselItem id="slide5">
+                <Image src="~/images/tour/5.jpg"></Image>
+            </CarouselItem>
+        </Carousel>
     </GridLayout>
-</StackLayout>
+
+    <GridLayout rows="*" horizontalAlignment="right" verticalAlignment="bottom" class="m-r-20">
+            <Button text="{{ fromSettingsPage ? 'exit' : 'skip >' }}"
+                    class="btn btn-primary btn-rounded-sm btn-submit " (tap)="skip()"></Button>
+    </GridLayout>
+</GridLayout>
