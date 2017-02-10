@@ -27,7 +27,7 @@
                                     class="post-item">
                             <GridLayout row="0" (tap)="openPostImages(post)">
 
-                                <Image *ngIf="isIos" stretch="aspectFill" height="250"
+                                <Image *ngIf="isIos" stretch="fill" height="250"
                                        src="{{ post.images[0] || '~/images/post-placeholder.jpg' }}"
                                        class="cover-image" loadMode="async"></Image>
 
@@ -167,9 +167,18 @@
                                 class="kid-dashboard">
                         <!--- Profile section -->
                         <GridLayout row="0"  backgroundColor="#e9e9e9" class="p-y-10 p-x-20">
-                            <StackLayout height="100" horizontalAlignment="right">
-                                <Image height="100" width="100" class="kid-profile-pic-big blue-circle-border"
-                                       src="{{ kid.photograph_url || '~/images/avatar-100.png'}}"></Image>
+                            <StackLayout  visibility="{{ kid.photograph_url ? 'visible' : 'collapse' }}">
+                                <StackLayout height="100" horizontalAlignment="right">
+                                    <Image height="100" width="100" class="kid-profile-pic-big blue-circle-border"
+                                           src="{{ kid.photograph_url || '~/images/avatar-100.png'}}"></Image>
+                                </StackLayout>
+                            </StackLayout>
+                            <StackLayout  visibility="{{ !kid.photograph_url ? 'visible' : 'collapse' }}">
+                                <StackLayout height="100" horizontalAlignment="right">
+                                    <StackLayout class="blue-circle-border extra-large-avatar-with-name text-center" verticalAlignment="center" >
+                                        <Label [text]="kid | shortName | uppercase"></Label>
+                                    </StackLayout>
+                                </StackLayout>
                             </StackLayout>
                         </GridLayout>
 
