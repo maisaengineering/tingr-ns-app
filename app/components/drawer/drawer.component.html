@@ -2,8 +2,15 @@
     <StackLayout orientation="vertical" class="m-t-20">
         <StackLayout horizontalAlignment="center"  verticalAlignment="center">
 
-            <Image *ngIf="teacherInfo.photograph" height="100" width="100" class="teacher-profile-pic blue-circle-border"
+            <Image *ngIf="isIos && teacherInfo.photograph" height="100" width="100" class="teacher-profile-pic blue-circle-border"
                    src="{{ teacherInfo.photograph }}"></Image>
+
+            <FrescoDrawee *ngIf="isAndroid && teacherInfo.photograph" height="100" width="100"
+                          class="teacher-profile-pic"
+                          imageUri="{{ teacherInfo.photograph }}"
+                          verticalAlignment="top"
+                          roundAsCircle="true"
+                          fadeDuration="600"></FrescoDrawee>
 
             <StackLayout *ngIf="!teacherInfo.photograph" class="blue-circle-border extra-large-avatar-with-name text-center" verticalAlignment="center" >
                 <Label [text]="teacherInfo | shortName | uppercase"></Label>

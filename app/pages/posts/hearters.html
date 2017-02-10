@@ -31,8 +31,16 @@
                     <StackLayout *ngFor="let hearter of hearters">
                         <Gridlayout rows="auto" columns="auto,*" verticalAlignment="center" orientation="horizontal"
                                     class="item">
-                            <Image *ngIf="hearter.photograph_url" row='0' col="0" height="40" width="40" class="hearter-profile-pic blue-circle-border"
-                                   src="{{ hearter.photograph_url }}"></Image>
+                            <StackLayout row='0' col="0" >
+                                <Image *ngIf="isIos && hearter.photograph_url" height="40" width="40" class="hearter-profile-pic blue-circle-border"
+                                       src="{{ hearter.photograph_url }}"></Image>
+                                <FrescoDrawee *ngIf="isAndroid && hearter.photograph_url" height="40" width="40"
+                                              class="hearter-profile-pic"
+                                              imageUri="{{ hearter.photograph_url }}"
+                                              verticalAlignment="top"
+                                              roundAsCircle="true"
+                                              fadeDuration="600"></FrescoDrawee>
+                            </StackLayout>
 
                             <StackLayout *ngIf="!hearter.photograph_url" class="blue-circle-border small-avatar-with-name text-center" verticalAlignment="center" >
                                 <Label [text]="hearter | shortName | uppercase"></Label>

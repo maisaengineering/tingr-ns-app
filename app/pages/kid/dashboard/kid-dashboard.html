@@ -34,7 +34,7 @@
                                 <FrescoDrawee *ngIf="isAndroid" height="250" imageUri="{{ post.images[0] }}"
                                               aspectRatio="1.33" verticalAlignment="top" showProgressBar="false"
                                               placeholderImageUri="~/images/post-placeholder.jpg"
-                                              fadeDuration="1000"
+                                              fadeDuration="600"
                                               failureImageUri="~/images/post-placeholder.jpg"></FrescoDrawee>
                             </GridLayout>
                             <GridLayout row="1" class="moment-tags">
@@ -42,9 +42,16 @@
                                     <GridLayout columns="*, auto" *ngIf="post.tagged_to.length">
                                         <WrapLayout col="0" row="0" orientation="horizontal">
                                             <StackLayout *ngFor="let item of post.tagged_to; let i = index" margin="3">
-                                                <Image *ngIf="item.photograph" height="40" width="40"
+                                                <Image *ngIf="isIos && item.photograph" height="40" width="40"
                                                        class="kid-profile-pic blue-circle-border"
                                                        src="{{ item.photograph }}"></Image>
+
+                                                <FrescoDrawee *ngIf="isAndroid && item.photograph" height="40" width="40"
+                                                              class="kid-profile-pic"
+                                                              imageUri="{{ item.photograph }}"
+                                                              verticalAlignment="top"
+                                                              roundAsCircle="true"
+                                                              fadeDuration="600"></FrescoDrawee>
 
                                                 <StackLayout *ngIf="!item.photograph"
                                                              class="blue-circle-border small-avatar-with-name text-center"
@@ -84,9 +91,17 @@
                                                      class="moment-comment-item"
                                                      id="comment-slug-{{ comment.slug }}">
 
-                                            <Image *ngIf="comment.commenter_photo" height="60" width="60"
+                                            <Image *ngIf="isIos && comment.commenter_photo" height="60" width="60"
                                                    class="parent-profile-pic blue-circle-border"
                                                    src="{{ comment.commenter_photo }}"></Image>
+
+                                            <FrescoDrawee *ngIf="isAndroid && comment.commenter_photo" height="60" width="60"
+                                                          class="parent-profile-pic"
+                                                          imageUri="{{ comment.commenter_photo }}"
+                                                          verticalAlignment="top"
+                                                          roundAsCircle="true"
+                                                          fadeDuration="600"></FrescoDrawee>
+
 
                                             <StackLayout *ngIf="!comment.commenter_photo"
                                                          class="blue-circle-border medium-avatar-with-name text-center"

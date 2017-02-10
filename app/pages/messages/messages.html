@@ -39,8 +39,14 @@
 
                                 <GridLayout rows="*" columns="auto,*">
                                     <StackLayout row="0" col="0" class="profile-pic-container">
-                                        <Image *ngIf="message.photograph" height="75" width="75" class="profile-pic blue-circle-border"
+                                        <Image *ngIf="isIos && message.photograph" height="75" width="75" class="profile-pic blue-circle-border"
                                                src="{{ message.photograph }}"></Image>
+                                        <FrescoDrawee *ngIf="isAndroid && message.photograph" height="75" width="75"
+                                                      class="profile-pic"
+                                                      imageUri="{{ message.photograph }}"
+                                                      verticalAlignment="top"
+                                                      roundAsCircle="true"
+                                                      fadeDuration="600"></FrescoDrawee>
 
                                         <StackLayout *ngIf="!message.photograph" class="blue-circle-border large-avatar-with-name text-center" verticalAlignment="center" >
                                             <Label [text]="message | shortName | uppercase"></Label>

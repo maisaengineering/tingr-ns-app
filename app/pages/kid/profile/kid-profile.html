@@ -23,8 +23,16 @@
             <StackLayout row="0">
                 <GridLayout rows="auto" columns="auto, *" class="kid-profile-header">
                     <StackLayout row="0" col="0">
-                        <Image *ngIf="kid.photograph_url" height="100" width="100" class="kid-profile-pic blue-circle-border"
+                        <Image *ngIf="isIos && kid.photograph_url" height="100" width="100" class="kid-profile-pic blue-circle-border"
                                src="{{ kid.photograph_url }}"></Image>
+
+                        <FrescoDrawee *ngIf="isAndroid && kid.photograph_url" height="100" width="100"
+                                      class="kid-profile-pic"
+                                      imageUri="{{ kid.photograph_url }}"
+                                      verticalAlignment="top"
+                                      roundAsCircle="true"
+                                      fadeDuration="600"></FrescoDrawee>
+
 
                         <StackLayout *ngIf="!kid.photograph_url" class="blue-circle-border extra-large-avatar-with-name text-center" verticalAlignment="center" >
                             <Label [text]="kid | shortName | uppercase"></Label>

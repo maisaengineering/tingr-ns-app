@@ -38,10 +38,13 @@
 
                                 <Image *ngIf="isIos && item.photograph_url" height="75" width="75" class="kid-profile-pic blue-circle-border"
                                        src="{{ item.photograph_url }}"></Image>
-
-                                <FrescoDrawee *ngIf="isAndroid && item.photograph_url" height="75" width="75" imageUri="{{ item.photograph_url }}"
+                                <FrescoDrawee *ngIf="isAndroid && item.photograph_url" height="75" width="75"
+                                              class="kid-profile-pic"
+                                              imageUri="{{ item.photograph_url }}"
                                               verticalAlignment="top"
-                                              fadeDuration="1000"></FrescoDrawee>
+                                              roundAsCircle="true"
+                                              fadeDuration="600"></FrescoDrawee>
+
 
                                 <StackLayout *ngIf="!item.photograph_url" class="blue-circle-border large-avatar-with-name text-center" verticalAlignment="center" >
                                     <Label [text]="item | shortName | uppercase"></Label>
