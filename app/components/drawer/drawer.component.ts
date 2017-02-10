@@ -11,10 +11,12 @@ export class DrawerComponent {
     public teacherInfo;
     public teacherFullname: String;
     public teacherPhotograph: String;
+    public teacherEmail: String;
 
     constructor() {
         this.teacherInfo = TeacherInfo.parsedDetails;
         this.teacherFullname = this.teacherInfo.fname+ ' '+this.teacherInfo.lname;
         this.teacherPhotograph = this.teacherInfo.photograph;
+        this.teacherEmail = this.teacherInfo.email;
     }
 }

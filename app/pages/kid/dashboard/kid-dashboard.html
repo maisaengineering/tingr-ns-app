@@ -167,19 +167,19 @@
                                 class="kid-dashboard">
                         <!--- Profile section -->
                         <GridLayout row="0"  backgroundColor="#e9e9e9" class="p-y-10 p-x-20">
-                            <StackLayout  visibility="{{ kid.photograph_url ? 'visible' : 'collapse' }}">
+                            <StackLayout>
                                 <StackLayout height="100" horizontalAlignment="right">
                                     <Image height="100" width="100" class="kid-profile-pic-big blue-circle-border"
                                            src="{{ kid.photograph_url || '~/images/avatar-100.png'}}"></Image>
                                 </StackLayout>
                             </StackLayout>
-                            <StackLayout  visibility="{{ !kid.photograph_url ? 'visible' : 'collapse' }}">
+                           <!-- <StackLayout  visibility="{{ !kid.photograph_url ? 'visible' : 'collapse' }}">
                                 <StackLayout height="100" horizontalAlignment="right">
                                     <StackLayout class="blue-circle-border extra-large-avatar-with-name text-center" verticalAlignment="center" >
-                                        <Label [text]="kid | shortName | uppercase"></Label>
+                                        <Label [text]="kid.nickname"></Label>
                                     </StackLayout>
                                 </StackLayout>
-                            </StackLayout>
+                            </StackLayout>-->
                         </GridLayout>
 
                         <GridLayout row="1">

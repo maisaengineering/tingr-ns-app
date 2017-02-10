@@ -168,15 +168,33 @@ NavigationButton, ActionItem{
 
 .drawer-content .drawer-header {
     height: 160;
-    /*background-color: #9fc5f8;*/
+    background-image: url("~/images/teacher-header-bg.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
 }
+
+.drawer-content .drawer-header .teacher-info {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
 
 .drawer-content .drawer-header .teacher-profile-pic {
     border-radius: 50;
 }
 .drawer-content .drawer-header .teacher-name{
-    color: black;
+   font-size: 17;
+    font-weight: 700;
 }
+.drawer-content .drawer-header .teacher-email{
+    font-size: 14;
+}
+
+.drawer-content .drawer-header .edit-profile{
+    font-size: 17;
+    font-weight: 700;
+}
+
 
 
 .drawer-content .drawer-links .drawer-link {
@@ -201,7 +219,7 @@ NavigationButton, ActionItem{
 .drawer-content .drawer-separator  {
     height: 1;
     background-color: #dddddd;
-    margin: 7 0;
+    padding: 7 0;
 }
 
 .todo-next {
