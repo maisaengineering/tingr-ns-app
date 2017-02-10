@@ -54,7 +54,7 @@ export class SettingsPage implements OnInit{
        // this.routerExtensions.backToPreviousPage();
         this.routerExtensions.navigate(["/calendar"], {
             transition: {
-                name: "slideTop"
+                name: "slideBottom"
             }
         });
     }
@@ -88,7 +88,7 @@ export class SettingsPage implements OnInit{
                     // redirect to login page
                     this.routerExtensions.navigate(["/login"], {
                         transition: {
-                            name: "slideTop"
+                            name: "slideBottom"
                         },
                         clearHistory: true
                     });
