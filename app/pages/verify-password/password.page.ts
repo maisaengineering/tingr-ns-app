@@ -102,7 +102,7 @@ export class VerifyPasswordPage implements OnInit {
 
                     this.routerExtensions.navigate(["/"+navigateTo],
                         {
-                            transition: {name: "slideLeft"},
+                            transition: {name: "slideRight"},
                             clearHistory: true
                         });
 
