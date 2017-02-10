@@ -54,9 +54,18 @@
                             <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center"
                                         orientation="horizontal" class="item">
 
-                                <Image row='0' col="0" *ngIf="kid.photograph_url" height="40" width="40"
-                                       class="kid-profile-pic blue-circle-border"
-                                       src="{{ kid.photograph_url }}"></Image>
+                                <StackLayout row="0" col="0">
+                                    <Image *ngIf="isIos && kid.photograph_url" height="40" width="40"
+                                           class="kid-profile-pic blue-circle-border"
+                                           src="{{ kid.photograph_url }}"></Image>
+                                    <FrescoDrawee *ngIf="isAndroid && kid.photograph_url" height="40" width="40"
+                                                  class="kid-profile-pic"
+                                                  imageUri="{{ kid.photograph_url }}"
+                                                  verticalAlignment="top"
+                                                  roundAsCircle="true"
+                                                  fadeDuration="600"></FrescoDrawee>
+
+                                </StackLayout>
 
                                 <StackLayout row='0' col="0" *ngIf="!kid.photograph_url"
                                              class="blue-circle-border small-avatar-with-name text-center"
