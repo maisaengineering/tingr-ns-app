@@ -14,12 +14,12 @@ let app = require("application");
     <StackLayout class="m-x-20 m-t-10" verticalALignment="center">  
             <Gridlayout cols="auto,auto,auto" verticalAlignment="center">
             <StackLayout (tap)="close('close')" class="text-primary blue2" row="0" col="0" orientation="horizontal"> 
-               <Label text="&#xE5CD;" class="text-left material-icons md-24 md-chevron-right"></Label>
+               <Label text="&#xE5CD;" class="text-left material-icons md-36 md-chevron-right"></Label>
             </StackLayout>
             <Label row="0" col="1" class="action-label" horizontalAlignment="center" text="Edit Profile"></Label>
             
              <StackLayout (tap)="submit()"  class="text-primary blue2" row="0" col="2"  horizontalAlignment="right" orientation="horizontal">  
-               <Label text="&#xE5CA;" class="material-icons md-24 md-chevron-right"></Label>
+               <Label text="&#xE5CA;" class="material-icons md-36 md-chevron-right"></Label>
              </StackLayout> 
             </Gridlayout>  
          </StackLayout>
