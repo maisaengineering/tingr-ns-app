@@ -1,0 +1,75 @@
+<ActionBar title="">
+    <!-- left area  -->
+    <NavigationButton *ngIf="isIos" visibility="collapsed"></NavigationButton>
+    <NavigationButton *ngIf="isAndroid" icon="res://ic_left" (tap)="goBack()"></NavigationButton>
+    <ActionItem *ngIf="isIos" icon="res://ic_left" visibility="visible"
+                ios.position="left" (tap)="goBack()"></ActionItem>
+    <!-- center area  -->
+    <StackLayout orientation="horizontal"
+                 ios:horizontalAlignment="center"
+                 android:horizontalAlignment="center">
+        <StackLayout orientation="horizontal" verticalAlignment="center">
+            <Label text="Profile" class="action-label"></Label>
+        </StackLayout>
+    </StackLayout>
+</ActionBar>
+
+
+<GridLayout class="teacher-profile">
+    <ScrollView>
+        <GridLayout rows="auto,auto" backgroundColor="#fafafa">
+            <StackLayout row="0" verticalAlignment="center" horizontalAlignment="center" class="m-20">
+                <AbsoluteLayout>
+                    <StackLayout>
+                        <Image *ngIf="isIos && teacherInfo.photograph" height="100" width="100"
+                               class="kid-profile-pic blue-circle-border"
+                               src="{{ teacherInfo.photograph }}"></Image>
+                        <FrescoDrawee *ngIf="isAndroid && teacherInfo.photograph" height="100" width="100"
+                                      class="kid-profile-pic"
+                                      imageUri="{{ teacherInfo.photograph }}"
+                                      verticalAlignment="top"
+                                      roundAsCircle="true"
+                                      fadeDuration="600"></FrescoDrawee>
+                        <StackLayout *ngIf="!teacherInfo.photograph"
+                                     class="blue-circle-border extra-large-avatar-with-name text-center"
+                                     verticalAlignment="center">
+                            <Label [text]="teacherInfo | shortName | uppercase"></Label>
+                        </StackLayout>
+                    </StackLayout>
+                     <StackLayout left="60" top="75"  >
+                         <Label class="material-icons blue2 md-36 md-photo-camera" text="&#xE412;"></Label>
+                     </StackLayout>
+                </AbsoluteLayout>
+            </StackLayout>
+
+            <StackLayout row="1" class="m-t-10">
+                <CardView margin="0" elevation="5" shadowOffsetWidth="1" shadowOffsetHeight="1" class="whiteCard">
+                     <Label class="p-15 font-weight-bold" [text]="teacherInfo.fname +' '+ teacherInfo.lname"></Label>
+                </CardView>
+                <StackLayout class="m-20">
+                    <Label [text]="teacherInfo.email"></Label>
+                    <Label text="" class="m-t-10"></Label>
+                </StackLayout>
+
+                <CardView margin="0"elevation="5" shadowOffsetWidth="1" shadowOffsetHeight="1" class="whiteCard">
+                     <Stacklayout  padding="15 15 0 15">
+                         <StackLayout>
+                             <Label text="Rooms" class="blue2 font-weight-bold"></Label>
+                         </StackLayout>
+                         <StackLayout *ngFor="let item of teacherInfo.rooms; let last = last">
+                             <Label [text]="item.session_name" class="p-y-15 "></Label>
+                             <StackLayout *ngIf="!last" class="hr-light"></StackLayout>
+                         </StackLayout>
+                     </Stacklayout>
+                </CardView>
+            </StackLayout> 
+        </GridLayout>
+    </ScrollView>
+
+
+    <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
+    <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
+        <ActivityIndicator class="busy activity-indicator" busy="true"></ActivityIndicator>
+    </GridLayout>
+
+</GridLayout>
