@@ -18,57 +18,50 @@
 
 
 <GridLayout>
-    <StackLayout style="background-color: #f9f9f9" class="p-t-20">
-        <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard" (tap)="getTour()">
-            <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
-                        orientation="horizontal">
-                <Label row="0" col="0" text=""></Label>
-                <Label row="0" col="1" verticalAlignment="center" text="Tingr Tour"
-                       class="text-left font-weight-bold"></Label>
-                <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
-                       class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
-            </Gridlayout>
-        </CardView>
+    <StackLayout style="background-color: #f6f6f6" class="p-t-20">
+        <CardView margin="0"elevation="5" shadowOffsetWidth="1" shadowOffsetHeight="1" class="whiteCard">
+            <Stacklayout  padding="0 15 0 15">
+                <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
+                            orientation="horizontal" (tap)="getTour()">
+                    <Label row="0" col="0" text=""></Label>
+                    <Label row="0" col="1" verticalAlignment="center" text="Tingr Tour"
+                           class="text-left font-weight-bold"></Label>
+                    <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
+                           class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
+                </Gridlayout>
+                <StackLayout class="hr-light"></StackLayout>
+                <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
+                            orientation="horizontal" [nsRouterLink]="['/myschool']"
+                            pageTransition="slideTop">
+                    <Label row="0" col="0" text=""></Label>
+                    <Label row="0" col="1" verticalAlignment="center" text="My School"
+                           class="text-left font-weight-bold"></Label>
+                    <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
+                           class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
+                </Gridlayout>
+                <StackLayout class="hr-light"></StackLayout>
+                <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
+                            orientation="horizontal" [nsRouterLink]="['/change-password']"
+                            pageTransition="slideTop">
+                    <Label row="0" col="0" text=""></Label>
+                    <Label row="0" col="1" verticalAlignment="center" text="Change Password"
+                           class="text-left font-weight-bold"></Label>
+                    <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
+                           class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
+                </Gridlayout>
+                <StackLayout class="hr-light"></StackLayout>
 
-        <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard"
-                  [nsRouterLink]="['/myschool']"
-                  pageTransition="slideTop">
-            <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
-                        orientation="horizontal">
-                <Label row="0" col="0" text=""></Label>
-                <Label row="0" col="1" verticalAlignment="center" text="My School"
-                       class="text-left font-weight-bold"></Label>
-                <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
-                       class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
-            </Gridlayout>
+                <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
+                            orientation="horizontal"  (tap)="logOut()">
+                    <Label row="0" col="0" text=""></Label>
+                    <Label row="0" col="1" verticalAlignment="center" text="Logout"
+                           class="text-left font-weight-bold"></Label>
+                    <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
+                           class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
+                </Gridlayout>
+            </Stacklayout>
         </CardView>
-
-        <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard"
-                  [nsRouterLink]="['/change-password']"
-                  pageTransition="slideTop">
-            <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
-                        orientation="horizontal">
-                <Label row="0" col="0" text=""></Label>
-                <Label row="0" col="1" verticalAlignment="center" text="Change Password"
-                       class="text-left font-weight-bold"></Label>
-                <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
-                       class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
-            </Gridlayout>
-        </CardView>
-
-        <CardView margin="5 10 5 10" radius="10" elevation="10" class="whiteCard" (tap)="logOut()">
-            <Gridlayout rows="auto" columns="auto,*,auto" verticalAlignment="center" class="settings-item"
-                        orientation="horizontal">
-                <Label row="0" col="0" text=""></Label>
-                <Label row="0" col="1" verticalAlignment="center" text="Logout"
-                       class="text-left font-weight-bold"></Label>
-                <Label row="0" col="2" verticalAlignment="center" horizontalAlignment="right"
-                       class="material-icons md-24 md-chevron-right text-right" text="&#xE5CC;"></Label>
-            </Gridlayout>
-        </CardView>
-
     </StackLayout>
-
 
     <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>
     <GridLayout rows="*" visibility="{{ isLoading ? 'visible' : 'collapsed'}}">
