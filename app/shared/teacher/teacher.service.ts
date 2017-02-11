@@ -131,6 +131,72 @@ export class TeacherService {
             .catch(this.handleErrors);
     }
 
+    changePhotoGraph(imageBase64Data, teacher_klid){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let imageBase64DataWithFormat = "data:image/jpeg;base64," + imageBase64Data;
+        let imageFileName = new Date().getTime() + '.jpeg';
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: "change_photograph",
+            body: {
+                profile_id: teacher_klid,
+                name: imageFileName,
+                content_type: "image/jpeg",
+                content: imageBase64DataWithFormat
+            }
+        });
+        return this.http.post(
+            Config.apiUrl + "document-vault", data, {
+                headers: headers
+            }
+        )
+            .map((res:Response) => res.json())
+            .catch(this.handleErrors);
+    }
+
+    profileDetails(teacher_klid){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: "teacher_info",
+            body: {
+            }
+        });
+        return this.http.post(
+            Config.apiUrl + "profiles/"+teacher_klid, data, {
+                headers: headers
+            }
+        )
+            .map((res:Response) => res.json())
+            .catch(this.handleErrors);
+    }
+
+
+    updateProfile(data,teacher_klid){
+        let headers = new Headers();
+        headers.append("Content-Type", "application/json");
+        let data = JSON.stringify({
+            access_token: TokenService.accessToken,
+            auth_token: TokenService.authToken,
+            command: "update_teacher",
+            body: {
+                fname: data.fname,
+                lname: data.lname
+            }
+        });
+        return this.http.post(
+            Config.apiUrl + "profiles/"+teacher_klid, data, {
+                headers: headers
+            }
+        )
+            .map((res:Response) => res.json())
+            .catch(this.handleErrors);
+    }
+
 
     handleErrors(error: Response) {
         // return Observable.throw(error.json() || {error: 'Server error'})

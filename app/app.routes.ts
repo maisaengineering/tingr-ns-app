@@ -17,6 +17,7 @@ import { KidRemindersComponent } from "./pages/kid/reminders/kid.reminders.compo
 import { MessagesComponent } from "./pages/messages/messages.component";
 import { HeartersComponent } from "./pages/posts/hearters.component";
 import { ChangePasswordComponent } from "./pages/change-password/change-password.component";
+import { TeacherProfileComponent } from "./pages/teacher/profile.component";
 import { MySchoolComponent } from "./pages/settings/myschool.component";
 import { TourComponent } from "./pages/tour/tour.component";
 import { TakeTourComponent } from "./pages/tour/take-tour.component";
@@ -26,10 +27,11 @@ import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
 import { ModalPostComment } from "./pages/dialogs/modal-post-comment";
 import { ModalMessageToParent } from "./pages/dialogs/modal-message-to-parent";
 import { ModalServerError } from "./pages/dialogs/modal-server-error";
+import { ModalEditProfile } from "./pages/dialogs/modal-edit-profile";
 
 export const APP_ROUTES = [
 
-    { path: "", redirectTo: "/myclass", pathMatch: 'full'},
+    { path: "", redirectTo: "/calendar", pathMatch: 'full'},
     { path: "calendar", component: CalendarComponent, canActivate: [AuthGuard] },
     { path: "myclass", component: MyClassComponent, canActivate: [AuthGuard] },
     { path: "kid-dashboard", component: KidDashboardComponent, canActivate: [AuthGuard]},
@@ -44,6 +46,7 @@ export const APP_ROUTES = [
     { path: "messages", component: MessagesComponent, canActivate: [AuthGuard]},
     { path: "settings", component: SettingsPage, canActivate: [AuthGuard]},
     { path: "change-password", component: ChangePasswordComponent, canActivate: [AuthGuard]},
+    { path: "teacher-profile", component: TeacherProfileComponent, canActivate: [AuthGuard]},
     { path: "myschool", component: MySchoolComponent, canActivate: [AuthGuard]},
     { path: "post-hearters", component: HeartersComponent, canActivate: [AuthGuard]},
     { path: "verify-password", component: VerifyPasswordPage },
@@ -77,6 +80,7 @@ export const navigatableComponents = [
     ModalPostComment,
     ModalMessageToParent,
     ModalServerError,
+    ModalEditProfile,
     ForgotPasswordComponent,
     KidMomentComponent,
     KidEditMomentComponent,
@@ -90,7 +94,8 @@ export const navigatableComponents = [
     ChangePasswordComponent,
     MySchoolComponent,
     TourComponent,
-    TakeTourComponent
+    TakeTourComponent,
+    TeacherProfileComponent
 
 ];
 

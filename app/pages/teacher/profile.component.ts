@@ -6,6 +6,8 @@ import {TeacherService} from "../../shared/teacher/teacher.service";
 import {InternetService} from "../../shared/internet.service";
 import {ServerErrorService} from "../../shared/server.error.service";
 import {TeacherInfo} from "../../providers/data/teacher_info";
+import {ModalEditProfile} from "../../pages/dialogs/modal-edit-profile";
+import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/directives/dialogs";
 let platformModule = require("platform");
 let permissions = require("nativescript-permissions");
 let cameraModule = require("camera");
@@ -23,7 +25,7 @@ declare var android: any;
     selector: 'my-app',
     templateUrl: './profile.html',
     styleUrls: ["./profile.css"],
-    providers: [TeacherService, ServerErrorService]
+    providers: [TeacherService, ServerErrorService, ModalDialogService]
 })
 export class TeacherProfileComponent implements OnInit {
     public isLoading: Boolean = false;
@@ -34,6 +36,7 @@ export class TeacherProfileComponent implements OnInit {
     public picUploaded: Boolean = false;
 
     constructor(private page: Page, private location: Location,
+                private modal: ModalDialogService,
                 private routerExtensions: RouterExtensions,
                 private teacherService: TeacherService,
                 private internetService: InternetService,
@@ -167,12 +170,15 @@ export class TeacherProfileComponent implements OnInit {
     }
 
     changePhoto(imageBase64Data){
+        nstoasts.show({
+            text: 'Photo updated',
+            duration: nstoasts.DURATION.SHORT
+        });
        let teacher_klid = this.teacherInfo.teacher_klid;
         this.teacherService.changePhotoGraph(imageBase64Data,teacher_klid)
             .subscribe(
                 (result) => {
                    let body = result.body;
-                    console.log("result "+ JSON.stringify(body));
                     this.teacherInfo.photograph = body.photograph;
                     //update teacher info in app settings
                     TeacherInfo.details = JSON.stringify(this.teacherInfo);
@@ -183,6 +189,54 @@ export class TeacherProfileComponent implements OnInit {
                 }
             );
     }
+
+    openEditModal(){
+        var options: ModalDialogOptions = {
+            viewContainerRef: this.vcRef,
+            context: {
+                teacher_klid: this.teacherInfo.teacher_klid,
+                fname: this.teacherInfo.fname,
+                lname: this.teacherInfo.lname,
+
+            },
+            fullscreen: true
+        };
+            this.modal.showModal(ModalEditProfile, options).then((result) => {
+                if (result === 'close' || typeof(result) == "undefined") {
+                    // modal closed
+                } else {
+                    this.teacherInfo.fname = result.fname;
+                    this.teacherInfo.lname = result.lname;
+                    nstoasts.show({
+                        text: 'Profile updated',
+                        duration: nstoasts.DURATION.SHORT
+                    });
+                    // invoke api in background to update
+                    this.updateProfile(result);
+                }
+            })
+    }
+
+
+    updateProfile(data){
+        let teacher_klid = this.teacherInfo.teacher_klid;
+        this.teacherService.updateProfile(data,teacher_klid)
+            .subscribe(
+                (result) => {
+                    let body = result.body;
+                    this.teacherInfo.fname = body.fname;
+                    this.teacherInfo.lname = body.lname;
+                    this.teacherInfo.email = body.email;
+                    this.teacherInfo.photograph = body.photograph;
+                    //update teacher info in app settings
+                    TeacherInfo.details = JSON.stringify(this.teacherInfo);
+                },
+                (error) => {
+                   //console.log("error "+ JSON.stringify(error));
+                }
+            );
+    }
+
 
 
 }

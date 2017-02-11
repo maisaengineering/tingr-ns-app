@@ -21,6 +21,7 @@ import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
 import { ModalPostComment } from "./pages/dialogs/modal-post-comment";
 import { ModalMessageToParent } from "./pages/dialogs/modal-message-to-parent";
 import { ModalServerError } from "./pages/dialogs/modal-server-error";
+import { ModalEditProfile } from "./pages/dialogs/modal-edit-profile";
 
 import { DatePipe } from '@angular/common';
 import { KeysPipe } from './utils/keys.pipe';
@@ -92,7 +93,8 @@ if (applicationModule.android) {
         ModalDatePicker,
         ModalPostComment,
         ModalMessageToParent,
-        ModalServerError
+        ModalServerError,
+        ModalEditProfile
     ]
 })
 export class AppModule {

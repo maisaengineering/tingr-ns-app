@@ -46,7 +46,7 @@
                     </StackLayout>
 
 
-                     <StackLayout left="60" top="75"  >
+                     <StackLayout left="65" top="75"  >
                          <Label class="material-icons blue2 md-36 md-photo-camera" text="&#xE412;"></Label>
                      </StackLayout>
                 </AbsoluteLayout>
@@ -54,7 +54,11 @@
 
             <StackLayout row="1" class="m-t-10">
                 <CardView margin="0" elevation="5" shadowOffsetWidth="1" shadowOffsetHeight="1" class="whiteCard">
-                     <Label class="p-15 font-weight-bold" [text]="teacherInfo.fname +' '+ teacherInfo.lname"></Label>
+                    <Gridlayout rows="auto" columns="*,auto" orientation="horizontal" (tap)="openEditModal()">
+                        <Label row="0" col="0" class="p-15 font-weight-bold" horizontalAlignment="left" [text]="teacherInfo.fname +' '+ teacherInfo.lname"></Label>
+                        <Label row="0" col="1" verticalAlignment="center" horizontalAlignment="right"
+                               class="p-r-10 material-icons md-24 md-chevron-right" text="&#xE254;"></Label>
+                    </Gridlayout>
                 </CardView>
                 <StackLayout class="m-20">
                     <Label [text]="teacherInfo.email"></Label>
