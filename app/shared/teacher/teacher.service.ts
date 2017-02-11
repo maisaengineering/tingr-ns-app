@@ -176,7 +176,7 @@ export class TeacherService {
     }
 
 
-    updateProfile(data,teacher_klid){
+    updateProfile(info,teacher_klid){
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({
@@ -184,8 +184,8 @@ export class TeacherService {
             auth_token: TokenService.authToken,
             command: "update_teacher",
             body: {
-                fname: data.fname,
-                lname: data.lname
+                fname: info.fname,
+                lname: info.lname
             }
         });
         return this.http.post(
