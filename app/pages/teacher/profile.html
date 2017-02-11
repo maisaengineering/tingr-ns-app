@@ -18,14 +18,15 @@
 <GridLayout class="teacher-profile">
     <ScrollView>
         <GridLayout rows="auto,auto" backgroundColor="#f6f6f6">
-            <StackLayout row="0" verticalAlignment="center" horizontalAlignment="center" class="m-20">
+            <StackLayout row="0" (tap)="selectMomentCaptureOption()" verticalAlignment="center" horizontalAlignment="center" class="m-20">
                 <AbsoluteLayout>
-                    <StackLayout>
+                    <StackLayout visibility="{{ picUploaded ? 'collapse' : 'visible'}}">
                         <Image *ngIf="isIos && teacherInfo.photograph" height="100" width="100"
-                               class="kid-profile-pic blue-circle-border"
+                               class="teacher-profile-pic blue-circle-border"
                                src="{{ teacherInfo.photograph }}"></Image>
+
                         <FrescoDrawee *ngIf="isAndroid && teacherInfo.photograph" height="100" width="100"
-                                      class="kid-profile-pic"
+                                      class="teacher-profile-pic"
                                       imageUri="{{ teacherInfo.photograph }}"
                                       verticalAlignment="top"
                                       roundAsCircle="true"
@@ -36,6 +37,15 @@
                             <Label [text]="teacherInfo | shortName | uppercase"></Label>
                         </StackLayout>
                     </StackLayout>
+
+
+                    <StackLayout visibility="{{ picUploaded ? 'visible' : 'collapse'}}">
+                        <Image height="100" width="100" id="teacherProfilePic"
+                               class="uploaded-teacher-profile-pic blue-circle-border"
+                               src="{{ '~/images/avatar-100.png' }}"></Image>
+                    </StackLayout>
+
+
                      <StackLayout left="60" top="75"  >
                          <Label class="material-icons blue2 md-36 md-photo-camera" text="&#xE412;"></Label>
                      </StackLayout>

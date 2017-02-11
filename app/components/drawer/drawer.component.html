@@ -3,15 +3,17 @@
         <GridLayout cols="*, auto" class="m-x-10 m-t-20 m-b-10">
             <StackLayout col="0" orientation="vertical" horizontalAlignment="left" class="m-l-10">
                 <StackLayout>
-                    <Image *ngIf="isIos && teacherInfo.photograph" height="60" width="60"
-                           class="teacher-profile-pic blue-circle-border"
-                           src="{{ teacherInfo.photograph }}"></Image>
-                    <FrescoDrawee *ngIf="isAndroid && teacherInfo.photograph" height="60" width="60"
-                                  class="teacher-profile-pic"
-                                  imageUri="{{ teacherInfo.photograph }}"
-                                  verticalAlignment="top"
-                                  roundAsCircle="true"
-                                  fadeDuration="600"></FrescoDrawee>
+                    <StackLayout horizontalAlignment="left">
+                        <Image *ngIf="isIos && teacherInfo.photograph" height="60" width="60"
+                               class="teacher-profile-pic blue-circle-border"
+                               src="{{ teacherInfo.photograph }}"></Image>
+                        <FrescoDrawee *ngIf="isAndroid && teacherInfo.photograph" height="60" width="60"
+                                      class="teacher-profile-pic"
+                                      imageUri="{{ teacherInfo.photograph }}"
+                                      verticalAlignment="top"
+                                      roundAsCircle="true"
+                                      fadeDuration="600"></FrescoDrawee>
+                    </StackLayout>
                     <StackLayout *ngIf="!teacherInfo.photograph"
                                  class="blue-circle-border large-avatar-with-name text-center"  horizontalAlignment="left" verticalAlignment="center">
                         <Label [text]="teacherInfo | shortName | uppercase"></Label>
@@ -24,8 +26,9 @@
                     <Label text="{{ teacherEmail }}" class="teacher-email light-gray"></Label>
                 </StackLayout>
             </StackLayout>
-            <StackLayout col="1" horizontalAlignment="right">
-                <Label text="" class="edit-profile"></Label>
+            <StackLayout col="1" horizontalAlignment="right" [nsRouterLink]="['/teacher-profile']"
+                         pageTransition="slideLeft">
+                <Label text="Edit profile" class="edit-profile"></Label>
             </StackLayout>
         </GridLayout>
     </Stacklayout>
