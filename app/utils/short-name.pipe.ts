@@ -4,7 +4,6 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'shortName'
 })
 export class ShortNamePipe implements PipeTransform {
-
     transform(person: any, args: any[]) {
         if(person.fname && person.lname){
             return person.fname[0]+''+person.lname[0];

@@ -1,6 +1,7 @@
 /* author: Upender
 * 09/Jan/2017
 * A Custom angular 2 Pipe to iterate over through key value pairs of JSON Object
+* And order by date
 * Example:
 * -------------
 *
@@ -25,7 +26,8 @@ data = {
 * */
 
 import {Pipe, PipeTransform} from "@angular/core";
-@Pipe({name: 'keys'})
+import * as moment from 'moment';
+@Pipe({name: 'keys', pure: false})
 export class KeysPipe implements PipeTransform {
     transform(value, args:string[]) : any {
         if (!value) {
@@ -33,8 +35,24 @@ export class KeysPipe implements PipeTransform {
         }
         let keys = [];
         for (let key in value) {
-            keys.push({key: key, value: value[key]});
+            // convert string to date object
+            let newKey = moment(key,'MM/DD/YYYY');
+            keys.push({key: newKey, value: value[key]});
         }
-        return keys;
+
+        // let sort the object by date(key)
+        let sortedKeys = keys.sort((a: any, b: any) => {
+            let date1 = new Date(a.key);
+            let date2 = new Date(b.key);
+            if (date1 > date2) {
+                return 1;
+            } else if (date1 < date2) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
+        return sortedKeys;
     }
 }

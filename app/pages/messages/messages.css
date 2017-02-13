@@ -10,26 +10,28 @@
 }
 
 .messages .message-item {
-    margin: 10 20 10 10;
+    margin: 8 20 8 10;
 }
 
 .messages .message-item .profile-pic {
-    border-radius: 38;
+    border-radius: 30;
 }
 
 .messages .message-item .profile-pic-container {
     margin-right: 10;
 }
-
+.message-date {
+    font-style: italic;
+}
 
 
 
 
 .message-form{
     border-width: 1;
-    border-color: #999999;
+    border-color: #cccccc;
    /* border-radius: 2;*/
-    padding: 10;
+    padding: 8;
     background-color: white;
 }
 
