@@ -72,12 +72,13 @@
         <StackLayout #messageBox row="1">
             <StackLayout>
                 <GridLayout columns="*, auto" class="message-form">
-                    <TextView class="input-without-border-bottom" [(ngModel)]="newMessageText" id="newMessageText"
+                    <TextView class="input-without-border-bottom"  id="newMessageText"
                               col="0"
                               hint="type your message here..." borderColor="white"></TextView>
-                    <Button isEnabled="{{ newMessageText.trim() ? true : false }}" (tap)="sendMessage()" col="1"
+                    <Button (tap)="sendMessage()" col="1"
                             text="Send"
-                            class="blue2 send-button {{ isIos ? 'p-x-10' : ''}} {{ newMessageText.trim() ? 'blue2-background' : 'disabled'}}"></Button>
+                            class="blue2 send-button blue2-background {{ isIos ? 'p-x-10' : ''}} "></Button>
+
                 </GridLayout>
             </StackLayout>
         </StackLayout>

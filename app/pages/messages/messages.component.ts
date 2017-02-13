@@ -215,14 +215,19 @@ export class MessagesComponent implements OnInit, OnChanges {
     sendMessage() {
         // focus out from field
         let msgTexfield = view.getViewById(this.page, "newMessageText");
+        let msgText = msgTexfield.text.trim();
         // this.isLoading = true;
+        if(msgText == ''){
+            return;
+        }
+
         let kid_klid = this.conversationKlId ? '' : this.kid.kid_klid;
         let teacherInfo = TeacherInfo.parsedDetails;
         // let createdAt = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
         //console.log("createdAt "+ createdAt);
         let newMsg = {
             kl_id: "",
-            text: this.newMessageText.trim(),
+            text: msgText,
             sender_name: teacherInfo.fname + ' ' + teacherInfo.lname,
             sender_klid: teacherInfo.teacher_klid,
             photograph: teacherInfo.photograph,
@@ -243,7 +248,7 @@ export class MessagesComponent implements OnInit, OnChanges {
 
         this.scrollToBottom();
         // send message to server in background
-        this.messageService.sendMessage(this.newMessageText.trim(), kid_klid, this.conversationKlId)
+        this.messageService.sendMessage(msgText, kid_klid, this.conversationKlId)
             .subscribe(
                 (result) => {
                     let body = result.body;
@@ -254,7 +259,7 @@ export class MessagesComponent implements OnInit, OnChanges {
                 }
             );
         msgTexfield.dismissSoftInput();
-        this.newMessageText = '';
+        msgTexfield.text = '';
 
     }
 
