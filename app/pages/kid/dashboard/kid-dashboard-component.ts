@@ -1,4 +1,4 @@
-import {Component, ViewContainerRef, ChangeDetectorRef, OnInit, ViewChild} from "@angular/core";
+import {Component, ViewContainerRef, ChangeDetectorRef, OnInit, ChangeDetectionStrategy} from "@angular/core";
 import {Page} from "ui/page";
 import {PostService, Post, TaggedTo, Comment} from "../../../shared/post.service";
 import frameModule = require("ui/frame");
@@ -28,13 +28,6 @@ let imagepicker = require("nativescript-imagepicker");
 let nstoasts = require("nativescript-toasts");
 let PhotoViewer = require("nativescript-photoviewer");
 let photoViewer = new PhotoViewer();
-import {
-    ListViewLinearLayout,
-    ListViewEventData
-}from "nativescript-telerik-ui/listview";
-
-import listViewModule = require("nativescript-telerik-ui/listview");
-import listViewAnularModule = require("nativescript-telerik-ui/listview/angular");
 declare var android: any;
 
 @Component({
@@ -42,7 +35,8 @@ declare var android: any;
     selector: 'my-app',
     styleUrls: ['./kid-dashboard.css'],
     templateUrl: './kid-dashboard.html',
-    providers: [PostService, ModalDialogService, ServerErrorService]
+    providers: [PostService, ModalDialogService, ServerErrorService],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class KidDashboardComponent implements OnInit {
     public kid: any;
@@ -54,15 +48,12 @@ export class KidDashboardComponent implements OnInit {
     public isIos: Boolean = false;
     public selectedImages = [];
     public showActionBarItems: Boolean = false;
-    private numberOfAddedItems; // pull to refresh
     public lastModified: string = '';
     public postCount: number = 0;
     public loadOnDemandFired: Boolean = false;
-
-    //private posts: ObservableArray<Post>;
-    private _layout: ListViewLinearLayout;
-
-    //public posts: ObservableArray<Post>;
+    public isLoadingMore: Boolean = false;
+    public showLoadingIndicator: Boolean = false;
+    public loadMoreText: string = 'Load More';
     public posts: any;
 
 
@@ -81,6 +72,7 @@ export class KidDashboardComponent implements OnInit {
 
         this.kid = {};
         this.kid = this.kidData.info;
+        //console.log("KID data "+ JSON.stringify(this.kidData.info))
 
         if (app.android) {
             this.isAndroid = true;
@@ -88,8 +80,6 @@ export class KidDashboardComponent implements OnInit {
             this.isIos = true;
         }
     }
-
-    @ViewChild('myRadListView') listViewComponent: listViewAnularModule.RadListViewComponent;
 
     static entries = [
         ModalPostComment
@@ -104,41 +94,51 @@ export class KidDashboardComponent implements OnInit {
         this.internetService.alertIfOffline();
         //this.page.actionBarHidden = true;
         this.kid = this.kidData.info;
-        this.layout = new ListViewLinearLayout();
         this.isLoading = true;
         this.posts = [];
+        this.getPosts(false);
+    }
+
+
+    getPosts(loadingMorePosts) {
         this.postService.getPosts(this.postCount, this.lastModified, this.kid.kid_klid)
-            .map((response1) => {
-                let result: Array<any> = [];
-                let res = response1.json();
-                // console.log("response " + JSON.stringify(response1.json()));
-                res.body.posts.forEach(post => {
-                    this.posts.push(this.addNewPostToListView(post));
-                });
-               // this.posts = res.body.posts;
-                this.postCount = res.body.post_count;
-                this.lastModified = res.body.last_modified;
-                return result;
-            })
             .subscribe(
-                data => {
+                (result) => {
+                    let body = result.body;
+                    body.posts.forEach(post => {
+                        this.posts.push(this.addNewPostToListView(post));
+                    });
+                    this.postCount = body.post_count;
+                    this.lastModified = body.last_modified;
+                    if (loadingMorePosts) {
+                        this.showLoadingIndicator = false;
+                        this.loadMoreText = 'Load More'
+                        if (body.posts.length < 1) {
+                            this.isLoadingMore = false;
+                            nstoasts.show({
+                                text: 'reached end of results',
+                                duration: nstoasts.DURATION.SHORT
+                            });
+                        }
+                    } else {
+                        this.isLoadingMore = true;
+                    }
                     this.isLoading = false;
+                    this.changeDetectorRef.markForCheck();
                 },
-                error => {
+                (error) => {
                     this.isLoading = false;
+                    this.serverErrorService.showErrorModal();
                 }
             );
-       // this.changeDetectorRef.detectChanges();
     }
 
-
-
-    public get layout(): ListViewLinearLayout {
-        return this._layout;
-    }
-
-    public set layout(value: ListViewLinearLayout) {
-        this._layout = value;
+    loadMore() {
+        this.kid = this.kidData.info;
+        this.isLoadingMore = true;
+        this.showLoadingIndicator = true;
+        this.loadMoreText = 'Loading...';
+        this.getPosts(true);
     }
 
 
@@ -319,6 +319,7 @@ export class KidDashboardComponent implements OnInit {
                         text: result.message,
                         duration: nstoasts.DURATION.SHORT
                     });
+                    this.changeDetectorRef.markForCheck();
                 },
                 (error) => {
                 }
@@ -355,14 +356,14 @@ export class KidDashboardComponent implements OnInit {
         if (post.can_delete) {
             actions.push('Delete')
         }
-        if(actions.length){
+        if (actions.length) {
             dialogs.action({
                 //message: "",
                 cancelButtonText: "Cancel",
                 actions: actions
             }).then(result => {
                 if (result === 'Delete') {
-                    this.deletePost(args, post, index);
+                    this.deletePost(post, index);
                 } else if (result === 'Edit') {
                     this.editPost(post);
                 }
@@ -383,14 +384,14 @@ export class KidDashboardComponent implements OnInit {
         });
     }
 
-    deletePost(args: ListViewEventData, post, index) {
-        let temp = this.posts.slice();
-        temp.splice(index, 1);
-        this.posts = temp;
+    deletePost(post, index) {
+        let index = this.posts.indexOf(post);
+        this.posts.splice(index, 1);
         nstoasts.show({
             text: 'Post successfully deleted.',
             duration: nstoasts.DURATION.SHORT
         });
+        this.changeDetectorRef.markForCheck();
         this.postService.deletePost(post)
             .subscribe(
                 (result) => {
@@ -431,7 +432,7 @@ export class KidDashboardComponent implements OnInit {
             },
             fullscreen: false
         };
-       // let currentPost = this.posts.getItem(index);
+        // let currentPost = this.posts.getItem(index);
         let currentPost = post;
         if (currentPost) {
             this.modal.showModal(ModalPostComment, options).then((result) => {
@@ -442,14 +443,13 @@ export class KidDashboardComponent implements OnInit {
                     //console.log("Modal Comment Result " + JSON.stringify(result));/
                     currentPost.comments.push(new Comment(result.commented_by, result.slug, result.created_at, '',
                         '', result.commenter_photo, result.content, false));
-                    let temp = this.posts.slice();
-                    // this.posts = new ObservableArray<Post>(temp);
-                     this.posts = temp;
-                   // this.changeDetectorRef.detectChanges();
+
+                    // this.changeDetectorRef.detectChanges();
                     nstoasts.show({
                         text: 'Your comment added.',
                         duration: nstoasts.DURATION.SHORT
                     });
+                    this.changeDetectorRef.markForCheck();
                 }
             })
         }

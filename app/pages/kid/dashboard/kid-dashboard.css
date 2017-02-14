@@ -122,6 +122,11 @@ Image.parent-profile-pic{
     color: #999999;
 }
 
+.load-more-posts{
+    background-color: transparent;
+    border-color:#6fa8dc;
+    color: black;
+}
 
 
 

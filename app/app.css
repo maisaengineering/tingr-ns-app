@@ -301,7 +301,6 @@ ActivityIndicator.busy {
 /* Card related styles */
 .whiteCard{
     background-color: white;
-    color: black;
 }
 
 .blueCard {
