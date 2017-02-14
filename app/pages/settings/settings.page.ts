@@ -54,7 +54,7 @@ export class SettingsPage implements OnInit{
        // this.routerExtensions.backToPreviousPage();
         this.routerExtensions.navigate(["/calendar"], {
             transition: {
-                name: "slideBottom"
+                name: "slideRight"
             }
         });
     }
