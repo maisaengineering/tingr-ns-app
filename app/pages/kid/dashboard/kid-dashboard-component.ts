@@ -122,6 +122,9 @@ export class KidDashboardComponent implements OnInit {
                         }
                     } else {
                         this.isLoadingMore = true;
+                        if(body.posts.length < 1) {
+                            this.isLoadingMore = false;
+                        }
                     }
                     this.isLoading = false;
                     this.changeDetectorRef.markForCheck();
