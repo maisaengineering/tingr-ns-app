@@ -184,7 +184,7 @@ export class TeacherProfileComponent implements OnInit {
                     TeacherInfo.details = JSON.stringify(this.teacherInfo);
                 },
                 (error) => {
-                    console.log("error "+ JSON.stringify(error));
+                    //console.log("error "+ JSON.stringify(error));
                     this.serverErrorService.showErrorModal();
                 }
             );
