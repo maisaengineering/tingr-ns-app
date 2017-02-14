@@ -138,7 +138,6 @@ export class MessagesComponent implements OnInit, OnChanges {
                 .subscribe(
                     (newMessages) => {
                         if (!this.isMessagesEmpty(newMessages)) {
-                            console.log("not empty---------" + JSON.stringify(newMessages))
                             for (var key in newMessages) {
                                 if (newMessages.hasOwnProperty(key)) {
                                     // alert("Key is " + key + ", value is" + newMessages[key]);
@@ -260,7 +259,7 @@ export class MessagesComponent implements OnInit, OnChanges {
                     }
                 },
                 (error) => {
-                    console.log("Error " + JSON.stringify(error));
+                    //console.log("Error " + JSON.stringify(error));
                     this.serverErrorService.showErrorModal();
                 }
             );
