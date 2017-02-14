@@ -5,3 +5,11 @@ Image.teacher-profile-pic{
 Image.uploaded-teacher-profile-pic{
     border-radius: 50%;
 }
+
+.camera-icon-with-circle{
+    color: white;
+    border-radius: 17;
+    height: 35;
+    width: 35;
+    background-color: #6fa8dc;
+}
