@@ -127,6 +127,16 @@ Image.parent-profile-pic{
     border-color:#6fa8dc;
     color: black;
 }
+.load-more-posts-android{
+    background-color: transparent;
+    border-color:#6fa8dc;
+    color: black;
+    padding: 15;
+}
+.android-indicator{
+    height: 20;
+    width: 20;
+}
 
 
 
