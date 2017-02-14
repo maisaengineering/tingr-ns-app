@@ -15,11 +15,17 @@
     <!-- right area  -->
 </ActionBar>
 <Gridlayout class="messages-container">
+    <StackLayout *ngIf="isMessagesEmpty(msgs)" visibility="{{ isLoading ? 'collapsed' : 'visible'}}"
+                 verticalAlignment="center">
+        <StackLayout orientation="vertical" horizontalAlignment="center" class="empty-page">
+            <Label class="message text-center" text="get conversation started" textWrap="true"></Label>
+        </StackLayout>
+    </StackLayout>
     <GridLayout rows="*, auto">
         <GridLayout row="0">
             <PullToRefresh (refresh)="refreshList($event)" #pullToRefresh>
                 <ScrollView #messagesScroll>
-                    <Stacklayout class="m-t-10">
+                    <Stacklayout class="m-t-10" *ngIf="!this.isMessagesEmpty(msgs)">
                         <StackLayout *ngFor="let groupedMessages of msgs | keys">
                             <StackLayout orinatation="vertical">
                                 <Label text="{{ groupedMessages.key | date: 'MM/dd/yyyy' }}"
@@ -77,7 +83,7 @@
                               hint="type your message here..." borderColor="white"></TextView>
                     <Button (tap)="sendMessage()" col="1"
                             text="Send"
-                            class="blue2 send-button blue2-background {{ isIos ? 'p-x-10' : ''}} "></Button>
+                            class="blue2 send-button btn-rounded-sm blue2-background {{ isIos ? 'p-x-10' : ''}} "></Button>
 
                 </GridLayout>
             </StackLayout>

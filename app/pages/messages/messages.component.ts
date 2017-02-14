@@ -136,8 +136,9 @@ export class MessagesComponent implements OnInit, OnChanges {
                     return result;
                 })
                 .subscribe(
-                    newMessages => {
+                    (newMessages) => {
                         if (!this.isMessagesEmpty(newMessages)) {
+                            console.log("not empty---------" + JSON.stringify(newMessages))
                             for (var key in newMessages) {
                                 if (newMessages.hasOwnProperty(key)) {
                                     // alert("Key is " + key + ", value is" + newMessages[key]);
@@ -154,31 +155,30 @@ export class MessagesComponent implements OnInit, OnChanges {
                                     }
                                 }
                             }
-                            this.changeDetectorRef.markForCheck();
-
-                            if (scrollToBottom) {
-                                this.scrollToBottom();
-                            }
                         }
-
+                        this.isLoading = false;
                         if (pullRefresh) {
                             pullRefresh.refreshing = false;
                         }
-                        this.isLoading = false;
+                        if (scrollToBottom) {
+                            this.scrollToBottom();
+                        }
+                        this.changeDetectorRef.markForCheck();
                     },
-                    error => {
+                    (error) => {
                         this.isLoading = false;
+                        this.serverErrorService.showErrorModal();
                     }
                 );
         }, 1000)
     }
 
     ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-      /*  if (changes['newMessageText']) { // fire your event }
-            console.log('------- CHnaged')
-        } else {
-            console.log('--------- not changes')
-        }*/
+        /*  if (changes['newMessageText']) { // fire your event }
+         console.log('------- CHnaged')
+         } else {
+         console.log('--------- not changes')
+         }*/
     }
 
 
@@ -217,10 +217,10 @@ export class MessagesComponent implements OnInit, OnChanges {
         let msgTexfield = view.getViewById(this.page, "newMessageText");
         let msgText = msgTexfield.text.trim();
         // this.isLoading = true;
-        if(msgText == ''){
+        if (msgText == '') {
             return;
         }
-
+        msgTexfield.dismissSoftInput();
         let kid_klid = this.conversationKlId ? '' : this.kid.kid_klid;
         let teacherInfo = TeacherInfo.parsedDetails;
         // let createdAt = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
@@ -236,15 +236,18 @@ export class MessagesComponent implements OnInit, OnChanges {
             created_at: new Date(), read_message: true
         };
 
-        let currentDate = moment(new Date()).format('MM/DD/YYYY');
-        // if date already exists
-        if (this.msgs[currentDate]) {
-            this.msgs[currentDate].push(newMsg);
+        let isFirstMessage = this.isMessagesEmpty(this.msgs);
+        if (isFirstMessage) {
+            this.isLoading = true;
         } else {
-            // date doesn't exists so add it newly
-            this.msgs[currentDate] = [newMsg];
+            let currentDate = moment(new Date()).format('MM/DD/YYYY');
+            // if date already exists
+            if (this.msgs[currentDate]) {
+                this.msgs[currentDate].push(newMsg);
+            } else {
+                this.msgs[currentDate] = [newMsg];// date doesn't exists so add it newly
+            }
         }
-
 
         this.scrollToBottom();
         // send message to server in background
@@ -252,13 +255,15 @@ export class MessagesComponent implements OnInit, OnChanges {
             .subscribe(
                 (result) => {
                     let body = result.body;
+                    if (isFirstMessage) {
+                        this.getNewMessages(kid_klid, false, false)
+                    }
                 },
                 (error) => {
                     console.log("Error " + JSON.stringify(error));
                     this.serverErrorService.showErrorModal();
                 }
             );
-        msgTexfield.dismissSoftInput();
         msgTexfield.text = '';
 
     }
@@ -268,7 +273,12 @@ export class MessagesComponent implements OnInit, OnChanges {
     }
 
     isMessagesEmpty(obj) {
-        return (Object.keys(obj).length === 0);
+        //return (Object.keys(obj).length === 0);
+        for (var prop in obj) {
+            if (obj.hasOwnProperty(prop))
+                return false;
+        }
+        return true;
     }
 
     scrollToBottom() {
