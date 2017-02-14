@@ -286,9 +286,9 @@
                     </Stacklayout>
                 </StackLayout>
                 <Stacklayout row="3" class="m-b-5">
-                    <Stacklayout *ngIf="isLoadingMore" class="{{isAndroid ? 'load-more-posts-android' : 'btn btn-outline btn-rounded-sm' }}"
+                    <Stacklayout *ngIf="isLoadingMore" class="{{isAndroid ? 'load-more-posts-android' : 'load-more-posts btn btn-outline btn-rounded-sm' }}"
                                  orientation="horizontal" horizontalAlignment="center">
-                        <ActivityIndicator *ngIf="showLoadingIndicator" class="busy activity-indicator {{isAndroid ? 'android-indicator' : '' }}" busy="true"
+                        <ActivityIndicator *ngIf="showLoadingIndicator" class="busy activity-indicator {{ isAndroid ? 'android-indicator' : '' }}" busy="true"
                                            class="m-x-10"></ActivityIndicator>
                         <Label *ngIf="!showLoadingIndicator" text="" class="m-x-10"></Label>
                         <Label [text]="loadMoreText" (tap)="loadMore()"></Label>

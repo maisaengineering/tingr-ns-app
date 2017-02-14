@@ -123,7 +123,6 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             .subscribe(
                 (result) => {
                     var body = result.body;
-                    console.log("body.managed_kids "+ JSON.stringify(body.managed_kids))
                     body.managed_kids.forEach((managedKid) => {
                         this.addNewManagedKid(managedKid);
                     });
