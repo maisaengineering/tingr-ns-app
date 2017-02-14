@@ -37,7 +37,23 @@ export class KeysPipe implements PipeTransform {
         for (let key in value) {
             // convert string to date object
             let newKey = moment(key,'MM/DD/YYYY');
-            keys.push({key: newKey, value: value[key]});
+            // let sort the messages by created-at
+            if(value[key].length > 0){
+                let sortedValue = value[key].sort((a: any, b: any) => {
+                    let date1 = moment(a.created_at);
+                    let date2 = moment(b.created_at);
+                    if (date1 > date2) {
+                        return 1;
+                    } else if (date1 < date2) {
+                        return -1;
+                    } else {
+                        return 0;
+                    }
+                });
+                keys.push({key: newKey, value: sortedValue});
+            }else{
+                keys.push({key: newKey, value: value[key]});
+            }
         }
 
         // let sort the object by date(key)

@@ -388,8 +388,8 @@ export class KidDashboardComponent implements OnInit {
     }
 
     deletePost(post, index) {
-        let index = this.posts.indexOf(post);
-        this.posts.splice(index, 1);
+        let postIndex = this.posts.indexOf(post);
+        this.posts.splice(postIndex, 1);
         nstoasts.show({
             text: 'Post successfully deleted.',
             duration: nstoasts.DURATION.SHORT
