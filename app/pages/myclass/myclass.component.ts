@@ -1,4 +1,4 @@
-import {Component, ViewContainerRef , ChangeDetectorRef, OnInit} from "@angular/core";
+import {Component, ViewContainerRef , ChangeDetectorRef, ChangeDetectionStrategy, OnInit} from "@angular/core";
 import {DrawerPage} from "../drawer.page";
 import {MyClassService, ManagedKid, Room} from "../../shared/myclass.service";
 import {KidSignInOutService} from "../../shared/kid-signinout.service";
@@ -47,10 +47,11 @@ let gestures = require("ui/gestures");
     styleUrls: ['./myclass.css'],
     templateUrl: './myclass.component.html',
     providers: [MyClassService, KidSignInOutService,
-        MessageService, TeacherService, ModalDialogService, ServerErrorService]
+        MessageService, TeacherService, ModalDialogService, ServerErrorService],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MyClassComponent extends DrawerPage implements OnInit {
-    private managed_kids: ObservableArray<ManagedKid>;
+    private managed_kids: any;
     public roomName: String;
     public currentRoom;
     public isLoading: Boolean = false;
@@ -98,7 +99,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         //this.getRoomsAndMangedKids();
         this.loadManagedKids(this.currentRoom);
         this.getAssignedRooms();
-        this.changeDetectorRef.detectChanges();
+      //  this.changeDetectorRef.detectChanges();
     }
 
 
@@ -106,6 +107,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         this.myClassService.getAssignedRooms().subscribe(
             (result) => {
                 this.assignedRooms = result.body.rooms;
+                this.changeDetectorRef.markForCheck();
             },
             (error) => {
                 this.isLoading = false;
@@ -116,18 +118,19 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
     loadManagedKids(room) {
         this.isLoading = true;
+        this.managed_kids = [];
         this.myClassService.getManagedKids(room)
             .subscribe(
                 (result) => {
-
-                    this.managed_kids = new ObservableArray<ManagedKid>();
                     var body = result.body;
+                    console.log("body.managed_kids "+ JSON.stringify(body.managed_kids))
                     body.managed_kids.forEach((managedKid) => {
                         this.addNewManagedKid(managedKid);
                     });
                     // save managed kids in SharedData Provider, so data will be available to all components
                     this.sharedData.managedKids = body.managed_kids;
                     this.isLoading = false;
+                    this.changeDetectorRef.markForCheck();
                 },
                 (error) => {
                     this.isLoading = false;
@@ -153,7 +156,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             this.myClassService.getManagedKids(this.currentRoom)
                 .subscribe(
                     (result) => {
-                        this.managed_kids = new ObservableArray<ManagedKid>();
+                        this.managed_kids = [];
                         var body = result.body;
                         body.managed_kids.forEach((managedKid) => {
                             this.addNewManagedKid(managedKid);
@@ -161,6 +164,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                         // save managed kids in SharedData Provider, so data will be available to all components
                         this.sharedData.managedKids = body.managed_kids;
                         listView.notifyPullToRefreshFinished();
+                        this.changeDetectorRef.markForCheck();
                     },
                     (error) => {
                         listView.notifyPullToRefreshFinished();
@@ -198,7 +202,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     }
 
     onTapKid(args: ListViewEventData) {
-        let kid = this.managed_kids.getItem(args.itemIndex);
+        let kid = this.managed_kids[args.itemIndex];
         this.kidData.info = kid;
         let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
         this.routerExtensions.navigate(["/kid-dashboard"], {
@@ -209,7 +213,8 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     }
 
     onLongPressKid(args: ListViewEventData) {
-        let kid = this.managed_kids.getItem(args.itemIndex);
+        let index = args.itemIndex;
+        let kid = this.managed_kids[args.itemIndex];
 
         let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
 
@@ -222,7 +227,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 this.cancelKidSelectionAnimation(kid);
             } else {
                 if (result === 'Sign-in/Sign-out') {
-                    this.signInOrSignOutKid(kid);
+                    this.signInOrSignOutKid(index);
                 } else if (result === "Message to Parent") {
                     this.showModalMessageToParent(kid);
                 }
@@ -231,9 +236,8 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
     }
 
-    signInOrSignOutKid(kid) {
-        //var time = this.datePipe.transform(new Date(), 'HH:MM a');
-        //alert(kidName + " signed in successfully at " + time)
+    signInOrSignOutKid(index) {
+        let kid = this.managed_kids[index];
         let inoutTimeLabel = view.getViewById(this.page, "in-or-out-time-" + kid.kid_klid);
         this.isLoading = true;
         this.kidSignInOutService.signInOrSingOut(kid.kid_klid)
@@ -247,6 +251,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                     };
                     nstoasts.show(options);
                     if (body.in_or_out_time) {
+                        kid.in_or_out_time = body.in_or_out_time;
                         inoutTimeLabel.text = body.in_or_out_time; // update label with result
                         inoutTimeLabel.parent.visibility = 'visible'; // show parent
                         try {
@@ -255,6 +260,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                             // may be page redirected kid-dashboard
                         }
                     }
+                    this.changeDetectorRef.markForCheck();
                     this.cancelKidSelectionAnimation(kid);
                 },
                 (error) => {
