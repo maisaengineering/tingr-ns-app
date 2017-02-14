@@ -133,7 +133,7 @@
                                     <GridLayout row="0" columns="50, *" rows="*" class="item"
                                                 (tap)="openMessageConversation(item)">
                                         <StackLayout verticalAlignment="center">
-                                            <Image *ngIf="isIos && item.photograph"  height="40" width="40" class="kid-profile-pic blue-circle-border"
+                                            <Image *ngIf="isIos && item.photograph"  height="40" width="40" class="kid-profile-pic"
                                                    src="{{ item.photograph }}"></Image>
                                             <FrescoDrawee *ngIf="isAndroid && item.photograph" height="40" width="40"
                                                           class="kid-profile-pic"

@@ -36,7 +36,7 @@
                         <GridLayout rows="*" columns="auto,*,50">
                             <StackLayout row="0" col="0">
 
-                                <Image *ngIf="isIos && item.photograph_url" height="75" width="75" class="kid-profile-pic blue-circle-border"
+                                <Image *ngIf="isIos && item.photograph_url" height="75" width="75" class="kid-profile-pic"
                                        src="{{ item.photograph_url }}"></Image>
                                 <FrescoDrawee *ngIf="isAndroid && item.photograph_url" height="75" width="75"
                                               class="kid-profile-pic"

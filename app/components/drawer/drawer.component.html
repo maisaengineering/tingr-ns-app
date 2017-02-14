@@ -5,7 +5,7 @@
                 <StackLayout>
                     <StackLayout horizontalAlignment="left">
                         <Image *ngIf="isIos && teacherInfo.photograph" height="60" width="60"
-                               class="teacher-profile-pic blue-circle-border"
+                               class="teacher-profile-pic"
                                src="{{ teacherInfo.photograph }}"></Image>
                         <FrescoDrawee *ngIf="isAndroid && teacherInfo.photograph" height="60" width="60"
                                       class="teacher-profile-pic"

@@ -22,7 +22,7 @@
                 <AbsoluteLayout>
                     <StackLayout visibility="{{ picUploaded ? 'collapse' : 'visible'}}">
                         <Image *ngIf="isIos && teacherInfo.photograph" height="100" width="100"
-                               class="teacher-profile-pic blue-circle-border"
+                               class="teacher-profile-pic"
                                src="{{ teacherInfo.photograph }}"></Image>
 
                         <FrescoDrawee *ngIf="isAndroid && teacherInfo.photograph" height="100" width="100"

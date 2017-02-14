@@ -37,7 +37,7 @@
                                     <GridLayout rows="*" columns="auto,*, auto">
                                         <StackLayout row="0" col="0" class="profile-pic-container">
                                             <Image *ngIf="isIos && message.photograph" height="60" width="60"
-                                                   class="profile-pic blue-circle-border"
+                                                   class="profile-pic"
                                                    src="{{ message.photograph || '~/images/avatar-100.png' }}"></Image>
                                             <FrescoDrawee *ngIf="isAndroid && message.photograph" height="60" width="60"
                                                           class="profile-pic"

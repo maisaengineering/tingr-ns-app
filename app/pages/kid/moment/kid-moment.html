@@ -56,7 +56,7 @@
 
                                 <StackLayout row="0" col="0">
                                     <Image *ngIf="isIos && kid.photograph_url" height="40" width="40"
-                                           class="kid-profile-pic blue-circle-border"
+                                           class="kid-profile-pic"
                                            src="{{ kid.photograph_url }}"></Image>
                                     <FrescoDrawee *ngIf="isAndroid && kid.photograph_url" height="40" width="40"
                                                   class="kid-profile-pic"

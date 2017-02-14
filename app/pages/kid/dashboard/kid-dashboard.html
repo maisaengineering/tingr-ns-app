@@ -43,7 +43,7 @@
                                         <WrapLayout col="0" row="0" orientation="horizontal">
                                             <StackLayout *ngFor="let item of post.tagged_to; let i = index" margin="3">
                                                 <Image *ngIf="isIos && item.photograph" height="40" width="40"
-                                                       class="kid-profile-pic blue-circle-border"
+                                                       class="kid-profile-pic"
                                                        src="{{ item.photograph }}"></Image>
 
                                                 <FrescoDrawee *ngIf="isAndroid && item.photograph" height="40" width="40"
@@ -92,7 +92,7 @@
                                                      id="comment-slug-{{ comment.slug }}">
 
                                             <Image *ngIf="isIos && comment.commenter_photo" height="60" width="60"
-                                                   class="parent-profile-pic blue-circle-border"
+                                                   class="parent-profile-pic"
                                                    src="{{ comment.commenter_photo }}"></Image>
 
                                             <FrescoDrawee *ngIf="isAndroid && comment.commenter_photo" height="60" width="60"
