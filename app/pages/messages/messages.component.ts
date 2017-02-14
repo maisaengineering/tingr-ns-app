@@ -120,41 +120,30 @@ export class MessagesComponent implements OnInit, OnChanges {
     getNewMessages(kid_klid, scrollToBottom = false, pullRefresh) {
         setTimeout(() => {
             this.messageService.getList(kid_klid, this.conversationKlId, this.lastMessageTime)
-                .map((response) => {
-                    let res = response.json();
-                    let result = {};
-                    let body = res.body;
-                    if (!this.isMessagesEmpty(body.messages)) {
-                        this.lastMessageTime = body.last_message_time;
-                        // console.log("response " + JSON.stringify(response1.json()));
-                        for (var key in body.messages) {
-                            if (body.messages.hasOwnProperty(key)) {
-                                result[key] = body.messages[key]
-                            }
-                        }
-                    }
-                    return result;
-                })
                 .subscribe(
-                    (newMessages) => {
-                        if (!this.isMessagesEmpty(newMessages)) {
-                            for (var key in newMessages) {
-                                if (newMessages.hasOwnProperty(key)) {
-                                    // alert("Key is " + key + ", value is" + newMessages[key]);
-                                    let oldmsgs = this.msgs[key];
-
-                                    // if date already exists
-                                    if (this.msgs[key]) {
-                                        newMessages[key].forEach((msg) => {
-                                            this.msgs[key].unshift(msg)
-                                        })
-                                    } else {
-                                        // date doesn't exists so add it newly to oldMessages
-                                        this.msgs[key] = newMessages[key];
+                    (result) => {
+                        let body = result.body;
+                        let messages = body.messages;
+                        if(!this.isMessagesEmpty(body.messages)) {
+                            this.lastMessageTime = body.last_message_time;
+                            if (!this.isMessagesEmpty(messages)) {
+                                for (var key in messages) {
+                                    if (messages.hasOwnProperty(key)) {
+                                        // alert("Key is " + key + ", value is" + newMessages[key]);
+                                        // if date already exists
+                                        if (this.msgs[key]) {
+                                            messages[key].forEach((msg) => {
+                                                this.msgs[key].unshift(msg)
+                                            })
+                                        } else {
+                                            // date doesn't exists so add it newly to oldMessages
+                                            this.msgs[key] = messages[key];
+                                        }
                                     }
                                 }
                             }
                         }
+                        this.makeMessagesRead(body.conversation_id,messages);
                         this.isLoading = false;
                         if (pullRefresh) {
                             pullRefresh.refreshing = false;
@@ -268,7 +257,16 @@ export class MessagesComponent implements OnInit, OnChanges {
     }
 
     goBack() {
-        this.routerExtensions.backToPreviousPage();
+        if(this.conversationKlId){
+            this.routerExtensions.navigate(["/calendar"], {
+                transition: {
+                    name: "slideRight"
+                }
+            })
+        }else{
+            this.routerExtensions.backToPreviousPage();
+        }
+
     }
 
     isMessagesEmpty(obj) {

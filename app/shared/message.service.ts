@@ -61,7 +61,8 @@ export class MessageService {
             Config.apiUrl + "conversations", data, {
                 headers: headers
             }
-        )
+        ).map((res: Response) => res.json())
+            .catch(this.handleErrors);
     }
 
     makeMessagesRead(conversationId, unreadMessageIds){
