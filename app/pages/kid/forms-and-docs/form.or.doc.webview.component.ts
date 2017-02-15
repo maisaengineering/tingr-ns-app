@@ -33,7 +33,7 @@ export class FormOrDocWebviewComponent implements OnInit {
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
     public formOrDoc: any;
-    public showActionBarItems: Boolean = false;
+    public isPdfView: Boolean = false;
 
     constructor(private page: Page, private changeDetectorRef: ChangeDetectorRef,
                 private formsAndDocsService: FormsAndDocsService,
@@ -60,10 +60,10 @@ export class FormOrDocWebviewComponent implements OnInit {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
         this.isLoading = false;
-        // show actionBarItems after some time to fix overlappingg issue
-        setTimeout(() => {
-            this.showActionBarItems = true;
-        }, 500);
+            if(this.isAndroid && this.formOrDoc.url_type && this.formOrDoc.url_type === '.pdf') {
+                this.isPdfView = true;
+            }
+
     }
 
     openShareOptions(formOrDoc) {

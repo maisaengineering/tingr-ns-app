@@ -28,9 +28,8 @@
     </StackLayout>
 
     <ScrollView *ngIf="formOrDoc.url">
-        <WebView src="{{ formOrDoc.url }}" *ngIf="!formOrDoc?.url_type"></WebView>
-        <WebView src="{{ formOrDoc.url }}" *ngIf="formOrDoc?.url_type && formOrDoc?.url_type != '.pdf'"></WebView>
-        <PDFView [src]="formOrDoc.url"  *ngIf="formOrDoc?.url_type && formOrDoc?.url_type == '.pdf'"></PDFView>
+        <WebView [src]="formOrDoc.url" *ngIf="!isPdfView"></WebView>
+        <PDFView [src]="formOrDoc.url"  *ngIf="isPdfView"></PDFView>
     </ScrollView>
 
     <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>

@@ -118,10 +118,10 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
     loadManagedKids(room) {
         this.isLoading = true;
-        this.managed_kids = [];
         this.myClassService.getManagedKids(room)
             .subscribe(
                 (result) => {
+                    this.managed_kids = [];
                     var body = result.body;
                     body.managed_kids.forEach((managedKid) => {
                         this.addNewManagedKid(managedKid);
@@ -193,6 +193,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                     TeacherInfo.currentRoom = JSON.stringify(this.currentRoom);
                     this.roomName = this.currentRoom.session_name;
                     this.loadManagedKids(this.currentRoom);
+                    this.changeDetectorRef.markForCheck();
                 }
             }
 
