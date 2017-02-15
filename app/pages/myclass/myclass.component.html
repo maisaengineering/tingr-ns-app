@@ -31,9 +31,9 @@
                      pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated($event)"
                       (itemTap)="onTapKid($event)" selectionBehavior="LongPress" (itemSelected)="onLongPressKid($event)">
             <template tkListItemTemplate let-item="item">
-                <StackLayout id="kid-{{ item.kid_klid }}" [kid]="item">
-                    <StackLayout class="p-10">
-                        <GridLayout rows="*" columns="auto,*,50">
+                <StackLayout [id]="'kid-'+item.kid_klid" [kid]="item">
+                    <GridLayout rows="auto,auto" class="p-10">
+                        <GridLayout row="0" rows="*" columns="auto,*,50">
                             <StackLayout row="0" col="0">
 
                                 <Image *ngIf="isIos && item.photograph_url" height="75" width="75" class="kid-profile-pic"
@@ -75,14 +75,17 @@
                                 </StackLayout>
                             </StackLayout>
                         </GridLayout>
-                        <StackLayout class="" visibility="{{ item.in_or_out_time? 'visible' : 'collapsed' }}"
-                                     verticalAlignment="center" orientation="vertical" horizontalAlignment="center">
-                            <Label id="in-or-out-time-{{ item.kid_klid }}"
-                                   class="in-or-out-time bg-primary bg-green-label light-gray font-italic p-x-10 m-t-5"
-                                   text="{{ item.in_or_out_time }}"></Label>
-                        </StackLayout>
+                        <GridLayout row="1"> 
+                            <StackLayout class="" [visibility]="item.in_or_out_time ? 'visible' : 'collapsed'"
+                                         verticalAlignment="center" orientation="vertical" horizontalAlignment="center">
+                                <Label [id]="'in-or-out-time-'+item.kid_klid"
+                                       class="in-or-out-time bg-primary bg-green-label light-gray font-italic p-x-10 m-t-5"
+                                       [text]="item.in_or_out_time"></Label>
+                            </StackLayout>
 
-                    </StackLayout>
+                        </GridLayout>
+
+                    </GridLayout>
 
                     <StackLayout class="hr-shadow"></StackLayout>
                 </StackLayout>
