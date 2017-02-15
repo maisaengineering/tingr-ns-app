@@ -53,7 +53,7 @@ export class KidDashboardComponent implements OnInit {
     public loadOnDemandFired: Boolean = false;
     public isLoadingMore: Boolean = false;
     public showLoadingIndicator: Boolean = false;
-    public loadMoreText: string = 'Load More';
+    public loadMoreText: string = 'load more';
     public posts: any;
 
 
@@ -112,13 +112,13 @@ export class KidDashboardComponent implements OnInit {
                     this.lastModified = body.last_modified;
                     if (loadingMorePosts) {
                         this.showLoadingIndicator = false;
-                        this.loadMoreText = 'Load More'
+                        this.loadMoreText = 'load more';
                         if (body.posts.length < 1) {
                             this.isLoadingMore = false;
-                            nstoasts.show({
+                           /* nstoasts.show({
                                 text: 'reached end of results',
                                 duration: nstoasts.DURATION.SHORT
-                            });
+                            });*/
                         }
                     } else {
                         this.isLoadingMore = true;
@@ -140,7 +140,7 @@ export class KidDashboardComponent implements OnInit {
         this.kid = this.kidData.info;
         this.isLoadingMore = true;
         this.showLoadingIndicator = true;
-        this.loadMoreText = 'Loading...';
+        this.loadMoreText = 'loading...';
         this.getPosts(true);
     }
 

@@ -124,11 +124,11 @@ Image.parent-profile-pic{
 
 .load-more-posts{
     background-color: transparent;
-    color: black;
-    border-color: #6fa8dc;
+    color: #6fa8dc;
+  /*  border-color: #6fa8dc;
     border-style: solid;
     border-width: 1;
-    border-radius: 5;
+    border-radius: 5;*/
     margin: 10;
 }
 
