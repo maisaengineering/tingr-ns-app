@@ -94,8 +94,8 @@ export class PostService {
             command: 'create_post',
             body: {
                 date: this.datePipe.transform(createdAt, 'MM/dd/yyyy'),
-                additional_text: momentTitle,
-                new_title: additionalDetails,
+                additional_text: additionalDetails,
+                new_title: momentTitle,
                 tags: taggedKidIds,
                 img_keys: [s3_key],
                 scope: "public",
@@ -235,6 +235,7 @@ export class Post {
     public hearts_count;
     public asset_base_url;
     public text_only: Boolean = false;
+    public text_only_bg: string = '';
 
 
     constructor(kl_id: string, slug: string, title: string, new_title: string, tzone: string,

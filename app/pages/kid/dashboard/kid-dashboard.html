@@ -156,21 +156,20 @@
                                     </StackLayout>
                                     <StackLayout *ngIf="post.text_only">
                                         <GridLayout rows="50,160" class="text-only-moment"
-                                                    [backgroundColor]="randomBgColor()">
+                                                    [backgroundColor]="post.text_only_bg">
                                             <StackLayout row="0" class="header">
-                                                <Gridlayout  rows="auto" columns="auto,*" class="m-y-10">
+                                                <Gridlayout  rows="auto" columns="*,*" class="m-y-10">
                                                     <Label row="0" col="0" [text]="post.new_title"
                                                            class="text-left font-weight-bold m-l-10"></Label>
                                                     <StackLayout row="0" col="1">
                                                         <Label class="text-right author p-5 m-r-10" horizontalAlignment="right"
                                                                [text]="'by '+ post.author_name"></Label>
                                                     </StackLayout>
-
                                                 </Gridlayout>
                                             </StackLayout>
 
 
-                                            <StackLayout row="1" verticalAlignment="center" horizontalAlignment="center">
+                                            <StackLayout row="1" class="m-x-10" verticalAlignment="center" horizontalAlignment="center">
                                                 <Label [text]="post.text" textWrap="true"></Label>
                                             </StackLayout>
                                         </GridLayout>

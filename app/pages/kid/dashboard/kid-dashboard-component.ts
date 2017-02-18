@@ -158,7 +158,11 @@ export class KidDashboardComponent implements OnInit {
         newPost.images = post.images;
         newPost.large_images = post.large_images;
         newPost.img_keys = post.img_keys;
-        newPost.text_only =  post.images[0] ? false : true;
+        let isTextOnly = post.images[0] ? false : true;
+        newPost.text_only =  isTextOnly;
+        if(isTextOnly){
+            newPost.text_only_bg = this.textOnlyBgColors[Math.floor((Math.random()*this.textOnlyBgColors.length))]
+        }
         // add comments
         if (post.comments.length) {
             post.comments.forEach((comment) => {
@@ -461,8 +465,4 @@ export class KidDashboardComponent implements OnInit {
         }
     }
 
-    // return random color code for textOnly post
-    randomBgColor(){
-        return this.textOnlyBgColors[Math.floor((Math.random()*this.textOnlyBgColors.length))];
-    }
 }

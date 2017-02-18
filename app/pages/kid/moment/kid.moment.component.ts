@@ -273,7 +273,7 @@ export class KidMomentComponent implements OnInit {
 
     createPost(){
         let createdAt = new Date();
-        this.postService.createPost(createdAt, this.momentTitle, this.additionalDetails.trim(), this.taggedKidIds, this.s3_key)
+        this.postService.createPost(createdAt, this.momentTitle.trim(), this.additionalDetails.trim(), this.taggedKidIds, this.s3_key)
             .subscribe(
                 (result) => {
                     let body = result.body;
