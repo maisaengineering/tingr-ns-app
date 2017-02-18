@@ -1,8 +1,8 @@
 import {Component, ViewContainerRef, ChangeDetectorRef, OnInit, ChangeDetectionStrategy} from "@angular/core";
 import {Page} from "ui/page";
 import {PostService, Post, TaggedTo, Comment} from "../../../shared/post.service";
-import frameModule = require("ui/frame");
-import {Router} from "@angular/router";
+import frameModule = require("ui/frame"); 
+import {Router, NavigationExtras} from "@angular/router";
 import {RouterExtensions} from "nativescript-angular/router";
 import {KidData} from "../../../providers/data/kid_data";
 import {SharedData} from "../../../providers/data/shared_data";
@@ -189,7 +189,7 @@ export class KidDashboardComponent implements OnInit {
         dialogs.action({
             //message: "",
             cancelButtonText: "Cancel",
-            actions: ["Take photo", "Choose existing"]
+            actions: ["Take photo", "Choose existing","Text only"]
         }).then(result => {
             if (result === 'Take photo') {
                 //  Android permissions (mainly for API 23+/Android 6+) check inplace
@@ -221,6 +221,14 @@ export class KidDashboardComponent implements OnInit {
                 } else {
                     this.selectFromGallery();
                 }
+            }else if(result === 'Text only'){
+
+                let navigationExtras: NavigationExtras = {
+                    queryParams: {
+                        "textOnly": true
+                    }
+                };
+                this.router.navigate(["kid-moment"], navigationExtras);
             }
         });
     }
