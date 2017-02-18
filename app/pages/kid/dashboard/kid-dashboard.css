@@ -132,4 +132,19 @@ Image.parent-profile-pic{
     margin: 10;
 }
 
+.text-only-moment{
+    min-height: 150;
+    color: white;
+}
+.text-only-moment .header{
+    background-color: rgba(20,20,20,0.2);
+}
+.text-only-moment .content{
+
+}
+.text-only-moment .author{
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 5;
+}
+
 

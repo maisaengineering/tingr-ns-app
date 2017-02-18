@@ -418,4 +418,9 @@ StackLayout.extra-large-avatar-with-name{
     font-weight: bold;
 }
 
+.input-without-border-bottom{
+    background-color: transparent;
+    border-color: transparent;
+}
+
 

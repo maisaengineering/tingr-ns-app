@@ -316,7 +316,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         dialogs.action({
             //message: "",
             cancelButtonText: "Cancel",
-            actions: ["Take photo", "Choose existing"]
+            actions: ["Take photo", "Choose existing","Text only"]
         }).then(result => {
             if (result === 'Take photo') {
                 //  Android permissions (mainly for API 23+/Android 6+) check inplace
@@ -348,6 +348,15 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 } else {
                     this.selectFromGallery();
                 }
+            }else if(result === 'Text only'){
+
+                let navigationExtras: NavigationExtras = {
+                    queryParams: {
+                        "textOnly": true,
+                        "fromClassRoomPage": true
+                    }
+                };
+                this.router.navigate(["kid-moment"], navigationExtras);
             }
         });
     }

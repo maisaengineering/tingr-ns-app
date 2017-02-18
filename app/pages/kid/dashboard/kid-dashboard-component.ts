@@ -55,6 +55,7 @@ export class KidDashboardComponent implements OnInit {
     public showLoadingIndicator: Boolean = false;
     public loadMoreText: string = 'load more';
     public posts: any;
+    public textOnlyBgColors: Array<any>;
 
 
     constructor(private postService: PostService,
@@ -72,7 +73,8 @@ export class KidDashboardComponent implements OnInit {
 
         this.kid = {};
         this.kid = this.kidData.info;
-        //console.log("KID data "+ JSON.stringify(this.kidData.info))
+        this.textOnlyBgColors = ['#C46D21','#BE1C2F', '#FF3869', '#4195FF',
+            '#A52BFF','#1E6587', '#32C4FC', '#FF2717','#FF601D', '#82AF52'];
 
         if (app.android) {
             this.isAndroid = true;
@@ -146,7 +148,7 @@ export class KidDashboardComponent implements OnInit {
 
 
     addNewPostToListView(post) {
-        let newPost = new Post(post.kl_id, post.slug, post.title, post.tzone,
+        let newPost = new Post(post.kl_id, post.slug, post.title, post.new_title, post.tzone,
             post.scope, post.text, post.author_name, post.photograph,
             post.new_created_at, post.deletable,
             post.can_delete, post.can_edit, post.can_save, post.kid_birthdate,
@@ -156,6 +158,7 @@ export class KidDashboardComponent implements OnInit {
         newPost.images = post.images;
         newPost.large_images = post.large_images;
         newPost.img_keys = post.img_keys;
+        newPost.text_only =  post.images[0] ? false : true;
         // add comments
         if (post.comments.length) {
             post.comments.forEach((comment) => {
@@ -456,7 +459,10 @@ export class KidDashboardComponent implements OnInit {
                 }
             })
         }
+    }
 
-
+    // return random color code for textOnly post
+    randomBgColor(){
+        return this.textOnlyBgColors[Math.floor((Math.random()*this.textOnlyBgColors.length))];
     }
 }

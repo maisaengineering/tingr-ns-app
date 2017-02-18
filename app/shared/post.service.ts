@@ -84,7 +84,7 @@ export class PostService {
             .catch(this.handleErrors)
     }
 
-    createPost(createdAt, additionalDetails, taggedKidIds, s3_key) {
+    createPost(createdAt, momentTitle, additionalDetails, taggedKidIds, s3_key) {
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let postCreatedAt = this.datePipe.transform(createdAt, 'MM/dd/yyyy');
@@ -94,7 +94,8 @@ export class PostService {
             command: 'create_post',
             body: {
                 date: this.datePipe.transform(createdAt, 'MM/dd/yyyy'),
-                additional_text: additionalDetails,
+                additional_text: momentTitle,
+                new_title: additionalDetails,
                 tags: taggedKidIds,
                 img_keys: [s3_key],
                 scope: "public",
@@ -210,6 +211,7 @@ export class Post {
     public kl_id;
     public slug;
     public title;
+    public new_title;
     public tzone;
     public scope;
     public tags: any[];
@@ -232,9 +234,10 @@ export class Post {
     public heart_icon;
     public hearts_count;
     public asset_base_url;
+    public text_only: Boolean = false;
 
 
-    constructor(kl_id: string, slug: string, title: string, tzone: string,
+    constructor(kl_id: string, slug: string, title: string, new_title: string, tzone: string,
                 scope: string, text: string, author_name: string, photograph: string,
                 created_at: string, deletable: boolean,
                 can_delete: boolean, can_edit: boolean, can_save: boolean, kid_birthdate: string,
@@ -242,6 +245,7 @@ export class Post {
         this.kl_id = kl_id;
         this.slug = slug;
         this.title = title;
+        this.new_title = new_title;
         this.tzone = tzone;
         this.scope = scope;
         this.tags = [];

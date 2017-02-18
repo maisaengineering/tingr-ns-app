@@ -34,12 +34,14 @@ export class KidMomentComponent implements OnInit {
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
-    public additionalDetails: string;
+    public additionalDetails: string = '';
+    public momentTitle: string = '';
     public taggedKidIds: Array<any> = [];
-    public s3_key: string;
+    public s3_key: string = '';
     public selectedImages = [];
     public showActionBarItems: Boolean = false;
     public fromClassRoomPage: Boolean = false;
+    public textOnly: Boolean = false;
 
     constructor(private kidService: KidService,
                 private postService: PostService,
@@ -57,7 +59,7 @@ export class KidMomentComponent implements OnInit {
         this.kid = this.kidData.info;
         this.managedKids = this.sharedData.managedKids;
         this.kid = this.kidData.info;
-        this.additionalDetails = '';
+
         // by default add this kid to tag
         this.taggedKidIds = [];
         this.s3_key = '';
@@ -65,6 +67,7 @@ export class KidMomentComponent implements OnInit {
         // get the conversationId from navigation params if this page is open from schedule
         this.route.queryParams.subscribe(params => {
             this.fromClassRoomPage = params["fromClassRoomPage"];
+            this.textOnly = params["textOnly"];
         });
 
         if (app.android) {
@@ -78,9 +81,9 @@ export class KidMomentComponent implements OnInit {
         // show alert if no internet connection
         this.internetService.alertIfOffline();
         // show actionBarItems after some time to fix overlappingg issue
-        setTimeout(() => {
+      /*  setTimeout(() => {
             this.showActionBarItems = true;
-        }, 500);
+        }, 500);*/
 
         // auto tag currentKid
         if(!this.fromClassRoomPage){
@@ -89,11 +92,13 @@ export class KidMomentComponent implements OnInit {
             managedKid.isTagged = managedKid ? true : false;
         }
 
-        let momentImageVIew = view.getViewById(this.page, 'moment-image');
-        momentImageVIew.src = this.sharedData.momentCaptureDetails.imageAsset;
-        momentImageVIew.visibility = 'visible';
-        // get s3 in background
-        this.getS3Key();
+        if(!this.textOnly){
+            let momentImageVIew = view.getViewById(this.page, 'moment-image');
+            momentImageVIew.src = this.sharedData.momentCaptureDetails.imageAsset;
+            momentImageVIew.visibility = 'visible';
+            // get s3 in background
+            this.getS3Key();
+        }
         let addDetailsTextField = view.getViewById(this.page, "moment-additional-details");
         //addDetailsTextField.focus();
     }
@@ -234,7 +239,9 @@ export class KidMomentComponent implements OnInit {
 
     saveMoment(){
         let momentAdditionalDetailsField = view.getViewById(this.page, "moment-additional-details");
+        let momentTitle = view.getViewById(this.page, "moment-title");
         momentAdditionalDetailsField.dismissSoftInput();
+        momentTitle.dismissSoftInput();
         if(this.taggedKidIds.length < 1){
             dialogs.alert({
                 title: "",
@@ -246,9 +253,9 @@ export class KidMomentComponent implements OnInit {
             return;
         }
         this.isLoading = true;
-        if(this.s3_key){
+        if(this.textOnly || this.s3_key){
             this.createPost();
-        }else{
+        } else{
             this.postService.uploadToS3(this.sharedData.momentCaptureDetails.imageBase64Data)
                 .subscribe(
                     (result) => {
@@ -266,7 +273,7 @@ export class KidMomentComponent implements OnInit {
 
     createPost(){
         let createdAt = new Date();
-        this.postService.createPost(createdAt, this.additionalDetails.trim(), this.taggedKidIds, this.s3_key)
+        this.postService.createPost(createdAt, this.momentTitle, this.additionalDetails.trim(), this.taggedKidIds, this.s3_key)
             .subscribe(
                 (result) => {
                     let body = result.body;
