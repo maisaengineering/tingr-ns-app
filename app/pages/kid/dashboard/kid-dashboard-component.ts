@@ -1,7 +1,7 @@
 import {Component, ViewContainerRef, ChangeDetectorRef, OnInit, ChangeDetectionStrategy} from "@angular/core";
 import {Page} from "ui/page";
 import {PostService, Post, TaggedTo, Comment} from "../../../shared/post.service";
-import frameModule = require("ui/frame"); 
+import frameModule = require("ui/frame");
 import {Router, NavigationExtras} from "@angular/router";
 import {RouterExtensions} from "nativescript-angular/router";
 import {KidData} from "../../../providers/data/kid_data";

@@ -155,25 +155,23 @@
                                                       failureImageUri="~/images/post-placeholder.jpg"></FrescoDrawee>
                                     </StackLayout>
                                     <StackLayout *ngIf="post.text_only">
-                                        <GridLayout rows="50,160" class="text-only-moment"
-                                                    [backgroundColor]="post.text_only_bg">
-                                            <StackLayout row="0" class="header">
-                                                <Gridlayout  rows="auto" columns="*,*" class="m-y-10">
+                                        <StackLayout class="text-only-moment"
+                                                     [backgroundColor]="post.text_only_bg">
+                                            <StackLayout class="header">
+                                                <Gridlayout rows="auto" columns="*,auto" margin="12 0 12 0">
                                                     <Label row="0" col="0" [text]="post.new_title"
                                                            class="text-left font-weight-bold m-l-10"></Label>
-                                                    <StackLayout row="0" col="1">
-                                                        <Label class="text-right author p-5 m-r-10" horizontalAlignment="right"
+                                                    <StackLayout row="0" col="1" class="author m-r-10">
+                                                        <Label class="text-right p-l-5 p-r-5"
+                                                               horizontalAlignment="right"
                                                                [text]="'by '+ post.author_name"></Label>
                                                     </StackLayout>
                                                 </Gridlayout>
                                             </StackLayout>
-
-
-                                            <StackLayout row="1" class="m-x-10" verticalAlignment="center" horizontalAlignment="center">
-                                                <Label [text]="post.text" textWrap="true"></Label>
+                                            <StackLayout verticalAlignment="center" horizontalAlignment="center">
+                                                <Label class="m-5" [text]="post.text" textWrap="true"></Label>
                                             </StackLayout>
-                                        </GridLayout>
-
+                                        </StackLayout>
                                     </StackLayout>
                                 </GridLayout>
                                 <GridLayout row="1" class="moment-tags">
@@ -216,7 +214,10 @@
                                                 </StackLayout>
                                             </StackLayout>
                                         </GridLayout>
-                                        <StackLayout *ngIf="post.text && !post.text_only" class="m-5">
+                                        <StackLayout *ngIf="post.new_title && !post.text_only" margin="5 5 2 5"  class="font-weight-bold">
+                                            <Label textWrap="true" text="{{ post.new_title }}"></Label>
+                                        </StackLayout>
+                                        <StackLayout *ngIf="post.text && !post.text_only" margin="0 5 2 5" >
                                             <Label textWrap="true" text="{{ post.text }}"></Label>
                                         </StackLayout>
                                     </StackLayout>

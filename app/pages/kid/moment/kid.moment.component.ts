@@ -242,6 +242,7 @@ export class KidMomentComponent implements OnInit {
         let momentTitle = view.getViewById(this.page, "moment-title");
         momentAdditionalDetailsField.dismissSoftInput();
         momentTitle.dismissSoftInput();
+
         if(this.taggedKidIds.length < 1){
             dialogs.alert({
                 title: "",
@@ -252,6 +253,18 @@ export class KidMomentComponent implements OnInit {
             });
             return;
         }
+
+        if(this.textOnly && (this.additionalDetails.trim() === '' || this.momentTitle.trim() === '')){
+            dialogs.alert({
+                title: "",
+                message: "title or text can't be black",
+                okButtonText: "Ok"
+            }).then(function () {
+                //console.log("Dialog closed!");
+            });
+            return;
+        }
+
         this.isLoading = true;
         if(this.textOnly || this.s3_key){
             this.createPost();

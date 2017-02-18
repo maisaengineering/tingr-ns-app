@@ -248,6 +248,18 @@ export class KidEditMomentComponent implements OnInit {
             });
             return;
         }
+
+        if(this.textOnly && (this.additionalDetails.trim() === '' || this.momentTitle.trim() === '')){
+            dialogs.alert({
+                title: "",
+                message: "title or text can't be black",
+                okButtonText: "Ok"
+            }).then(function () {
+                //console.log("Dialog closed!");
+            });
+            return;
+        }
+
         this.isLoading = true;
         if(this.textOnly || this.s3_key){
             this.updatePost();
