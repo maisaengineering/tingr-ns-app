@@ -111,7 +111,7 @@ export class PostService {
     }
 
 
-    updatePost(postKlId, updatedAt, additionalDetails, taggedKidIds, s3_key) {
+    updatePost(postKlId, updatedAt, momentTitle, additionalDetails, taggedKidIds, s3_key) {
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let postCreatedAt = this.datePipe.transform(updatedAt, 'MM/dd/yyyy');
@@ -119,6 +119,7 @@ export class PostService {
         let body = {
             date: this.datePipe.transform(updatedAt, 'MM/dd/yyyy'),
             additional_text: additionalDetails,
+            new_title: momentTitle,
             tags: taggedKidIds,
             img_keys: [s3_key],
             scope: "public",

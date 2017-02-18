@@ -41,6 +41,8 @@ export class KidEditMomentComponent implements OnInit {
     public s3_key: string;
     public selectedImages = [];
     public showActionBarItems: Boolean = false;
+    public textOnly: Boolean = false;
+    public momentTitle: string = '';
 
     constructor(private kidService: KidService,
                 private postService: PostService,
@@ -57,6 +59,7 @@ export class KidEditMomentComponent implements OnInit {
         this.kid = this.kidData.info;
         this.managedKids = this.sharedData.managedKids;
         this.currentPost = this.sharedData.currentPost;
+        this.textOnly = this.currentPost.text_only;
         this.kid = this.kidData.info;
         this.additionalDetails = '';
         // by default add this kid to tag
@@ -74,12 +77,16 @@ export class KidEditMomentComponent implements OnInit {
         this.internetService.alertIfOffline();
         // show actionBarItems after some time to fix overlappingg issue
         //set image and additional details with existing data
-        let momentImageVIew = view.getViewById(this.page, 'moment-image');
-        if(this.currentPost.images.length){
-            momentImageVIew.src = this.currentPost.images[0];
+        if(!this.textOnly){
+            let momentImageVIew = view.getViewById(this.page, 'moment-image');
+            if(this.currentPost.images.length){
+                momentImageVIew.src = this.currentPost.images[0];
+            }
+            momentImageVIew.visibility = 'visible';
         }
-        momentImageVIew.visibility = 'visible';
+
         this.additionalDetails = this.currentPost.text;
+        this.momentTitle= this.currentPost.new_title;
 
         // set already TaggedKidIds
         this.currentPost.tagged_to.forEach((taggedKid) => {
@@ -90,7 +97,6 @@ export class KidEditMomentComponent implements OnInit {
                 managedKid.isTagged = true
             }
         });
-
         let addDetailsTextField = view.getViewById(this.page, "moment-additional-details");
         //addDetailsTextField.focus();
     }
@@ -243,7 +249,7 @@ export class KidEditMomentComponent implements OnInit {
             return;
         }
         this.isLoading = true;
-        if(this.s3_key){
+        if(this.textOnly || this.s3_key){
             this.updatePost();
         }else{
             this.postService.uploadToS3(this.sharedData.momentCaptureDetails.imageBase64Data)
@@ -264,7 +270,7 @@ export class KidEditMomentComponent implements OnInit {
 
     updatePost(){
         let updatedAt = new Date();
-        this.postService.updatePost(this.currentPost.kl_id,updatedAt, this.additionalDetails.trim(), this.taggedKidIds, this.s3_key)
+        this.postService.updatePost(this.currentPost.kl_id,updatedAt, this.momentTitle.trim(), this.additionalDetails.trim(), this.taggedKidIds, this.s3_key)
             .subscribe(
                 (result) => {
                     let body = result.body;

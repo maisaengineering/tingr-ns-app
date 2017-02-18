@@ -23,17 +23,24 @@
         <GridLayout>
             <GridLayout rows="auto,auto">
                 <StackLayout row="0" orientation="horizontal">
-                    <CardView margin="0 0 5 0" radius="0" shadowOffsetHeight="1" class="whiteCard">
+                    <CardView margin="0" radius="0" elevation="5" shadowOffsetWidth="1" shadowOffsetHeight="1" class="whiteCard">
                         <Gridlayout rows="auto" columns="auto,*" verticalAlignment="center"
-                                    class="settings-item"
-                                    orientation="horizontal" class="item">
-                            <Image (tap)="selectMomentCaptureOption()" row='0' col="0" id="moment-image" height="100"
-                                   width="100"
-                                   stretch="aspectFill" class="" src="https://placehold.it/100x100"></Image>
-                            <TextView class="input-without-border-bottom" row='0' col="1"
-                                      hint="what is this post about? enter here..." id="moment-additional-details"
-                                      text="" [(ngModel)]="additionalDetails" editable="true"
-                                      borderColor="white"></TextView>
+                                    orientation="horizontal" class="item" height="120">
+                            <Image visibility="{{ textOnly ? 'collapse' : 'visible' }}" (tap)="selectMomentCaptureOption()" row='0' col="0" id="moment-image" height="120"
+                                   width="120"
+                                   stretch="aspectFill" class="" src="~/images/avatar-100.png"></Image>
+
+                            <StackLayout row='0' col="1">
+                                <TextField  class="input-without-border-bottom" hint="title"
+                                            id="moment-title" [(ngModel)]="momentTitle"></TextField>
+                                <StackLayout class="hr-light"></StackLayout>
+
+                                <TextView class="input-without-border-bottom" height="80"
+                                          hint="what is this post about? enter here..." id="moment-additional-details"
+                                          text="" [(ngModel)]="additionalDetails" editable="true"
+                                          borderColor="white"></TextView>
+                            </StackLayout>
+
                         </Gridlayout>
                     </CardView>
                 </StackLayout>
