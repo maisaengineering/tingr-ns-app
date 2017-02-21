@@ -15,7 +15,6 @@ import {ModalPostComment} from "../../../pages/dialogs/modal-post-comment";
 import {ServerErrorService} from "../../../shared/server.error.service";
 
 import observable = require("data/observable");
-import {Location} from "@angular/common";
 require("nativescript-dom");
 let view = require("ui/core/view");
 let tnsfx = require('nativescript-effects');
@@ -67,8 +66,7 @@ export class KidDashboardComponent implements OnInit {
                 private sharedData: SharedData,
                 private internetService: InternetService,
                 private vcRef: ViewContainerRef,
-                private serverErrorService: ServerErrorService,
-                private location: Location) {
+                private serverErrorService: ServerErrorService) {
         //super(changeDetectorRef);
 
         this.kid = {};
