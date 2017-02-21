@@ -29,7 +29,7 @@
     <GridLayout tkMainContent>
         <RadListView [items]="managed_kids"
                      pullToRefresh="true" (pullToRefreshInitiated)="onPullToRefreshInitiated($event)"
-                      (itemTap)="onTapKid($event)" selectionBehavior="LongPress" (itemSelected)="onLongPressKid($event)">
+                      (itemTap)="onTapKid($event)" selectionBehavior="LongPress" (itemHold)="onLongPressKid($event)">
             <template tkListItemTemplate let-item="item">
                 <StackLayout [id]="'kid-'+item.kid_klid" [kid]="item">
                     <GridLayout rows="auto,auto" class="p-10">

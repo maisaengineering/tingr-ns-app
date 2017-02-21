@@ -22,7 +22,6 @@ import {ListViewEventData} from "nativescript-telerik-ui/listview";
 import * as timerModule  from "timer";
 import listViewModule = require("nativescript-telerik-ui/listview/angular");
 import listViewAnularModule = require("nativescript-telerik-ui/listview/angular");
-import {ObservableArray} from "data/observable-array";
 
 let cameraModule = require("camera");
 let platformModule = require("platform");
@@ -67,10 +66,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     constructor(private myClassService: MyClassService,
                 private modal: ModalDialogService,
                 private kidSignInOutService: KidSignInOutService,
-                private teacherService: TeacherService,
-                private messageService: MessageService,
                 private changeDetectorRef: ChangeDetectorRef,
-                private datePipe: DatePipe,
                 private kidData: KidData,
                 private sharedData: SharedData,
                 private routerExtensions: RouterExtensions,
@@ -204,7 +200,8 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     onTapKid(args: ListViewEventData) {
         let kid = this.managed_kids[args.itemIndex];
         this.kidData.info = kid;
-        let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
+        this.changeDetectorRef.markForCheck();
+        //let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
         this.routerExtensions.navigate(["/kid-dashboard"], {
             transition: {
                 name: "slideLeft"
@@ -215,8 +212,8 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     onLongPressKid(args: ListViewEventData) {
         let index = args.itemIndex;
         let kid = this.managed_kids[args.itemIndex];
-
-        let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
+        this.changeDetectorRef.markForCheck();
+        //let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
 
         dialogs.action({
             //message: "",

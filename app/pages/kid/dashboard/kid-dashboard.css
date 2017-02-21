@@ -140,7 +140,7 @@ Image.parent-profile-pic{
     background-color: rgba(20,20,20,0.2);
 }
 .text-only-moment .content{
-
+  vertical-align: middle;
 }
 .text-only-moment .author{
     background-color: rgba(0,0,0,0.3);
