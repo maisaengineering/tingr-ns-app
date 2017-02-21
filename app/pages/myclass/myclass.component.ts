@@ -1,4 +1,4 @@
-import {Component, ViewContainerRef , ChangeDetectorRef, ChangeDetectionStrategy, OnInit} from "@angular/core";
+import {Component, ViewContainerRef, ChangeDetectorRef, ChangeDetectionStrategy, OnInit} from "@angular/core";
 import {DrawerPage} from "../drawer.page";
 import {MyClassService, ManagedKid, Room} from "../../shared/myclass.service";
 import {KidSignInOutService} from "../../shared/kid-signinout.service";
@@ -6,7 +6,7 @@ import {MessageService} from "../../shared/message.service";
 import {TeacherService} from "../../shared/teacher/teacher.service";
 import {KidData} from "../../providers/data/kid_data";
 import {SharedData} from "../../providers/data/shared_data";
-import { RouterExtensions } from 'nativescript-angular/router';
+import {RouterExtensions} from 'nativescript-angular/router';
 import {Router, NavigationExtras} from "@angular/router";
 import {Page} from "ui/page";
 import {TeacherInfo} from "../../providers/data/teacher_info";
@@ -62,7 +62,6 @@ export class MyClassComponent extends DrawerPage implements OnInit {
     public selectedImages = [];
 
 
-
     constructor(private myClassService: MyClassService,
                 private modal: ModalDialogService,
                 private kidSignInOutService: KidSignInOutService,
@@ -95,7 +94,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         //this.getRoomsAndMangedKids();
         this.loadManagedKids(this.currentRoom);
         this.getAssignedRooms();
-      //  this.changeDetectorRef.detectChanges();
+        //  this.changeDetectorRef.detectChanges();
     }
 
 
@@ -134,7 +133,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             );
     }
 
-    addNewManagedKid(managedKid){
+    addNewManagedKid(managedKid) {
         let kid = new ManagedKid(managedKid.fname, managedKid.lname, managedKid.nickname,
             managedKid.age, managedKid.reminders_count, managedKid.messages_count,
             managedKid.kid_klid, managedKid.photograph_url, managedKid.in_or_out_time);
@@ -218,12 +217,15 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         dialogs.action({
             //message: "",
             cancelButtonText: "Cancel",
-            actions: ["Sign-in/Sign-out", "Message to Parent"]
+            actions: ["Sign-in", "Sign-out", "Message to Parent"]
         }).then(result => {
             if (result == 'Cancel' || typeof result == "undefined") {
                 this.cancelKidSelectionAnimation(kid);
             } else {
-                if (result === 'Sign-in/Sign-out') {
+                if (result === 'Sign-in') {
+                    this.signInOrSignOutKid(index);
+                }
+                else if (result === 'Sign-out') {
                     this.signInOrSignOutKid(index);
                 } else if (result === "Message to Parent") {
                     this.showModalMessageToParent(kid);
@@ -313,7 +315,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         dialogs.action({
             //message: "",
             cancelButtonText: "Cancel",
-            actions: ["Take photo", "Choose existing","Text only"]
+            actions: ["Take photo", "Choose existing", "Text only"]
         }).then(result => {
             if (result === 'Take photo') {
                 //  Android permissions (mainly for API 23+/Android 6+) check inplace
@@ -345,7 +347,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 } else {
                     this.selectFromGallery();
                 }
-            }else if(result === 'Text only'){
+            } else if (result === 'Text only') {
 
                 let navigationExtras: NavigationExtras = {
                     queryParams: {

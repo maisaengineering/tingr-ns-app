@@ -16,16 +16,14 @@
     <ActionItem (tap)="saveMoment()" ios.position="right" andriod.postion="actionBar" icon="res://ic_check">
     </ActionItem>
 </ActionBar>
-
-
-
-<GridLayout class="moment-capture-container">
-
+<GridLayout class="moment-capture-container"> 
     <ScrollView>
         <GridLayout>
             <GridLayout rows="auto,auto">
                 <StackLayout row="0" orientation="horizontal">
-                    <CardView margin="0" radius="0" elevation="5" shadowOffsetWidth="1" shadowOffsetHeight="1" class="whiteCard">
+                    <CardView elevation="5" shadowOffsetWidth="1"
+                              shadowOffsetHeight="1"
+                              class="whiteCard">
                         <Gridlayout rows="auto" columns="auto,*" verticalAlignment="center"
                                     orientation="horizontal" class="item" height="120">
                             <Image visibility="{{ textOnly ? 'collapse' : 'visible' }}" (tap)="selectMomentCaptureOption()" row='0' col="0" id="moment-image" height="120"

@@ -243,6 +243,30 @@ export class KidMomentComponent implements OnInit {
         momentAdditionalDetailsField.dismissSoftInput();
         momentTitle.dismissSoftInput();
 
+
+
+        if(this.textOnly){
+            if(this.additionalDetails.trim() === '' || this.momentTitle.trim() === '' ){
+                dialogs.alert({
+                    title: "",
+                    message: "title or text can't be blank",
+                    okButtonText: "Ok"
+                }).then(function () {
+                    //console.log("Dialog closed!");
+                });
+                return;
+            }
+        }else if(this.momentTitle.trim() === ''){
+            dialogs.alert({
+                title: "",
+                message: "title can't be blank",
+                okButtonText: "Ok"
+            }).then(function () {
+                //console.log("Dialog closed!");
+            });
+            return;
+        }
+
         if(this.taggedKidIds.length < 1){
             dialogs.alert({
                 title: "",
@@ -254,16 +278,6 @@ export class KidMomentComponent implements OnInit {
             return;
         }
 
-        if(this.textOnly && (this.additionalDetails.trim() === '' || this.momentTitle.trim() === '')){
-            dialogs.alert({
-                title: "",
-                message: "title or text can't be black",
-                okButtonText: "Ok"
-            }).then(function () {
-                //console.log("Dialog closed!");
-            });
-            return;
-        }
 
         this.isLoading = true;
         if(this.textOnly || this.s3_key){

@@ -238,10 +238,21 @@ export class KidEditMomentComponent implements OnInit {
     updateMoment(){
         let momentAdditionalDetailsField = view.getViewById(this.page, "moment-additional-details");
         momentAdditionalDetailsField.dismissSoftInput();
-        if(this.taggedKidIds.length < 1){
+        if(this.textOnly){
+            if(this.additionalDetails.trim() === '' || this.momentTitle.trim() === '' ){
+                dialogs.alert({
+                    title: "",
+                    message: "title or text can't be blank",
+                    okButtonText: "Ok"
+                }).then(function () {
+                    //console.log("Dialog closed!");
+                });
+                return;
+            }
+        }else if(this.momentTitle.trim() === ''){
             dialogs.alert({
                 title: "",
-                message: 'Please tag at least one kid',
+                message: "title can't be blank",
                 okButtonText: "Ok"
             }).then(function () {
                 //console.log("Dialog closed!");
@@ -249,10 +260,10 @@ export class KidEditMomentComponent implements OnInit {
             return;
         }
 
-        if(this.textOnly && (this.additionalDetails.trim() === '' || this.momentTitle.trim() === '')){
+        if(this.taggedKidIds.length < 1){
             dialogs.alert({
                 title: "",
-                message: "title or text can't be black",
+                message: 'Please tag at least one kid',
                 okButtonText: "Ok"
             }).then(function () {
                 //console.log("Dialog closed!");
