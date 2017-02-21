@@ -223,10 +223,10 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 this.cancelKidSelectionAnimation(kid);
             } else {
                 if (result === 'Sign-in') {
-                    this.signInOrSignOutKid(index);
+                    this.signInOrSignOutKid(index, 'Sign-in');
                 }
                 else if (result === 'Sign-out') {
-                    this.signInOrSignOutKid(index);
+                    this.signInOrSignOutKid(index, 'Sign-out');
                 } else if (result === "Message to Parent") {
                     this.showModalMessageToParent(kid);
                 }
@@ -235,11 +235,11 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
     }
 
-    signInOrSignOutKid(index) {
+    signInOrSignOutKid(index, option) {
         let kid = this.managed_kids[index];
         let inoutTimeLabel = view.getViewById(this.page, "in-or-out-time-" + kid.kid_klid);
         this.isLoading = true;
-        this.kidSignInOutService.signInOrSingOut(kid.kid_klid)
+        this.kidSignInOutService.signInOrSingOut(kid.kid_klid, option)
             .subscribe(
                 (result) => {
                     this.isLoading = false;
@@ -261,6 +261,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                     }
                     this.changeDetectorRef.markForCheck();
                     this.cancelKidSelectionAnimation(kid);
+                    this.managed_kids.refresh();
                 },
                 (error) => {
                     this.cancelKidSelectionAnimation(kid);
