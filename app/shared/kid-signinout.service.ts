@@ -13,7 +13,7 @@ export class KidSignInOutService {
 
     }
 
-    signInOrSingOut(kid_klid) {
+    signInOrSingOut(kid_klid, option) {
         var room = TeacherInfo.parsedDetails.rooms[0];
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
@@ -24,7 +24,8 @@ export class KidSignInOutService {
             body: {
                 session_id: room.session_id,
                 season_id: room.season_id,
-                kid_klid: kid_klid
+                kid_klid: kid_klid,
+                option: option
             }
         });
 
