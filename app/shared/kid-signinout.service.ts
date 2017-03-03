@@ -12,7 +12,7 @@ export class KidSignInOutService {
     constructor(private http: Http) {
 
     }
-
+    
     signInOrSingOut(kid_klid, option) {
         var room = TeacherInfo.parsedDetails.rooms[0];
         let headers = new Headers();
@@ -24,6 +24,7 @@ export class KidSignInOutService {
             body: {
                 session_id: room.session_id,
                 season_id: room.season_id,
+                org_id:  room.organization_id,
                 kid_klid: kid_klid,
                 option: option
             }

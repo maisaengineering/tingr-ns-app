@@ -142,6 +142,32 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
 
     // pull to refresh the data
+    refreshList(args) {
+        let pullRefresh = args.object;
+        this.myClassService.getManagedKids(this.currentRoom)
+            .subscribe(
+                (result) => {
+                    this.managed_kids = [];
+                    var body = result.body;
+                    body.managed_kids.forEach((managedKid) => {
+                        this.addNewManagedKid(managedKid);
+                    });
+                    // save managed kids in SharedData Provider, so data will be available to all components
+                    this.sharedData.managedKids = body.managed_kids;
+                    this.changeDetectorRef.markForCheck();
+                    setTimeout(() => {
+                        pullRefresh.refreshing = false;
+                    }, 1000);
+                },
+                (error) => {
+                    listView.notifyPullToRefreshFinished();
+                    this.serverErrorService.showErrorModal();
+                }
+            ); 
+    }
+
+
+    // pull to refresh the data
     public onPullToRefreshInitiated(args: ListViewEventData) {
         var that = new WeakRef(this);
         timerModule.setTimeout(()=> {
@@ -196,7 +222,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         });
     }
 
-    onTapKid(args: ListViewEventData) {
+    /*onTapKid(args: ListViewEventData) {
         let kid = this.managed_kids[args.itemIndex];
         this.kidData.info = kid;
         this.changeDetectorRef.markForCheck();
@@ -206,37 +232,42 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                 name: "slideLeft"
             }
         })
-    }
+    }*/
 
-    onLongPressKid(args: ListViewEventData) {
-        let index = args.itemIndex;
-        let kid = this.managed_kids[args.itemIndex];
-        this.changeDetectorRef.markForCheck();
+    onLongPressKid(kid) {
+
         //let kidStackLayout = view.getViewById(this.page, 'kid-' + kid.kid_klid);
 
         dialogs.action({
             //message: "",
             cancelButtonText: "Cancel",
-            actions: ["Sign-in", "Sign-out", "Message to Parent"]
+            actions: ["Sign-in", "Sign-out", "Message to Parent", "View Profile"]
         }).then(result => {
             if (result == 'Cancel' || typeof result == "undefined") {
                 this.cancelKidSelectionAnimation(kid);
             } else {
                 if (result === 'Sign-in') {
-                    this.signInOrSignOutKid(index, 'Sign-in');
+                    this.signInOrSignOutKid(kid,'Sign-in');
                 }
                 else if (result === 'Sign-out') {
-                    this.signInOrSignOutKid(index, 'Sign-out');
+                    this.signInOrSignOutKid(kid,'Sign-out');
                 } else if (result === "Message to Parent") {
                     this.showModalMessageToParent(kid);
+                } else if (result === "View Profile") {
+                    this.kidData.info = kid;
+                    this.routerExtensions.navigate(["/kid-dashboard"], {
+                        transition: {
+                            name: "slideLeft"
+                        }
+                    })
                 }
             }
         })
 
     }
 
-    signInOrSignOutKid(index, option) {
-        let kid = this.managed_kids[index];
+    signInOrSignOutKid(kid, option) {
+
         let inoutTimeLabel = view.getViewById(this.page, "in-or-out-time-" + kid.kid_klid);
         this.isLoading = true;
         this.kidSignInOutService.signInOrSingOut(kid.kid_klid, option)
@@ -261,10 +292,10 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                     }
                     this.changeDetectorRef.markForCheck();
                     this.cancelKidSelectionAnimation(kid);
-                    this.managed_kids.refresh();
+                    //this.managed_kids.refresh();
                 },
                 (error) => {
-                    this.cancelKidSelectionAnimation(kid);
+                   // this.cancelKidSelectionAnimation(kid);
                     this.isLoading = false;
                     this.serverErrorService.showErrorModal();
                 }
