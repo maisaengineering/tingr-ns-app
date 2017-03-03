@@ -38,11 +38,10 @@
                         </StackLayout>
                     </StackLayout>
 
-
                     <StackLayout visibility="{{ picUploaded ? 'visible' : 'collapse'}}">
                         <Image height="100" width="100" id="teacherProfilePic"
-                               class="uploaded-teacher-profile-pic blue-circle-border"
-                               src="{{ '~/images/avatar-100.png' }}"></Image>
+                               style="border-radius: 50;"
+                               src="{{ teacherInfo.photograph || '~/images/avatar-100.png' }}"></Image>
                     </StackLayout>
 
 

@@ -1,8 +1,8 @@
 Image.teacher-profile-pic{
-    border-radius: 50;
+    border-radius: 50%;
 }
 
-Image.uploaded-teacher-profile-pic{
+.uploaded-teacher-profile-pic{
     border-radius: 50%;
 }
 

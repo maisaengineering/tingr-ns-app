@@ -140,7 +140,6 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         this.managed_kids.push(kid);
     }
 
-
     // pull to refresh the data
     refreshList(args) {
         let pullRefresh = args.object;
@@ -160,10 +159,10 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                     }, 1000);
                 },
                 (error) => {
-                    listView.notifyPullToRefreshFinished();
+                    pullRefresh.refreshing = false;
                     this.serverErrorService.showErrorModal();
                 }
-            ); 
+            );
     }
 
 

@@ -19,7 +19,7 @@ let view = require("ui/core/view");
 let nstoasts = require("nativescript-toasts");
 let app = require("application");
 
-declare var android: any;
+declare var android:any;
 @Component({
     moduleId: module.id,
     selector: 'my-app',
@@ -28,20 +28,20 @@ declare var android: any;
     providers: [TeacherService, ServerErrorService, ModalDialogService]
 })
 export class TeacherProfileComponent implements OnInit {
-    public isLoading: Boolean = false;
-    public isAndroid: Boolean = false;
-    public isIos: Boolean = false;
-    public teacherInfo: any;
+    public isLoading:Boolean = false;
+    public isAndroid:Boolean = false;
+    public isIos:Boolean = false;
+    public teacherInfo:any;
     public selectedImages = [];
-    public picUploaded: Boolean = false;
+    public picUploaded:Boolean = false;
 
-    constructor(private page: Page, private location: Location,
-                private modal: ModalDialogService,
-                private routerExtensions: RouterExtensions,
-                private teacherService: TeacherService,
-                private internetService: InternetService,
-                private vcRef: ViewContainerRef,
-                private serverErrorService: ServerErrorService) {
+    constructor(private page:Page, private location:Location,
+                private modal:ModalDialogService,
+                private routerExtensions:RouterExtensions,
+                private teacherService:TeacherService,
+                private internetService:InternetService,
+                private vcRef:ViewContainerRef,
+                private serverErrorService:ServerErrorService) {
 
         if (app.android) {
             this.isAndroid = true;
@@ -56,7 +56,6 @@ export class TeacherProfileComponent implements OnInit {
         this.internetService.alertIfOffline();
 
     }
-
 
 
     goBack() {
@@ -115,9 +114,9 @@ export class TeacherProfileComponent implements OnInit {
         };
         cameraModule.takePicture(options).then((imageAsset) => {
 
-            let imageBase64Data =  imageAsset.toBase64String(enums.ImageFormat.jpeg);
+            let imageBase64Data = imageAsset.toBase64String(enums.ImageFormat.jpeg);
             this.picUploaded = true;
-            teacherProfilePicView.src = imageAsset;
+            //teacherProfilePicView.src = imageAsset;
             this.changePhoto(imageBase64Data);
             GC();
         });
@@ -155,7 +154,7 @@ export class TeacherProfileComponent implements OnInit {
 
                         let imageBase64Data = imageSource.toBase64String(enums.ImageFormat.jpeg);
                         this.picUploaded = true;
-                        teacherProfilePicView.src = imageSource;
+                        //teacherProfilePicView.src = imageSource;
                         this.changePhoto(imageBase64Data);
 
                     }).catch((e) => {
@@ -169,29 +168,35 @@ export class TeacherProfileComponent implements OnInit {
 
     }
 
-    changePhoto(imageBase64Data){
-        nstoasts.show({
-            text: 'Photo updated',
-            duration: nstoasts.DURATION.SHORT
-        });
-       let teacher_klid = this.teacherInfo.teacher_klid;
-        this.teacherService.changePhotoGraph(imageBase64Data,teacher_klid)
+    changePhoto(imageBase64Data) {
+        let teacherProfilePicView = view.getViewById(this.page, 'teacherProfilePic');
+        let teacher_klid = this.teacherInfo.teacher_klid;
+        this.isLoading = true;
+        this.teacherService.changePhotoGraph(imageBase64Data, teacher_klid)
             .subscribe(
                 (result) => {
-                   let body = result.body;
-                    this.teacherInfo.photograph = body.photograph;
+                    let body = result.body;
+                    this.teacherInfo.photograph = body.thumb_photograph;
                     //update teacher info in app settings
                     TeacherInfo.details = JSON.stringify(this.teacherInfo);
+                    teacherProfilePicView.src = body.thumb_photograph;
+                    this.isLoading = false;
+                    nstoasts.show({
+                        text: 'Photo updated',
+                        duration: nstoasts.DURATION.SHORT
+                    });
+
                 },
                 (error) => {
+                    this.isLoading = false;
                     //console.log("error "+ JSON.stringify(error));
                     this.serverErrorService.showErrorModal();
                 }
             );
     }
 
-    openEditModal(){
-        var options: ModalDialogOptions = {
+    openEditModal() {
+        var options:ModalDialogOptions = {
             viewContainerRef: this.vcRef,
             context: {
                 teacher_klid: this.teacherInfo.teacher_klid,
@@ -201,26 +206,26 @@ export class TeacherProfileComponent implements OnInit {
             },
             fullscreen: true
         };
-            this.modal.showModal(ModalEditProfile, options).then((result) => {
-                if (result === 'close' || typeof(result) == "undefined") {
-                    // modal closed
-                } else {
-                    this.teacherInfo.fname = result.fname;
-                    this.teacherInfo.lname = result.lname;
-                    nstoasts.show({
-                        text: 'Profile updated',
-                        duration: nstoasts.DURATION.SHORT
-                    });
-                    // invoke api in background to update
-                    this.updateProfile(result);
-                }
-            })
+        this.modal.showModal(ModalEditProfile, options).then((result) => {
+            if (result === 'close' || typeof(result) == "undefined") {
+                // modal closed
+            } else {
+                this.teacherInfo.fname = result.fname;
+                this.teacherInfo.lname = result.lname;
+                nstoasts.show({
+                    text: 'Profile updated',
+                    duration: nstoasts.DURATION.SHORT
+                });
+                // invoke api in background to update
+                this.updateProfile(result);
+            }
+        })
     }
 
 
-    updateProfile(data){
+    updateProfile(data) {
         let teacher_klid = this.teacherInfo.teacher_klid;
-        this.teacherService.updateProfile(data,teacher_klid)
+        this.teacherService.updateProfile(data, teacher_klid)
             .subscribe(
                 (result) => {
                     let body = result.body;
@@ -232,11 +237,10 @@ export class TeacherProfileComponent implements OnInit {
                     TeacherInfo.details = JSON.stringify(this.teacherInfo);
                 },
                 (error) => {
-                   //console.log("error "+ JSON.stringify(error));
+                    //console.log("error "+ JSON.stringify(error));
                 }
             );
     }
-
 
 
 }
