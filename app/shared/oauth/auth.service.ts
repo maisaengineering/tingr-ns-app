@@ -18,7 +18,7 @@ export class AuthService {
                 grant_type: "client_credentials",
                 client_id: Config.clientId,
                 client_secret: Config.clientSecret,
-                scope: "KidsApp"
+                scope: Config.scope
             }), {
                 headers: headers
             }
