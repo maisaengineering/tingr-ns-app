@@ -52,15 +52,18 @@ let gestures = require("ui/gestures");
 export class MyClassComponent extends DrawerPage implements OnInit {
     private managed_kids: any;
     public roomName: String;
-    public currentRoom;
+
     public isLoading: Boolean = false;
     public isAndroid: Boolean = false;
     public isIos: Boolean = false;
-    public assignedRooms: Array<any>;
+
     public showActionBarItems: Boolean = false;
     private numberOfAddedItems; // pull to refresh
     public selectedImages = [];
 
+    public currentRoom: any;
+    public assignedRooms: Array<any>;
+    public moreThanOneRoom: Boolean = false;
 
     constructor(private myClassService: MyClassService,
                 private modal: ModalDialogService,
@@ -102,6 +105,9 @@ export class MyClassComponent extends DrawerPage implements OnInit {
         this.myClassService.getAssignedRooms().subscribe(
             (result) => {
                 this.assignedRooms = result.body.rooms;
+                if(this.assignedRooms.length > 1){
+                    this.moreThanOneRoom = true;
+                }
                 this.changeDetectorRef.markForCheck();
             },
             (error) => {
@@ -117,7 +123,7 @@ export class MyClassComponent extends DrawerPage implements OnInit {
             .subscribe(
                 (result) => {
                     this.managed_kids = [];
-                    var body = result.body;
+                    var body = result.body; 
                     body.managed_kids.forEach((managedKid) => {
                         this.addNewManagedKid(managedKid);
                     });
@@ -196,6 +202,9 @@ export class MyClassComponent extends DrawerPage implements OnInit {
 
     openRooms() {
         let rooms = this.assignedRooms;
+        if(rooms.length < 2) {
+            return;
+        }
         let actions = [];
         for (let room of rooms) {
             actions.push(room.session_name);

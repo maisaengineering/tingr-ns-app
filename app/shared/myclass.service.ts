@@ -20,7 +20,7 @@ export class MyClassService {
     getRoomsAndMangedKids(room) {
         return Observable.forkJoin(
             this.getAssignedRooms(),
-            this.getManagedKids(room),
+            this.getManagedKids(room)
         );
     }
 

@@ -11,7 +11,7 @@
                  android:horizontalAlignment="center" (tap)="openRooms()">
         <StackLayout orientation="horizontal" verticalAlignment="center">
             <Label [text]="roomName" class="action-label"></Label>
-            <Label class="blue2 material-icons md-24 md-arrow-drop-down m-r-10" text="&#xE5C5;"></Label>
+            <Label *ngIf="moreThanOneRoom" class="blue2 material-icons md-24 md-arrow-drop-down m-r-10" text="&#xE5C5;"></Label>
         </StackLayout>
     </StackLayout>
     <!-- right area  -->

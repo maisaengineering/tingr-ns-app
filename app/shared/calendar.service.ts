@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 //const faker = require('faker');
 import { Observable } from "rxjs/Rx";
 import { Http, Headers, Response } from "@angular/http";
-import "rxjs/add/operator/do";
+import "rxjs/add/rator/do";
 import "rxjs/add/operator/map";
 
 import { TeacherInfo } from "../providers/data/teacher_info";
@@ -23,9 +23,9 @@ export class CalendarService {
     }
 
 
-    getCalendarData(currentDate) {
+    getCalendarData(currentDate, room) {
         this.currentDateStr = this.datePipe.transform(currentDate, 'dd/MM/yyyy');
-        var room = TeacherInfo.parsedCurrentRoom;
+        //var room = TeacherInfo.parsedCurrentRoom;
         let headers = new Headers();
         headers.append("Content-Type", "application/json");
         let data = JSON.stringify({

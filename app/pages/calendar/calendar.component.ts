@@ -2,6 +2,7 @@ import {Component, ViewContainerRef, ChangeDetectorRef, OnInit} from "@angular/c
 import {DrawerPage} from "../drawer.page";
 import {CalendarService, Schedule, Birthday, EventReminder, Holiday, Message} from "../../shared/calendar.service";
 import {TeacherInfo} from "../../providers/data/teacher_info";
+import {MyClassService, ManagedKid, Room} from "../../shared/myclass.service";
 import * as dialogs from "ui/dialogs";
 import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/directives/dialogs";
 import {ModalDatePicker} from "../../pages/dialogs/modal-date-picker";
@@ -17,7 +18,7 @@ let platform = require("platform");
     selector: 'my-app',
     styleUrls: ['./calendar.css'],
     templateUrl: './calendar.component.html',
-    providers: [CalendarService, ModalDialogService, ServerErrorService]
+    providers: [CalendarService, MyClassService, ModalDialogService, ServerErrorService]
 })
 export class CalendarComponent extends DrawerPage implements OnInit {
     public schedules: Array<Schedule>;
@@ -34,7 +35,13 @@ export class CalendarComponent extends DrawerPage implements OnInit {
     public iscurrentDateSelected: Boolean = false;
     public showActionBarItems: Boolean = false;
 
-    constructor(private changeDetectorRef: ChangeDetectorRef,
+    public currentRoom: any;
+    public roomName: String;
+    public assignedRooms: Array<any>;
+    public moreThanOneRoom: Boolean = false;
+
+    constructor(private myClassService: MyClassService,
+                private changeDetectorRef: ChangeDetectorRef,
                 private modal: ModalDialogService, private vcRef: ViewContainerRef,
                 private calendarService: CalendarService,
                 private internetService: InternetService,
@@ -54,6 +61,12 @@ export class CalendarComponent extends DrawerPage implements OnInit {
         this.event_reminders = [];
         this.holidays = [];
         this.messages = [];
+
+        this.currentRoom = TeacherInfo.parsedCurrentRoom;
+        this.roomName = this.currentRoom.session_name;
+        // initialize with when user logged in data and then invoke assignedrooms api to get updated ones
+        //this.assignedRooms = TeacherInfo.parsedDetails.rooms;
+        this.assignedRooms = [];
     }
 
     createModalDatePickerView() {
@@ -70,22 +83,69 @@ export class CalendarComponent extends DrawerPage implements OnInit {
             .then((dateresult: Date) => {
                 this.iscurrentDateSelected = false;
                 if (dateresult) {
-                    this.loadCalendarDataByDay(dateresult);
+                    this.loadCalendarDataByDay(dateresult, this.currentRoom);
                 }
             })
     }
 
     ngOnInit() {
         // show alert if no internet connection
-        this.internetService.alertIfOffline();
-        this.loadCalendarDataByDay(this.currentDate);
+        this.internetService.alertIfOffline(); 
+        this.loadCalendarDataByDay(this.currentDate, this.currentRoom);
+        this.getAssignedRooms();
+    }
+
+    getAssignedRooms() {
+        this.myClassService.getAssignedRooms().subscribe(
+            (result) => {
+                this.assignedRooms = result.body.rooms;
+                if(this.assignedRooms.length > 1){
+                    this.moreThanOneRoom = true;
+                }
+                this.changeDetectorRef.markForCheck();
+            },
+            (error) => {
+                this.isLoading = false;
+                this.serverErrorService.showErrorModal();
+            }
+        );
+    }
+
+    openRooms() {
+        let rooms = this.assignedRooms;
+        if(rooms.length < 2) {
+            return;
+        }
+        let actions = [];
+        for (let room of rooms) {
+            actions.push(room.session_name);
+        }
+        dialogs.action({
+            //message: "",
+            cancelButtonText: "Cancel",
+            actions: actions
+        }).then(result => {
+            if (result !== 'Cancel') {
+                // don't fetch data if clicks on same room
+                if (this.roomName != result) {
+                    this.currentRoom = rooms.filter(report => report.session_name === result)[0];
+                    // save the selected room in application data to access application wide
+                    TeacherInfo.currentRoom = JSON.stringify(this.currentRoom);
+                    this.roomName = this.currentRoom.session_name;
+                    this.loadCalendarDataByDay(this.currentDate, this.currentRoom);
+                    this.changeDetectorRef.markForCheck();
+                }
+            }
+
+
+        });
     }
 
 
     // pull to refresh the data
     refreshList(args) {
         let pullRefresh = args.object;
-        this.calendarService.getCalendarData(this.currentDate)
+        this.calendarService.getCalendarData(this.currentDate, this.currentRoom)
             .subscribe((result) => {
                     let body = result.body;
                     this.schedules = body.events;
@@ -107,10 +167,10 @@ export class CalendarComponent extends DrawerPage implements OnInit {
             );
     }
 
-    loadCalendarDataByDay(currentDate) {
+    loadCalendarDataByDay(currentDate, room) {
         this.currentDate = currentDate;
         this.isLoading = true;
-        this.calendarService.getCalendarData(currentDate)
+        this.calendarService.getCalendarData(currentDate, room)
             .subscribe((result) => {
                     let body = result.body;
                     this.schedules = body.events;
