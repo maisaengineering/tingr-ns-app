@@ -2,13 +2,11 @@ import { Injectable } from '@angular/core';
 //const faker = require('faker');
 import { Observable } from "rxjs/Rx";
 import { Http, Headers, Response } from "@angular/http";
-import "rxjs/add/rator/do";
-import "rxjs/add/operator/map";
-
+import "rxjs/add/operator/do";
+import "rxjs/add/operator/map"; 
 import { TeacherInfo } from "../providers/data/teacher_info";
 import {TokenService} from "../shared/token.service";
 import {Config} from "../shared/config";
-
 import { DatePipe } from '@angular/common';
 
 

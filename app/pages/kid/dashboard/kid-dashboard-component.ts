@@ -293,12 +293,12 @@ export class KidDashboardComponent implements OnInit {
                         });
 
                     }).catch((e) => {
-                    this.serverErrorService.showErrorModal();
+                      //this.serverErrorService.showErrorModal();
                     //console.log("Error: " + e);
                     //console.log(e.stack);
                 });
             }).catch((e) => {
-            this.serverErrorService.showErrorModal();
+              //this.serverErrorService.showErrorModal();
             //console.log(e);
         });
     }
