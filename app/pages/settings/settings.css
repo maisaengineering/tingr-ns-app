@@ -2,3 +2,8 @@ GridLayout.settings-item{
    padding: 15
 }
 
+.version-number{
+   font-style: italic;
+   font-size: 12;
+}
+
