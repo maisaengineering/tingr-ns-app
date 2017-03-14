@@ -9,6 +9,7 @@ android {
   defaultConfig {  
     generatedDensities = []
     applicationId = "org.tingr.teacher"
+    multiDexEnabled true
     
     //override supported platforms
     // ndk {
@@ -19,5 +20,9 @@ android {
   }  
   aaptOptions {  
     additionalParameters "--no-version-vectors"  
-  }  
+  }
+
+  dexOptions {
+    javaMaxHeapSize "4g"
+  }
 } 

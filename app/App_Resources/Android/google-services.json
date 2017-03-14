@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "600834290509",
+    "firebase_url": "https://tingrschool.firebaseio.com",
+    "project_id": "tingrschool",
+    "storage_bucket": "tingrschool.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:600834290509:android:4aa8b0df79443c3b",
+        "android_client_info": {
+          "package_name": "org.tingr.teacher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "600834290509-r6te66tmvbdd9ksqg0oci6tb7gfuo6vb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9MyrcS5p-3RNbDMmGxz8OdW7rx0APXmk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
