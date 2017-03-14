@@ -106,7 +106,7 @@ export class CalendarComponent extends DrawerPage implements OnInit {
             },
             (error) => {
                 this.isLoading = false;
-                this.serverErrorService.showErrorModal();
+                //this.serverErrorService.showErrorModal();
             }
         );
     }

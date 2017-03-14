@@ -236,6 +236,7 @@ export class KidDashboardComponent implements OnInit {
         //TODO check for android if not working: https://github.com/NativeScript/NativeScript/issues/2353
         //var imageView = view.getViewById(this.page, 'kid-profile-picture');
         let options = {
+            width: 400, height: 400, keepAspectRatio: true,
             saveToGallery: this.isAndroid ? false : true
         };
         cameraModule.takePicture(options).then((imageAsset) => {

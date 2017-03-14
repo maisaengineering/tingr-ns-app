@@ -149,6 +149,7 @@ export class KidMomentComponent implements OnInit {
     takePicture(){
        let momentImageView = view.getViewById(this.page, 'moment-image');
         let options = {
+            width: 400, height: 400, keepAspectRatio: true,
             saveToGallery: this.isAndroid ? false : true
         };
         cameraModule.takePicture(options).then((imageAsset) => {

@@ -110,6 +110,7 @@ export class TeacherProfileComponent implements OnInit {
     takePicture() {
         let teacherProfilePicView = view.getViewById(this.page, 'teacherProfilePic');
         let options = {
+            width: 400, height: 400, keepAspectRatio: true,
             saveToGallery: this.isAndroid ? false : true
         };
         cameraModule.takePicture(options).then((imageAsset) => {
