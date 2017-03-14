@@ -58,7 +58,7 @@
                                     <GridLayout row="0" columns="auto, *" rows="auto,auto"
                                                 class="m-t-5 item {{ isScheduleTimeIsCurrent(item.start_time, item.end_time) ? 'blue' : '' }}">
                                         <Label col="0" row="0"
-                                               text="{{item.start_time | date: 'HH:mm' }}-{{ item.end_time | date: 'HH:mma'  | lowercase }}">
+                                               text="{{item.start_time | date: 'hh:mma' | lowercase }}-{{ item.end_time | date: 'hh:mma'  | lowercase }}">
                                         </Label>
                                         <Label col="1" row="0" class="event m-r-5" text="{{ item.name }}"
                                                textWrap="true"></Label>
