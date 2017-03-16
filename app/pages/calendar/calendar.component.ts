@@ -9,6 +9,7 @@ import {ModalDatePicker} from "../../pages/dialogs/modal-date-picker";
 import {InternetService} from "../../shared/internet.service";
 import {ServerErrorService} from "../../shared/server.error.service";
 import {Router, NavigationExtras} from "@angular/router";
+import firebase = require("nativescript-plugin-firebase");
 let app = require("application");
 let platform = require("platform");
 
@@ -89,6 +90,18 @@ export class CalendarComponent extends DrawerPage implements OnInit {
     }
 
     ngOnInit() {
+
+        // ask permission for push notifications
+        firebase.addOnPushTokenReceivedCallback(
+            function(token) {
+                // you can use this token to send to your own backend server,
+                // so you can send notifications to this specific device
+                console.log("Firebase plugin received a push token: " + token);
+                // var pasteboard = utils.ios.getter(UIPasteboard, UIPasteboard.generalPasteboard);
+                // pasteboard.setValueForPasteboardType(token, kUTTypePlainText);
+            }
+        );
+ 
         // show alert if no internet connection
         this.internetService.alertIfOffline(); 
         this.loadCalendarDataByDay(this.currentDate, this.currentRoom);

@@ -25,9 +25,7 @@ firebase.init({
     (error) => {
         console.log("-----------------  firebase.init error: " + error);
     }
-);
-
-
+); 
 
 
 platformNativeScriptDynamic().bootstrapModule(AppModule);
