@@ -11,6 +11,7 @@ import {TeacherInfo} from "../../providers/data/teacher_info";
 import {SharedData} from "../../providers/data/shared_data"
 import {InternetService} from "../../shared/internet.service";
 import {ServerErrorService} from "../../shared/server.error.service";
+import firebase = require("nativescript-plugin-firebase");
 import dialogs = require("ui/dialogs");
 let app = require("application");
 let view = require("ui/core/view");
@@ -100,6 +101,20 @@ export class VerifyPasswordPage implements OnInit {
                     // to get the currentRoom => TeacherInfo.parsedCurrentRoom
                     let navigateTo = body.onboarding ? 'take-tour' : 'calendar';
 
+
+                    // ask permission for push notifications
+                    firebase.addOnPushTokenReceivedCallback(
+                        function(token) {
+                            // you can use this token to send to your own backend server,
+                            // so you can send notifications to this specific device
+                            console.log("Firebase plugin received a push token: " + token);
+                            // var pasteboard = utils.ios.getter(UIPasteboard, UIPasteboard.generalPasteboard);
+                            // pasteboard.setValueForPasteboardType(token, kUTTypePlainText);
+                        }
+                    );
+                    console.log("Firebase topicId "+body.teacher_klid);
+                    // subscribe to push notifications
+                    firebase.subscribeToTopic("tingr_"+body.teacher_klid);
                     this.routerExtensions.navigate(["/"+navigateTo],
                         {
                             transition: {name: "fade"},

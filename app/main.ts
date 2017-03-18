@@ -5,7 +5,7 @@ import {StatusBar} from "./utils/native";
 
 // enable production mode...
 import {enableProdMode} from '@angular/core';
-enableProdMode();
+//enableProdMode();
 
 // to check if its production
 // require 'environment'

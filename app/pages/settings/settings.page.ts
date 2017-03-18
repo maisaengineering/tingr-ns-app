@@ -8,7 +8,7 @@ import { TeacherInfo } from "../../providers/data/teacher_info";
 import { TeacherService } from "../../shared/teacher/teacher.service";
 import {InternetService} from "../../shared/internet.service";
 import {ServerErrorService} from "../../shared/server.error.service";
-
+import firebase = require("nativescript-plugin-firebase");
 let nstoasts = require("nativescript-toasts");
 let app = require("application");
 
@@ -74,6 +74,8 @@ export class SettingsPage implements OnInit{
         this.teacherService.logOff()
             .subscribe(
                 (result) => {
+                    //unsubscribe from push notificaitons
+                    firebase.unsubscribeFromTopic("tingr_"+TeacherInfo.parsedDetails.teacher_klid);
                     // clear teacher accessToke, authToken and details
                     TokenService.authToken = '';
                     TokenService.accessToken = '';
