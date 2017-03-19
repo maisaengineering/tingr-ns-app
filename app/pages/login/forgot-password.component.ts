@@ -8,7 +8,7 @@ import {TeacherInfo} from "../../providers/data/teacher_info";
 import dialogs = require("ui/dialogs");
 var view = require("ui/core/view");
 var app = require("application");
-let tnsfx = require('nativescript-effects');
+//let tnsfx = require('nativescript-effects');
 
 
 @Component({

@@ -23,7 +23,7 @@ import {TeacherInfo} from "../../providers/data/teacher_info";
 import {ScrollView} from "ui/scroll-view";
 
 var view = require("ui/core/view");
-var tnsfx = require('nativescript-effects');
+//var tnsfx = require('nativescript-effects');
 var app = require("application");
 
 

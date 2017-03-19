@@ -1,4 +1,9 @@
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
+
+// --- The built-in 'nativescript-telerik-ui' modules
+import { NativeScriptUISideDrawerModule } from "nativescript-telerik-ui/sidedrawer/angular";
+import { NativeScriptUIListViewModule } from "nativescript-telerik-ui/listview/angular";
+
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptHttpModule } from "nativescript-angular/http";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
@@ -6,8 +11,8 @@ import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 
 import {AppComponent} from "./app.component";
-import {SIDEDRAWER_DIRECTIVES} from "nativescript-telerik-ui/sidedrawer/angular";
-import { LISTVIEW_DIRECTIVES } from 'nativescript-telerik-ui/listview/angular';
+//import {SIDEDRAWER_DIRECTIVES} from "nativescript-telerik-ui/sidedrawer/angular";
+//import { LISTVIEW_DIRECTIVES } from 'nativescript-telerik-ui/listview/angular';
 import {APP_ROUTES, authProviders, navigatableComponents} from "./app.routes";
 import { TeacherInfo } from "./providers/data/teacher_info";
 import { TokenService } from "./shared/token.service";
@@ -56,8 +61,6 @@ if (applicationModule.android) {
 
 @NgModule({
     declarations: [
-        SIDEDRAWER_DIRECTIVES,
-        LISTVIEW_DIRECTIVES,
         AppComponent,
         KeysPipe,
         TimeAgoPipe,
@@ -69,6 +72,8 @@ if (applicationModule.android) {
     ],
     imports: [
         NativeScriptModule,
+        NativeScriptUIListViewModule,
+        NativeScriptUISideDrawerModule,
         NativeScriptFormsModule,
         NativeScriptHttpModule,
         NativeScriptRouterModule,

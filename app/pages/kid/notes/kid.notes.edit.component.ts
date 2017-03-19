@@ -8,7 +8,7 @@ import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
 import { NotesService } from "../../../shared/notes.service";
 var view = require("ui/core/view");
-var tnsfx = require('nativescript-effects');
+//var tnsfx = require('nativescript-effects');
 var app = require("application");
 
 

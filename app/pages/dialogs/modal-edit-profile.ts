@@ -1,7 +1,7 @@
 import {Component, ViewContainerRef, OnInit, NgModule, Input} from '@angular/core';
 import {ModalDialogParams} from "nativescript-angular/directives/dialogs";
 import {Page} from "ui/page";
-let tnsfx = require('nativescript-effects');
+//let tnsfx = require('nativescript-effects');
 let view = require("ui/core/view");
 let app = require("application");
 

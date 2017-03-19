@@ -36,7 +36,7 @@ let app = require("application");
 let platform = require("platform");
 let frameModule = require("ui/frame");
 let view = require("ui/core/view");
-let tnsfx = require('nativescript-effects');
+//let tnsfx = require('nativescript-effects');
 let gestures = require("ui/gestures");
 
 

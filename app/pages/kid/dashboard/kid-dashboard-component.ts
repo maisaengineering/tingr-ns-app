@@ -17,7 +17,7 @@ import {ServerErrorService} from "../../../shared/server.error.service";
 import observable = require("data/observable");
 require("nativescript-dom");
 let view = require("ui/core/view");
-let tnsfx = require('nativescript-effects');
+//let tnsfx = require('nativescript-effects');
 let app = require("application");
 let cameraModule = require("camera");
 let platformModule = require("platform");

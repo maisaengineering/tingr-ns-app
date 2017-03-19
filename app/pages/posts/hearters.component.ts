@@ -9,7 +9,7 @@ import {InternetService} from "../../shared/internet.service";
 import {ServerErrorService} from "../../shared/server.error.service";
 import { PostService } from "../../shared/post.service";
 var view = require("ui/core/view");
-var tnsfx = require('nativescript-effects');
+//var tnsfx = require('nativescript-effects');
 var app = require("application");
 
 

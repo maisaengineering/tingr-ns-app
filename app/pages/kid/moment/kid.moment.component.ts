@@ -12,7 +12,7 @@ import {KidService} from "../../../shared/kid.service";
 import { PostService } from "../../../shared/post.service";
 import {GC} from 'utils/utils';
 var view = require("ui/core/view");
-var tnsfx = require('nativescript-effects');
+//var tnsfx = require('nativescript-effects');
 var app = require("application");
 var cameraModule = require("camera");
 import { ImageAsset } from "image-asset";

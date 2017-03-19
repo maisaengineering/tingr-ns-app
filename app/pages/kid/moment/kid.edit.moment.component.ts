@@ -13,7 +13,7 @@ import {GC} from 'utils/utils';
 
 require( "nativescript-dom" );
 let view = require("ui/core/view");
-let tnsfx = require('nativescript-effects');
+//let tnsfx = require('nativescript-effects');
 let app = require("application");
 
 let cameraModule = require("camera");
