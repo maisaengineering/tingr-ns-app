@@ -9,6 +9,7 @@ import {InternetService} from "../../../shared/internet.service";
 import {ServerErrorService} from "../../../shared/server.error.service";
 import {FormsAndDocsService} from "../../../shared/forms.and.docs.service";
 //let pdfview = require('nativescript-pdf-view');
+import {PDFView} from 'nativescript-pdf-view';
 let view = require("ui/core/view");
 //let tnsfx = require('nativescript-effects');
 let app = require("application");
