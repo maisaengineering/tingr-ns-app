@@ -21,7 +21,7 @@ TextField{
     font-size: 17;
 }
 .login-cover-image{
-    background-image: url("~/images/teacher-login-bg-lr.png");
+    background-image: url("~/images/teacher-login-bg-lr.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

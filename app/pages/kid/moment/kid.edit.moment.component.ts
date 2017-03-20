@@ -12,8 +12,7 @@ import { PostService } from "../../../shared/post.service";
 import {GC} from 'utils/utils';
 
 require( "nativescript-dom" );
-let view = require("ui/core/view");
-//let tnsfx = require('nativescript-effects');
+let view = require("ui/core/view"); 
 let app = require("application");
 
 let cameraModule = require("camera");

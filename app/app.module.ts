@@ -35,11 +35,8 @@ import { ShortNamePipe } from './utils/short-name.pipe';
 
 import { TNSFrescoModule } from "nativescript-fresco/angular";
 import * as frescoModule from "nativescript-fresco";
-import * as applicationModule from "application";
-
-
-
-
+import * as applicationModule from "application"; 
+ 
 import { registerElement, ViewClass } from "nativescript-angular/element-registry";
 registerElement("CardView", () => require("nativescript-cardview").CardView);
 registerElement("PullToRefresh", () => {

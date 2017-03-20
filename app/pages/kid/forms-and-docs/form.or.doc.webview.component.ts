@@ -8,10 +8,9 @@ import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
 import {ServerErrorService} from "../../../shared/server.error.service";
 import {FormsAndDocsService} from "../../../shared/forms.and.docs.service";
-//let pdfview = require('nativescript-pdf-view');
 import {PDFView} from 'nativescript-pdf-view';
-let view = require("ui/core/view");
-//let tnsfx = require('nativescript-effects');
+//require('nativescript-pdf-view');
+let view = require("ui/core/view"); 
 let app = require("application");
 let utilityModule = require("utils/utils");
 
