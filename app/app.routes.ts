@@ -28,6 +28,7 @@ import { ModalPostComment } from "./pages/dialogs/modal-post-comment";
 import { ModalMessageToParent } from "./pages/dialogs/modal-message-to-parent";
 import { ModalServerError } from "./pages/dialogs/modal-server-error";
 import { ModalEditProfile } from "./pages/dialogs/modal-edit-profile";
+import { ModalImageViewer } from "./pages/dialogs/modal-image-viewer";
 
 export const APP_ROUTES = [
 
@@ -81,6 +82,7 @@ export const navigatableComponents = [
     ModalMessageToParent,
     ModalServerError,
     ModalEditProfile,
+    ModalImageViewer,
     ForgotPasswordComponent,
     KidMomentComponent,
     KidEditMomentComponent,
@@ -95,8 +97,7 @@ export const navigatableComponents = [
     MySchoolComponent,
     TourComponent,
     TakeTourComponent,
-    TeacherProfileComponent
-
+    TeacherProfileComponent 
 ];
 
 export const authProviders = [

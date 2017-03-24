@@ -7,9 +7,7 @@ import {KidData} from "../../../providers/data/kid_data";
 import {SharedData} from "../../../providers/data/shared_data";
 import {InternetService} from "../../../shared/internet.service";
 import {ServerErrorService} from "../../../shared/server.error.service";
-import {FormsAndDocsService} from "../../../shared/forms.and.docs.service";
-import {PDFView} from 'nativescript-pdf-view';
-//require('nativescript-pdf-view');
+import {FormsAndDocsService} from "../../../shared/forms.and.docs.service"; 
 let view = require("ui/core/view"); 
 let app = require("application");
 let utilityModule = require("utils/utils");
@@ -48,7 +46,6 @@ export class FormOrDocWebviewComponent implements OnInit {
         this.kid = {};
         this.kid = this.kidData.info;
         this.formOrDoc = this.sharedData.formOrDoc;
-
         if (app.android) {
             this.isAndroid = true;
         } else if (app.ios) {

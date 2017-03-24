@@ -1,17 +1,17 @@
-<ActionBar title="">
+<ActionBar [title]="formOrDoc.name">
     <!-- left area  -->
     <NavigationButton *ngIf="isIos" visibility="collapsed"></NavigationButton>
     <NavigationButton *ngIf="isAndroid" icon="res://ic_left" (tap)="goBack()"></NavigationButton>
     <ActionItem *ngIf="isIos" icon="res://ic_left" visibility="visible"
                 ios.position="left" (tap)="goBack()"></ActionItem>
     <!-- center area  -->
-    <StackLayout orientation="horizontal"
+ <!--   <StackLayout orientation="horizontal"
                  ios:horizontalAlignment="center"
                  android:horizontalAlignment="center">
-        <StackLayout>
-            <Label text="{{ formOrDoc.name }}" class="action-label text-center"  width="150"></Label>
+        <StackLayout orientation="horizontal" verticalAlignment="center" class="text-center"  textWrap="true">
+            <Label text="{{ formOrDoc.name }}" class="action-label"></Label>
         </StackLayout>
-    </StackLayout>
+    </StackLayout>-->
     <!-- right area  -->
     <ActionItem ios.position="right" andriod.postion="actionBar" icon="res://ic_exit"
                 (tap)="openShareOptions(formOrDoc)">
@@ -29,7 +29,7 @@
 
     <ScrollView *ngIf="formOrDoc.url">
         <WebView [src]="formOrDoc.url" *ngIf="!isPdfView"></WebView>
-        <PDFView [src]="formOrDoc.url"  *ngIf="isPdfView"></PDFView>
+        <WebView src="http://drive.google.com/viewerng/viewer?embedded=true&url={{ formOrDoc.url }}"  *ngIf="isPdfView"></WebView>
     </ScrollView>
 
     <StackLayout class="dimmer" visibility="{{ isLoading ? 'visible' : 'collapsed'}}"></StackLayout>

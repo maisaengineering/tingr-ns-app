@@ -21,12 +21,13 @@ import {SharedData} from "./providers/data/shared_data"
 import { InternetService } from "./shared/internet.service"
 import { ServerErrorService } from "./shared/server.error.service"
 
-import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/modal-dialog";
+import { ModalDialogService, ModalDialogOptions } from "nativescript-angular/modal-dialog";
 import { ModalDatePicker } from "./pages/dialogs/modal-date-picker";
 import { ModalPostComment } from "./pages/dialogs/modal-post-comment";
 import { ModalMessageToParent } from "./pages/dialogs/modal-message-to-parent";
 import { ModalServerError } from "./pages/dialogs/modal-server-error";
 import { ModalEditProfile } from "./pages/dialogs/modal-edit-profile";
+import { ModalImageViewer } from "./pages/dialogs/modal-image-viewer";
 
 import { DatePipe } from '@angular/common';
 import { KeysPipe } from './utils/keys.pipe';
@@ -45,7 +46,7 @@ registerElement("PullToRefresh", () => {
 });
 
 registerElement("Carousel", () => require("nativescript-carousel").Carousel);
-registerElement("CarouselItem", () => require("nativescript-carousel").CarouselItem);
+registerElement("CarouselItem", () => require("nativescript-carousel").CarouselItem); 
 //registerElement("FrescoDrawee", () => frescoModule.FrescoDrawee);
 
 if (applicationModule.android) {
@@ -53,9 +54,6 @@ if (applicationModule.android) {
         frescoModule.initialize();
     });
 }
-
-
-
 @NgModule({
     declarations: [
         AppComponent,
@@ -96,7 +94,8 @@ if (applicationModule.android) {
         ModalPostComment,
         ModalMessageToParent,
         ModalServerError,
-        ModalEditProfile
+        ModalEditProfile,
+        ModalImageViewer
     ]
 })
 export class AppModule {
