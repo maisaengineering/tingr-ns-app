@@ -15,7 +15,6 @@ import firebase = require("nativescript-plugin-firebase");
 import dialogs = require("ui/dialogs");
 let app = require("application");
 let view = require("ui/core/view");
-let tnsfx = require('nativescript-effects');
 
 @Component({
     moduleId: module.id,
@@ -132,7 +131,7 @@ export class VerifyPasswordPage implements OnInit {
                         emailTextField.borderColor = '#e89999';
                         passTextField.borderColor = '#e89999';
                         this.emailOrPasswordError = true;
-                        forgotPassLink.floatIn('slow', 'top')
+                        //forgotPassLink.floatIn('slow', 'top')
                     });
                 }
             );

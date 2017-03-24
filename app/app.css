@@ -1,22 +1,7 @@
-/*
-In NativeScript, the app.css file is where you place CSS rules that
-you would like to apply to your entire application. Check out
-http://docs.nativescript.org/ui/styling for a full list of the CSS
-selectors and properties you can use to style UI components.
-
-/*
-For example, the following CSS rule changes the font size of all UI
-components that have the btn class name.
-*/
 .btn {
     font-size: 18;
 }
 
-/*
-In many cases you may want to use the NativeScript core theme instead
-of writing your own CSS rules. For a full list of class names in the theme
-refer to http://docs.nativescript.org/ui/theme.
-*/
 @import 'nativescript-theme-core/css/core.light.css';
 @import url("~/platform.css");
 
@@ -43,13 +28,6 @@ refer to http://docs.nativescript.org/ui/theme.
     background-color: #b7d6a9;
 }
 
-
-
-/*
-.fa {
-    font-family: FontAwesome, fontawesome-webfont;
-}
-*/
 
 .material-icons {
     font-family: MaterialIcons-Regular, Material Icons;
@@ -281,11 +259,8 @@ NavigationButton, ActionItem{
 /*Activity Indicator*/
 StackLayout.dimmer{
     background-color:rgba(0, 0, 0, 0.2);
-    /*opacity: 0.7;*/
 }
 ActivityIndicator.busy {
-   /* height: 70;
-    width: 70;*/
     color: #6fa8dc;
 }
 
@@ -376,7 +351,6 @@ StackLayout.empty-page {
 }
 .btn-submit{
     border-radius: 4;
-    /*override default margin 16*/
     margin-right: 0;
     font-size: 17;
     font-weight: bold;

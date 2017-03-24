@@ -30,13 +30,12 @@ let enums = require("ui/enums");
 let imagepicker = require("nativescript-imagepicker");
 declare let android: any;
 
-
 let nstoasts = require("nativescript-toasts");
+
 let app = require("application");
 let platform = require("platform");
 let frameModule = require("ui/frame");
 let view = require("ui/core/view");
-let tnsfx = require('nativescript-effects');
 let gestures = require("ui/gestures");
 
 
@@ -292,11 +291,15 @@ export class MyClassComponent extends DrawerPage implements OnInit {
                         kid.in_or_out_time = body.in_or_out_time;
                         inoutTimeLabel.text = body.in_or_out_time; // update label with result
                         inoutTimeLabel.parent.visibility = 'visible'; // show parent
-                        try {
+
+                        inoutTimeLabel.animate({
+                            translate: { x: 0, y: 0 }, opacity: 1
+                        });
+                     /*   try {
                             inoutTimeLabel.shake(); //shake effect
                         } catch (err) {
                             // may be page redirected kid-dashboard
-                        }
+                        }*/
                     }
                     this.changeDetectorRef.markForCheck();
                     this.cancelKidSelectionAnimation(kid);

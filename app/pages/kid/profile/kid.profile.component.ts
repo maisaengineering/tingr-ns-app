@@ -7,8 +7,7 @@ import {KidData} from "../../../providers/data/kid_data";
 import {InternetService} from "../../../shared/internet.service";
 import {ServerErrorService} from "../../../shared/server.error.service";
 import {KidService} from "../../../shared/kid.service";
-var view = require("ui/core/view");
-var tnsfx = require('nativescript-effects');
+var view = require("ui/core/view"); 
 var app = require("application");
 import {Location} from "@angular/common";
 @Component({

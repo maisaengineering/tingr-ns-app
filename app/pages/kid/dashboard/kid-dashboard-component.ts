@@ -12,12 +12,12 @@ import {GC} from 'utils/utils';
 
 import {ModalDialogService, ModalDialogOptions} from "nativescript-angular/directives/dialogs";
 import {ModalPostComment} from "../../../pages/dialogs/modal-post-comment";
+import {ModalImageViewer} from "../../../pages/dialogs/modal-image-viewer";
 import {ServerErrorService} from "../../../shared/server.error.service";
 
 import observable = require("data/observable");
 require("nativescript-dom");
-let view = require("ui/core/view");
-let tnsfx = require('nativescript-effects');
+let view = require("ui/core/view"); 
 let app = require("application");
 let cameraModule = require("camera");
 let platformModule = require("platform");
@@ -25,8 +25,6 @@ let permissions = require("nativescript-permissions");
 let enums = require("ui/enums");
 let imagepicker = require("nativescript-imagepicker");
 let nstoasts = require("nativescript-toasts");
-let PhotoViewer = require("nativescript-photoviewer");
-let photoViewer = new PhotoViewer();
 declare var android: any;
 
 @Component({
@@ -432,11 +430,21 @@ export class KidDashboardComponent implements OnInit {
     }
 
     openPostImages(post) {
-        // Add to array and pass to showViewer
-        // add multiple images if post has
-        let postImages = post.large_images;
-        //postImages.push(post.large_images);
-        photoViewer.showViewer(postImages);
+        //let postImages = post.large_images;
+        let postImages = post.images;
+        var options: ModalDialogOptions = {
+            viewContainerRef: this.vcRef,
+            context: {
+                imageUrls: postImages
+            },
+            fullscreen: true
+        };
+        this.modal.showModal(ModalImageViewer, options).then((result) => {
+            if (result === 'close' || typeof(result) == "undefined") {
+                // modal closed
+            } else {
+            }
+        })  
     }
 
 
