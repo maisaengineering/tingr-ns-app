@@ -76,11 +76,17 @@ export class SettingsPage implements OnInit{
                 (result) => {
                     //unsubscribe from push notificaitons
                     firebase.unsubscribeFromTopic("tingr_"+TeacherInfo.parsedDetails.teacher_klid);
+                    //appSettings.remove("user-granted-push");
+                    appSettings.remove("user-fcm-topic-id");
                     // clear teacher accessToke, authToken and details
                     TokenService.authToken = '';
                     TokenService.accessToken = '';
                     TeacherInfo.details = '';
-                    appSettings.clear();
+                    appSettings.remove("accessToken");
+                    appSettings.remove("authToken");
+                    appSettings.remove("teacherDetails");
+                    appSettings.remove("currentRoom");
+                    //appSettings.clear();
                     var options = {
                         text: 'Logged out successfully',
                         duration : nstoasts.DURATION.SHORT

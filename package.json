@@ -4,8 +4,8 @@
   "readme": "please checkout https://Tingr.org",
   "repository": "https://github.com/maisaengineering/tingr-ns-app",
   "nativescript": {
-    "id": "org.tingr.teacher",
-    "tns-android": {
+    "id": "org.tingr.teacher.prod",
+    "tns-ios": {
       "version": "2.5.0"
     }
   },

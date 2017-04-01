@@ -3,9 +3,13 @@ import {platformNativeScriptDynamic, NativeScriptModule } from "nativescript-ang
 import { AppModule } from "./app.module";
 import {StatusBar} from "./utils/native";
 
+import {isAndroid, isIOS} from "platform";
+import firebase = require("nativescript-plugin-firebase");
 // enable production mode...
 import {enableProdMode} from '@angular/core';
 enableProdMode();
+
+
 
 /*
 // to check if its production
@@ -17,23 +21,23 @@ if (environment.production) {
 }
 */
 
-
-
-
 //StatusBar.setColor('#ffffff');
+// Android doesn't ask permissions so go for firebase initialization on launch.
+if (isAndroid) {
+    firebase.init({
+        // Optionally pass in properties for database, authentication and cloud messaging,
+        // see their respective docs.
+    }).then(
+        (instance) => {
+            console.log("-----------------  android firebase.init done");
+        },
+        (e) => {
+            console.log("Failed to init firebase. " + e);
+            console.log("stack:\n" + e.stack);
+        }
+    );
+}
 
-import firebase = require("nativescript-plugin-firebase");
-firebase.init({
-    // Optionally pass in properties for database, authentication and cloud messaging,
-    // see their respective docs.
-}).then(
-    (instance) => {
-        console.log("-----------------  firebase.init done");
-    },
-    (error) => {
-        console.log("-----------------  firebase.init error: " + error);
-    }
-); 
 
 
 platformNativeScriptDynamic().bootstrapModule(AppModule);
